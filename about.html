@@ -5,28 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>About - Visco Compare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap)" rel="stylesheet"/>
 
 <style>
 
 :root{
 
-  --primary:#3ecf8e;
-  --primary-hover:#2eb67d;
+  --primary:#2563eb;
+  --primary-hover:#1d4ed8;
+  --primary-light:#93c5fd;
+  --primary-soft:#dbeafe;
 
-  --bg:#f8faf9;
+  --bg:#f8fafc;
   --card:#ffffff;
 
-  --text:#111827;
-  --muted:#6b7280;
+  --text:#0f172a;
+  --muted:#64748b;
 
-  --border:#e5e7eb;
+  --border:#e2e8f0;
 
 }
-
-/* =========================
-   BODY
-========================= */
 
 body{
   margin:0;
@@ -34,10 +32,6 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-
-/* =========================
-   TOPBAR
-========================= */
 
 .topbar{
   display:flex;
@@ -63,9 +57,7 @@ body{
   height:65px;
   object-fit:contain;
   border-radius:18px;
-
-  box-shadow:
-    0 10px 30px rgba(62,207,142,0.18);
+  box-shadow:0 10px 30px rgba(37,99,235,0.18);
 }
 
 .logo span{
@@ -82,7 +74,7 @@ body{
   text-decoration:none;
   font-weight:600;
   transition:0.25s;
-  box-shadow:0 8px 20px rgba(62,207,142,0.2);
+  box-shadow:0 8px 20px rgba(37,99,235,0.2);
 }
 
 .home-btn:hover{
@@ -90,19 +82,11 @@ body{
   transform:translateY(-2px);
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .container{
   max-width:1100px;
   margin:auto;
   padding:70px 20px;
 }
-
-/* =========================
-   CARD
-========================= */
 
 .card{
   background:var(--card);
@@ -111,36 +95,28 @@ body{
   padding:55px;
   position:relative;
   overflow:hidden;
-
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.06);
+  box-shadow:0 20px 60px rgba(0,0,0,0.06);
 }
-
-/* GLOW */
 
 .card::before{
   content:"";
   position:absolute;
   width:350px;
   height:350px;
-  background:rgba(62,207,142,0.10);
+  background:rgba(37,99,235,0.10);
   filter:blur(120px);
   top:-120px;
   right:-120px;
   border-radius:50%;
 }
 
-/* =========================
-   HEADING
-========================= */
-
 .badge{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  background:#ecfdf5;
-  border:1px solid #bbf7d0;
-  color:#15803d;
+  background:var(--primary-soft);
+  border:1px solid var(--primary-light);
+  color:var(--primary-hover);
   padding:10px 18px;
   border-radius:999px;
   font-size:13px;
@@ -160,20 +136,12 @@ h1 span{
   color:var(--primary);
 }
 
-/* =========================
-   TEXT
-========================= */
-
 p{
   color:var(--muted);
   line-height:1.9;
   font-size:16px;
   margin-bottom:22px;
 }
-
-/* =========================
-   FEATURES
-========================= */
 
 .features{
   display:grid;
@@ -188,17 +156,13 @@ p{
   border-radius:22px;
   padding:24px;
   transition:0.25s;
-
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.04);
+  box-shadow:0 8px 24px rgba(0,0,0,0.04);
 }
 
 .feature:hover{
-  border-color:rgba(62,207,142,0.3);
+  border-color:rgba(37,99,235,0.3);
   transform:translateY(-5px);
-
-  box-shadow:
-    0 16px 35px rgba(62,207,142,0.12);
+  box-shadow:0 16px 35px rgba(37,99,235,0.12);
 }
 
 .feature h3{
@@ -212,10 +176,6 @@ p{
   font-size:14px;
 }
 
-/* =========================
-   FOOTER BTN
-========================= */
-
 .back{
   display:inline-flex;
   align-items:center;
@@ -228,9 +188,7 @@ p{
   text-decoration:none;
   font-weight:600;
   transition:0.25s;
-
-  box-shadow:
-    0 10px 25px rgba(62,207,142,0.22);
+  box-shadow:0 10px 25px rgba(37,99,235,0.22);
 }
 
 .back:hover{
@@ -238,30 +196,21 @@ p{
   transform:translateY(-2px);
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:700px){
-
   .card{
     padding:34px 22px;
     border-radius:24px;
   }
-
   h1{
     font-size:38px;
   }
-
   .logo span{
     font-size:22px;
   }
-
   .logo img{
     width:56px;
     height:56px;
   }
-
 }
 
 </style>
@@ -269,34 +218,20 @@ p{
 
 <body>
 
-<!-- TOPBAR -->
-
 <div class="topbar">
-
   <div class="logo">
     <img src="logo.png" alt="Visco Logo">
     <span>Visco Compare</span>
   </div>
-
-  <a href="homepage.html" class="home-btn">
-    Home
-  </a>
-
+  <a href="homepage.html" class="home-btn">Home</a>
 </div>
 
-<!-- MAIN -->
-
 <div class="container">
-
   <div class="card">
 
-    <div class="badge">
-      ⚡ Smart Shopping Platform
-    </div>
+    <div class="badge">⚡ Smart Shopping Platform</div>
 
-    <h1>
-      About <span>Visco Compare</span>
-    </h1>
+    <h1>About <span>Visco Compare</span></h1>
 
     <p>
       Visco Compare is a modern smart price comparison platform
@@ -322,46 +257,28 @@ p{
       and intelligent shopping ecosystem for everyone.
     </p>
 
-    <!-- FEATURES -->
-
     <div class="features">
-
       <div class="feature">
         <h3>⚡ Fast Comparison</h3>
-        <p>
-          Compare product prices instantly from multiple stores.
-        </p>
+        <p>Compare product prices instantly from multiple stores.</p>
       </div>
-
       <div class="feature">
         <h3>💰 Best Deals</h3>
-        <p>
-          Find discounts, offers, and lowest price options easily.
-        </p>
+        <p>Find discounts, offers, and lowest price options easily.</p>
       </div>
-
       <div class="feature">
         <h3>🛍️ Trusted Stores</h3>
-        <p>
-          Shop from verified platforms like Amazon and Flipkart.
-        </p>
+        <p>Shop from verified platforms like Amazon and Flipkart.</p>
       </div>
-
       <div class="feature">
         <h3>📈 Smart Shopping</h3>
-        <p>
-          Save money with intelligent price tracking technology.
-        </p>
+        <p>Save money with intelligent price tracking technology.</p>
       </div>
-
     </div>
 
-    <a class="back" href="homepage.html">
-      ← Back to Home
-    </a>
+    <a class="back" href="homepage.html">← Back to Home</a>
 
   </div>
-
 </div>
 
 </body>
