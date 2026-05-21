@@ -3,101 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy - Visco Compare</title>
+<title>Privacy Policy | Visco Compare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#004ac6",
+        "primary-light": "#2563eb",
+        background: "#f7f9fb",
+        surface: "#ffffff",
+        "text-muted": "#5b6472"
+      }
+    }
+  }
+}
+</script>
 
 <style>
-:root{
-  --bg1:#080d18;
-  --bg2:#5838c3;
-  --glass: rgba(255,255,255,0.06);
-  --border: rgba(255,255,255,0.12);
-}
-
 body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,var(--bg1),var(--bg2));
-  color:white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background:#f7f9fb;
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
+.glass{
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .card{
-  background:var(--glass);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:25px;
-  backdrop-filter: blur(12px);
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
-}
-
-h1{
-  background:linear-gradient(90deg,#8b5cf6,#22d3ee);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-p{
-  opacity:0.9;
-  line-height:1.7;
-}
-
-a{
-  color:#22d3ee;
-  text-decoration:none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 </style>
+
 </head>
 
-<body>
+<body class="text-slate-800">
 
-<div class="container">
+<!-- HEADER -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 h-16 flex items-center px-4 justify-between">
 
-<div class="card">
+  <div class="flex items-center gap-3">
+    <button onclick="history.back()" class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
 
-<h1>Privacy Policy</h1>
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white font-bold">
+        V
+      </div>
+      <span class="font-bold text-primary">Visco Compare</span>
+    </div>
+  </div>
 
-<p>
-Visco Compare respects your privacy and is committed to protecting any information you share with us.
-</p>
+</header>
 
-<p>
-We do not sell, rent, or share your personal data with third parties for marketing purposes.
-</p>
+<!-- MAIN -->
+<main class="pt-24 pb-20 px-4 max-w-4xl mx-auto">
 
-<p>
-We may collect basic user information such as login details to provide a better experience and improve platform functionality.
-</p>
+  <!-- TITLE -->
+  <section class="mb-8">
+    <h1 class="text-3xl font-extrabold text-primary">Privacy Policy</h1>
+    <p class="text-text-muted mt-2">
+      Your privacy matters. Here’s how Visco Compare handles your data.
+    </p>
+  </section>
 
-<p>
-We use cookies and local storage only to enhance user experience and maintain session data.
-</p>
+  <!-- CARD -->
+  <div class="glass card rounded-2xl p-6 space-y-5 border border-slate-200">
 
-<p>
-Visco Compare may contain links to third-party websites such as Amazon and Flipkart. We are not responsible for their privacy practices.
-</p>
+    <p>
+      Visco Compare respects your privacy and is committed to protecting any information you share with us.
+    </p>
 
-<p>
-Users are encouraged to review the privacy policies of external websites before using them.
-</p>
+    <p>
+      We do not sell, rent, or share your personal data with third parties for marketing purposes.
+    </p>
 
-<p>
-By using this platform, you agree to this Privacy Policy.
-</p>
+    <p>
+      We may collect basic user information such as login details to provide a better experience and improve platform functionality.
+    </p>
 
-</div>
+    <p>
+      We use cookies and local storage only to enhance user experience and maintain session data.
+    </p>
 
-<br>
+    <p>
+      Visco Compare may contain links to third-party websites such as Amazon and Flipkart. We are not responsible for their privacy practices.
+    </p>
 
-<a href="homepage.html" style="color:white;opacity:0.8;">← Back to Home</a>
+    <p>
+      Users are encouraged to review the privacy policies of external websites before using them.
+    </p>
 
-</div>
+    <p class="font-semibold text-primary">
+      By using this platform, you agree to this Privacy Policy.
+    </p>
+
+  </div>
+
+  <!-- BACK BUTTON -->
+  <div class="mt-8">
+    <a href="homepage.html"
+       class="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      Back to Home
+    </a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="text-center text-sm text-slate-500 pb-10">
+  © 2026 Visco Compare
+</footer>
 
 </body>
 </html>
