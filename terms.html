@@ -1,102 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms - Visco Compare</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms & Conditions | Visco Compare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary:"#004ac6",
+        secondary:"#565e74",
+        bg:"#f7f9fb",
+      }
+    }
+  }
+}
+</script>
 
 <style>
-:root{
-  --bg1:#080d18;
-  --bg2:#5838c3;
-  --glass: rgba(255,255,255,0.06);
-  --border: rgba(255,255,255,0.12);
-}
-
 body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,var(--bg1),var(--bg2));
-  color:white;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#f7f9fb;
+  overflow-x:hidden;
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
+.glass{
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(0,0,0,0.05);
+}
+
+.glow{
+  position:fixed;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:#004ac6;
+  filter:blur(120px);
+  opacity:0.12;
+  z-index:0;
 }
 
 .card{
-  background:var(--glass);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:25px;
-  backdrop-filter: blur(12px);
+  transition:0.25s;
 }
 
-h1{
-  background:linear-gradient(90deg,#8b5cf6,#22d3ee);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+.card:hover{
+  transform:translateY(-4px);
 }
 
-p{
-  opacity:0.9;
-  line-height:1.7;
-}
-
-a{
-  color:#22d3ee;
-  text-decoration:none;
+.material-symbols-outlined{
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
 }
 </style>
 </head>
 
-<body>
+<body class="text-slate-800">
 
-<div class="container">
+<!-- BACKGROUND GLOWS -->
+<div class="glow top-[-80px] left-[-80px]"></div>
+<div class="glow bottom-[-80px] right-[-80px]" style="background:#7c3aed;"></div>
 
-<div class="card">
+<!-- HEADER -->
+<header class="fixed top-0 w-full z-50 glass h-16 flex items-center justify-between px-4">
 
-<h1>Terms & Conditions</h1>
+  <div class="flex items-center gap-3">
 
-<p>
-By using Visco Compare, you agree to the following terms and conditions.
-</p>
+    <!-- BACK -->
+    <button onclick="history.back()" class="w-9 h-9 rounded-full hover:bg-black/5 flex items-center justify-center">
+      <span class="material-symbols-outlined text-primary">arrow_back</span>
+    </button>
 
-<p>
-1. Visco Compare does not sell or ship any products directly. We only provide comparison and redirect users to external websites.
-</p>
+    <!-- LOGO -->
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg">
+      <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6"/>
+    </div>
 
-<p>
-2. All product information, prices, images, and trademarks belong to their respective owners such as Amazon and Flipkart.
-</p>
+    <div>
+      <div class="font-bold text-primary">Visco Compare</div>
+      <div class="text-[10px] text-slate-500">Smart Price Engine</div>
+    </div>
 
-<p>
-3. Prices and availability may change without notice as they are controlled by third-party platforms.
-</p>
+  </div>
 
-<p>
-4. We are not responsible for any transactions made on external websites.
-</p>
+  <span class="material-symbols-outlined text-primary text-3xl">
+    account_circle
+  </span>
 
-<p>
-5. Users should verify product details before making any purchase.
-</p>
+</header>
 
-<p>
-6. By clicking external links, users are subject to the terms of those third-party websites.
-</p>
+<!-- MAIN -->
+<main class="relative pt-24 px-4 pb-28 max-w-5xl mx-auto z-10">
 
+<!-- HERO -->
+<section class="mb-10 text-center">
+  <h1 class="text-3xl font-bold">
+    Terms & <span class="text-primary">Conditions</span>
+  </h1>
+  <p class="text-slate-600 mt-3 max-w-xl mx-auto">
+    By using Visco Compare, you agree to the rules that keep our platform transparent and safe.
+  </p>
+</section>
+
+<!-- GRID -->
+<section class="grid md:grid-cols-2 gap-5">
+
+  <div class="glass card p-6 rounded-2xl">
+    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
+      <span class="material-symbols-outlined">shopping_cart</span>
+    </div>
+    <h2 class="font-bold text-lg">No Direct Sales</h2>
+    <p class="text-sm text-slate-600 mt-2">
+      We do not sell products. We only compare and redirect you to trusted platforms.
+    </p>
+  </div>
+
+  <div class="glass card p-6 rounded-2xl">
+    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
+      <span class="material-symbols-outlined">verified_user</span>
+    </div>
+    <h2 class="font-bold text-lg">Third-Party Data</h2>
+    <p class="text-sm text-slate-600 mt-2">
+      Prices and listings belong to external sites like Amazon and Flipkart.
+    </p>
+  </div>
+
+  <div class="glass card p-6 rounded-2xl">
+    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
+      <span class="material-symbols-outlined">update</span>
+    </div>
+    <h2 class="font-bold text-lg">Live Updates</h2>
+    <p class="text-sm text-slate-600 mt-2">
+      Prices may change anytime. We try to keep data as accurate as possible.
+    </p>
+  </div>
+
+  <div class="glass card p-6 rounded-2xl">
+    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
+      <span class="material-symbols-outlined">gavel</span>
+    </div>
+    <h2 class="font-bold text-lg">User Responsibility</h2>
+    <p class="text-sm text-slate-600 mt-2">
+      Users must verify details before purchasing on external websites.
+    </p>
+  </div>
+
+  <div class="glass card p-6 rounded-2xl md:col-span-2">
+    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
+      <span class="material-symbols-outlined">link</span>
+    </div>
+    <h2 class="font-bold text-lg">External Websites</h2>
+    <p class="text-sm text-slate-600 mt-2">
+      Once you leave Visco Compare, their policies apply. We are not responsible for external actions.
+    </p>
+  </div>
+
+</section>
+
+<!-- BUTTON -->
+<div class="text-center mt-12">
+  <button class="bg-primary text-white px-10 py-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition">
+    I Understand & Accept
+  </button>
+
+  <p class="text-xs text-slate-500 mt-3">Last updated: 2026</p>
 </div>
 
-<br>
-
-<a href="homepage.html" style="color:white;opacity:0.8;">← Back to Home</a>
-
-</div>
+</main>
 
 </body>
 </html>
