@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Visco Compare | Explore Deals</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+.product-card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 74, 198, 0.1);
+}
+.product-card-shadow:hover {
+  box-shadow: 0 10px 30px rgba(0, 74, 198, 0.15);
+  transform: translateY(-4px);
+}
+
+.platform-btn{
+  padding:6px 12px;
+  border-radius:20px;
+  background:rgba(0,0,0,0.05);
+  cursor:pointer;
+  white-space:nowrap;
+  font-size:13px;
+}
+
+.platform-btn.active{
+  background:#2563eb;
+  color:white;
+}
+</style>
+</head>
+
+<body class="bg-background text-on-background">
+
+<!-- HEADER -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b h-16 flex justify-between items-center px-4">
+
+<div class="flex items-center gap-3">
+<img src="https://lh3.googleusercontent.com/aida/ADBb0uiEOtxPguLXrdfmdccBv0iO-O20w5k0DA1xfn4syT9Og9lv0gjKo8wsIH07-3M7HtIF5zWchuFcHKgI6Rh2V9Y-SK8qNomL_H05xyQqBEni8hiztbdrwFy_hxnIpcVF_dy6_zUlEDO76Qxa-wHFW-ecEDKZ-UwHLUSXLALv1J2ZARY5WDuMaYA8zOqxZfdUEQLc8NYEaRtZNpDmx1G6lqz7M-IdcCERgBVH8Av0NuQc7EdTFXGkJ_n2aNUY"
+class="h-8"/>
+
+<h1 class="font-bold text-blue-600">Visco Explore</h1>
+</div>
+
+</header>
+
+<main class="pt-20 px-4">
+
+<!-- HERO -->
+<section class="text-center py-10">
+<h1 class="text-3xl font-bold">Shop & Earn Deals 💰</h1>
+<p class="text-gray-500 mt-2">Select platform and buy directly</p>
+</section>
+
+<!-- PLATFORM FILTER -->
+<div id="platformBar" class="flex gap-2 overflow-auto mb-6"></div>
+
+<!-- PRODUCTS -->
+<div id="products" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+</main>
+
+<script>
+
+let products = [];
+let currentPlatform = "amazon";
+
+const platforms = ["amazon","flipkart","myntra","ajio"];
+
+/* PLATFORM BUTTONS */
+function loadPlatforms(){
+  const bar = document.getElementById("platformBar");
+
+  bar.innerHTML = platforms.map(p=>`
+    <div class="platform-btn ${p===currentPlatform?'active':''}"
+      onclick="switchPlatform('${p}')">
+      ${p.toUpperCase()}
+    </div>
+  `).join('');
+}
+
+function switchPlatform(p){
+  currentPlatform = p;
+  loadPlatforms();
+  renderProducts();
+}
+
+/* FETCH DATA */
+async function load(){
+  try{
+    const res = await fetch("https://visco.onrender.com/products");
+    products = await res.json();
+
+    loadPlatforms();
+    renderProducts();
+
+  }catch(err){
+    document.getElementById("products").innerHTML =
+      "<p class='text-center w-full'>Server Error</p>";
+  }
+}
+
+/* FILTER + RENDER */
+function renderProducts(){
+
+  const container = document.getElementById("products");
+
+  const filtered = products.filter(p=>{
+    return p[currentPlatform] && p[currentPlatform] > 0;
+  });
+
+  if(!filtered.length){
+    container.innerHTML = "<p>No products found</p>";
+    return;
+  }
+
+  container.innerHTML = filtered.map(p=>`
+    <div class="bg-white p-3 rounded-2xl product-card-shadow transition">
+
+      <img src="${p.image}" class="w-full h-40 object-contain"/>
+
+      <h3 class="font-semibold text-sm mt-2 line-clamp-2">${p.name}</h3>
+
+      <p class="text-blue-600 font-bold mt-1">
+        ₹${p[currentPlatform]}
+      </p>
+
+      <button onclick="buy('${p[currentPlatform + "_link"]}')"
+        class="w-full mt-3 bg-blue-600 text-white py-2 rounded-xl">
+        Buy on ${currentPlatform.toUpperCase()}
+      </button>
+
+    </div>
+  `).join('');
+}
+
+/* BUY */
+function buy(link){
+  if(link) window.open(link, "_blank");
+}
+
+/* INIT */
+load();
+
+</script>
+
+</body>
+</html>
