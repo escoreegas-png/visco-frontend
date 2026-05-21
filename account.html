@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>My Account - Visco Compare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap)" rel="stylesheet"/>
 
 <style>
 
@@ -16,33 +16,25 @@
 }
 
 :root{
+  --primary:#2563eb;
+  --primary-hover:#1d4ed8;
+  --primary-light:#93c5fd;
+  --primary-soft:#dbeafe;
 
-  --primary:#3ecf8e;
-  --primary-hover:#2eb67d;
-
-  --bg:#f8faf9;
+  --bg:#f8fafc;
   --card:#ffffff;
 
-  --text:#111827;
-  --muted:#6b7280;
+  --text:#0f172a;
+  --muted:#64748b;
 
-  --border:#e5e7eb;
-
+  --border:#e2e8f0;
 }
-
-/* =========================
-   BODY
-========================= */
 
 body{
   font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:var(--text);
 }
-
-/* =========================
-   TOPBAR
-========================= */
 
 .topbar{
   display:flex;
@@ -67,9 +59,7 @@ body{
   height:65px;
   border-radius:18px;
   object-fit:contain;
-
-  box-shadow:
-    0 10px 25px rgba(62,207,142,0.15);
+  box-shadow:0 10px 25px rgba(37,99,235,0.15);
 }
 
 .logo span{
@@ -92,28 +82,18 @@ body{
   background:var(--primary-hover);
 }
 
-/* =========================
-   CONTAINER
-========================= */
-
 .container{
   max-width:1100px;
   margin:auto;
   padding:40px 20px;
 }
 
-/* =========================
-   PROFILE CARD
-========================= */
-
 .profile-card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:30px;
   padding:40px;
-  box-shadow:
-    0 20px 50px rgba(0,0,0,0.05);
-
+  box-shadow:0 20px 50px rgba(0,0,0,0.05);
   position:relative;
   overflow:hidden;
 }
@@ -123,16 +103,12 @@ body{
   position:absolute;
   width:300px;
   height:300px;
-  background:rgba(62,207,142,0.10);
+  background:rgba(37,99,235,0.10);
   filter:blur(100px);
   top:-120px;
   right:-120px;
   border-radius:50%;
 }
-
-/* =========================
-   PROFILE HEADER
-========================= */
 
 .profile-header{
   display:flex;
@@ -145,18 +121,14 @@ body{
   width:110px;
   height:110px;
   border-radius:50%;
-  background:linear-gradient(135deg,#3ecf8e,#2eb67d);
-
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:white;
   font-size:42px;
   font-weight:700;
-
-  box-shadow:
-    0 15px 35px rgba(62,207,142,0.25);
+  box-shadow:0 15px 35px rgba(37,99,235,0.25);
 }
 
 .user-info h1{
@@ -170,33 +142,19 @@ body{
   line-height:1.8;
 }
 
-/* =========================
-   STATUS BADGE
-========================= */
-
 .badge{
   display:inline-flex;
   align-items:center;
   gap:8px;
-
   margin-top:12px;
-
   padding:10px 18px;
-
-  background:#ecfdf5;
-  border:1px solid #bbf7d0;
-
+  background:var(--primary-soft);
+  border:1px solid var(--primary-light);
   border-radius:999px;
-
-  color:#15803d;
-
+  color:var(--primary-hover);
   font-size:13px;
   font-weight:600;
 }
-
-/* =========================
-   GRID
-========================= */
 
 .grid{
   display:grid;
@@ -205,29 +163,19 @@ body{
   margin-top:35px;
 }
 
-/* =========================
-   INFO CARD
-========================= */
-
 .info-card{
   background:white;
   border:1px solid var(--border);
   border-radius:22px;
   padding:24px;
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.04);
-
+  box-shadow:0 10px 25px rgba(0,0,0,0.04);
   transition:0.25s;
 }
 
 .info-card:hover{
   transform:translateY(-4px);
-
-  border-color:rgba(62,207,142,0.25);
-
-  box-shadow:
-    0 15px 35px rgba(62,207,142,0.10);
+  border-color:rgba(37,99,235,0.25);
+  box-shadow:0 15px 35px rgba(37,99,235,0.10);
 }
 
 .info-card h3{
@@ -251,10 +199,6 @@ body{
   font-weight:600;
   color:var(--text);
 }
-
-/* =========================
-   BUTTONS
-========================= */
 
 .action-buttons{
   display:flex;
@@ -290,38 +234,28 @@ body{
 }
 
 .secondary-btn:hover{
-  background:#f3f4f6;
+  background:#f1f5f9;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:700px){
-
   .profile-card{
     padding:28px 20px;
     border-radius:24px;
   }
-
   .profile-header{
     flex-direction:column;
     text-align:center;
   }
-
   .user-info h1{
     font-size:28px;
   }
-
   .logo span{
     font-size:20px;
   }
-
   .logo img{
     width:55px;
     height:55px;
   }
-
 }
 
 </style>
@@ -329,262 +263,120 @@ body{
 
 <body>
 
-<!-- TOPBAR -->
-
 <div class="topbar">
-
   <div class="logo">
     <img src="logo.png" alt="Logo">
     <span>Visco Compare</span>
   </div>
-
-  <a href="homepage.html" class="home-btn">
-    Home
-  </a>
-
+  <a href="homepage.html" class="home-btn">Home</a>
 </div>
 
-<!-- MAIN -->
-
 <div class="container">
-
   <div class="profile-card">
 
-    <!-- PROFILE -->
-
     <div class="profile-header">
-
-      <div class="avatar" id="avatar">
-        U
-      </div>
-
+      <div class="avatar" id="avatar">U</div>
       <div class="user-info">
-
-        <h1 id="userName">
-          Guest User
-        </h1>
-
-        <p id="userMobile">
-          +91XXXXXXXXXX
-        </p>
-
-        <div class="badge" id="userBadge">
-          👤 Guest Account
-        </div>
-
+        <h1 id="userName">Guest User</h1>
+        <p id="userMobile">+91XXXXXXXXXX</p>
+        <div class="badge" id="userBadge">👤 Guest Account</div>
       </div>
-
     </div>
-
-    <!-- INFO GRID -->
 
     <div class="grid">
 
       <div class="info-card">
-
         <h3>📄 Personal Details</h3>
-
         <div class="info">
           <div class="label">Full Name</div>
-          <div class="value" id="detailName">
-            Guest User
-          </div>
+          <div class="value" id="detailName">Guest User</div>
         </div>
-
         <div class="info">
           <div class="label">Mobile Number</div>
-          <div class="value" id="detailMobile">
-            Not Available
-          </div>
+          <div class="value" id="detailMobile">Not Available</div>
         </div>
-
         <div class="info">
           <div class="label">Account Type</div>
-          <div class="value" id="detailType">
-            Guest
-          </div>
+          <div class="value" id="detailType">Guest</div>
         </div>
-
       </div>
 
       <div class="info-card">
-
         <h3>🛍️ Shopping Details</h3>
-
         <div class="info">
           <div class="label">Wishlist Items</div>
-          <div class="value">
-            12 Products
-          </div>
+          <div class="value">12 Products</div>
         </div>
-
         <div class="info">
           <div class="label">Price Alerts</div>
-          <div class="value">
-            5 Active Alerts
-          </div>
+          <div class="value">5 Active Alerts</div>
         </div>
-
         <div class="info">
           <div class="label">Recent Searches</div>
-          <div class="value">
-            Smartphones, Shoes
-          </div>
+          <div class="value">Smartphones, Shoes</div>
         </div>
-
       </div>
 
       <div class="info-card">
-
         <h3>⚡ Account Activity</h3>
-
         <div class="info">
           <div class="label">Member Since</div>
-          <div class="value">
-            2026
-          </div>
+          <div class="value">2026</div>
         </div>
-
         <div class="info">
           <div class="label">Last Login</div>
-          <div class="value">
-            Today
-          </div>
+          <div class="value">Today</div>
         </div>
-
         <div class="info">
           <div class="label">Status</div>
-          <div class="value">
-            Active
-          </div>
+          <div class="value">Active</div>
         </div>
-
       </div>
 
     </div>
 
-    <!-- ACTIONS -->
-
     <div class="action-buttons">
-
-      <button class="btn primary-btn" onclick="editProfile()">
-        Edit Profile
-      </button>
-
-      <button class="btn secondary-btn" onclick="logout()">
-        Logout
-      </button>
-
+      <button class="btn primary-btn" onclick="editProfile()">Edit Profile</button>
+      <button class="btn secondary-btn" onclick="logout()">Logout</button>
     </div>
 
   </div>
-
 </div>
 
 <script>
-
-/* =========================
-   LOAD USER
-========================= */
-
-const user = JSON.parse(
-  localStorage.getItem("user")
-);
-
-const guest =
-  localStorage.getItem("guest");
-
-/* =========================
-   USER MODE
-========================= */
+const user = JSON.parse(localStorage.getItem("user"));
+const guest = localStorage.getItem("guest");
 
 if(user){
-
-  document.getElementById("userName")
-  .innerText = user.name || "User";
-
-  document.getElementById("detailName")
-  .innerText = user.name || "User";
-
-  document.getElementById("userMobile")
-  .innerText = user.phone || "Not Available";
-
-  document.getElementById("detailMobile")
-  .innerText = user.phone || "Not Available";
-
-  document.getElementById("detailType")
-  .innerText = "Registered User";
-
-  document.getElementById("userBadge")
-  .innerHTML =
-    "✅ Registered Account";
-
-  document.getElementById("avatar")
-  .innerText =
-    user.name
-    ? user.name.charAt(0).toUpperCase()
-    : "U";
-
+  document.getElementById("userName").innerText = user.name || "User";
+  document.getElementById("detailName").innerText = user.name || "User";
+  document.getElementById("userMobile").innerText = user.phone || "Not Available";
+  document.getElementById("detailMobile").innerText = user.phone || "Not Available";
+  document.getElementById("detailType").innerText = "Registered User";
+  document.getElementById("userBadge").innerHTML = "✅ Registered Account";
+  document.getElementById("avatar").innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
 }
-
-/* =========================
-   GUEST MODE
-========================= */
 
 if(guest){
-
-  document.getElementById("userName")
-  .innerText = "Guest User";
-
-  document.getElementById("detailName")
-  .innerText = "Guest User";
-
-  document.getElementById("userMobile")
-  .innerText = "No mobile number";
-
-  document.getElementById("detailMobile")
-  .innerText = "Not Available";
-
-  document.getElementById("detailType")
-  .innerText = "Guest";
-
-  document.getElementById("userBadge")
-  .innerHTML =
-    "👤 Guest Account";
-
-  document.getElementById("avatar")
-  .innerText = "G";
-
+  document.getElementById("userName").innerText = "Guest User";
+  document.getElementById("detailName").innerText = "Guest User";
+  document.getElementById("userMobile").innerText = "No mobile number";
+  document.getElementById("detailMobile").innerText = "Not Available";
+  document.getElementById("detailType").innerText = "Guest";
+  document.getElementById("userBadge").innerHTML = "👤 Guest Account";
+  document.getElementById("avatar").innerText = "G";
 }
-
-/* =========================
-   EDIT
-========================= */
 
 function editProfile(){
-
-  alert(
-    "Profile edit feature coming soon 🚀"
-  );
-
+  alert("Profile edit feature coming soon 🚀");
 }
-
-/* =========================
-   LOGOUT
-========================= */
 
 function logout(){
-
   localStorage.removeItem("token");
-
   localStorage.removeItem("user");
-
   localStorage.removeItem("guest");
-
   window.location.href = "index.html";
-
 }
-
 </script>
 
 </body>
