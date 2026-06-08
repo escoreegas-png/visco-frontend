@@ -1,403 +1,321 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
+
 <title>About Us | Visco Compare</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
-<script id="tailwind-config">
-tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            colors: {
-                "on-tertiary-container": "#ffeedd",
-                "surface-dim": "#d8dadc",
-                "outline-variant": "#c3c6d7",
-                "on-primary-fixed-variant": "#003ea8",
-                "inverse-primary": "#b4c5ff",
-                "surface-tint": "#0053db",
-                "surface-container-highest": "#e0e3e5",
-                "secondary-container": "#dae2fd",
-                "on-surface-variant": "#434655",
-                "on-primary-container": "#eeefff",
-                "tertiary": "#784b00",
-                "on-tertiary": "#ffffff",
-                "background": "#f7f9fb",
-                "primary": "#004ac6",
-                "primary-container": "#2563eb",
-                "surface": "#f7f9fb",
-                "secondary": "#565e74",
-                "on-surface": "#191c1e",
-                "inverse-surface": "#2d3133",
-                "on-secondary": "#ffffff"
-            },
-
-            borderRadius: {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "24px",
-                "full": "9999px"
-            },
-
-            spacing: {
-                "gutter-grid": "24px",
-                "container-padding-mobile": "16px",
-                "section-margin": "64px",
-                "container-padding-desktop": "40px",
-                "base": "8px",
-                "card-gap": "16px"
-            },
-
-            fontFamily: {
-                "body-lg": ["Plus Jakarta Sans"],
-                "label-sm": ["Plus Jakarta Sans"],
-                "display-lg": ["Plus Jakarta Sans"],
-                "headline-md": ["Plus Jakarta Sans"],
-                "headline-lg-mobile": ["Plus Jakarta Sans"],
-                "headline-lg": ["Plus Jakarta Sans"],
-                "label-lg": ["Plus Jakarta Sans"],
-                "body-md": ["Plus Jakarta Sans"]
-            },
-
-            fontSize: {
-                "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-                "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
-                "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "800" }],
-                "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-                "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
-                "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }],
-                "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
-                "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
-            }
-        }
-    }
-}
-</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
+
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
 body{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    background-color:#f7f9fb;
+  background:var(--bg);
+  overflow-x:hidden;
+  color:var(--text);
+  padding-bottom:90px;
 }
 
 .glass{
-    background:rgba(255,255,255,0.7);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-.radial-glow{
-    background:radial-gradient(circle at 50% 0%, rgba(37,99,235,0.08) 0%, transparent 70%);
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
 
-.material-symbols-outlined{
-    font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
+  pointer-events:none;
 }
 
-.logo-box{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    background:linear-gradient(135deg,#004ac6,#2563eb);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 8px 24px rgba(37,99,235,0.25);
+.product-card{
+  transition:.3s ease;
+  background:white;
+  border:1px solid var(--border);
 }
 
-.logo-box img{
-    width:24px;
-    height:24px;
-    object-fit:contain;
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.12),
+    0 12px 25px rgba(0,0,0,0.06);
 }
 
-.feature-card:hover{
-    transform:translateY(-4px);
+.footer-link{
+  transition:all .2s ease;
 }
+
+.footer-link:hover{
+  color:white;
+  transform:translateX(4px);
+}
+
 </style>
 </head>
 
-<body class="text-on-surface antialiased overflow-x-hidden">
+<body>
 
-<!-- HEADER -->
-<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-inverse-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm shadow-primary/10 h-16 flex justify-between items-center px-container-padding-mobile md:px-container-padding-desktop">
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
-<div class="flex items-center gap-3">
+  <div class="flex items-center gap-3">
 
-<div class="logo-box">
-<img src="logo.png" alt="Visco Logo">
-</div>
+    <button type="button" onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
+    </button>
 
-<div class="flex flex-col leading-tight">
-<span class="font-extrabold text-primary text-lg tracking-tight">
-Visco Compare
-</span>
-<span class="text-[10px] text-secondary uppercase tracking-[0.18em]">
-Smart Price Engine
-</span>
-</div>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+    </div>
 
-</div>
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">About Us</p>
+    </div>
 
-<div class="flex items-center">
-<span class="material-symbols-outlined text-primary">
-account_circle
-</span>
-</div>
+  </div>
 
 </header>
 
-<!-- MAIN -->
-<main class="pt-24 pb-32 radial-glow min-h-screen">
+<section class="relative overflow-hidden hero-bg pt-32 pb-16">
 
-<!-- HERO -->
-<section class="px-container-padding-mobile mb-12">
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
 
-<div class="inline-flex items-center px-3 py-1 bg-primary-container/10 border border-primary/20 rounded-full mb-6">
-<span class="text-primary font-label-sm text-label-sm">
-Smart Shopping Platform
-</span>
-</div>
+  <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-10 text-center">
 
-<h1 class="font-display-lg text-display-lg mb-4 leading-none">
-About <span class="text-primary-container">Visco</span>
-</h1>
+    <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-6">
+      🚀 Our Story
+    </div>
 
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
-Precision in every price. We empower tech-savvy consumers with real-time data to make smarter, faster purchasing decisions.
-</p>
+    <h1 class="text-[42px] md:text-[56px] leading-tight font-extrabold tracking-[-2px] text-slate-900">
+      About <span class="text-blue-700">Visco Compare</span>
+    </h1>
 
-</section>
+    <p class="max-w-2xl mx-auto mt-5 text-slate-500 text-[15px] md:text-[17px] leading-8">
+      A smart price comparison engine designed to help users save money, compare products instantly, and make better buying decisions using real-time data.
+    </p>
 
-<!-- MISSION -->
-<section class="px-container-padding-mobile flex flex-col gap-card-gap">
-
-<div class="glass p-8 rounded-xl border border-outline-variant shadow-sm relative overflow-hidden">
-
-<div class="absolute -right-12 -top-12 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
-
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-4 text-primary-container">
-Our Mission
-</h2>
-
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-At Visco Compare, our mission is to eliminate the friction of online shopping. We provide a high-fidelity comparison experience that feels both authoritative and energetic, ensuring you never overpay for the products you love.
-</p>
-
-</div>
-
-<!-- HOW IT WORKS -->
-<div class="glass p-8 rounded-xl border border-outline-variant shadow-sm relative overflow-hidden">
-
-<div class="absolute -left-12 -bottom-12 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
-
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-4 text-primary-container">
-How It Works
-</h2>
-
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
-We act as a sophisticated price comparison bridge. Our platform scans thousands of listings from trusted giants like <span class="font-bold">Amazon</span> and <span class="font-bold">Flipkart</span> in milliseconds.
-</p>
-
-<div class="flex items-center gap-4 py-4 px-4 bg-white/50 rounded-lg border border-outline-variant/30">
-
-<div class="flex-1 text-center">
-<div class="text-xs font-bold text-secondary uppercase tracking-widest mb-1">
-User
-</div>
-
-<span class="material-symbols-outlined text-primary text-3xl">
-person
-</span>
-</div>
-
-<span class="material-symbols-outlined text-outline-variant">
-compare_arrows
-</span>
-
-<div class="flex-1 text-center">
-<div class="text-xs font-bold text-secondary uppercase tracking-widest mb-1">
-Market
-</div>
-
-<span class="material-symbols-outlined text-primary text-3xl">
-storefront
-</span>
-</div>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
-<!-- FEATURES -->
-<section class="px-container-padding-mobile mt-section-margin">
+<main class="max-w-5xl mx-auto px-4 md:px-10 mt-4">
 
-<h3 class="font-headline-md text-headline-md mb-6 px-1">
-Why Choose Us
-</h3>
+  <section class="grid md:grid-cols-2 gap-5 mb-10">
 
-<div class="grid grid-cols-2 gap-4">
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-rocket text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">Our Mission</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        To eliminate confusion in online shopping by giving users the fastest and most accurate price comparison across Amazon, Flipkart, and more.
+      </p>
+    </div>
 
-<!-- CARD -->
-<div class="glass feature-card p-5 rounded-xl border border-outline-variant flex flex-col gap-3 transition-all duration-300 hover:shadow-lg">
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-gears text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">How It Works</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        We scan multiple e-commerce sites in real-time, fetch product prices, and show you the best deal in a clean comparison view.
+      </p>
+    </div>
 
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">bolt</span>
-</div>
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-lightbulb text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">Why Choose Us</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        Fast results, trusted sources, AI-driven insights, and a clean UI that helps you decide without wasting time.
+      </p>
+    </div>
 
-<h4 class="font-label-lg text-label-lg">
-Fast Comparison
-</h4>
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-lock text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">Trusted Data</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        We only show verified sellers and real-time pricing to ensure accuracy and transparency.
+      </p>
+    </div>
 
-<p class="text-[12px] text-on-surface-variant leading-tight">
-Instant results across multiple retailers.
-</p>
+  </section>
 
-</div>
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
 
-<!-- CARD -->
-<div class="glass feature-card p-5 rounded-xl border border-outline-variant flex flex-col gap-3 transition-all duration-300 hover:shadow-lg">
+    <div class="product-card rounded-2xl p-5 text-center">
+      <div class="text-blue-700 text-[28px] font-extrabold">10K+</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Products</div>
+    </div>
 
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">local_offer</span>
-</div>
+    <div class="product-card rounded-2xl p-5 text-center">
+      <div class="text-blue-700 text-[28px] font-extrabold">50+</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Stores</div>
+    </div>
 
-<h4 class="font-label-lg text-label-lg">
-Best Deals
-</h4>
+    <div class="product-card rounded-2xl p-5 text-center">
+      <div class="text-blue-700 text-[28px] font-extrabold">24/7</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Live Updates</div>
+    </div>
 
-<p class="text-[12px] text-on-surface-variant leading-tight">
-Handpicked savings from top merchants.
-</p>
+    <div class="product-card rounded-2xl p-5 text-center">
+      <div class="text-blue-700 text-[28px] font-extrabold">100%</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Free</div>
+    </div>
 
-</div>
+  </section>
 
-<!-- CARD -->
-<div class="glass feature-card p-5 rounded-xl border border-outline-variant flex flex-col gap-3 transition-all duration-300 hover:shadow-lg">
+  <section class="bg-gradient-to-br from-blue-700 to-blue-500 rounded-3xl p-8 md:p-10 text-white relative overflow-hidden shadow-xl shadow-blue-100">
 
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">verified_user</span>
-</div>
+    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
 
-<h4 class="font-label-lg text-label-lg">
-Trusted Stores
-</h4>
+    <div class="relative z-10 text-center md:text-left md:flex md:items-center md:justify-between gap-6">
 
-<p class="text-[12px] text-on-surface-variant leading-tight">
-Only verified and reliable sellers listed.
-</p>
+      <div>
+        <h2 class="text-2xl md:text-3xl font-extrabold">Start saving on every purchase</h2>
+        <p class="opacity-90 mt-2 max-w-lg">Join thousands of smart shoppers who compare before they buy.</p>
+      </div>
 
-</div>
+      <a href="homepage.html" class="inline-block mt-5 md:mt-0 bg-white text-blue-700 px-7 py-3 rounded-full font-bold hover:scale-105 transition shadow-lg whitespace-nowrap">
+        Explore Now →
+      </a>
 
-<!-- CARD -->
-<div class="glass feature-card p-5 rounded-xl border border-outline-variant flex flex-col gap-3 transition-all duration-300 hover:shadow-lg">
+    </div>
 
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">smart_toy</span>
-</div>
-
-<h4 class="font-label-lg text-label-lg">
-Smart Shopping
-</h4>
-
-<p class="text-[12px] text-on-surface-variant leading-tight">
-AI-driven insights for your wallet.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="mt-section-margin px-container-padding-mobile text-center pb-8">
-
-<div class="flex justify-center mb-4">
-
-<div class="logo-box">
-<img src="logo.png" alt="Visco Logo">
-</div>
-
-</div>
-
-<p class="font-body-md text-body-md text-on-surface-variant/60">
-© 2026 Visco Compare. Precision in every price.
-</p>
-
-</footer>
+  </section>
 
 </main>
 
-<!-- BOTTOM NAV -->
-<nav class="fixed bottom-0 w-full z-50 bg-white/80 dark:bg-inverse-surface/80 backdrop-blur-md border-t border-outline-variant/30 rounded-t-xl shadow-[0_-4px_20px_rgba(0,74,198,0.1)] flex justify-around items-center h-20 pb-safe px-4">
+<footer class="mt-24 bg-slate-950 text-white">
 
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">search</span>
-<span class="font-label-sm text-label-sm">Explore</span>
-</a>
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
 
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">local_offer</span>
-<span class="font-label-sm text-label-sm">Deals</span>
-</a>
+    <div>
 
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">compare_arrows</span>
-<span class="font-label-sm text-label-sm">Compare</span>
-</a>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
 
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
-<span class="material-symbols-outlined">history</span>
-<span class="font-label-sm text-label-sm">History</span>
-</a>
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
 
-<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/20 rounded-xl px-3 py-1 transition-all active:scale-90 duration-150" href="#">
+      <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
+        ⚡ Smart Shopping Platform
+      </div>
 
-<span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">
-person
-</span>
+    </div>
 
-<span class="font-label-sm text-label-sm">
-Profile
-</span>
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block">Home</a>
+        <a href="about.html" class="footer-link block">About Us</a>
+        <a href="explore.html" class="footer-link block">Explore</a>
+      </nav>
+    </div>
 
-</a>
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block">Terms</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+
+</footer>
+
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+
+  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
+  </button>
+
+  <button onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
 
 </nav>
 
 <script>
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-
-    if(window.scrollY > 20){
-        header.classList.add('shadow-lg');
-        header.classList.remove('shadow-sm');
-    }else{
-        header.classList.add('shadow-sm');
-        header.classList.remove('shadow-lg');
-    }
-});
-
-const cards = document.querySelectorAll('.glass');
-
-cards.forEach(card => {
-    card.addEventListener('touchstart', () => {
-        card.style.transform = 'scale(0.98)';
-    });
-
-    card.addEventListener('touchend', () => {
-        card.style.transform = 'scale(1)';
-    });
-});
+document.getElementById("footerYear").innerText = new Date().getFullYear();
 </script>
 
 </body>
