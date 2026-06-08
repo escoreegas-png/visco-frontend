@@ -1,129 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy | Visco Compare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
+
+<title>Privacy Policy | Visco Compare</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: "#004ac6",
-        "primary-light": "#2563eb",
-        background: "#f7f9fb",
-        surface: "#ffffff",
-        "text-muted": "#5b6472"
-      }
-    }
-  }
-}
-</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
+
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
 body{
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background:#f7f9fb;
+  background:var(--bg);
+  overflow-x:hidden;
+  color:var(--text);
+  padding-bottom:90px;
 }
 
 .glass{
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-.card{
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
+
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
+  pointer-events:none;
+}
+
+.product-card{
+  transition:.3s ease;
+  background:white;
+  border:1px solid var(--border);
+}
+
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.12),
+    0 12px 25px rgba(0,0,0,0.06);
+}
+
+.footer-link{
+  transition:all .2s ease;
+}
+
+.footer-link:hover{
+  color:white;
+  transform:translateX(4px);
+}
+
 </style>
-
 </head>
 
-<body class="text-slate-800">
+<body>
 
-<!-- HEADER -->
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 h-16 flex items-center px-4 justify-between">
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
   <div class="flex items-center gap-3">
-    <button onclick="history.back()" class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center">
-      <span class="material-symbols-outlined text-primary">arrow_back</span>
+
+    <button type="button" onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
 
-    <div class="flex items-center gap-2">
-      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white font-bold">
-        V
-      </div>
-      <span class="font-bold text-primary">Visco Compare</span>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
+
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">Privacy Policy</p>
+    </div>
+
   </div>
 
 </header>
 
-<!-- MAIN -->
-<main class="pt-24 pb-20 px-4 max-w-4xl mx-auto">
+<section class="relative overflow-hidden hero-bg pt-32 pb-16">
 
-  <!-- TITLE -->
-  <section class="mb-8">
-    <h1 class="text-3xl font-extrabold text-primary">Privacy Policy</h1>
-    <p class="text-text-muted mt-2">
-      Your privacy matters. Here’s how Visco Compare handles your data.
-    </p>
-  </section>
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
 
-  <!-- CARD -->
-  <div class="glass card rounded-2xl p-6 space-y-5 border border-slate-200">
+  <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-10 text-center">
 
-    <p>
-      Visco Compare respects your privacy and is committed to protecting any information you share with us.
-    </p>
+    <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-6">
+      🔒 Your Privacy Matters
+    </div>
 
-    <p>
-      We do not sell, rent, or share your personal data with third parties for marketing purposes.
-    </p>
+    <h1 class="text-[42px] md:text-[56px] leading-tight font-extrabold tracking-[-2px] text-slate-900">
+      Privacy Policy
+    </h1>
 
-    <p>
-      We may collect basic user information such as login details to provide a better experience and improve platform functionality.
-    </p>
-
-    <p>
-      We use cookies and local storage only to enhance user experience and maintain session data.
-    </p>
-
-    <p>
-      Visco Compare may contain links to third-party websites such as Amazon and Flipkart. We are not responsible for their privacy practices.
-    </p>
-
-    <p>
-      Users are encouraged to review the privacy policies of external websites before using them.
-    </p>
-
-    <p class="font-semibold text-primary">
-      By using this platform, you agree to this Privacy Policy.
+    <p class="max-w-2xl mx-auto mt-5 text-slate-500 text-[15px] md:text-[17px] leading-8">
+      Here's how Visco Compare handles your data, transparently and responsibly.
     </p>
 
   </div>
 
-  <!-- BACK BUTTON -->
-  <div class="mt-8">
-    <a href="homepage.html"
-       class="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
-      <span class="material-symbols-outlined text-sm">arrow_back</span>
+</section>
+
+<main class="max-w-4xl mx-auto px-4 md:px-10 mt-4">
+
+  <section class="product-card rounded-3xl p-7 md:p-10 space-y-6">
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        Visco Compare respects your privacy and is committed to protecting any information you share with us.
+      </p>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-ban"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        We do not sell, rent, or share your personal data with third parties for marketing purposes.
+      </p>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-database"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        We may collect basic user information such as login details to provide a better experience and improve platform functionality.
+      </p>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-cookie-bite"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        We use cookies and local storage only to enhance user experience and maintain session data.
+      </p>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-link"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        Visco Compare may contain links to third-party websites such as Amazon and Flipkart. We are not responsible for their privacy practices.
+      </p>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700">
+        <i class="fa-solid fa-circle-info"></i>
+      </div>
+      <p class="text-slate-600 leading-8 text-[15px]">
+        Users are encouraged to review the privacy policies of external websites before using them.
+      </p>
+    </div>
+
+    <div class="bg-gradient-to-r from-blue-700 to-blue-500 rounded-2xl p-5 text-white font-semibold text-[15px] flex gap-3 items-start">
+      <i class="fa-solid fa-circle-check mt-1"></i>
+      <span>By using this platform, you agree to this Privacy Policy.</span>
+    </div>
+
+  </section>
+
+  <div class="text-center mt-10">
+    <a href="homepage.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+      <i class="fa-solid fa-arrow-left"></i>
       Back to Home
     </a>
+    <p class="text-xs text-slate-400 mt-4">Last updated: <span id="updYear">2026</span></p>
   </div>
 
 </main>
 
-<!-- FOOTER -->
-<footer class="text-center text-sm text-slate-500 pb-10">
-  © 2026 Visco Compare
+<footer class="mt-24 bg-slate-950 text-white">
+
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+
+    <div>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
+
+      <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
+        ⚡ Smart Shopping Platform
+      </div>
+
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block">Home</a>
+        <a href="about.html" class="footer-link block">About Us</a>
+        <a href="explore.html" class="footer-link block">Explore</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block">Terms</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+
 </footer>
+
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+
+  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
+  </button>
+
+  <button onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
+
+</nav>
+
+<script>
+const y = new Date().getFullYear();
+document.getElementById("updYear").innerText = y;
+document.getElementById("footerYear").innerText = y;
+</script>
 
 </body>
 </html>
