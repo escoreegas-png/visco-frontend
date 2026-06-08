@@ -23,11 +23,7 @@
   --success:#22c55e;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{ margin:0; padding:0; box-sizing:border-box; }
 
 body{
   font-family:'Plus Jakarta Sans',sans-serif;
@@ -38,14 +34,8 @@ body{
 }
 
 .material-symbols-outlined{
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24;
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
 }
-
-/* HEADER */
 
 header{
   position:fixed;
@@ -63,49 +53,24 @@ header{
   z-index:1000;
 }
 
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
+.header-left{ display:flex; align-items:center; gap:14px; }
 
 .back-btn{
-  width:42px;
-  height:42px;
+  width:42px; height:42px;
   border-radius:50%;
   border:none;
   background:#eef4ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:0.2s ease;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:0.2s ease;
 }
 
-.back-btn:hover{
-  transform:scale(1.05);
-}
+.back-btn:hover{ transform:scale(1.05); }
+.back-btn span{ color:var(--primary-dark); }
 
-.back-btn span{
-  color:var(--primary-dark);
-}
+.header-title{ font-size:20px; font-weight:700; }
 
-.header-title{
-  font-size:20px;
-  font-weight:700;
-}
-
-.header-icons{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.header-icons span{
-  color:var(--secondary);
-}
-
-/* CONTAINER */
+.header-icons{ display:flex; align-items:center; gap:10px; }
+.header-icons span{ color:var(--secondary); cursor:pointer; }
 
 .container{
   max-width:1100px;
@@ -113,36 +78,19 @@ header{
   padding:95px 18px 20px;
 }
 
-/* LOADING */
-
-.loading{
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
+.loading{ display:flex; flex-direction:column; gap:20px; }
 
 .shimmer{
   border-radius:24px;
-  background:linear-gradient(
-  90deg,
-  #f1f5f9 25%,
-  #e2e8f0 50%,
-  #f1f5f9 75%
-  );
+  background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);
   background-size:200% 100%;
   animation:shimmer 1.5s infinite;
 }
 
 @keyframes shimmer{
-  0%{
-    background-position:200% 0;
-  }
-  100%{
-    background-position:-200% 0;
-  }
+  0%{ background-position:200% 0; }
+  100%{ background-position:-200% 0; }
 }
-
-/* HERO CARD */
 
 .hero-card{
   background:var(--card);
@@ -156,39 +104,36 @@ header{
 
 .rating-box{
   position:absolute;
-  top:18px;
-  right:18px;
+  top:18px; right:18px;
   background:rgba(255,255,255,0.8);
   backdrop-filter:blur(10px);
   padding:8px 14px;
   border-radius:999px;
-  display:flex;
-  align-items:center;
-  gap:6px;
+  display:flex; align-items:center; gap:6px;
   border:1px solid #e2e8f0;
+  font-weight:600;
 }
 
-.rating-box span{
-  color:#f59e0b;
-}
+.rating-box .material-symbols-outlined{ color:#f59e0b; font-size:20px; }
 
 .product-image-box{
   width:100%;
   aspect-ratio:1/1;
   margin-bottom:24px;
   overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  background:#f8fafc;
+  border-radius:24px;
 }
 
 .product-image-box img{
-  width:100%;
-  height:100%;
+  width:100%; height:100%;
   object-fit:contain;
+  padding:20px;
   transition:0.4s ease;
 }
 
-.product-image-box img:hover{
-  transform:scale(1.05);
-}
+.product-image-box img:hover{ transform:scale(1.05); }
 
 .brand{
   font-size:12px;
@@ -205,7 +150,21 @@ header{
   font-weight:800;
 }
 
-/* PRICE GRID */
+.price-summary{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+
+.summary-pill{
+  background:#eef4ff;
+  color:var(--primary-dark);
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:600;
+}
 
 .price-grid{
   margin-top:20px;
@@ -223,14 +182,11 @@ header{
   transition:0.3s ease;
 }
 
-.price-card:hover{
-  transform:translateY(-4px);
-}
+.price-card:hover{ transform:translateY(-4px); }
 
 .best-badge{
   position:absolute;
-  top:0;
-  right:0;
+  top:0; right:0;
   background:var(--primary);
   color:white;
   padding:8px 16px;
@@ -246,10 +202,7 @@ header{
   margin-bottom:22px;
 }
 
-.store-name{
-  font-size:18px;
-  font-weight:700;
-}
+.store-name{ font-size:18px; font-weight:700; }
 
 .store-status{
   font-size:13px;
@@ -257,11 +210,7 @@ header{
   font-weight:700;
 }
 
-.price-label{
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:8px;
-}
+.price-label{ color:var(--muted); font-size:14px; margin-bottom:8px; }
 
 .price{
   font-size:42px;
@@ -281,13 +230,12 @@ header{
   font-weight:700;
   cursor:pointer;
   transition:0.3s ease;
+  text-decoration:none;
+  display:block;
+  text-align:center;
 }
 
-.shop-btn:hover{
-  background:var(--primary-dark);
-}
-
-/* SPECS */
+.shop-btn:hover{ background:var(--primary-dark); }
 
 .spec-card{
   margin-top:20px;
@@ -297,11 +245,7 @@ header{
   border:1px solid var(--border);
 }
 
-.section-title{
-  font-size:24px;
-  font-weight:700;
-  margin-bottom:20px;
-}
+.section-title{ font-size:24px; font-weight:700; margin-bottom:20px; }
 
 .spec-grid{
   display:grid;
@@ -324,12 +268,7 @@ header{
   font-weight:700;
 }
 
-.spec-value{
-  font-size:15px;
-  font-weight:600;
-}
-
-/* CHART */
+.spec-value{ font-size:15px; font-weight:600; }
 
 .chart-card{
   margin-top:20px;
@@ -344,40 +283,71 @@ header{
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
+  flex-wrap:wrap;
+  gap:10px;
 }
 
-.chart-tags{
-  display:flex;
-  gap:15px;
-}
+.chart-tags{ display:flex; gap:15px; flex-wrap:wrap; }
 
 .chart-tag{
-  display:flex;
-  align-items:center;
-  gap:6px;
+  display:flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:600;
+}
+
+.dot{ width:10px; height:10px; border-radius:50%; }
+
+canvas{ max-height:300px; }
+
+.related-card{
+  margin-top:20px;
+  background:white;
+  border-radius:28px;
+  padding:24px;
+  border:1px solid var(--border);
+}
+
+.related-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:14px;
+}
+
+.related-item{
+  background:#f8fafc;
+  border:1px solid #edf2f7;
+  border-radius:18px;
+  padding:12px;
+  cursor:pointer;
+  transition:0.2s ease;
+}
+
+.related-item:hover{ transform:translateY(-4px); border-color:var(--primary); }
+
+.related-item img{
+  width:100%; height:120px;
+  object-fit:contain;
+  background:white;
+  border-radius:12px;
+  padding:8px;
+}
+
+.related-title{
   font-size:13px;
   font-weight:600;
+  margin-top:8px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  min-height:36px;
 }
 
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
+.related-price{
+  color:var(--primary-dark);
+  font-weight:800;
+  font-size:16px;
+  margin-top:6px;
 }
-
-.dot.blue{
-  background:#2563eb;
-}
-
-.dot.gray{
-  background:#64748b;
-}
-
-canvas{
-  max-height:300px;
-}
-
-/* BOTTOM NAV */
 
 .bottom-nav{
   position:fixed;
@@ -390,6 +360,7 @@ canvas{
   display:flex;
   justify-content:space-around;
   align-items:center;
+  z-index:50;
 }
 
 .nav-item{
@@ -401,32 +372,18 @@ canvas{
   color:#64748b;
   text-decoration:none;
   font-weight:600;
+  background:none;
+  border:none;
+  cursor:pointer;
 }
 
-.nav-item.active{
-  color:var(--primary);
-}
-
-.nav-item span{
-  font-size:24px;
-}
-
-/* MOBILE */
+.nav-item.active{ color:var(--primary); }
+.nav-item span{ font-size:24px; }
 
 @media(max-width:768px){
-
-  .price-grid{
-    grid-template-columns:1fr;
-  }
-
-  .spec-grid{
-    grid-template-columns:1fr;
-  }
-
-  .product-title{
-    font-size:26px;
-  }
-
+  .price-grid{ grid-template-columns:1fr; }
+  .spec-grid{ grid-template-columns:1fr; }
+  .product-title{ font-size:26px; }
 }
 
 </style>
@@ -447,248 +404,232 @@ canvas{
   </div>
 
   <div class="header-icons">
-    <span class="material-symbols-outlined">location_on</span>
-    <span class="material-symbols-outlined">person</span>
+    <span class="material-symbols-outlined" onclick="shareProduct()">share</span>
+    <span class="material-symbols-outlined" onclick="location.href='account.html'">person</span>
   </div>
 
 </header>
 
 <div class="container">
 
-  <!-- LOADING -->
   <div class="loading" id="loading">
-
     <div class="shimmer" style="height:340px;"></div>
     <div class="shimmer" style="height:50px;width:70%;"></div>
     <div class="shimmer" style="height:120px;"></div>
-
   </div>
 
-  <!-- MAIN CONTENT -->
   <div id="main-content" style="display:none;"></div>
 
 </div>
 
-<!-- BOTTOM NAV -->
-
 <div class="bottom-nav">
 
-  <a href="#" class="nav-item">
+  <button class="nav-item" onclick="location.href='homepage.html'">
+    <span class="material-symbols-outlined">home</span>
+    Home
+  </button>
+
+  <button class="nav-item" onclick="location.href='homepage.html'">
     <span class="material-symbols-outlined">search</span>
-    Explore
-  </a>
+    Search
+  </button>
 
-  <a href="#" class="nav-item">
-    <span class="material-symbols-outlined">local_offer</span>
-    Deals
-  </a>
-
-  <a href="#" class="nav-item active">
+  <button class="nav-item active">
     <span class="material-symbols-outlined">compare_arrows</span>
     Compare
-  </a>
+  </button>
 
-  <a href="#" class="nav-item">
-    <span class="material-symbols-outlined">history</span>
-    History
-  </a>
+  <button class="nav-item" onclick="location.href='homepage.html'">
+    <span class="material-symbols-outlined">local_offer</span>
+    Deals
+  </button>
 
-  <a href="#" class="nav-item">
+  <button class="nav-item" onclick="location.href='account.html'">
     <span class="material-symbols-outlined">person</span>
     Profile
-  </a>
+  </button>
 
 </div>
 
 <script>
 
-const id = localStorage.getItem("productId");
+const API = "https://visco1.onrender.com";
+const id  = localStorage.getItem("productId");
+let currentProduct = null;
 
 function goBack(){
-  if(window.history.length > 1){
-    window.history.back();
+  if(window.history.length > 1) window.history.back();
+  else window.location.href = "homepage.html";
+}
+
+async function shareProduct(){
+  if(!currentProduct) return;
+  const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare`;
+  if(navigator.share){
+    try{ await navigator.share({title: currentProduct.title, text, url: location.href}); }
+    catch(e){}
   }else{
-    window.location.href = "homepage.html";
+    navigator.clipboard.writeText(`${text}\n${location.href}`);
+    alert("Link copied!");
   }
+}
+
+async function apiGet(path){
+  const res = await fetch(API + path);
+  const json = await res.json().catch(()=>({}));
+  if(!res.ok || !json.success) throw new Error(json.error || "Request failed");
+  return json.data;
+}
+
+function showError(msg){
+  document.getElementById("loading").style.display = "none";
+  const main = document.getElementById("main-content");
+  main.style.display = "block";
+  main.innerHTML = `
+    <div style="text-align:center;padding:60px;">
+      <div style="font-size:60px;">⚠️</div>
+      <div style="color:#ef4444;font-weight:700;font-size:18px;margin-top:12px;">${msg}</div>
+      <button onclick="loadProduct()" style="margin-top:20px;background:#2563eb;color:white;border:none;padding:12px 28px;border-radius:14px;font-weight:700;cursor:pointer;">
+        Retry
+      </button>
+    </div>
+  `;
 }
 
 async function loadProduct(){
 
+  if(!id){
+    showError("No product selected");
+    return;
+  }
+
   try{
 
-    const res = await fetch(`https://visco.onrender.com/product/${id}`);
-    const p = await res.json();
+    const p = await apiGet(`/api/product/${encodeURIComponent(id)}`);
+    currentProduct = p;
 
     document.getElementById("loading").style.display = "none";
     document.getElementById("main-content").style.display = "block";
 
-    if(!p || p.error){
-      document.getElementById("main-content").innerHTML = `
-        <div style="text-align:center;padding:60px;color:red;font-weight:700;">
-          Product Not Found
-        </div>
-      `;
-      return;
-    }
-
-    const links = {
-      amazon: p.amazon_link,
-      flipkart: p.flipkart_link
-    };
-
-    const stores = {
-      amazon: "Amazon",
-      flipkart: "Flipkart"
-    };
-
-    let bestKey = "";
-    let minPrice = Infinity;
-
-    for(let k in stores){
-
-      if(p[k] && p[k] < minPrice){
-        minPrice = p[k];
-        bestKey = k;
-      }
-
-    }
+    const offers = p.offers || [];
+    const best   = offers[0];
 
     let priceCards = "";
-
-    let keys = [];
-    let values = [];
-
-    for(let k in stores){
-
-      if(p[k]){
-
-        const bestBadge = k === bestKey
-        ? `<div class="best-badge">BEST VALUE</div>`
-        : "";
-
-        priceCards += `
-
-          <div class="price-card">
-
-            ${bestBadge}
-
-            <div class="store-row">
-              <div class="store-name">${stores[k]}</div>
-              <div class="store-status">IN STOCK</div>
-            </div>
-
-            <div class="price-label">Current Price</div>
-
-            <div class="price">
-              ₹${Number(p[k]).toLocaleString()}
-            </div>
-
-            <button class="shop-btn"
-            onclick="window.open('${links[k]}')">
-              Shop on ${stores[k]}
-            </button>
-
+    offers.forEach((o, idx)=>{
+      const badge = idx === 0 ? `<div class="best-badge">BEST VALUE</div>` : "";
+      priceCards += `
+        <div class="price-card">
+          ${badge}
+          <div class="store-row">
+            <div class="store-name">${o.store}</div>
+            <div class="store-status">IN STOCK</div>
           </div>
+          <div class="price-label">Current Price</div>
+          <div class="price">₹${Number(o.price).toLocaleString()}</div>
+          <a class="shop-btn" href="${API}/go/${o.offerId}" target="_blank" rel="noopener">
+            Shop on ${o.store}
+          </a>
+        </div>
+      `;
+    });
 
-        `;
-
-        keys.push(stores[k]);
-        values.push(p[k]);
-
-      }
-
+    if(!priceCards){
+      priceCards = `
+        <div class="price-card" style="grid-column:1/-1;text-align:center;">
+          <div style="padding:30px;color:#64748b;font-weight:600;">
+            No offers currently available
+          </div>
+        </div>
+      `;
     }
+
+    const summaryPills = `
+      ${ p.lowestPrice ? `<div class="summary-pill">Lowest ₹${p.lowestPrice.toLocaleString()}</div>` : "" }
+      ${ p.averagePrice ? `<div class="summary-pill">Avg ₹${p.averagePrice.toLocaleString()}</div>` : "" }
+      ${ p.highestPrice ? `<div class="summary-pill">Highest ₹${p.highestPrice.toLocaleString()}</div>` : "" }
+      ${ offers.length > 1 ? `<div class="summary-pill">${offers.length} stores compared</div>` : "" }
+    `;
 
     document.getElementById("main-content").innerHTML = `
 
-      <!-- HERO -->
-
       <div class="hero-card">
 
-        <div class="rating-box">
-          <span class="material-symbols-outlined">star</span>
-          <strong>${p.rating || 4.5}</strong>
-        </div>
+        ${ p.rating ? `
+          <div class="rating-box">
+            <span class="material-symbols-outlined">star</span>
+            <strong>${p.rating}</strong>
+            ${ p.reviews ? `<span style="color:#64748b;font-weight:500;font-size:12px;">(${p.reviews.toLocaleString()})</span>` : "" }
+          </div>` : "" }
 
         <div class="product-image-box">
-          <img src="${p.image}" alt="${p.name}">
+          <img src="${p.image || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x400?text=No+Image)'">
         </div>
 
         <div class="brand">
-          ${p.category || "Premium Choice"}
+          ${p.brand || p.mainCategory || "Premium Choice"}
         </div>
 
         <div class="product-title">
-          ${p.name}
+          ${p.title || 'Untitled Product'}
+        </div>
+
+        <div class="price-summary">
+          ${summaryPills}
         </div>
 
       </div>
 
-      <!-- PRICE GRID -->
-
       <div class="price-grid">
-
         ${priceCards}
-
       </div>
-
-      <!-- SPECS -->
 
       <div class="spec-card">
 
-        <div class="section-title">
-          Product Specifications
-        </div>
+        <div class="section-title">Product Information</div>
 
         <div class="spec-grid">
 
           <div class="spec-item">
+            <div class="spec-label">Category</div>
+            <div class="spec-value">${p.mainCategory || "—"}</div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-label">Sub Category</div>
+            <div class="spec-value">${p.subCategory || "—"}</div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-label">Brand</div>
+            <div class="spec-value">${p.brand || "—"}</div>
+          </div>
+
+          <div class="spec-item">
+            <div class="spec-label">Stores Available</div>
+            <div class="spec-value">${offers.length}</div>
+          </div>
+
+          <div class="spec-item">
             <div class="spec-label">Delivery</div>
-            <div class="spec-value">Express 2-3 Days</div>
+            <div class="spec-value">Varies by store</div>
           </div>
 
           <div class="spec-item">
             <div class="spec-label">Warranty</div>
-            <div class="spec-value">1 Year Warranty</div>
-          </div>
-
-          <div class="spec-item">
-            <div class="spec-label">Replacement</div>
-            <div class="spec-value">7 Days Replacement</div>
-          </div>
-
-          <div class="spec-item">
-            <div class="spec-label">Exchange</div>
-            <div class="spec-value">Available</div>
+            <div class="spec-value">As per brand</div>
           </div>
 
         </div>
 
       </div>
-
-      <!-- CHART -->
 
       <div class="chart-card">
 
         <div class="chart-top">
 
-          <div class="section-title">
-            Price Trends
-          </div>
+          <div class="section-title" style="margin-bottom:0;">Price Trends</div>
 
-          <div class="chart-tags">
-
-            <div class="chart-tag">
-              <div class="dot blue"></div>
-              Amazon
-            </div>
-
-            <div class="chart-tag">
-              <div class="dot gray"></div>
-              Flipkart
-            </div>
-
-          </div>
+          <div class="chart-tags" id="chartLegend"></div>
 
         </div>
 
@@ -696,128 +637,167 @@ async function loadProduct(){
 
       </div>
 
+      <div class="related-card">
+        <div class="section-title">Related Products</div>
+        <div class="related-grid" id="relatedGrid">
+          <div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">
+            Loading...
+          </div>
+        </div>
+      </div>
+
     `;
 
-    initChart(p.amazon, p.flipkart);
+    loadPriceHistory();
+    loadRelated();
 
   }catch(err){
-
-    console.log(err);
-
-    document.getElementById("loading").style.display = "none";
-
-    document.getElementById("main-content").style.display = "block";
-
-    document.getElementById("main-content").innerHTML = `
-      <div style="text-align:center;padding:60px;color:red;font-weight:700;">
-        Backend Not Running
-      </div>
-    `;
-
+    console.error(err);
+    showError(err.message || "Backend not reachable");
   }
-
 }
 
-function initChart(amazonPrice, flipkartPrice){
+async function loadPriceHistory(){
+  try{
+    const data = await apiGet(`/api/price-history/${encodeURIComponent(id)}`);
+    const history = data.history || [];
 
-  const ctx = document.getElementById("priceChart");
-
-  const amazonTrend = [
-    amazonPrice + 200,
-    amazonPrice + 100,
-    amazonPrice + 300,
-    amazonPrice - 50,
-    amazonPrice + 150,
-    amazonPrice
-  ];
-
-  const flipkartTrend = [
-    flipkartPrice + 150,
-    flipkartPrice + 250,
-    flipkartPrice + 100,
-    flipkartPrice + 180,
-    flipkartPrice + 50,
-    flipkartPrice
-  ];
-
-  const gradient = ctx
-  .getContext("2d")
-  .createLinearGradient(0,0,0,400);
-
-  gradient.addColorStop(0,"rgba(37,99,235,0.25)");
-  gradient.addColorStop(1,"rgba(37,99,235,0)");
-
-  new Chart(ctx,{
-
-    type:"line",
-
-    data:{
-      labels:["Jan","Feb","Mar","Apr","May","Jun"],
-
-      datasets:[
-
-        {
-          label:"Amazon",
-          data:amazonTrend,
-          borderColor:"#2563eb",
-          backgroundColor:gradient,
-          fill:true,
-          tension:0.4,
-          borderWidth:3,
-          pointRadius:0,
-          pointHoverRadius:5
-        },
-
-        {
-          label:"Flipkart",
-          data:flipkartTrend,
-          borderColor:"#64748b",
-          borderDash:[6,6],
-          tension:0.4,
-          borderWidth:2,
-          fill:false,
-          pointRadius:0
-        }
-
-      ]
-    },
-
-    options:{
-
-      responsive:true,
-
-      plugins:{
-        legend:{
-          display:false
-        }
-      },
-
-      scales:{
-
-        x:{
-          grid:{
-            display:false
-          },
-          ticks:{
-            color:"#64748b"
-          }
-        },
-
-        y:{
-          grid:{
-            color:"rgba(0,0,0,0.05)"
-          },
-          ticks:{
-            color:"#64748b"
-          }
-        }
-
-      }
-
+    if(!history.length){
+      // Fallback: synthetic chart from current offers
+      drawFallbackChart();
+      return;
     }
 
+    // Group by store
+    const byStore = {};
+    history.forEach(h=>{
+      const s = h.store || "Price";
+      if(!byStore[s]) byStore[s] = [];
+      byStore[s].push({x: h.date, y: h.price});
+    });
+
+    const colors = ["#2563eb","#64748b","#10b981","#f59e0b","#ef4444"];
+    const datasets = Object.keys(byStore).map((store, i)=>({
+      label: store,
+      data: byStore[store],
+      borderColor: colors[i % colors.length],
+      backgroundColor: colors[i % colors.length] + "22",
+      fill: i === 0,
+      tension: 0.35,
+      borderWidth: 2.5,
+      pointRadius: 0,
+      pointHoverRadius: 5
+    }));
+
+    // Legend
+    document.getElementById("chartLegend").innerHTML = Object.keys(byStore).map((s,i)=>`
+      <div class="chart-tag">
+        <div class="dot" style="background:${colors[i % colors.length]};"></div>
+        ${s}
+      </div>
+    `).join("");
+
+    const labels = [...new Set(history.map(h=>h.date))].sort();
+
+    new Chart(document.getElementById("priceChart"),{
+      type:"line",
+      data:{ labels, datasets },
+      options:{
+        responsive:true,
+        plugins:{ legend:{ display:false } },
+        scales:{
+          x:{ grid:{ display:false }, ticks:{ color:"#64748b" } },
+          y:{ grid:{ color:"rgba(0,0,0,0.05)" }, ticks:{ color:"#64748b", callback:(v)=>"₹"+v } }
+        }
+      }
+    });
+
+  }catch(e){
+    drawFallbackChart();
+  }
+}
+
+function drawFallbackChart(){
+  if(!currentProduct) return;
+  const offers = currentProduct.offers || [];
+  if(!offers.length) return;
+
+  const colors = ["#2563eb","#64748b","#10b981","#f59e0b"];
+  const labels = ["Jan","Feb","Mar","Apr","May","Jun"];
+
+  const datasets = offers.slice(0,4).map((o, i)=>{
+    const base = o.price;
+    const data = [
+      base + Math.round(base*0.08),
+      base + Math.round(base*0.04),
+      base + Math.round(base*0.12),
+      base - Math.round(base*0.02),
+      base + Math.round(base*0.06),
+      base
+    ];
+    return {
+      label: o.store,
+      data,
+      borderColor: colors[i % colors.length],
+      backgroundColor: colors[i % colors.length] + "22",
+      fill: i === 0,
+      tension: 0.4,
+      borderWidth: 2.5,
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      borderDash: i === 0 ? [] : [6,6]
+    };
   });
 
+  document.getElementById("chartLegend").innerHTML = offers.slice(0,4).map((o,i)=>`
+    <div class="chart-tag">
+      <div class="dot" style="background:${colors[i % colors.length]};"></div>
+      ${o.store}
+    </div>
+  `).join("");
+
+  new Chart(document.getElementById("priceChart"),{
+    type:"line",
+    data:{ labels, datasets },
+    options:{
+      responsive:true,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ grid:{ display:false }, ticks:{ color:"#64748b" } },
+        y:{ grid:{ color:"rgba(0,0,0,0.05)" }, ticks:{ color:"#64748b", callback:(v)=>"₹"+v } }
+      }
+    }
+  });
+}
+
+async function loadRelated(){
+  const grid = document.getElementById("relatedGrid");
+  try{
+    const list = await apiGet(`/api/related/${encodeURIComponent(id)}?limit=8`);
+    if(!list.length){
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">No related products</div>`;
+      return;
+    }
+
+    grid.innerHTML = "";
+    list.forEach(rp=>{
+      const div = document.createElement("div");
+      div.className = "related-item";
+      div.innerHTML = `
+        <img src="${rp.image || ''}" alt="" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/200x200?text=No+Image)'"/>
+        <div class="related-title">${rp.title || ''}</div>
+        <div class="related-price">₹${(rp.lowestPrice || 0).toLocaleString()}</div>
+      `;
+      div.addEventListener("click", ()=>{
+        localStorage.setItem("productId", rp.id);
+        location.reload();
+      });
+      grid.appendChild(div);
+    });
+
+  }catch(e){
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">Couldn't load related products</div>`;
+  }
 }
 
 loadProduct();
