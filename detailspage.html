@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Visco Product Details</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<title>Product Details | Visco Compare</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 :root{
   --primary:#2563eb;
-  --primary-dark:#004ac6;
-  --secondary:#64748b;
-  --bg:#f7f9fb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
   --card:#ffffff;
   --border:#e2e8f0;
   --text:#0f172a;
@@ -23,68 +34,39 @@
   --success:#22c55e;
 }
 
-*{ margin:0; padding:0; box-sizing:border-box; }
-
 body{
-  font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--bg);
+  overflow-x:hidden;
   color:var(--text);
-  min-height:100vh;
-  padding-bottom:100px;
+  padding-bottom:90px;
 }
 
-.material-symbols-outlined{
-  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+.glass{
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:70px;
-  background:rgba(255,255,255,0.85);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(0,0,0,0.06);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  z-index:1000;
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
 
-.header-left{ display:flex; align-items:center; gap:14px; }
-
-.back-btn{
-  width:42px; height:42px;
-  border-radius:50%;
-  border:none;
-  background:#eef4ff;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:0.2s ease;
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
 }
 
-.back-btn:hover{ transform:scale(1.05); }
-.back-btn span{ color:var(--primary-dark); }
-
-.header-title{ font-size:20px; font-weight:700; }
-
-.header-icons{ display:flex; align-items:center; gap:10px; }
-.header-icons span{ color:var(--secondary); cursor:pointer; }
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:95px 18px 20px;
-}
-
-.loading{ display:flex; flex-direction:column; gap:20px; }
-
-.shimmer{
-  border-radius:24px;
-  background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);
+.skeleton{
+  background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);
   background-size:200% 100%;
   animation:shimmer 1.5s infinite;
+  border-radius:16px;
 }
 
 @keyframes shimmer{
@@ -92,298 +74,38 @@ header{
   100%{ background-position:-200% 0; }
 }
 
-.hero-card{
-  background:var(--card);
-  border-radius:30px;
-  padding:24px;
-  border:1px solid var(--border);
-  box-shadow:0 10px 30px rgba(0,0,0,0.04);
-  position:relative;
-  overflow:hidden;
-}
+.hide-scrollbar::-webkit-scrollbar{ display:none; }
+.hide-scrollbar{ scrollbar-width:none; }
 
-.rating-box{
-  position:absolute;
-  top:18px; right:18px;
-  background:rgba(255,255,255,0.8);
-  backdrop-filter:blur(10px);
-  padding:8px 14px;
-  border-radius:999px;
-  display:flex; align-items:center; gap:6px;
-  border:1px solid #e2e8f0;
-  font-weight:600;
-}
-
-.rating-box .material-symbols-outlined{ color:#f59e0b; font-size:20px; }
-
-.product-image-box{
-  width:100%;
-  aspect-ratio:1/1;
-  margin-bottom:24px;
-  overflow:hidden;
-  display:flex; align-items:center; justify-content:center;
-  background:#f8fafc;
-  border-radius:24px;
-}
-
-.product-image-box img{
-  width:100%; height:100%;
-  object-fit:contain;
-  padding:20px;
-  transition:0.4s ease;
-}
-
-.product-image-box img:hover{ transform:scale(1.05); }
-
-.brand{
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--primary);
-  font-weight:700;
-  margin-bottom:10px;
-}
-
-.product-title{
-  font-size:32px;
-  line-height:1.3;
-  font-weight:800;
-}
-
-.price-summary{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:16px;
-}
-
-.summary-pill{
-  background:#eef4ff;
-  color:var(--primary-dark);
-  padding:8px 14px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:600;
-}
-
-.price-grid{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.price-card{
+.product-card{
+  transition:.3s ease;
   background:white;
-  border-radius:28px;
-  padding:24px;
-  border:1px solid var(--border);
-  position:relative;
-  transition:0.3s ease;
-}
-
-.price-card:hover{ transform:translateY(-4px); }
-
-.best-badge{
-  position:absolute;
-  top:0; right:0;
-  background:var(--primary);
-  color:white;
-  padding:8px 16px;
-  border-bottom-left-radius:18px;
-  font-size:12px;
-  font-weight:700;
-}
-
-.store-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
-}
-
-.store-name{ font-size:18px; font-weight:700; }
-
-.store-status{
-  font-size:13px;
-  color:var(--success);
-  font-weight:700;
-}
-
-.price-label{ color:var(--muted); font-size:14px; margin-bottom:8px; }
-
-.price{
-  font-size:42px;
-  color:var(--primary-dark);
-  font-weight:800;
-}
-
-.shop-btn{
-  margin-top:22px;
-  width:100%;
-  border:none;
-  background:var(--primary);
-  color:white;
-  padding:15px;
-  border-radius:18px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.3s ease;
-  text-decoration:none;
-  display:block;
-  text-align:center;
-}
-
-.shop-btn:hover{ background:var(--primary-dark); }
-
-.spec-card{
-  margin-top:20px;
-  background:white;
-  border-radius:28px;
-  padding:24px;
   border:1px solid var(--border);
 }
 
-.section-title{ font-size:24px; font-weight:700; margin-bottom:20px; }
-
-.spec-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.12),
+    0 12px 25px rgba(0,0,0,0.06);
 }
 
-.spec-item{
-  background:#f8fafc;
-  border:1px solid #edf2f7;
-  border-radius:18px;
-  padding:16px;
-}
-
-.spec-label{
-  font-size:11px;
-  color:var(--muted);
-  text-transform:uppercase;
-  margin-bottom:6px;
-  font-weight:700;
-}
-
-.spec-value{ font-size:15px; font-weight:600; }
-
-.chart-card{
-  margin-top:20px;
-  background:white;
-  border-radius:28px;
-  padding:24px;
-  border:1px solid var(--border);
-}
-
-.chart-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.chart-tags{ display:flex; gap:15px; flex-wrap:wrap; }
-
-.chart-tag{
-  display:flex; align-items:center; gap:6px;
-  font-size:13px; font-weight:600;
-}
-
-.dot{ width:10px; height:10px; border-radius:50%; }
-
-canvas{ max-height:300px; }
-
-.related-card{
-  margin-top:20px;
-  background:white;
-  border-radius:28px;
-  padding:24px;
-  border:1px solid var(--border);
-}
-
-.related-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:14px;
-}
-
-.related-item{
-  background:#f8fafc;
-  border:1px solid #edf2f7;
-  border-radius:18px;
-  padding:12px;
-  cursor:pointer;
-  transition:0.2s ease;
-}
-
-.related-item:hover{ transform:translateY(-4px); border-color:var(--primary); }
-
-.related-item img{
-  width:100%; height:120px;
-  object-fit:contain;
-  background:white;
-  border-radius:12px;
-  padding:8px;
-}
-
-.related-title{
-  font-size:13px;
-  font-weight:600;
-  margin-top:8px;
+.line-clamp-2{
   display:-webkit-box;
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  min-height:36px;
 }
 
-.related-price{
-  color:var(--primary-dark);
-  font-weight:800;
-  font-size:16px;
-  margin-top:6px;
+.footer-link:hover{
+  color:white;
+  transform:translateX(4px);
 }
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  height:78px;
-  background:rgba(255,255,255,0.88);
-  backdrop-filter:blur(12px);
-  border-top:1px solid rgba(0,0,0,0.06);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:50;
-}
-
-.nav-item{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  font-size:12px;
-  color:#64748b;
-  text-decoration:none;
-  font-weight:600;
-  background:none;
-  border:none;
-  cursor:pointer;
-}
-
-.nav-item.active{ color:var(--primary); }
-.nav-item span{ font-size:24px; }
 
 @media(max-width:768px){
-  .price-grid{ grid-template-columns:1fr; }
-  .spec-grid{ grid-template-columns:1fr; }
-  .product-title{ font-size:26px; }
+  .hero-title{ font-size:30px !important; line-height:38px !important; }
+  .price-grid{ grid-template-columns:1fr !important; }
+  .spec-grid{ grid-template-columns:1fr !important; }
 }
 
 </style>
@@ -391,65 +113,156 @@ canvas{ max-height:300px; }
 
 <body>
 
-<header>
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
-  <div class="header-left">
+  <div class="flex items-center gap-3">
 
-    <button class="back-btn" onclick="goBack()">
-      <span class="material-symbols-outlined">arrow_back</span>
+    <button onclick="goBack()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
 
-    <div class="header-title">Product Details</div>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+    </div>
+
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">Product Details</p>
+    </div>
 
   </div>
 
-  <div class="header-icons">
-    <span class="material-symbols-outlined" onclick="shareProduct()">share</span>
-    <span class="material-symbols-outlined" onclick="location.href='account.html'">person</span>
+  <div class="flex items-center gap-2">
+
+    <button onclick="shareProduct()" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
+      <i class="fa-solid fa-share-nodes text-blue-700"></i>
+    </button>
+
+    <button onclick="location.href='account.html'" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
+      <i class="fa-solid fa-user text-blue-700"></i>
+    </button>
+
   </div>
 
 </header>
 
-<div class="container">
+<!-- DECORATIVE HERO BG -->
+<div class="relative hero-bg pt-20">
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
+</div>
 
-  <div class="loading" id="loading">
-    <div class="shimmer" style="height:340px;"></div>
-    <div class="shimmer" style="height:50px;width:70%;"></div>
-    <div class="shimmer" style="height:120px;"></div>
+<!-- MAIN -->
+<main class="relative z-10 max-w-7xl mx-auto px-4 md:px-10 -mt-6">
+
+  <!-- LOADING -->
+  <div id="loading" class="space-y-6">
+    <div class="skeleton h-[400px] rounded-3xl"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="skeleton h-[200px] rounded-3xl"></div>
+      <div class="skeleton h-[200px] rounded-3xl"></div>
+    </div>
   </div>
 
-  <div id="main-content" style="display:none;"></div>
+  <div id="main-content" class="hidden"></div>
 
-</div>
+</main>
 
-<div class="bottom-nav">
+<!-- FOOTER -->
+<footer class="mt-24 bg-slate-950 text-white">
 
-  <button class="nav-item" onclick="location.href='homepage.html'">
-    <span class="material-symbols-outlined">home</span>
-    Home
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+
+    <div>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
+
+      <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
+        ⚡ Smart Shopping Platform
+      </div>
+
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <div class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block transition">Home</a>
+        <a href="about.html" class="footer-link block transition">About Us</a>
+        <a href="explore.html" class="footer-link block transition">Explore</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <div class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block transition">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block transition">Terms</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-x-twitter"></i>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+    © 2026 Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+
+</footer>
+
+<!-- BOTTOM NAV -->
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
   </button>
 
-  <button class="nav-item" onclick="location.href='homepage.html'">
-    <span class="material-symbols-outlined">search</span>
-    Search
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
   </button>
 
-  <button class="nav-item active">
-    <span class="material-symbols-outlined">compare_arrows</span>
-    Compare
+  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
   </button>
 
-  <button class="nav-item" onclick="location.href='homepage.html'">
-    <span class="material-symbols-outlined">local_offer</span>
-    Deals
+  <button class="flex flex-col items-center text-blue-700">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
   </button>
 
-  <button class="nav-item" onclick="location.href='account.html'">
-    <span class="material-symbols-outlined">person</span>
-    Profile
+  <button onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
   </button>
 
-</div>
+</nav>
 
 <script>
 
@@ -466,8 +279,7 @@ async function shareProduct(){
   if(!currentProduct) return;
   const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare`;
   if(navigator.share){
-    try{ await navigator.share({title: currentProduct.title, text, url: location.href}); }
-    catch(e){}
+    try{ await navigator.share({title: currentProduct.title, text, url: location.href}); }catch(e){}
   }else{
     navigator.clipboard.writeText(`${text}\n${location.href}`);
     alert("Link copied!");
@@ -482,14 +294,14 @@ async function apiGet(path){
 }
 
 function showError(msg){
-  document.getElementById("loading").style.display = "none";
+  document.getElementById("loading").classList.add("hidden");
   const main = document.getElementById("main-content");
-  main.style.display = "block";
+  main.classList.remove("hidden");
   main.innerHTML = `
-    <div style="text-align:center;padding:60px;">
-      <div style="font-size:60px;">⚠️</div>
-      <div style="color:#ef4444;font-weight:700;font-size:18px;margin-top:12px;">${msg}</div>
-      <button onclick="loadProduct()" style="margin-top:20px;background:#2563eb;color:white;border:none;padding:12px 28px;border-radius:14px;font-weight:700;cursor:pointer;">
+    <div class="text-center py-20">
+      <i class="fa-solid fa-triangle-exclamation text-red-500 text-5xl mb-4"></i>
+      <div class="font-semibold text-lg text-slate-700">${msg}</div>
+      <button onclick="loadProduct()" class="mt-5 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
         Retry
       </button>
     </div>
@@ -508,142 +320,179 @@ async function loadProduct(){
     const p = await apiGet(`/api/product/${encodeURIComponent(id)}`);
     currentProduct = p;
 
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("main-content").style.display = "block";
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("main-content").classList.remove("hidden");
 
     const offers = p.offers || [];
     const best   = offers[0];
 
     let priceCards = "";
     offers.forEach((o, idx)=>{
-      const badge = idx === 0 ? `<div class="best-badge">BEST VALUE</div>` : "";
+      const badge = idx === 0 ? `
+        <div class="absolute top-0 right-0">
+          <span class="bg-gradient-to-r from-blue-700 to-blue-500 text-white text-[11px] font-bold px-4 py-2 rounded-bl-2xl rounded-tr-3xl shadow-lg">
+            🏆 BEST VALUE
+          </span>
+        </div>` : "";
+
       priceCards += `
-        <div class="price-card">
+        <div class="product-card rounded-3xl p-6 relative overflow-hidden">
+
           ${badge}
-          <div class="store-row">
-            <div class="store-name">${o.store}</div>
-            <div class="store-status">IN STOCK</div>
+
+          <div class="flex justify-between items-center mb-5 mt-2">
+            <div class="text-[18px] font-bold">${o.store}</div>
+            <div class="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-[11px] font-bold px-3 py-1 rounded-full">
+              <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+              IN STOCK
+            </div>
           </div>
-          <div class="price-label">Current Price</div>
-          <div class="price">₹${Number(o.price).toLocaleString()}</div>
-          <a class="shop-btn" href="${API}/go/${o.offerId}" target="_blank" rel="noopener">
+
+          <div class="text-slate-500 text-sm mb-2">Current Price</div>
+
+          <div class="text-blue-700 font-extrabold text-[36px] leading-tight">
+            ₹${Number(o.price).toLocaleString()}
+          </div>
+
+          <a class="mt-5 block text-center bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-xl py-3 font-semibold hover:opacity-90 transition"
+             href="${API}/go/${o.offerId}" target="_blank" rel="noopener">
             Shop on ${o.store}
           </a>
+
         </div>
       `;
     });
 
     if(!priceCards){
       priceCards = `
-        <div class="price-card" style="grid-column:1/-1;text-align:center;">
-          <div style="padding:30px;color:#64748b;font-weight:600;">
-            No offers currently available
-          </div>
+        <div class="product-card rounded-3xl p-10 text-center text-slate-500 font-semibold" style="grid-column:1/-1;">
+          No offers currently available
         </div>
       `;
     }
 
     const summaryPills = `
-      ${ p.lowestPrice ? `<div class="summary-pill">Lowest ₹${p.lowestPrice.toLocaleString()}</div>` : "" }
-      ${ p.averagePrice ? `<div class="summary-pill">Avg ₹${p.averagePrice.toLocaleString()}</div>` : "" }
-      ${ p.highestPrice ? `<div class="summary-pill">Highest ₹${p.highestPrice.toLocaleString()}</div>` : "" }
-      ${ offers.length > 1 ? `<div class="summary-pill">${offers.length} stores compared</div>` : "" }
+      ${ p.lowestPrice ? `<div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-semibold text-sm border border-blue-100">Lowest ₹${p.lowestPrice.toLocaleString()}</div>` : "" }
+      ${ p.averagePrice ? `<div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-semibold text-sm border border-blue-100">Avg ₹${p.averagePrice.toLocaleString()}</div>` : "" }
+      ${ p.highestPrice ? `<div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-semibold text-sm border border-blue-100">Highest ₹${p.highestPrice.toLocaleString()}</div>` : "" }
+      ${ offers.length > 1 ? `<div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-semibold text-sm border border-blue-100">${offers.length} stores compared</div>` : "" }
     `;
 
     document.getElementById("main-content").innerHTML = `
 
-      <div class="hero-card">
+      <!-- HERO CARD -->
+      <div class="product-card rounded-3xl p-6 md:p-8 relative overflow-hidden mb-6">
 
         ${ p.rating ? `
-          <div class="rating-box">
-            <span class="material-symbols-outlined">star</span>
-            <strong>${p.rating}</strong>
-            ${ p.reviews ? `<span style="color:#64748b;font-weight:500;font-size:12px;">(${p.reviews.toLocaleString()})</span>` : "" }
+          <div class="absolute top-5 right-5 z-10 bg-white border border-slate-200 px-4 py-2 rounded-full flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-star text-amber-400"></i>
+            <span class="font-bold text-slate-800">${p.rating}</span>
+            ${ p.reviews ? `<span class="text-slate-400 text-xs">(${p.reviews.toLocaleString()})</span>` : "" }
           </div>` : "" }
 
-        <div class="product-image-box">
-          <img src="${p.image || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x400?text=No+Image)'">
-        </div>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
 
-        <div class="brand">
-          ${p.brand || p.mainCategory || "Premium Choice"}
-        </div>
-
-        <div class="product-title">
-          ${p.title || 'Untitled Product'}
-        </div>
-
-        <div class="price-summary">
-          ${summaryPills}
-        </div>
-
-      </div>
-
-      <div class="price-grid">
-        ${priceCards}
-      </div>
-
-      <div class="spec-card">
-
-        <div class="section-title">Product Information</div>
-
-        <div class="spec-grid">
-
-          <div class="spec-item">
-            <div class="spec-label">Category</div>
-            <div class="spec-value">${p.mainCategory || "—"}</div>
+          <div class="bg-slate-100 rounded-3xl flex items-center justify-center p-6 aspect-square">
+            <img src="${p.image || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}"
+                 class="w-full h-full object-contain"
+                 onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'"/>
           </div>
 
-          <div class="spec-item">
-            <div class="spec-label">Sub Category</div>
-            <div class="spec-value">${p.subCategory || "—"}</div>
-          </div>
+          <div>
 
-          <div class="spec-item">
-            <div class="spec-label">Brand</div>
-            <div class="spec-value">${p.brand || "—"}</div>
-          </div>
+            <div class="text-xs uppercase tracking-[2px] text-blue-700 font-bold mb-3">
+              ${p.brand || p.mainCategory || "Premium Choice"}
+            </div>
 
-          <div class="spec-item">
-            <div class="spec-label">Stores Available</div>
-            <div class="spec-value">${offers.length}</div>
-          </div>
+            <h1 class="hero-title text-[36px] leading-[44px] font-extrabold tracking-[-1px] text-slate-900">
+              ${p.title || 'Untitled Product'}
+            </h1>
 
-          <div class="spec-item">
-            <div class="spec-label">Delivery</div>
-            <div class="spec-value">Varies by store</div>
-          </div>
+            <div class="flex flex-wrap gap-2 mt-5">
+              ${summaryPills}
+            </div>
 
-          <div class="spec-item">
-            <div class="spec-label">Warranty</div>
-            <div class="spec-value">As per brand</div>
           </div>
 
         </div>
 
       </div>
 
-      <div class="chart-card">
+      <!-- PRICE COMPARISON -->
+      <div class="mb-6">
+        <div class="flex items-end justify-between mb-5">
+          <div>
+            <h2 class="text-[24px] font-bold">Compare Prices</h2>
+            <p class="text-slate-500 text-sm mt-1">Best deals across top stores</p>
+          </div>
+        </div>
+        <div class="price-grid grid grid-cols-1 md:grid-cols-2 gap-5">
+          ${priceCards}
+        </div>
+      </div>
 
-        <div class="chart-top">
+      <!-- PRODUCT INFO -->
+      <div class="product-card rounded-3xl p-6 md:p-8 mb-6">
 
-          <div class="section-title" style="margin-bottom:0;">Price Trends</div>
+        <h2 class="text-[24px] font-bold mb-6">Product Information</h2>
 
-          <div class="chart-tags" id="chartLegend"></div>
+        <div class="spec-grid grid grid-cols-2 md:grid-cols-3 gap-4">
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Category</div>
+            <div class="font-semibold text-sm">${p.mainCategory || "—"}</div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Sub Category</div>
+            <div class="font-semibold text-sm">${p.subCategory || "—"}</div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Brand</div>
+            <div class="font-semibold text-sm">${p.brand || "—"}</div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Stores</div>
+            <div class="font-semibold text-sm">${offers.length}</div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Delivery</div>
+            <div class="font-semibold text-sm">Varies by store</div>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wide mb-2">Warranty</div>
+            <div class="font-semibold text-sm">As per brand</div>
+          </div>
 
         </div>
-
-        <canvas id="priceChart"></canvas>
 
       </div>
 
-      <div class="related-card">
-        <div class="section-title">Related Products</div>
-        <div class="related-grid" id="relatedGrid">
-          <div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">
-            Loading...
-          </div>
+      <!-- PRICE CHART -->
+      <div class="product-card rounded-3xl p-6 md:p-8 mb-6">
+
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
+          <h2 class="text-[24px] font-bold">Price Trends</h2>
+          <div id="chartLegend" class="flex gap-4 flex-wrap"></div>
         </div>
+
+        <canvas id="priceChart" style="max-height:300px;"></canvas>
+
+      </div>
+
+      <!-- RELATED -->
+      <div class="product-card rounded-3xl p-6 md:p-8 mb-6">
+
+        <h2 class="text-[24px] font-bold mb-6">Related Products</h2>
+
+        <div id="relatedGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="col-span-full text-center text-slate-400 py-8">Loading...</div>
+        </div>
+
       </div>
 
     `;
@@ -663,12 +512,10 @@ async function loadPriceHistory(){
     const history = data.history || [];
 
     if(!history.length){
-      // Fallback: synthetic chart from current offers
       drawFallbackChart();
       return;
     }
 
-    // Group by store
     const byStore = {};
     history.forEach(h=>{
       const s = h.store || "Price";
@@ -689,10 +536,9 @@ async function loadPriceHistory(){
       pointHoverRadius: 5
     }));
 
-    // Legend
     document.getElementById("chartLegend").innerHTML = Object.keys(byStore).map((s,i)=>`
-      <div class="chart-tag">
-        <div class="dot" style="background:${colors[i % colors.length]};"></div>
+      <div class="flex items-center gap-2 text-sm font-semibold">
+        <div class="w-3 h-3 rounded-full" style="background:${colors[i % colors.length]};"></div>
         ${s}
       </div>
     `).join("");
@@ -750,8 +596,8 @@ function drawFallbackChart(){
   });
 
   document.getElementById("chartLegend").innerHTML = offers.slice(0,4).map((o,i)=>`
-    <div class="chart-tag">
-      <div class="dot" style="background:${colors[i % colors.length]};"></div>
+    <div class="flex items-center gap-2 text-sm font-semibold">
+      <div class="w-3 h-3 rounded-full" style="background:${colors[i % colors.length]};"></div>
       ${o.store}
     </div>
   `).join("");
@@ -775,18 +621,19 @@ async function loadRelated(){
   try{
     const list = await apiGet(`/api/related/${encodeURIComponent(id)}?limit=8`);
     if(!list.length){
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">No related products</div>`;
+      grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">No related products</div>`;
       return;
     }
 
     grid.innerHTML = "";
     list.forEach(rp=>{
       const div = document.createElement("div");
-      div.className = "related-item";
+      div.className = "product-card rounded-2xl p-3 cursor-pointer";
       div.innerHTML = `
-        <img src="${rp.image || ''}" alt="" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/200x200?text=No+Image)'"/>
-        <div class="related-title">${rp.title || ''}</div>
-        <div class="related-price">₹${(rp.lowestPrice || 0).toLocaleString()}</div>
+        <img src="${rp.image || ''}" class="w-full h-[140px] object-contain bg-slate-100 rounded-xl p-3"
+             onerror="this.src='[via.placeholder.com](https://via.placeholder.com/200x200?text=No+Image)'"/>
+        <div class="font-semibold text-[13px] mt-3 line-clamp-2 min-h-[36px]">${rp.title || ''}</div>
+        <div class="text-blue-700 font-bold text-[16px] mt-2">₹${(rp.lowestPrice || 0).toLocaleString()}</div>
       `;
       div.addEventListener("click", ()=>{
         localStorage.setItem("productId", rp.id);
@@ -796,7 +643,7 @@ async function loadRelated(){
     });
 
   }catch(e){
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#64748b;padding:20px;">Couldn't load related products</div>`;
+    grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">Couldn't load related products</div>`;
   }
 }
 
