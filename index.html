@@ -51,28 +51,23 @@ body{
 
 <body class="text-slate-800 overflow-x-hidden">
 
-<!-- BACKGROUND -->
 <div class="fixed inset-0 pointer-events-none">
   <div class="blob top-[-120px] left-[-120px]"></div>
   <div class="blob bottom-[-120px] right-[-120px]"></div>
 </div>
 
-<!-- HEADER -->
 <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md h-16 flex items-center px-4 justify-between border-b">
 
   <div class="flex items-center gap-3">
 
-    <!-- BACK BUTTON -->
     <button onclick="history.back()"
       class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition">
       <span class="material-symbols-outlined text-primary">arrow_back</span>
     </button>
 
-    <!-- LOGO -->
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center overflow-hidden">
-  <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain"/>
-   
-</div>
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+      <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6"/>
+    </div>
 
     <div class="leading-tight">
       <div class="font-bold text-primary">Visco Compare</div>
@@ -89,15 +84,13 @@ body{
 
 </header>
 
-<!-- MAIN -->
 <main class="min-h-screen flex items-center justify-center px-4 pt-24 pb-10">
 
-<!-- LOGIN CARD -->
 <div class="glass w-full max-w-md rounded-2xl p-8 shadow-xl">
 
   <div class="text-center mb-6">
-    <h1 class="text-2xl font-bold text-primary">Login</h1>
-    <p class="text-sm text-slate-500">Welcome back to Visco Compare</p>
+    <h1 class="text-2xl font-bold text-primary">Welcome</h1>
+    <p class="text-sm text-slate-500">Sign in to Visco Compare</p>
   </div>
 
   <form id="loginForm" class="space-y-4">
@@ -108,7 +101,7 @@ body{
     <input id="phone" placeholder="+91XXXXXXXXXX" required
       class="w-full p-3 rounded-xl bg-white/60 border outline-none focus:ring-2 focus:ring-primary"/>
 
-    <input id="password" type="password" placeholder="Password" required
+    <input id="password" type="password" placeholder="Password" required minlength="4"
       class="w-full p-3 rounded-xl bg-white/60 border outline-none focus:ring-2 focus:ring-primary"/>
 
     <button id="loginBtn" class="w-full py-3 rounded-full bg-primary text-white font-semibold active:scale-95 transition">
@@ -127,18 +120,21 @@ body{
     Continue as Guest
   </button>
 
+  <p class="text-center text-xs text-slate-400 mt-6">
+    By continuing, you agree to our Terms & Privacy Policy.
+  </p>
+
 </div>
 
 </main>
 
-<!-- TOAST -->
 <div id="toast"
-  class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-full text-sm opacity-0 transition">
+  class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-full text-sm opacity-0 transition pointer-events-none z-[100]">
 </div>
 
 <script>
 
-const API = "https://visco.onrender.com";
+const API = "https://visco1.onrender.com";
 
 function showToast(msg){
   const t = document.getElementById("toast");
@@ -148,10 +144,15 @@ function showToast(msg){
 
   setTimeout(()=>{
     t.classList.add("opacity-0");
-  },2000);
+    t.classList.remove("opacity-100");
+  },2200);
 }
 
-// LOGIN
+// If already logged in, skip login
+if(localStorage.getItem("token") || localStorage.getItem("guest")){
+  window.location.href = "homepage.html";
+}
+
 document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
 
@@ -170,14 +171,17 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
       body: JSON.stringify({ name, phone, password })
     });
 
-    const data = await res.json();
+    const data = await res.json().catch(()=>({}));
 
     if(res.ok){
       localStorage.setItem("token", data.token || "user");
+      if(name) localStorage.setItem("userName", name);
+      localStorage.setItem("userPhone", phone);
+      localStorage.removeItem("guest");
       showToast("Login Successful 🚀");
-      setTimeout(()=> window.location.href="homepage.html", 1200);
+      setTimeout(()=> window.location.href="homepage.html", 1000);
     }else{
-      showToast(data.message || "Login Failed");
+      showToast(data.message || data.error || "Login Failed");
     }
 
   }catch(err){
@@ -188,7 +192,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   btn.disabled = false;
 });
 
-// SIGNUP
 async function signup(){
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -206,12 +209,12 @@ async function signup(){
       body: JSON.stringify({ name, phone, password })
     });
 
-    const data = await res.json();
+    const data = await res.json().catch(()=>({}));
 
     if(res.ok){
       showToast("Account Created 🚀 Now Login");
     }else{
-      showToast(data.message || "Signup Failed");
+      showToast(data.message || data.error || "Signup Failed");
     }
 
   }catch(err){
@@ -219,11 +222,11 @@ async function signup(){
   }
 }
 
-// GUEST
 function guestMode(){
   localStorage.setItem("guest","true");
+  localStorage.removeItem("token");
   showToast("Guest Mode Activated");
-  setTimeout(()=>window.location.href="homepage.html",1000);
+  setTimeout(()=>window.location.href="homepage.html",);
 }
 
 </script>
