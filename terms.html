@@ -1,180 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Terms & Conditions | Visco Compare</title>
+<meta name="theme-color" content="#2563eb"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>Terms & Conditions | Visco Compare</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary:"#004ac6",
-        secondary:"#565e74",
-        bg:"#f7f9fb",
-      }
-    }
-  }
-}
-</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
+
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
 body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#f7f9fb;
+  background:var(--bg);
   overflow-x:hidden;
+  color:var(--text);
+  padding-bottom:90px;
 }
 
 .glass{
-  background:rgba(255,255,255,0.7);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  border:1px solid rgba(0,0,0,0.05);
+}
+
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
 
 .glow{
-  position:fixed;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  background:#004ac6;
-  filter:blur(120px);
-  opacity:0.12;
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
   z-index:0;
+  pointer-events:none;
 }
 
-.card{
-  transition:0.25s;
+.product-card{
+  transition:.3s ease;
+  background:white;
+  border:1px solid var(--border);
 }
 
-.card:hover{
-  transform:translateY(-4px);
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.12),
+    0 12px 25px rgba(0,0,0,0.06);
 }
 
-.material-symbols-outlined{
-  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+.footer-link{
+  transition:all .2s ease;
 }
+
+.footer-link:hover{
+  color:white;
+  transform:translateX(4px);
+}
+
 </style>
 </head>
 
-<body class="text-slate-800">
+<body>
 
-<!-- BACKGROUND GLOWS -->
-<div class="glow top-[-80px] left-[-80px]"></div>
-<div class="glow bottom-[-80px] right-[-80px]" style="background:#7c3aed;"></div>
-
-<!-- HEADER -->
-<header class="fixed top-0 w-full z-50 glass h-16 flex items-center justify-between px-4">
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
   <div class="flex items-center gap-3">
 
-    <!-- BACK -->
-    <button onclick="history.back()" class="w-9 h-9 rounded-full hover:bg-black/5 flex items-center justify-center">
-      <span class="material-symbols-outlined text-primary">arrow_back</span>
+    <button type="button" onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
 
-    <!-- LOGO -->
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg">
-      <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6"/>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
 
     <div>
-      <div class="font-bold text-primary">Visco Compare</div>
-      <div class="text-[10px] text-slate-500">Smart Price Engine</div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">Legal Information</p>
     </div>
 
   </div>
-
-  <span class="material-symbols-outlined text-primary text-3xl">
-    account_circle
-  </span>
 
 </header>
 
-<!-- MAIN -->
-<main class="relative pt-24 px-4 pb-28 max-w-5xl mx-auto z-10">
+<section class="relative overflow-hidden hero-bg pt-32 pb-16">
 
-<!-- HERO -->
-<section class="mb-10 text-center">
-  <h1 class="text-3xl font-bold">
-    Terms & <span class="text-primary">Conditions</span>
-  </h1>
-  <p class="text-slate-600 mt-3 max-w-xl mx-auto">
-    By using Visco Compare, you agree to the rules that keep our platform transparent and safe.
-  </p>
-</section>
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
 
-<!-- GRID -->
-<section class="grid md:grid-cols-2 gap-5">
+  <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-10 text-center">
 
-  <div class="glass card p-6 rounded-2xl">
-    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
-      <span class="material-symbols-outlined">shopping_cart</span>
+    <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-6">
+      📜 Legal
     </div>
-    <h2 class="font-bold text-lg">No Direct Sales</h2>
-    <p class="text-sm text-slate-600 mt-2">
-      We do not sell products. We only compare and redirect you to trusted platforms.
-    </p>
-  </div>
 
-  <div class="glass card p-6 rounded-2xl">
-    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
-      <span class="material-symbols-outlined">verified_user</span>
-    </div>
-    <h2 class="font-bold text-lg">Third-Party Data</h2>
-    <p class="text-sm text-slate-600 mt-2">
-      Prices and listings belong to external sites like Amazon and Flipkart.
-    </p>
-  </div>
+    <h1 class="text-[42px] md:text-[56px] leading-tight font-extrabold tracking-[-2px] text-slate-900">
+      Terms & Conditions
+    </h1>
 
-  <div class="glass card p-6 rounded-2xl">
-    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
-      <span class="material-symbols-outlined">update</span>
-    </div>
-    <h2 class="font-bold text-lg">Live Updates</h2>
-    <p class="text-sm text-slate-600 mt-2">
-      Prices may change anytime. We try to keep data as accurate as possible.
+    <p class="max-w-2xl mx-auto mt-5 text-slate-500 text-[15px] md:text-[17px] leading-8">
+      By using Visco Compare, you agree to the rules that keep our platform transparent and safe.
     </p>
-  </div>
 
-  <div class="glass card p-6 rounded-2xl">
-    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
-      <span class="material-symbols-outlined">gavel</span>
-    </div>
-    <h2 class="font-bold text-lg">User Responsibility</h2>
-    <p class="text-sm text-slate-600 mt-2">
-      Users must verify details before purchasing on external websites.
-    </p>
-  </div>
-
-  <div class="glass card p-6 rounded-2xl md:col-span-2">
-    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-primary mb-4">
-      <span class="material-symbols-outlined">link</span>
-    </div>
-    <h2 class="font-bold text-lg">External Websites</h2>
-    <p class="text-sm text-slate-600 mt-2">
-      Once you leave Visco Compare, their policies apply. We are not responsible for external actions.
-    </p>
   </div>
 
 </section>
 
-<!-- BUTTON -->
-<div class="text-center mt-12">
-  <button class="bg-primary text-white px-10 py-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition">
-    I Understand & Accept
-  </button>
+<main class="max-w-5xl mx-auto px-4 md:px-10 mt-4">
 
-  <p class="text-xs text-slate-500 mt-3">Last updated: 2026</p>
-</div>
+  <section class="grid md:grid-cols-2 gap-5">
+
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-cart-shopping text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">No Direct Sales</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        We do not sell products. We only compare and redirect you to trusted platforms.
+      </p>
+    </div>
+
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-shield-halved text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">Third-Party Data</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        Prices and listings belong to external sites like Amazon and Flipkart.
+      </p>
+    </div>
+
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-rotate text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">Live Updates</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        Prices may change anytime. We try to keep data as accurate as possible.
+      </p>
+    </div>
+
+    <div class="product-card rounded-3xl p-6">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-gavel text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">User Responsibility</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        Users must verify details before purchasing on external websites.
+      </p>
+    </div>
+
+    <div class="product-card rounded-3xl p-6 md:col-span-2">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
+        <i class="fa-solid fa-link text-lg"></i>
+      </div>
+      <h2 class="font-bold text-lg text-slate-900">External Websites</h2>
+      <p class="text-sm text-slate-500 mt-2 leading-7">
+        Once you leave Visco Compare, their policies apply. We are not responsible for external actions, transactions, or content found on third-party sites.
+      </p>
+    </div>
+
+  </section>
+
+  <div class="text-center mt-12">
+    <button type="button" onclick="location.href='homepage.html'" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-10 py-3.5 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+      I Understand & Accept
+    </button>
+    <p class="text-xs text-slate-400 mt-4">Last updated: <span id="updYear">2026</span></p>
+  </div>
 
 </main>
+
+<footer class="mt-24 bg-slate-950 text-white">
+
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+
+    <div>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
+
+      <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
+        ⚡ Smart Shopping Platform
+      </div>
+
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block">Home</a>
+        <a href="about.html" class="footer-link block">About Us</a>
+        <a href="explore.html" class="footer-link block">Explore</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block">Terms</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+
+</footer>
+
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+
+  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
+  </button>
+
+  <button onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
+
+</nav>
+
+<script>
+const y = new Date().getFullYear();
+document.getElementById("updYear").innerText = y;
+document.getElementById("footerYear").innerText = y;
+</script>
 
 </body>
 </html>
