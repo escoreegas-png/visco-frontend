@@ -134,6 +134,28 @@ a:focus-visible{
   outline-offset:2px;
 }
 
+/* HERO + SEARCH FIX */
+.hero-section{
+  position:relative;
+}
+
+.hero-inner{
+  position:relative;
+  z-index:10;
+}
+
+.glow-wrap{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+}
+
+#suggestBox{
+  z-index:9999 !important;
+}
+
 @media(max-width:768px){
   .mobile-grid{ grid-template-columns:repeat(2,1fr); }
   .hero-title{ font-size:34px !important; line-height:42px !important; }
@@ -183,12 +205,14 @@ a:focus-visible{
 
 </header>
 
-<section class="relative overflow-hidden hero-bg pt-32 pb-20">
+<section class="hero-section hero-bg pt-32 pb-20">
 
-  <div class="glow top-[-100px] right-[-100px]"></div>
-  <div class="glow bottom-[-120px] left-[-120px]"></div>
+  <div class="glow-wrap">
+    <div class="glow top-[-100px] right-[-100px]"></div>
+    <div class="glow bottom-[-120px] left-[-120px]"></div>
+  </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
+  <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
 
     <div class="text-center">
 
@@ -205,10 +229,10 @@ a:focus-visible{
         Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time with smart shopping technology.
       </p>
 
-      <form id="searchForm" role="search" class="max-w-3xl mx-auto mt-10 relative" onsubmit="return handleSearchSubmit(event)">
+      <form id="searchForm" role="search" class="max-w-3xl mx-auto mt-10 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
 
         <label for="searchInput" class="sr-only">Search products</label>
-        <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[20px]" aria-hidden="true"></i>
+        <i class="fa-solid fa-magnifying-glass absolute left-5 top-[26px] -translate-y-1/2 text-blue-700 text-[20px] z-10" aria-hidden="true"></i>
 
         <input
           id="searchInput"
@@ -219,10 +243,10 @@ a:focus-visible{
           aria-label="Search products"
           aria-autocomplete="list"
           aria-controls="suggestBox"
-          class="w-full bg-white border border-slate-200 rounded-3xl pl-14 pr-5 py-5 shadow-2xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition text-[15px]"
+          class="w-full bg-white border border-slate-200 rounded-3xl pl-14 pr-5 py-5 shadow-2xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition text-[15px] relative"
         />
 
-        <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden z-20 text-left max-h-80 overflow-y-auto"></div>
+        <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
 
       </form>
 
@@ -387,7 +411,7 @@ const categoryBar   = document.getElementById("categoryBar");
 const searchInput   = document.getElementById("searchInput");
 
 const state = {
-  mode: "trending",       // trending | category | search | deals
+  mode: "trending",
   query: "",
   category: "",
   page: 1,
@@ -397,8 +421,6 @@ const state = {
   suggestIndex: -1,
   suggestions: []
 };
-
-/* ---------- UTILITIES ---------- */
 
 function escapeHtml(str){
   if(str == null) return "";
@@ -427,8 +449,6 @@ function handleImgError(img){
   img.src = PLACEHOLDER_IMG;
 }
 
-/* ---------- LOCATION ---------- */
-
 async function getUserLocation(){
   const text = document.getElementById("userLocation");
   const original = text.innerText;
@@ -447,7 +467,7 @@ async function getUserLocation(){
         localStorage.setItem("userLat", lat);
         localStorage.setItem("userLng", lon);
 
-        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`, {
+        const r = await fetch(`[nominatim.openstreetmap.org](https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon})`, {
           headers: { "Accept": "application/json" }
         });
         const d = await r.json();
@@ -473,8 +493,6 @@ if(savedLocation){
   document.getElementById("userLocation").innerText = savedLocation;
 }
 
-/* ---------- AUTH ---------- */
-
 const loginBtn = document.getElementById("loginBtn");
 const token = localStorage.getItem("token");
 
@@ -491,8 +509,6 @@ if(token){
   loginBtn.onclick = () => { location.href = "index.html"; };
 }
 
-/* ---------- API ---------- */
-
 async function apiGet(path, { signal } = {}){
   const res = await fetch(API + path, { signal });
   if(!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -500,8 +516,6 @@ async function apiGet(path, { signal } = {}){
   if(!json.success) throw new Error(json.error || "Bad response");
   return json;
 }
-
-/* ---------- RENDER ---------- */
 
 function skeletonGrid(n = 8){
   productGrid.setAttribute("aria-busy", "true");
@@ -637,8 +651,6 @@ function compare(id){
   window.location = "detailspage.html";
 }
 
-/* ---------- LOADERS ---------- */
-
 async function loadTrending(reset = true){
   state.mode = "trending";
   sectionTitle.innerText = "Trending Deals";
@@ -730,7 +742,7 @@ loadMoreBtn.addEventListener("click", async () => {
     }
     updateLoadMore();
   }catch{
-    state.page -= 1; // rollback
+    state.page -= 1;
   }finally{
     loadMoreBtn.disabled = false;
     loadMoreBtn.innerText = originalText;
@@ -747,8 +759,6 @@ function errorBlock(retryFn){
     </div>
   `;
 }
-
-/* ---------- CATEGORIES ---------- */
 
 async function loadCategories(){
   try{
@@ -786,9 +796,7 @@ async function loadCategories(){
     });
 
     categoryBar.appendChild(frag);
-  }catch{
-    /* silent — categories are non-critical */
-  }
+  }catch{}
 }
 
 document.querySelector('.category-btn[data-category=""]').addEventListener("click", (e) => {
@@ -801,8 +809,6 @@ document.querySelector('.category-btn[data-category=""]').addEventListener("clic
   loadTrending(true);
   setActiveNav("home");
 });
-
-/* ---------- SEARCH + SUGGEST ---------- */
 
 let searchTimer, suggestTimer;
 let suggestAbort;
@@ -835,7 +841,6 @@ searchInput.addEventListener("input", (e) => {
     return;
   }
 
-  // Suggestions
   suggestTimer = setTimeout(async () => {
     try{
       suggestAbort = new AbortController();
@@ -872,7 +877,6 @@ searchInput.addEventListener("input", (e) => {
     }
   }, 250);
 
-  // Actual search
   searchTimer = setTimeout(() => {
     loadSearch(q, true);
   }, 500);
@@ -916,8 +920,6 @@ document.addEventListener("click", (e) => {
     suggestBox.classList.add("hidden");
   }
 });
-
-/* ---------- NAV ---------- */
 
 function setActiveNav(key){
   document.querySelectorAll(".nav-btn").forEach(btn => {
@@ -976,8 +978,6 @@ function goAccount(){
   setActiveNav("account");
   location.href = "account.html";
 }
-
-/* ---------- INIT ---------- */
 
 document.getElementById("footerYear").innerText = new Date().getFullYear();
 
