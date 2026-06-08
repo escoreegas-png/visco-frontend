@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>My Account - Visco Compare</title>
 
-<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap)" rel="stylesheet"/>
+<title>Account | Visco Compare</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 
 *{
+  font-family:'Poppins',sans-serif;
   margin:0;
   padding:0;
   box-sizing:border-box;
@@ -17,245 +23,57 @@
 
 :root{
   --primary:#2563eb;
-  --primary-hover:#1d4ed8;
-  --primary-light:#93c5fd;
+  --primary-dark:#1d4ed8;
   --primary-soft:#dbeafe;
-
-  --bg:#f8fafc;
+  --bg:#f8fbff;
   --card:#ffffff;
-
+  --border:#e2e8f0;
   --text:#0f172a;
   --muted:#64748b;
-
-  --border:#e2e8f0;
 }
 
 body{
-  font-family:'Poppins',sans-serif;
   background:var(--bg);
+  overflow-x:hidden;
   color:var(--text);
+  padding-bottom:90px;
 }
 
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 24px;
-  background:white;
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  z-index:100;
+.glass{
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
 
-.logo img{
-  width:65px;
-  height:65px;
-  border-radius:18px;
-  object-fit:contain;
-  box-shadow:0 10px 25px rgba(37,99,235,0.15);
-}
-
-.logo span{
-  font-size:26px;
-  font-weight:700;
-  color:var(--primary);
-}
-
-.home-btn{
-  padding:12px 20px;
-  border-radius:14px;
-  background:var(--primary);
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-  transition:0.25s;
-}
-
-.home-btn:hover{
-  background:var(--primary-hover);
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-.profile-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:30px;
-  padding:40px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.05);
-  position:relative;
-  overflow:hidden;
-}
-
-.profile-card::before{
-  content:"";
+.glow{
   position:absolute;
-  width:300px;
-  height:300px;
-  background:rgba(37,99,235,0.10);
-  filter:blur(100px);
-  top:-120px;
-  right:-120px;
-  border-radius:50%;
-}
-
-.profile-header{
-  display:flex;
-  align-items:center;
-  gap:25px;
-  flex-wrap:wrap;
-}
-
-.avatar{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:42px;
-  font-weight:700;
-  box-shadow:0 15px 35px rgba(37,99,235,0.25);
-}
-
-.user-info h1{
-  font-size:34px;
-  margin-bottom:8px;
-}
-
-.user-info p{
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.8;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  margin-top:12px;
-  padding:10px 18px;
-  background:var(--primary-soft);
-  border:1px solid var(--primary-light);
+  width:450px;
+  height:450px;
   border-radius:999px;
-  color:var(--primary-hover);
-  font-size:13px;
-  font-weight:600;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  margin-top:35px;
-}
-
-.info-card{
+.product-card{
+  transition:.3s ease;
   background:white;
   border:1px solid var(--border);
-  border-radius:22px;
-  padding:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.04);
-  transition:0.25s;
 }
 
-.info-card:hover{
+.product-card:hover{
   transform:translateY(-4px);
-  border-color:rgba(37,99,235,0.25);
-  box-shadow:0 15px 35px rgba(37,99,235,0.10);
+  box-shadow:0 12px 30px rgba(37,99,235,0.10);
 }
 
-.info-card h3{
-  font-size:18px;
-  margin-bottom:16px;
-  color:var(--text);
-}
-
-.info{
-  margin-bottom:14px;
-}
-
-.label{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:4px;
-}
-
-.value{
-  font-size:15px;
-  font-weight:600;
-  color:var(--text);
-}
-
-.action-buttons{
-  display:flex;
-  gap:15px;
-  margin-top:35px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  padding:14px 22px;
-  border:none;
-  border-radius:16px;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.25s;
-}
-
-.primary-btn{
-  background:var(--primary);
+.footer-link:hover{
   color:white;
-}
-
-.primary-btn:hover{
-  background:var(--primary-hover);
-  transform:translateY(-2px);
-}
-
-.secondary-btn{
-  background:white;
-  border:1px solid var(--border);
-  color:var(--text);
-}
-
-.secondary-btn:hover{
-  background:#f1f5f9;
-}
-
-@media(max-width:700px){
-  .profile-card{
-    padding:28px 20px;
-    border-radius:24px;
-  }
-  .profile-header{
-    flex-direction:column;
-    text-align:center;
-  }
-  .user-info h1{
-    font-size:28px;
-  }
-  .logo span{
-    font-size:20px;
-  }
-  .logo img{
-    width:55px;
-    height:55px;
-  }
+  transform:translateX(4px);
 }
 
 </style>
@@ -263,120 +81,294 @@ body{
 
 <body>
 
-<div class="topbar">
-  <div class="logo">
-    <img src="logo.png" alt="Logo">
-    <span>Visco Compare</span>
-  </div>
-  <a href="homepage.html" class="home-btn">Home</a>
-</div>
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
-<div class="container">
-  <div class="profile-card">
+  <div class="flex items-center gap-3">
 
-    <div class="profile-header">
-      <div class="avatar" id="avatar">U</div>
-      <div class="user-info">
-        <h1 id="userName">Guest User</h1>
-        <p id="userMobile">+91XXXXXXXXXX</p>
-        <div class="badge" id="userBadge">👤 Guest Account</div>
-      </div>
+    <button onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
+    </button>
+
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
 
-    <div class="grid">
-
-      <div class="info-card">
-        <h3>📄 Personal Details</h3>
-        <div class="info">
-          <div class="label">Full Name</div>
-          <div class="value" id="detailName">Guest User</div>
-        </div>
-        <div class="info">
-          <div class="label">Mobile Number</div>
-          <div class="value" id="detailMobile">Not Available</div>
-        </div>
-        <div class="info">
-          <div class="label">Account Type</div>
-          <div class="value" id="detailType">Guest</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <h3>🛍️ Shopping Details</h3>
-        <div class="info">
-          <div class="label">Wishlist Items</div>
-          <div class="value">12 Products</div>
-        </div>
-        <div class="info">
-          <div class="label">Price Alerts</div>
-          <div class="value">5 Active Alerts</div>
-        </div>
-        <div class="info">
-          <div class="label">Recent Searches</div>
-          <div class="value">Smartphones, Shoes</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <h3>⚡ Account Activity</h3>
-        <div class="info">
-          <div class="label">Member Since</div>
-          <div class="value">2026</div>
-        </div>
-        <div class="info">
-          <div class="label">Last Login</div>
-          <div class="value">Today</div>
-        </div>
-        <div class="info">
-          <div class="label">Status</div>
-          <div class="value">Active</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="action-buttons">
-      <button class="btn primary-btn" onclick="editProfile()">Edit Profile</button>
-      <button class="btn secondary-btn" onclick="logout()">Logout</button>
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">My Account</p>
     </div>
 
   </div>
-</div>
+
+  <button class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
+    <i class="fa-solid fa-gear text-blue-700"></i>
+  </button>
+
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden hero-bg pt-28 pb-12">
+
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
+
+  <div class="relative z-10 max-w-3xl mx-auto px-4 md:px-10 text-center">
+
+    <div class="relative inline-block mb-5">
+
+      <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-4xl font-extrabold shadow-2xl shadow-blue-200">
+        <span id="user-initial">JD</span>
+      </div>
+
+      <button class="absolute bottom-1 right-1 bg-white p-2.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 transition">
+        <i class="fa-solid fa-pen text-blue-700 text-xs"></i>
+      </button>
+
+    </div>
+
+    <h1 class="text-[28px] font-extrabold tracking-[-1px] text-slate-900" id="user-name">USER</h1>
+
+    <div class="flex justify-center items-center gap-2 mt-2 text-slate-500 text-sm">
+      <span id="user-phone">+91 9999999999</span>
+      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+      <span class="text-green-600 font-bold text-xs">Active</span>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- MAIN -->
+<main class="max-w-3xl mx-auto px-4 md:px-10">
+
+  <!-- STATS -->
+  <section class="grid grid-cols-2 gap-4 mb-8">
+
+    <div class="product-card rounded-3xl p-5 text-center">
+      <div class="w-12 h-12 mx-auto rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-bell text-blue-700"></i>
+      </div>
+      <div class="text-blue-700 text-[28px] font-extrabold">12</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Alerts</div>
+    </div>
+
+    <div class="product-card rounded-3xl p-5 text-center">
+      <div class="w-12 h-12 mx-auto rounded-xl bg-green-50 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-piggy-bank text-green-600"></i>
+      </div>
+      <div class="text-green-600 text-[28px] font-extrabold">₹240</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Saved</div>
+    </div>
+
+  </section>
+
+  <!-- MENU -->
+  <section class="space-y-3 mb-8">
+
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
+          <i class="fa-solid fa-heart text-red-500"></i>
+        </div>
+        <div>
+          <div class="font-semibold">Wishlist</div>
+          <div class="text-xs text-slate-400">Your saved products</div>
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-right text-slate-400"></i>
+    </div>
+
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center">
+          <i class="fa-solid fa-bell text-amber-500"></i>
+        </div>
+        <div>
+          <div class="font-semibold">Price Alerts</div>
+          <div class="text-xs text-slate-400">Get notified on price drops</div>
+        </div>
+      </div>
+      <span class="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">3</span>
+    </div>
+
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-clock-rotate-left text-slate-600"></i>
+        </div>
+        <div>
+          <div class="font-semibold">My Activity</div>
+          <div class="text-xs text-slate-400">Recent views and searches</div>
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-right text-slate-400"></i>
+    </div>
+
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+      <div class="flex items-center gap-4">
+        <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
+          <i class="fa-solid fa-circle-question text-blue-700"></i>
+        </div>
+        <div>
+          <div class="font-semibold">Support</div>
+          <div class="text-xs text-slate-400">Help & FAQs</div>
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-right text-slate-400"></i>
+    </div>
+
+  </section>
+
+  <!-- PRO CARD -->
+  <section class="mb-8 p-7 rounded-3xl text-white bg-gradient-to-br from-blue-700 to-blue-500 relative overflow-hidden shadow-xl shadow-blue-100">
+
+    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+    <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
+
+    <div class="relative z-10">
+
+      <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold mb-3">
+        ⚡ PREMIUM
+      </div>
+
+      <h2 class="text-2xl font-extrabold">Upgrade to Pro</h2>
+      <p class="text-sm opacity-90 mt-2 max-w-xs">Real-time price tracking, smart alerts & exclusive deals</p>
+
+      <button class="mt-5 bg-white text-blue-700 px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition shadow-lg">
+        Learn More →
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- LOGOUT -->
+  <button onclick="logout()" class="w-full product-card rounded-2xl p-4 text-red-600 font-bold border-red-100 hover:bg-red-50 transition flex items-center justify-center gap-3">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout Account
+  </button>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="mt-16 bg-slate-950 text-white">
+
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+
+    <div>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
+
+      <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
+        ⚡ Smart Shopping Platform
+      </div>
+
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <div class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block transition">Home</a>
+        <a href="about.html" class="footer-link block transition">About Us</a>
+        <a href="explore.html" class="footer-link block transition">Explore</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <div class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block transition">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block transition">Terms</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-x-twitter"></i>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+    © 2026 Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+
+</footer>
+
+<!-- BOTTOM NAV -->
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+
+  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
+  </button>
+
+  <button class="flex flex-col items-center text-blue-700">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
+
+</nav>
 
 <script>
-const user = JSON.parse(localStorage.getItem("user"));
-const guest = localStorage.getItem("guest");
 
-if(user){
-  document.getElementById("userName").innerText = user.name || "User";
-  document.getElementById("detailName").innerText = user.name || "User";
-  document.getElementById("userMobile").innerText = user.phone || "Not Available";
-  document.getElementById("detailMobile").innerText = user.phone || "Not Available";
-  document.getElementById("detailType").innerText = "Registered User";
-  document.getElementById("userBadge").innerHTML = "✅ Registered Account";
-  document.getElementById("avatar").innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
-}
+function loadUser(){
+  const name = localStorage.getItem("userName") || "John Doe";
+  const phone = localStorage.getItem("userPhone") || "+91 9999999999";
 
-if(guest){
-  document.getElementById("userName").innerText = "Guest User";
-  document.getElementById("detailName").innerText = "Guest User";
-  document.getElementById("userMobile").innerText = "No mobile number";
-  document.getElementById("detailMobile").innerText = "Not Available";
-  document.getElementById("detailType").innerText = "Guest";
-  document.getElementById("userBadge").innerHTML = "👤 Guest Account";
-  document.getElementById("avatar").innerText = "G";
-}
+  document.getElementById("user-name").innerText = name;
+  document.getElementById("user-phone").innerText = phone;
 
-function editProfile(){
-  alert("Profile edit feature coming soon 🚀");
+  const initial = name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  document.getElementById("user-initial").innerText = initial || "JD";
 }
 
 function logout(){
   localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userPhone");
   localStorage.removeItem("guest");
   window.location.href = "index.html";
 }
+
+window.onload = loadUser;
+
 </script>
 
 </body>
