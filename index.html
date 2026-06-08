@@ -1,135 +1,188 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Login | Visco Compare</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Material+Symbols+Outlined" rel="stylesheet"/>
-
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: "#004ac6",
-        background: "#f7f9fb",
-        "on-surface-variant": "#434655",
-        "primary-container": "#2563eb",
-      }
-    }
-  }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
+
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
 body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:#f7f9fb;
+  background:var(--bg);
+  overflow-x:hidden;
+  color:var(--text);
+  min-height:100vh;
 }
 
 .glass{
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border:1px solid rgba(0,0,0,0.05);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-.blob{
-  position:absolute;
-  width:300px;
-  height:300px;
-  background:#2563eb;
-  filter:blur(90px);
-  opacity:0.12;
-  border-radius:50%;
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
 }
+
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
+}
+
+.input-field{
+  width:100%;
+  padding:16px 18px 16px 50px;
+  border-radius:16px;
+  background:white;
+  border:1px solid var(--border);
+  outline:none;
+  font-size:15px;
+  transition:.3s ease;
+}
+
+.input-field:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+}
+
+.input-wrap{ position:relative; }
+
+.input-wrap i.field-icon{
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--primary);
+  font-size:16px;
+}
+
 </style>
 </head>
 
-<body class="text-slate-800 overflow-x-hidden">
+<body>
 
-<div class="fixed inset-0 pointer-events-none">
-  <div class="blob top-[-120px] left-[-120px]"></div>
-  <div class="blob bottom-[-120px] right-[-120px]"></div>
-</div>
-
-<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md h-16 flex items-center px-4 justify-between border-b">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
   <div class="flex items-center gap-3">
 
-    <button onclick="history.back()"
-      class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition">
-      <span class="material-symbols-outlined text-primary">arrow_back</span>
+    <button onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
 
-    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-      <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6"/>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
 
-    <div class="leading-tight">
-      <div class="font-bold text-primary">Visco Compare</div>
-      <div class="text-[10px] text-slate-500 uppercase tracking-widest">
-        Smart Price Engine
-      </div>
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">Smart Shopping Platform</p>
     </div>
 
   </div>
-
-  <span class="material-symbols-outlined text-primary text-3xl">
-    account_circle
-  </span>
 
 </header>
 
-<main class="min-h-screen flex items-center justify-center px-4 pt-24 pb-10">
+<!-- MAIN -->
+<main class="relative hero-bg min-h-screen pt-24 pb-10 flex items-center justify-center px-4 overflow-hidden">
 
-<div class="glass w-full max-w-md rounded-2xl p-8 shadow-xl">
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
 
-  <div class="text-center mb-6">
-    <h1 class="text-2xl font-bold text-primary">Welcome</h1>
-    <p class="text-sm text-slate-500">Sign in to Visco Compare</p>
+  <div class="relative z-10 w-full max-w-md">
+
+    <div class="bg-white rounded-3xl p-8 md:p-10 shadow-2xl border border-slate-100">
+
+      <div class="text-center mb-8">
+
+        <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-4 py-1.5 rounded-full font-semibold text-xs mb-5">
+          🔥 Welcome Back
+        </div>
+
+        <h1 class="text-[28px] font-extrabold tracking-[-1px] text-slate-900">
+          Sign in to your account
+        </h1>
+
+        <p class="text-slate-500 text-sm mt-2">
+          Track prices and unlock the best deals
+        </p>
+
+      </div>
+
+      <form id="loginForm" class="space-y-4">
+
+        <div class="input-wrap">
+          <i class="fa-solid fa-user field-icon"></i>
+          <input id="name" placeholder="Your Name" class="input-field"/>
+        </div>
+
+        <div class="input-wrap">
+          <i class="fa-solid fa-phone field-icon"></i>
+          <input id="phone" placeholder="+91XXXXXXXXXX" required class="input-field"/>
+        </div>
+
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock field-icon"></i>
+          <input id="password" type="password" placeholder="Password" required minlength="4" class="input-field"/>
+        </div>
+
+        <button id="loginBtn" type="submit" class="w-full bg-gradient-to-r from-blue-700 to-blue-500 text-white py-3.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-[1.02] transition">
+          Login
+        </button>
+
+      </form>
+
+      <button onclick="signup()" class="w-full mt-3 bg-white border border-blue-200 text-blue-700 py-3.5 rounded-xl font-semibold hover:bg-blue-50 transition">
+        Create Account
+      </button>
+
+      <button onclick="guestMode()" class="w-full mt-3 bg-slate-100 text-slate-700 py-3.5 rounded-xl font-semibold hover:bg-slate-200 transition">
+        Continue as Guest
+      </button>
+
+      <p class="text-center text-xs text-slate-400 mt-6 leading-5">
+        By continuing, you agree to our <span class="text-blue-700 font-semibold">Terms</span> &amp; <span class="text-blue-700 font-semibold">Privacy Policy</span>.
+      </p>
+
+    </div>
+
   </div>
-
-  <form id="loginForm" class="space-y-4">
-
-    <input id="name" placeholder="Your Name"
-      class="w-full p-3 rounded-xl bg-white/60 border outline-none focus:ring-2 focus:ring-primary"/>
-
-    <input id="phone" placeholder="+91XXXXXXXXXX" required
-      class="w-full p-3 rounded-xl bg-white/60 border outline-none focus:ring-2 focus:ring-primary"/>
-
-    <input id="password" type="password" placeholder="Password" required minlength="4"
-      class="w-full p-3 rounded-xl bg-white/60 border outline-none focus:ring-2 focus:ring-primary"/>
-
-    <button id="loginBtn" class="w-full py-3 rounded-full bg-primary text-white font-semibold active:scale-95 transition">
-      Login
-    </button>
-
-  </form>
-
-  <button onclick="signup()"
-    class="w-full mt-3 py-3 rounded-full border border-primary text-primary font-semibold hover:bg-primary/5">
-    Create Account
-  </button>
-
-  <button onclick="guestMode()"
-    class="w-full mt-3 py-3 rounded-full bg-black/5 text-slate-700">
-    Continue as Guest
-  </button>
-
-  <p class="text-center text-xs text-slate-400 mt-6">
-    By continuing, you agree to our Terms & Privacy Policy.
-  </p>
-
-</div>
 
 </main>
 
-<div id="toast"
-  class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-full text-sm opacity-0 transition pointer-events-none z-[100]">
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-semibold opacity-0 transition pointer-events-none z-[100] shadow-2xl">
 </div>
 
 <script>
@@ -141,21 +194,18 @@ function showToast(msg){
   t.innerText = msg;
   t.classList.remove("opacity-0");
   t.classList.add("opacity-100");
-
   setTimeout(()=>{
     t.classList.add("opacity-0");
     t.classList.remove("opacity-100");
   },2200);
 }
 
-// If already logged in, skip login
 if(localStorage.getItem("token") || localStorage.getItem("guest")){
   window.location.href = "homepage.html";
 }
 
 document.getElementById("loginForm").addEventListener("submit", async (e)=>{
   e.preventDefault();
-
   const btn = document.getElementById("loginBtn");
   btn.innerText = "Logging in...";
   btn.disabled = true;
@@ -170,7 +220,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ name, phone, password })
     });
-
     const data = await res.json().catch(()=>({}));
 
     if(res.ok){
@@ -183,7 +232,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e)=>{
     }else{
       showToast(data.message || data.error || "Login Failed");
     }
-
   }catch(err){
     showToast("Network Error");
   }
@@ -208,7 +256,6 @@ async function signup(){
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ name, phone, password })
     });
-
     const data = await res.json().catch(()=>({}));
 
     if(res.ok){
@@ -216,7 +263,6 @@ async function signup(){
     }else{
       showToast(data.message || data.error || "Signup Failed");
     }
-
   }catch(err){
     showToast("Server Error");
   }
@@ -226,7 +272,7 @@ function guestMode(){
   localStorage.setItem("guest","true");
   localStorage.removeItem("token");
   showToast("Guest Mode Activated");
-  setTimeout(()=>window.location.href="homepage.html",);
+  setTimeout(()=>window.location.href="index.html", 800);
 }
 
 </script>
