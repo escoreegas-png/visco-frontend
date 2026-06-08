@@ -4,11 +4,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
 
 <title>Account | Visco Compare</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
@@ -58,6 +61,7 @@ body{
   background:rgba(37,99,235,0.12);
   filter:blur(100px);
   z-index:0;
+  pointer-events:none;
 }
 
 .product-card{
@@ -71,6 +75,10 @@ body{
   box-shadow:0 12px 30px rgba(37,99,235,0.10);
 }
 
+.footer-link{
+  transition:all .2s ease;
+}
+
 .footer-link:hover{
   color:white;
   transform:translateX(4px);
@@ -81,17 +89,16 @@ body{
 
 <body>
 
-<!-- HEADER -->
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
 
   <div class="flex items-center gap-3">
 
-    <button onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+    <button type="button" onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
       <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
 
     <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
-      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
 
     <div>
@@ -101,13 +108,12 @@ body{
 
   </div>
 
-  <button class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
+  <button type="button" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
     <i class="fa-solid fa-gear text-blue-700"></i>
   </button>
 
 </header>
 
-<!-- HERO -->
 <section class="relative overflow-hidden hero-bg pt-28 pb-12">
 
   <div class="glow top-[-100px] right-[-100px]"></div>
@@ -121,7 +127,7 @@ body{
         <span id="user-initial">JD</span>
       </div>
 
-      <button class="absolute bottom-1 right-1 bg-white p-2.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 transition">
+      <button type="button" class="absolute bottom-1 right-1 bg-white p-2.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 transition">
         <i class="fa-solid fa-pen text-blue-700 text-xs"></i>
       </button>
 
@@ -139,10 +145,8 @@ body{
 
 </section>
 
-<!-- MAIN -->
 <main class="max-w-3xl mx-auto px-4 md:px-10">
 
-  <!-- STATS -->
   <section class="grid grid-cols-2 gap-4 mb-8">
 
     <div class="product-card rounded-3xl p-5 text-center">
@@ -163,7 +167,6 @@ body{
 
   </section>
 
-  <!-- MENU -->
   <section class="space-y-3 mb-8">
 
     <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
@@ -220,7 +223,6 @@ body{
 
   </section>
 
-  <!-- PRO CARD -->
   <section class="mb-8 p-7 rounded-3xl text-white bg-gradient-to-br from-blue-700 to-blue-500 relative overflow-hidden shadow-xl shadow-blue-100">
 
     <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
@@ -235,7 +237,7 @@ body{
       <h2 class="text-2xl font-extrabold">Upgrade to Pro</h2>
       <p class="text-sm opacity-90 mt-2 max-w-xs">Real-time price tracking, smart alerts & exclusive deals</p>
 
-      <button class="mt-5 bg-white text-blue-700 px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition shadow-lg">
+      <button type="button" class="mt-5 bg-white text-blue-700 px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition shadow-lg">
         Learn More →
       </button>
 
@@ -243,15 +245,13 @@ body{
 
   </section>
 
-  <!-- LOGOUT -->
-  <button onclick="logout()" class="w-full product-card rounded-2xl p-4 text-red-600 font-bold border-red-100 hover:bg-red-50 transition flex items-center justify-center gap-3">
+  <button type="button" onclick="logout()" class="w-full product-card rounded-2xl p-4 text-red-600 font-bold border-red-100 hover:bg-red-50 transition flex items-center justify-center gap-3">
     <i class="fa-solid fa-right-from-bracket"></i>
     Logout Account
   </button>
 
 </main>
 
-<!-- FOOTER -->
 <footer class="mt-16 bg-slate-950 text-white">
 
   <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
@@ -277,46 +277,39 @@ body{
 
     <div>
       <h3 class="font-bold text-lg mb-5">Quick Links</h3>
-      <div class="space-y-3 text-slate-400">
-        <a href="homepage.html" class="footer-link block transition">Home</a>
-        <a href="about.html" class="footer-link block transition">About Us</a>
-        <a href="explore.html" class="footer-link block transition">Explore</a>
-      </div>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block">Home</a>
+        <a href="about.html" class="footer-link block">About Us</a>
+        <a href="explore.html" class="footer-link block">Explore</a>
+      </nav>
     </div>
 
     <div>
       <h3 class="font-bold text-lg mb-5">Legal</h3>
-      <div class="space-y-3 text-slate-400">
-        <a href="privacy.html" class="footer-link block transition">Privacy Policy</a>
-        <a href="terms.html" class="footer-link block transition">Terms</a>
-      </div>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block">Terms</a>
+      </nav>
     </div>
 
     <div>
       <h3 class="font-bold text-lg mb-5">Connect</h3>
       <div class="flex gap-3">
-        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
-          <i class="fa-brands fa-instagram"></i>
-        </div>
-        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
-          <i class="fa-brands fa-x-twitter"></i>
-        </div>
-        <div class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center cursor-pointer">
-          <i class="fa-brands fa-linkedin-in"></i>
-        </div>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
 
   </div>
 
   <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
-    © 2026 Visco Compare. All rights reserved.<br>
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
     <span class="text-[12px]">We may earn commissions from affiliate links.</span>
   </div>
 
 </footer>
 
-<!-- BOTTOM NAV -->
 <nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
 
   <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
@@ -347,6 +340,8 @@ body{
 </nav>
 
 <script>
+
+document.getElementById("footerYear").innerText = new Date().getFullYear();
 
 function loadUser(){
   const name = localStorage.getItem("userName") || "John Doe";
