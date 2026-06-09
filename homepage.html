@@ -7,6 +7,10 @@
 <meta name="theme-color" content="#2563eb"/>
 <title>Visco Compare — Smart Price Comparison</title>
 
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<link rel="apple-touch-icon" href="favicon.png"/>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +63,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .hide-scrollbar::-webkit-scrollbar{ display:none; }
 .hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
 
-/* Buyhatke-style product card */
+/* UNIFORM PRODUCT CARD - fixed height layout */
 .product-card{
   background:white;
   border:1px solid var(--border);
@@ -69,6 +73,8 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   display:flex;
   flex-direction:column;
   position:relative;
+  height:100%;
+  min-height:380px;
 }
 .product-card:hover{
   transform:translateY(-4px);
@@ -84,9 +90,11 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-shrink:0;
 }
 .pc-image-wrap img{
-  width:100%; height:100%;
+  max-width:100%; max-height:100%;
+  width:auto; height:auto;
   object-fit:contain;
   transition:transform .3s ease;
 }
@@ -102,9 +110,18 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   padding:4px 9px;
   border-radius:6px;
   letter-spacing:0.3px;
+  z-index:2;
 }
 
-.pc-body{ padding:12px 14px 14px; display:flex; flex-direction:column; flex:1; }
+.pc-body{
+  padding:12px 14px 14px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  justify-content:space-between;
+}
+
+.pc-top-section{ display:flex; flex-direction:column; }
 
 .pc-title{
   font-size:13px;
@@ -115,7 +132,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  min-height:36px;
+  height:36px;
   margin-bottom:8px;
 }
 
@@ -131,17 +148,28 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   border-radius:4px;
   width:fit-content;
   margin-bottom:8px;
+  height:18px;
 }
+.pc-rating-placeholder{ height:18px; margin-bottom:8px; }
 
 .pc-price-row{
   display:flex;
   align-items:baseline;
   gap:8px;
   margin-bottom:4px;
+  min-height:24px;
 }
 .pc-price{ font-size:18px; font-weight:800; color:#0f172a; }
 .pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; }
-.pc-saving{ font-size:11px; color:#10b981; font-weight:600; margin-bottom:10px; }
+.pc-saving{
+  font-size:11px;
+  color:#10b981;
+  font-weight:600;
+  margin-bottom:10px;
+  height:14px;
+}
+
+.pc-bottom-section{ display:flex; flex-direction:column; gap:8px; }
 
 .pc-stores{
   display:flex;
@@ -150,16 +178,17 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   padding:8px 10px;
   background:#f1f5f9;
   border-radius:10px;
-  margin-bottom:10px;
   font-size:11px;
   color:#475569;
   font-weight:600;
+  height:32px;
 }
 .pc-store-dot{
   display:inline-block;
   width:6px; height:6px;
   border-radius:50%;
   background:#2563eb;
+  flex-shrink:0;
 }
 
 .pc-cta{
@@ -194,6 +223,8 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   100%{ background-position:-200% 0; }
 }
 
+.skeleton-card{ height:380px; }
+
 .suggest-item.active{ background:#eff6ff; }
 
 button:focus-visible, input:focus-visible, a:focus-visible{
@@ -210,8 +241,10 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 @media(max-width:768px){
   .hero-title{ font-size:34px !important; line-height:42px !important; }
   .pc-image-wrap{ padding:12px; }
-  .pc-title{ font-size:12px; min-height:32px; }
+  .pc-title{ font-size:12px; height:32px; }
   .pc-price{ font-size:16px; }
+  .product-card{ min-height:340px; }
+  .skeleton-card{ height:340px; }
 }
 </style>
 </head>
@@ -331,7 +364,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       <nav class="space-y-3 text-slate-400">
         <a href="homepage.html" class="footer-link block">Home</a>
         <a href="about.html" class="footer-link block">About Us</a>
-        <a href="explore.html" class="footer-link block">Explore</a>
+        <a href="homepage.html" class="footer-link block">Explore</a>
       </nav>
     </div>
 
@@ -474,16 +507,7 @@ async function apiGet(path, { signal } = {}){
 function skeletonGrid(n = 8){
   let html = "";
   for(let i = 0; i < n; i++){
-    html += `
-      <div class="product-card">
-        <div class="skeleton w-full aspect-square"></div>
-        <div class="p-3">
-          <div class="skeleton h-3 w-3/4 mb-2"></div>
-          <div class="skeleton h-3 w-1/2 mb-3"></div>
-          <div class="skeleton h-5 w-1/3 mb-3"></div>
-          <div class="skeleton h-8 w-full"></div>
-        </div>
-      </div>`;
+    html += `<div class="skeleton skeleton-card"></div>`;
   }
   productGrid.innerHTML = html;
 }
@@ -513,7 +537,7 @@ function renderProducts(products, append = false){
     const safeTitle  = escapeHtml(p.title || "Untitled Product");
     const safeImg    = escapeHtml(p.image || "");
     const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
-    const storesText = offers.length === 1 ? "1 store" : `${offers.length} stores`;
+    const storesText = offers.length === 1 ? "1 store" : `${offers.length || 0} stores`;
 
     const card = document.createElement("article");
     card.className = "product-card";
@@ -524,29 +548,32 @@ function renderProducts(products, append = false){
       </div>
 
       <div class="pc-body">
-        <div class="pc-title">${safeTitle}</div>
+        <div class="pc-top-section">
+          <div class="pc-title">${safeTitle}</div>
 
-        ${ratingNum ? `
-          <div class="pc-rating">
-            <i class="fa-solid fa-star" style="font-size:9px;"></i>
-            <span>${ratingNum}</span>
-          </div>` : ""}
+          ${ratingNum ? `
+            <div class="pc-rating">
+              <i class="fa-solid fa-star" style="font-size:9px;"></i>
+              <span>${ratingNum}</span>
+            </div>` : `<div class="pc-rating-placeholder"></div>`}
 
-        <div class="pc-price-row">
-          <span class="pc-price">₹${formatINR(lowest)}</span>
-          ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
+          <div class="pc-price-row">
+            <span class="pc-price">₹${formatINR(lowest)}</span>
+            ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
+          </div>
+          <div class="pc-saving">${saving > 0 ? `You save ₹${formatINR(saving)}` : ""}</div>
         </div>
-        ${saving > 0 ? `<div class="pc-saving">You save ₹${formatINR(saving)}</div>` : `<div style="height:4px;"></div>`}
 
-        ${offers.length ? `
+        <div class="pc-bottom-section">
           <div class="pc-stores">
             <span class="pc-store-dot"></span>
             <span>Compare across ${storesText}</span>
-          </div>` : ""}
+          </div>
 
-        <button class="pc-cta" type="button">
-          <i class="fa-solid fa-bolt"></i>View Deal
-        </button>
+          <button class="pc-cta" type="button">
+            <i class="fa-solid fa-bolt"></i>View Deal
+          </button>
+        </div>
       </div>
     `;
 
@@ -665,7 +692,6 @@ document.querySelector('.category-btn[data-category=""]').addEventListener("clic
   setActiveNav("home");
 });
 
-// Search now redirects to searchpage.html
 let suggestTimer;
 let suggestAbort;
 
@@ -765,7 +791,8 @@ function goSearch(){
 }
 
 function goExplore(){
-  window.location = "explore.html";
+  // Explore now redirects to homepage
+  window.location = "homepage.html";
 }
 
 async function goDrops(){
