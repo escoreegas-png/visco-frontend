@@ -31,50 +31,6 @@
   --muted:#64748b;
   --success:#22c55e;
 }
-  html, body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-* {
-  max-width: 100%;
-}/* Prevent long text from breaking layout */
-h1, h2, h3, p, div, span {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Product title */
-.hero-title {
-  word-break: break-word;
-}
-
-/* Images */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Canvas chart */
-#priceChart {
-  width: 100% !important;
-  max-width: 100%;
-}
-
-/* Main container */
-main {
-  overflow-x: hidden;
-}
-
-/* Related products */
-#relatedGrid {
-  overflow-x: hidden;
-}
-
-/* Price cards */
-.info-card {
-  min-width: 0;
-}
 
 body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom:90px; }
 
@@ -310,10 +266,43 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
     </div>
   </div>
 
-  <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
-    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
-    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
-  </div>
+  <div class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm leading-7">
+
+  <p>
+
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.
+
+  </p>
+
+
+
+  <p class="mt-3 text-[12px] max-w-4xl mx-auto px-4">
+
+    Prices, availability, ratings, specifications, offers, and product details are
+
+    collected from third-party retailers and may change without notice.
+
+    While we strive to keep information accurate and up to date, Visco Compare
+
+    cannot guarantee the completeness, accuracy, or reliability of all listings.
+
+    Please verify final pricing and product information on the retailer's website
+
+    before making a purchase.
+
+  </p>
+
+
+
+  <p class="mt-3 text-[12px] text-slate-400">
+
+    Visco Compare may earn a commission from qualifying purchases made through
+
+    affiliate links at no additional cost to you.
+
+  </p>
+
+</div>
 </footer>
 
 <nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
