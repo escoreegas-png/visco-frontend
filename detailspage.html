@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
+<meta name="description" content="Compare prices across top stores on Visco Compare."/>
 <title>Product Details | Visco Compare</title>
+
+<link rel="icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<link rel="apple-touch-icon" href="favicon.png"/>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -43,6 +49,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   background:rgba(37,99,235,0.12);
   filter:blur(100px);
   z-index:0;
+  pointer-events:none;
 }
 
 .skeleton{
@@ -78,7 +85,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 
 .footer-link:hover{ color:white; transform:translateX(4px); }
 
-/* Buyhatke-style related card */
+/* UNIFORM Related Product Card */
 .rp-card{
   background:white;
   border:1px solid var(--border);
@@ -88,6 +95,8 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   cursor:pointer;
   display:flex;
   flex-direction:column;
+  height:100%;
+  min-height:300px;
 }
 .rp-card:hover{
   transform:translateY(-4px);
@@ -102,8 +111,14 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-shrink:0;
 }
-.rp-image-wrap img{ width:100%; height:100%; object-fit:contain; transition:transform .3s; }
+.rp-image-wrap img{
+  max-width:100%; max-height:100%;
+  width:auto; height:auto;
+  object-fit:contain;
+  transition:transform .3s;
+}
 .rp-card:hover .rp-image-wrap img{ transform:scale(1.05); }
 .rp-discount{
   position:absolute;
@@ -114,8 +129,15 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   font-weight:700;
   padding:3px 7px;
   border-radius:5px;
+  z-index:2;
 }
-.rp-body{ padding:10px 12px 12px; }
+.rp-body{
+  padding:10px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  justify-content:space-between;
+}
 .rp-title{
   font-size:12px;
   font-weight:500;
@@ -125,10 +147,16 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  min-height:34px;
+  height:34px;
   margin-bottom:6px;
 }
-.rp-price-row{ display:flex; align-items:baseline; gap:6px; margin-bottom:4px; }
+.rp-price-row{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  margin-bottom:4px;
+  min-height:22px;
+}
 .rp-price{ font-size:15px; font-weight:800; color:#0f172a; }
 .rp-mrp{ font-size:11px; color:#94a3b8; text-decoration:line-through; }
 .rp-stores{
@@ -142,13 +170,15 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   display:flex;
   align-items:center;
   gap:5px;
+  height:24px;
 }
-.rp-store-dot{ width:5px; height:5px; border-radius:50%; background:#2563eb; }
+.rp-store-dot{ width:5px; height:5px; border-radius:50%; background:#2563eb; flex-shrink:0; }
 
 @media(max-width:768px){
   .hero-title{ font-size:30px !important; line-height:38px !important; }
   .price-grid{ grid-template-columns:1fr !important; }
   .spec-grid{ grid-template-columns:1fr !important; }
+  .rp-card{ min-height:260px; }
 }
 </style>
 </head>
@@ -214,7 +244,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
       <div class="space-y-3 text-slate-400">
         <a href="homepage.html" class="footer-link block transition">Home</a>
         <a href="about.html" class="footer-link block transition">About Us</a>
-        <a href="explore.html" class="footer-link block transition">Explore</a>
+        <a href="homepage.html" class="footer-link block transition">Explore</a>
       </div>
     </div>
 
@@ -237,7 +267,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   </div>
 
   <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
-    © 2026 Visco Compare. All rights reserved.<br>
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
     <span class="text-[12px]">We may earn commissions from affiliate links.</span>
   </div>
 </footer>
@@ -251,7 +281,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
     <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Search</span>
   </button>
-  <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-compass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Explore</span>
   </button>
@@ -269,6 +299,8 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 const API = "https://visco1.onrender.com";
 const id  = localStorage.getItem("productId");
 let currentProduct = null;
+
+document.getElementById("footerYear").innerText = new Date().getFullYear();
 
 function goBack(){
   if(window.history.length > 1) window.history.back();
@@ -369,7 +401,7 @@ async function loadProduct(){
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div class="bg-slate-100 rounded-3xl flex items-center justify-center p-6 aspect-square">
             <img src="${p.image || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}"
-                 class="w-full h-full object-contain"
+                 class="max-w-full max-h-full w-auto h-auto object-contain"
                  onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x400?text=No+Image)'"/>
           </div>
 
@@ -576,10 +608,12 @@ async function loadRelated(){
           <img src="${rp.image || ''}" alt="${(rp.title || '').replace(/"/g,'&quot;')}" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/200x200?text=No+Image)'"/>
         </div>
         <div class="rp-body">
-          <div class="rp-title">${rp.title || ''}</div>
-          <div class="rp-price-row">
-            <span class="rp-price">₹${lowest.toLocaleString()}</span>
-            ${highest > lowest ? `<span class="rp-mrp">₹${highest.toLocaleString()}</span>` : ""}
+          <div>
+            <div class="rp-title">${rp.title || ''}</div>
+            <div class="rp-price-row">
+              <span class="rp-price">₹${lowest.toLocaleString()}</span>
+              ${highest > lowest ? `<span class="rp-mrp">₹${highest.toLocaleString()}</span>` : ""}
+            </div>
           </div>
           <div class="rp-stores">
             <span class="rp-store-dot"></span>
