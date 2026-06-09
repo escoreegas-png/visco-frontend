@@ -1,28 +1,20 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Visco Compare — Search results with smart filters and price comparison."/>
+<meta name="description" content="Visco Compare — Search results with smart filters."/>
 <meta name="theme-color" content="#2563eb"/>
-
 <title>Search Results — Visco Compare</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
-*{
-  font-family:'Poppins',sans-serif;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{ font-family:'Poppins',sans-serif; margin:0; padding:0; box-sizing:border-box; }
 
 :root{
   --primary:#2563eb;
@@ -36,18 +28,9 @@
 }
 
 html{ scroll-behavior:smooth; }
+body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom:90px; }
 
-body{
-  background:var(--bg);
-  overflow-x:hidden;
-  color:var(--text);
-  padding-bottom:90px;
-}
-
-.glass{
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-}
+.glass{ backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
 
 .hero-bg{
   background:
@@ -57,8 +40,7 @@ body{
 
 .glow{
   position:absolute;
-  width:450px;
-  height:450px;
+  width:450px; height:450px;
   border-radius:999px;
   background:rgba(37,99,235,0.12);
   filter:blur(100px);
@@ -69,25 +51,127 @@ body{
 .hide-scrollbar::-webkit-scrollbar{ display:none; }
 .hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
 
+/* Buyhatke-style product card */
 .product-card{
-  transition:.3s ease;
   background:white;
   border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  transition:.25s ease;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  cursor:pointer;
 }
-
 .product-card:hover{
-  transform:translateY(-6px);
-  box-shadow:
-    0 20px 40px rgba(37,99,235,0.12),
-    0 12px 25px rgba(0,0,0,0.06);
+  transform:translateY(-4px);
+  border-color:#bfdbfe;
+  box-shadow:0 12px 30px rgba(37,99,235,0.12);
 }
 
-.line-clamp-2{
+.pc-image-wrap{
+  position:relative;
+  background:#f8fafc;
+  padding:18px;
+  aspect-ratio:1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.pc-image-wrap img{
+  width:100%; height:100%;
+  object-fit:contain;
+  transition:transform .3s ease;
+}
+.product-card:hover .pc-image-wrap img{ transform:scale(1.05); }
+
+.pc-discount-badge{
+  position:absolute;
+  top:10px; left:10px;
+  background:#ef4444;
+  color:white;
+  font-size:11px;
+  font-weight:700;
+  padding:4px 9px;
+  border-radius:6px;
+  letter-spacing:0.3px;
+}
+
+.pc-body{ padding:12px 14px 14px; display:flex; flex-direction:column; flex:1; }
+
+.pc-title{
+  font-size:13px;
+  font-weight:500;
+  color:#334155;
+  line-height:1.4;
   display:-webkit-box;
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
+  min-height:36px;
+  margin-bottom:8px;
 }
+
+.pc-rating{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:#10b981;
+  color:white;
+  font-size:11px;
+  font-weight:700;
+  padding:2px 6px;
+  border-radius:4px;
+  width:fit-content;
+  margin-bottom:8px;
+}
+
+.pc-price-row{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  margin-bottom:4px;
+}
+.pc-price{ font-size:18px; font-weight:800; color:#0f172a; }
+.pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; }
+.pc-saving{ font-size:11px; color:#10b981; font-weight:600; margin-bottom:10px; }
+
+.pc-stores{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 10px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  font-size:11px;
+  color:#475569;
+  font-weight:600;
+}
+.pc-store-dot{
+  display:inline-block;
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#2563eb;
+}
+
+.pc-cta{
+  display:block;
+  width:100%;
+  text-align:center;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  font-size:12px;
+  font-weight:700;
+  padding:9px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  transition:.2s;
+  letter-spacing:0.3px;
+}
+.pc-cta:hover{ opacity:0.9; transform:translateY(-1px); }
+.pc-cta i{ margin-right:5px; }
 
 .skeleton{
   background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);
@@ -95,51 +179,31 @@ body{
   animation:shimmer 1.5s infinite;
   border-radius:16px;
 }
-
 @keyframes shimmer{
   0%{ background-position:200% 0; }
   100%{ background-position:-200% 0; }
 }
 
-.suggest-item.active{ background:#eff6ff; }
-
-button:focus-visible,
-input:focus-visible,
-a:focus-visible{
+button:focus-visible, input:focus-visible, a:focus-visible{
   outline:2px solid #2563eb;
   outline-offset:2px;
 }
 
 .hero-section{ position:relative; }
 .hero-inner{ position:relative; z-index:10; }
-.glow-wrap{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  z-index:0;
-  pointer-events:none;
-}
+.glow-wrap{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
 
 #suggestBox{ z-index:9999 !important; }
 
-/* Filter sidebar */
+/* Filters */
 .filter-sidebar{
   background:white;
   border:1px solid var(--border);
   border-radius:24px;
 }
-
-.filter-checkbox{
-  accent-color:#2563eb;
-  cursor:pointer;
-}
-
-.filter-section{
-  border-bottom:1px solid #f1f5f9;
-}
-
+.filter-checkbox{ accent-color:#2563eb; cursor:pointer; }
+.filter-section{ border-bottom:1px solid #f1f5f9; }
 .filter-section:last-child{ border-bottom:none; }
-
 .price-input{
   border:1px solid #e2e8f0;
   border-radius:10px;
@@ -149,12 +213,10 @@ a:focus-visible{
   outline:none;
   transition:.2s;
 }
-
 .price-input:focus{
   border-color:#2563eb;
   box-shadow:0 0 0 3px rgba(37,99,235,0.1);
 }
-
 .brand-search{
   background:#f8fafc;
   border:1px solid #e2e8f0;
@@ -165,7 +227,6 @@ a:focus-visible{
   outline:none;
 }
 
-/* Active filter chips */
 .chip{
   display:inline-flex;
   align-items:center;
@@ -178,7 +239,6 @@ a:focus-visible{
   font-size:12px;
   font-weight:600;
 }
-
 .chip button{
   background:transparent;
   border:none;
@@ -188,7 +248,6 @@ a:focus-visible{
   line-height:1;
 }
 
-/* Sort dropdown */
 .sort-btn{
   background:white;
   border:1px solid #e2e8f0;
@@ -202,7 +261,6 @@ a:focus-visible{
   cursor:pointer;
   transition:.2s;
 }
-
 .sort-btn:hover{ border-color:#2563eb; }
 
 .sort-menu{
@@ -217,30 +275,25 @@ a:focus-visible{
   overflow:hidden;
   z-index:30;
 }
-
 .sort-option{
   padding:12px 16px;
   font-size:13px;
   cursor:pointer;
   transition:.15s;
 }
-
 .sort-option:hover{ background:#f8fafc; }
 .sort-option.active{ background:#eff6ff; color:#1d4ed8; font-weight:600; }
 
-/* Mobile bottom bar */
 .mobile-bar{
   position:fixed;
   bottom:80px;
-  left:0;
-  right:0;
+  left:0; right:0;
   background:white;
   border-top:1px solid var(--border);
   display:flex;
   z-index:40;
   box-shadow:0 -4px 20px rgba(0,0,0,0.06);
 }
-
 .mobile-bar button{
   flex:1;
   padding:14px;
@@ -253,25 +306,19 @@ a:focus-visible{
   justify-content:center;
   gap:8px;
 }
-
 .mobile-bar button:first-child{ border-right:1px solid var(--border); }
 
-/* Filter drawer (mobile) */
 .drawer-overlay{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:rgba(15,23,42,0.5);
   z-index:60;
   display:none;
 }
-
 .drawer-overlay.open{ display:block; }
 
 .drawer{
   position:fixed;
-  top:0;
-  bottom:0;
-  left:0;
+  top:0; bottom:0; left:0;
   width:85%;
   max-width:380px;
   background:white;
@@ -280,13 +327,14 @@ a:focus-visible{
   transition:transform .3s ease;
   overflow-y:auto;
 }
-
 .drawer.open{ transform:translateX(0); }
 
+.suggest-item.active{ background:#eff6ff; }
+
 @media(max-width:768px){
-  .mobile-grid{ grid-template-columns:repeat(2,1fr); }
-  .hero-title{ font-size:34px !important; line-height:42px !important; }
-  .product-card img{ height:140px !important; }
+  .pc-image-wrap{ padding:12px; }
+  .pc-title{ font-size:12px; min-height:32px; }
+  .pc-price{ font-size:16px; }
 }
 </style>
 </head>
@@ -295,7 +343,7 @@ a:focus-visible{
 
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
   <div class="flex items-center gap-3">
-    <div id="logoWrap" class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
       <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="handleLogoError(this)"/>
     </div>
     <div>
@@ -314,22 +362,18 @@ a:focus-visible{
         <span id="userLocation" class="text-[13px] font-semibold">Detect Location</span>
       </div>
     </button>
-
     <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
       Login
     </button>
   </div>
 </header>
 
-<!-- Compact hero with search -->
 <section class="hero-section hero-bg pt-24 pb-8">
   <div class="glow-wrap">
     <div class="glow top-[-100px] right-[-100px]"></div>
   </div>
 
   <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
-
-    <!-- Breadcrumb -->
     <div class="flex items-center gap-2 text-[13px] mb-4">
       <a href="homepage.html" class="text-blue-700 hover:underline font-semibold">Home</a>
       <span class="text-slate-400">/</span>
@@ -356,11 +400,9 @@ a:focus-visible{
   </div>
 </section>
 
-<!-- Main content: filters + results -->
 <section class="max-w-7xl mx-auto px-4 md:px-10">
   <div class="flex flex-col md:flex-row gap-6">
 
-    <!-- Filters sidebar (desktop) -->
     <aside class="hidden md:block w-72 flex-shrink-0">
       <div class="filter-sidebar p-5 sticky top-24" id="filterPanel">
         <div class="flex items-center justify-between mb-5">
@@ -370,15 +412,11 @@ a:focus-visible{
           </h3>
           <button type="button" id="clearAllBtn" class="text-[12px] text-blue-700 font-semibold hover:underline">Clear All</button>
         </div>
-
         <div id="filterContent"></div>
       </div>
     </aside>
 
-    <!-- Results column -->
     <div class="flex-1 min-w-0">
-
-      <!-- Results header -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>
           <h2 id="sectionTitle" class="text-[24px] md:text-[28px] font-bold text-slate-900">Search Results</h2>
@@ -401,11 +439,9 @@ a:focus-visible{
         </div>
       </div>
 
-      <!-- Active filter chips -->
       <div id="activeChips" class="flex flex-wrap gap-2 mb-5"></div>
 
-      <!-- Products grid -->
-      <div id="productGrid" class="grid mobile-grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" aria-live="polite"></div>
+      <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5" aria-live="polite"></div>
 
       <div id="loadMoreWrap" class="text-center mt-10 hidden">
         <button id="loadMoreBtn" type="button" class="bg-white border border-blue-200 text-blue-700 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition disabled:opacity-50">
@@ -416,7 +452,6 @@ a:focus-visible{
   </div>
 </section>
 
-<!-- Mobile filter/sort bar -->
 <div class="mobile-bar md:hidden">
   <button type="button" onclick="openDrawer('sort')">
     <i class="fa-solid fa-arrow-down-wide-short text-blue-700"></i>
@@ -428,7 +463,6 @@ a:focus-visible{
   </button>
 </div>
 
-<!-- Mobile drawer -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer">
   <div class="flex items-center justify-between p-5 border-b border-slate-200 sticky top-0 bg-white z-10">
@@ -478,9 +512,9 @@ a:focus-visible{
     <div>
       <h3 class="font-bold text-lg mb-5">Connect</h3>
       <div class="flex gap-3">
-        <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="X" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
   </div>
@@ -551,7 +585,6 @@ function escapeHtml(str){
   if(str == null) return "";
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
-
 function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
 
 function handleLogoError(img){
@@ -606,11 +639,14 @@ function skeletonGrid(n = 8){
   let html = "";
   for(let i = 0; i < n; i++){
     html += `
-      <div class="product-card rounded-3xl p-3 md:p-4">
-        <div class="skeleton w-full h-[220px]"></div>
-        <div class="skeleton h-4 mt-4 w-3/4"></div>
-        <div class="skeleton h-4 mt-2 w-1/2"></div>
-        <div class="skeleton h-10 mt-4"></div>
+      <div class="product-card">
+        <div class="skeleton w-full aspect-square"></div>
+        <div class="p-3">
+          <div class="skeleton h-3 w-3/4 mb-2"></div>
+          <div class="skeleton h-3 w-1/2 mb-3"></div>
+          <div class="skeleton h-5 w-1/3 mb-3"></div>
+          <div class="skeleton h-8 w-full"></div>
+        </div>
       </div>`;
   }
   productGrid.innerHTML = html;
@@ -637,66 +673,48 @@ function renderProducts(products, append = false){
     const lowest   = Number(p.lowestPrice) || (best ? Number(best.price) : 0);
     const highest  = Number(p.highestPrice) || lowest;
     const discount = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+    const saving   = highest > lowest ? highest - lowest : 0;
 
     const safeTitle  = escapeHtml(p.title || "Untitled Product");
     const safeImg    = escapeHtml(p.image || "");
-    const safeStore  = best ? escapeHtml(best.store || "Store") : "";
     const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
-    const reviewsTxt = p.reviews ? `(${Number(p.reviews).toLocaleString("en-IN")})` : "";
+    const storesText = offers.length === 1 ? "1 store" : `${offers.length} stores`;
 
     const card = document.createElement("article");
-    card.className = "product-card rounded-3xl p-3 md:p-4 flex flex-col overflow-hidden";
+    card.className = "product-card";
     card.innerHTML = `
-      <div class="relative">
-        ${best ? `
-          <div class="absolute top-3 left-3 z-10">
-            <span class="bg-gradient-to-r from-blue-700 to-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">
-              🏆 ${safeStore}
-            </span>
-          </div>` : ""}
-        ${discount >= 15 ? `
-          <div class="absolute top-3 right-3 z-10">
-            <span class="bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full">
-              🔥 ${discount}% OFF
-            </span>
-          </div>` : ""}
-        <img src="${safeImg}" alt="${safeTitle}" class="w-full h-[220px] object-contain rounded-2xl bg-slate-100 p-4" loading="lazy" onerror="handleImgError(this)"/>
+      <div class="pc-image-wrap">
+        ${discount >= 10 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
+        <img src="${safeImg}" alt="${safeTitle}" loading="lazy" onerror="handleImgError(this)"/>
       </div>
 
-      <div class="pt-4 flex-grow">
-        <h3 class="font-semibold text-[14px] md:text-[15px] line-clamp-2 min-h-[44px]">${safeTitle}</h3>
+      <div class="pc-body">
+        <div class="pc-title">${safeTitle}</div>
 
         ${ratingNum ? `
-          <div class="flex items-center gap-1 mt-2 text-[12px] text-slate-500">
-            <i class="fa-solid fa-star text-amber-400"></i>
-            <span class="font-semibold text-slate-700">${ratingNum}</span>
-            ${reviewsTxt ? `<span>${reviewsTxt}</span>` : ""}
+          <div class="pc-rating">
+            <i class="fa-solid fa-star" style="font-size:9px;"></i>
+            <span>${ratingNum}</span>
           </div>` : ""}
 
-        ${highest > lowest ? `
-          <div class="mt-3 text-slate-400 line-through text-sm">₹${formatINR(highest)}</div>` : `<div class="mt-3 h-[20px]"></div>`}
-
-        <div class="flex items-center gap-2 mt-1">
-          <span class="text-blue-700 font-bold text-[24px]">₹${formatINR(lowest)}</span>
+        <div class="pc-price-row">
+          <span class="pc-price">₹${formatINR(lowest)}</span>
+          ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
         </div>
+        ${saving > 0 ? `<div class="pc-saving">You save ₹${formatINR(saving)}</div>` : `<div style="height:4px;"></div>`}
+
+        ${offers.length ? `
+          <div class="pc-stores">
+            <span class="pc-store-dot"></span>
+            <span>Compare across ${storesText}</span>
+          </div>` : ""}
+
+        <button class="pc-cta" type="button">
+          <i class="fa-solid fa-bolt"></i>View Deal
+        </button>
       </div>
-
-      <div class="mt-4 space-y-2">
-        <button type="button" class="cmp-btn w-full border border-blue-700 text-blue-700 rounded-xl py-3 font-semibold hover:bg-blue-50 transition">
-          Compare ${offers.length} ${offers.length === 1 ? "Store" : "Stores"}
-        </button>
-        <button type="button" class="buy-btn w-full bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-xl py-3 font-semibold hover:opacity-90 transition disabled:opacity-50" ${best ? "" : "disabled"}>
-          ${best ? "Buy Now" : "Unavailable"}
-        </button>
-      </div>`;
-
-    card.querySelector(".cmp-btn").addEventListener("click", () => compare(p.id));
-    const buyBtn = card.querySelector(".buy-btn");
-    if(best && best.offerId){
-      buyBtn.addEventListener("click", () => {
-        window.open(`${API}/go/${encodeURIComponent(best.offerId)}`, "_blank", "noopener,noreferrer");
-      });
-    }
+    `;
+    card.addEventListener("click", () => compare(p.id));
     frag.appendChild(card);
   });
 
@@ -734,25 +752,18 @@ async function loadResults(reset = true){
   sectionTitle.innerText = `Results for "${state.query}"`;
   sectionSub.innerText = "Filtered and sorted to match your preferences";
 
-  if(reset){
-    state.page = 1;
-    skeletonGrid();
-  }
+  if(reset){ state.page = 1; skeletonGrid(); }
 
   try{
     const json = await apiGet(`/api/search?${buildQueryString()}`);
     state.items = json.data || [];
     state.totalPages = json.pagination?.pages || 1;
 
-    // Extract facets if available
     if(json.facets){
       state.availableBrands = json.facets.brands || [];
       state.availableCategories = json.facets.categories || [];
-      if(json.facets.priceRange){
-        state.priceRange = json.facets.priceRange;
-      }
+      if(json.facets.priceRange) state.priceRange = json.facets.priceRange;
     }else if(reset){
-      // Derive facets from results
       deriveFacets(state.items);
     }
 
@@ -760,11 +771,8 @@ async function loadResults(reset = true){
     renderFilters();
     renderChips();
 
-    if(state.page < state.totalPages){
-      loadMoreWrap.classList.remove("hidden");
-    }else{
-      loadMoreWrap.classList.add("hidden");
-    }
+    if(state.page < state.totalPages) loadMoreWrap.classList.remove("hidden");
+    else loadMoreWrap.classList.add("hidden");
   }catch{
     productGrid.innerHTML = `
       <div class="col-span-full text-center py-20 text-red-500">
@@ -779,44 +787,28 @@ function deriveFacets(items){
   const brandMap = new Map();
   const catMap = new Map();
   let minP = Infinity, maxP = 0;
-
   items.forEach(p => {
     const price = Number(p.lowestPrice) || 0;
     if(price > 0){
       if(price < minP) minP = price;
       if(price > maxP) maxP = price;
     }
-    if(p.brand){
-      brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
-    }
-    if(p.category){
-      catMap.set(p.category, (catMap.get(p.category) || 0) + 1);
-    }
+    if(p.brand) brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
+    if(p.category) catMap.set(p.category, (catMap.get(p.category) || 0) + 1);
   });
-
-  state.availableBrands = [...brandMap.entries()]
-    .map(([brand, count]) => ({ brand, count }))
-    .sort((a,b) => b.count - a.count);
-
-  state.availableCategories = [...catMap.entries()]
-    .map(([category, count]) => ({ category, count }))
-    .sort((a,b) => b.count - a.count);
-
-  if(minP !== Infinity){
-    state.priceRange = { min: Math.floor(minP), max: Math.ceil(maxP) };
-  }
+  state.availableBrands = [...brandMap.entries()].map(([brand, count]) => ({ brand, count })).sort((a,b) => b.count - a.count);
+  state.availableCategories = [...catMap.entries()].map(([category, count]) => ({ category, count })).sort((a,b) => b.count - a.count);
+  if(minP !== Infinity) state.priceRange = { min: Math.floor(minP), max: Math.ceil(maxP) };
 }
 
 function renderFilters(){
   const minR = state.priceRange.min;
   const maxR = state.priceRange.max;
-
   const filteredBrands = state.brandSearch
     ? state.availableBrands.filter(b => b.brand.toLowerCase().includes(state.brandSearch.toLowerCase()))
     : state.availableBrands;
 
   const html = `
-    <!-- Price Range -->
     <div class="filter-section pb-5 mb-5">
       <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Price Range</h4>
       <div class="flex items-center gap-2">
@@ -834,7 +826,6 @@ function renderFilters(){
     </div>
 
     ${state.availableBrands.length ? `
-    <!-- Brands -->
     <div class="filter-section pb-5 mb-5">
       <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Brands</h4>
       <div class="relative mb-3">
@@ -853,7 +844,6 @@ function renderFilters(){
     </div>` : ""}
 
     ${state.availableCategories.length ? `
-    <!-- Categories -->
     <div class="filter-section pb-5 mb-5">
       <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Categories</h4>
       <div class="max-h-48 overflow-y-auto space-y-2 pr-1">
@@ -867,7 +857,6 @@ function renderFilters(){
       </div>
     </div>` : ""}
 
-    <!-- Rating -->
     <div class="filter-section pb-3">
       <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Customer Rating</h4>
       <div class="space-y-2">
@@ -888,7 +877,6 @@ function renderFilters(){
   filterContent.innerHTML = html;
   attachFilterListeners(filterContent);
 
-  // Mirror to drawer
   const drawerContent = document.getElementById("drawerContent");
   if(drawerContent && document.getElementById("drawer").classList.contains("open") && document.getElementById("drawerTitle").innerText === "Filters"){
     drawerContent.innerHTML = html;
@@ -913,7 +901,6 @@ function attachFilterListeners(root){
     brandInput.addEventListener("input", (e) => {
       state.brandSearch = e.target.value;
       renderFilters();
-      // Restore focus
       const ni = filterContent.querySelector("#brandSearchInput");
       if(ni){ ni.focus(); ni.setSelectionRange(ni.value.length, ni.value.length); }
     });
@@ -946,57 +933,33 @@ function attachFilterListeners(root){
 
 function renderChips(){
   const chips = [];
-
   if(state.minPrice != null || state.maxPrice != null){
-    const label = `₹${formatINR(state.minPrice ?? 0)} - ₹${formatINR(state.maxPrice ?? '∞')}`;
-    chips.push({ label, clear: () => { state.minPrice = null; state.maxPrice = null; }});
+    chips.push({ label: `₹${formatINR(state.minPrice ?? 0)} - ₹${formatINR(state.maxPrice ?? '∞')}`, clear: () => { state.minPrice = null; state.maxPrice = null; }});
   }
+  state.brands.forEach(b => chips.push({ label: b, clear: () => state.brands.delete(b) }));
+  state.categories.forEach(c => chips.push({ label: c, clear: () => state.categories.delete(c) }));
+  if(state.rating != null) chips.push({ label: `${state.rating}★ & above`, clear: () => state.rating = null });
 
-  state.brands.forEach(b => {
-    chips.push({ label: b, clear: () => state.brands.delete(b) });
-  });
-
-  state.categories.forEach(c => {
-    chips.push({ label: c, clear: () => state.categories.delete(c) });
-  });
-
-  if(state.rating != null){
-    chips.push({ label: `${state.rating}★ & above`, clear: () => state.rating = null });
-  }
-
-  if(!chips.length){
-    activeChips.innerHTML = "";
-    return;
-  }
+  if(!chips.length){ activeChips.innerHTML = ""; return; }
 
   activeChips.innerHTML = chips.map((c, i) => `
-    <span class="chip">
-      ${escapeHtml(c.label)}
-      <button type="button" data-i="${i}" aria-label="Remove filter">×</button>
-    </span>
+    <span class="chip">${escapeHtml(c.label)}<button type="button" data-i="${i}" aria-label="Remove filter">×</button></span>
   `).join("");
 
   activeChips.querySelectorAll("button").forEach((btn, i) => {
-    btn.addEventListener("click", () => {
-      chips[i].clear();
-      loadResults(true);
-    });
+    btn.addEventListener("click", () => { chips[i].clear(); loadResults(true); });
   });
 }
 
 function clearAllFilters(){
-  state.minPrice = null;
-  state.maxPrice = null;
-  state.brands.clear();
-  state.categories.clear();
-  state.rating = null;
-  state.brandSearch = "";
+  state.minPrice = null; state.maxPrice = null;
+  state.brands.clear(); state.categories.clear();
+  state.rating = null; state.brandSearch = "";
   loadResults(true);
 }
 
 document.getElementById("clearAllBtn").addEventListener("click", clearAllFilters);
 
-// Sort menu
 const sortBtn = document.getElementById("sortBtn");
 const sortMenu = document.getElementById("sortMenu");
 const sortLabel = document.getElementById("sortLabel");
@@ -1018,15 +981,10 @@ sortMenu.querySelectorAll(".sort-option").forEach(opt => {
 });
 
 document.addEventListener("click", (e) => {
-  if(!sortBtn.contains(e.target) && !sortMenu.contains(e.target)){
-    sortMenu.classList.add("hidden");
-  }
-  if(!suggestBox.contains(e.target) && e.target !== searchInput){
-    suggestBox.classList.add("hidden");
-  }
+  if(!sortBtn.contains(e.target) && !sortMenu.contains(e.target)) sortMenu.classList.add("hidden");
+  if(!suggestBox.contains(e.target) && e.target !== searchInput) suggestBox.classList.add("hidden");
 });
 
-// Search
 function handleSearchSubmit(e){
   e.preventDefault();
   const q = searchInput.value.trim();
@@ -1049,7 +1007,7 @@ searchInput.addEventListener("input", (e) => {
       const json = await apiGet(`/api/search?q=${encodeURIComponent(q)}&suggest=true`);
       const list = (json.data || []).slice(0, 8);
       if(!list.length){ suggestBox.classList.add("hidden"); return; }
-      suggestBox.innerHTML = list.map((item, i) => `
+      suggestBox.innerHTML = list.map((item) => `
         <div class="px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-q="${escapeHtml(item)}">
           <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
           <span>${escapeHtml(item)}</span>
@@ -1068,7 +1026,6 @@ searchInput.addEventListener("input", (e) => {
   }, 250);
 });
 
-// Load more
 loadMoreBtn.addEventListener("click", async () => {
   loadMoreBtn.disabled = true;
   loadMoreBtn.innerText = "Loading...";
@@ -1085,7 +1042,6 @@ loadMoreBtn.addEventListener("click", async () => {
   }
 });
 
-// Drawer (mobile)
 function openDrawer(type){
   const drawer = document.getElementById("drawer");
   const overlay = document.getElementById("drawerOverlay");
@@ -1098,25 +1054,20 @@ function openDrawer(type){
     attachFilterListeners(content);
   }else{
     title.innerText = "Sort By";
+    const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
     content.innerHTML = `
       <div class="space-y-2">
-        ${['popular','price_low','price_high','discount','rating'].map(s => {
-          const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
-          return `
+        ${Object.keys(labels).map(s => `
           <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 rounded-xl p-3 border border-slate-100">
             <input type="radio" name="msort" class="filter-checkbox" value="${s}" ${state.sort === s ? 'checked' : ''}/>
             <span class="text-[14px] font-medium">${labels[s]}</span>
-          </label>`;
-        }).join("")}
+          </label>`).join("")}
       </div>`;
     content.querySelectorAll('input[name="msort"]').forEach(r => {
       r.addEventListener("change", (e) => {
         state.sort = e.target.value;
-        const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
         sortLabel.innerText = labels[state.sort];
-        document.querySelectorAll("#sortMenu .sort-option").forEach(o => {
-          o.classList.toggle("active", o.dataset.sort === state.sort);
-        });
+        document.querySelectorAll("#sortMenu .sort-option").forEach(o => o.classList.toggle("active", o.dataset.sort === state.sort));
         loadResults(true);
         closeDrawer();
       });
@@ -1132,13 +1083,9 @@ function closeDrawer(){
   document.getElementById("drawerOverlay").classList.remove("open");
 }
 
-// Init
 document.getElementById("footerYear").innerText = new Date().getFullYear();
 
-if(state.query){
-  searchInput.value = state.query;
-}
-
+if(state.query) searchInput.value = state.query;
 loadResults(true);
 </script>
 
