@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Visco Compare — India's smart price comparison platform."/>
+<meta name="description" content="Visco Compare — India's No.1 smart price comparison platform."/>
 <meta name="theme-color" content="#2563eb"/>
 <title>Visco Compare — Smart Price Comparison</title>
 
@@ -63,7 +63,15 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .hide-scrollbar::-webkit-scrollbar{ display:none; }
 .hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
 
-/* UNIFORM PRODUCT CARD - fixed height layout */
+/* ============================================
+   UNIFORM PRODUCT CARD — strict equal heights
+   Every card has identical structure regardless
+   of whether rating/saving data is present.
+   ============================================ */
+#productGrid{
+  align-items:stretch;
+}
+
 .product-card{
   background:white;
   border:1px solid var(--border);
@@ -74,7 +82,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   flex-direction:column;
   position:relative;
   height:100%;
-  min-height:380px;
+  width:100%;
 }
 .product-card:hover{
   transform:translateY(-4px);
@@ -82,15 +90,18 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 12px 30px rgba(37,99,235,0.12);
 }
 
+/* Image block — fixed square */
 .pc-image-wrap{
   position:relative;
   background:#f8fafc;
   padding:18px;
+  width:100%;
   aspect-ratio:1/1;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
+  overflow:hidden;
 }
 .pc-image-wrap img{
   max-width:100%; max-height:100%;
@@ -113,15 +124,13 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   z-index:2;
 }
 
+/* Body — fixed-height rows so every card aligns */
 .pc-body{
   padding:12px 14px 14px;
   display:flex;
   flex-direction:column;
   flex:1;
-  justify-content:space-between;
 }
-
-.pc-top-section{ display:flex; flex-direction:column; }
 
 .pc-title{
   font-size:13px;
@@ -136,6 +145,13 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   margin-bottom:8px;
 }
 
+/* Rating row ALWAYS reserves space — even when empty */
+.pc-rating-row{
+  height:18px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+}
 .pc-rating{
   display:inline-flex;
   align-items:center;
@@ -147,29 +163,41 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   padding:2px 6px;
   border-radius:4px;
   width:fit-content;
-  margin-bottom:8px;
   height:18px;
 }
-.pc-rating-placeholder{ height:18px; margin-bottom:8px; }
 
 .pc-price-row{
   display:flex;
   align-items:baseline;
   gap:8px;
+  height:24px;
   margin-bottom:4px;
-  min-height:24px;
 }
-.pc-price{ font-size:18px; font-weight:800; color:#0f172a; }
-.pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; }
+.pc-price{ font-size:18px; font-weight:800; color:#0f172a; line-height:1; }
+.pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; line-height:1; }
+
+/* Saving row ALWAYS reserves space */
+.pc-saving-row{
+  height:14px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+}
 .pc-saving{
   font-size:11px;
   color:#10b981;
   font-weight:600;
-  margin-bottom:10px;
-  height:14px;
+  line-height:1;
 }
 
-.pc-bottom-section{ display:flex; flex-direction:column; gap:8px; }
+/* Spacer pushes bottom block down so all cards align */
+.pc-spacer{ flex:1; }
+
+.pc-bottom-section{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
 
 .pc-stores{
   display:flex;
@@ -217,13 +245,14 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   background-size:200% 100%;
   animation:shimmer 1.5s infinite;
   border-radius:16px;
+  width:100%;
 }
 @keyframes shimmer{
   0%{ background-position:200% 0; }
   100%{ background-position:-200% 0; }
 }
 
-.skeleton-card{ height:380px; }
+.skeleton-card{ aspect-ratio:1/1.5; min-height:340px; }
 
 .suggest-item.active{ background:#eff6ff; }
 
@@ -238,13 +267,21 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 #suggestBox{ z-index:9999 !important; }
 
+/* Mobile fine-tuning */
 @media(max-width:768px){
   .hero-title{ font-size:34px !important; line-height:42px !important; }
-  .pc-image-wrap{ padding:12px; }
+  .pc-image-wrap{ padding:14px; }
   .pc-title{ font-size:12px; height:32px; }
   .pc-price{ font-size:16px; }
-  .product-card{ min-height:340px; }
-  .skeleton-card{ height:340px; }
+  .pc-mrp{ font-size:11px; }
+  .pc-stores{ font-size:10px; padding:7px 9px; height:30px; }
+  .pc-cta{ font-size:11px; padding:8px; }
+  #productGrid{ gap:12px; }
+}
+
+@media(max-width:380px){
+  .pc-image-wrap{ padding:10px; }
+  .pc-body{ padding:10px 10px 12px; }
 }
 </style>
 </head>
@@ -287,7 +324,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
     <div class="text-center">
       <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-6">
-        🔥 India's Smartest Price Comparison
+        🏆 India's No.1 Smart Price Comparison
       </div>
 
       <h1 class="hero-title text-[65px] leading-[74px] font-extrabold tracking-[-2px] text-slate-900">
@@ -352,7 +389,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         <h2 class="font-bold text-2xl">Visco Compare</h2>
       </div>
       <p class="text-slate-400 leading-8 text-sm">
-        Compare prices across top online stores and discover the best deals instantly.
+        India's No.1 price comparison platform. Compare prices across top online stores and discover the best deals instantly.
       </p>
       <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
         ⚡ Smart Shopping Platform
@@ -419,7 +456,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 <script>
 const API = "https://visco1.onrender.com";
-const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
 
 const productGrid   = document.getElementById("productGrid");
 const sectionTitle  = document.getElementById("sectionTitle");
@@ -548,21 +585,26 @@ function renderProducts(products, append = false){
       </div>
 
       <div class="pc-body">
-        <div class="pc-top-section">
-          <div class="pc-title">${safeTitle}</div>
+        <div class="pc-title">${safeTitle}</div>
 
+        <div class="pc-rating-row">
           ${ratingNum ? `
-            <div class="pc-rating">
+            <span class="pc-rating">
               <i class="fa-solid fa-star" style="font-size:9px;"></i>
               <span>${ratingNum}</span>
-            </div>` : `<div class="pc-rating-placeholder"></div>`}
-
-          <div class="pc-price-row">
-            <span class="pc-price">₹${formatINR(lowest)}</span>
-            ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
-          </div>
-          <div class="pc-saving">${saving > 0 ? `You save ₹${formatINR(saving)}` : ""}</div>
+            </span>` : ``}
         </div>
+
+        <div class="pc-price-row">
+          <span class="pc-price">₹${formatINR(lowest)}</span>
+          ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
+        </div>
+
+        <div class="pc-saving-row">
+          ${saving > 0 ? `<span class="pc-saving">You save ₹${formatINR(saving)}</span>` : ``}
+        </div>
+
+        <div class="pc-spacer"></div>
 
         <div class="pc-bottom-section">
           <div class="pc-stores">
@@ -791,7 +833,6 @@ function goSearch(){
 }
 
 function goExplore(){
-  // Explore now redirects to homepage
   window.location = "homepage.html";
 }
 
