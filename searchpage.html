@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Visco Compare — Search results with smart filters and price comparison."/>
+<meta name="theme-color" content="#2563eb"/>
+
+<title>Search Results — Visco Compare</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+*{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --bg:#f8fbff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  overflow-x:hidden;
+  color:var(--text);
+  padding-bottom:90px;
+}
+
+.glass{
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+.hero-bg{
+  background:
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
+}
+
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
+  pointer-events:none;
+}
+
+.hide-scrollbar::-webkit-scrollbar{ display:none; }
+.hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
+
+.product-card{
+  transition:.3s ease;
+  background:white;
+  border:1px solid var(--border);
+}
+
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.12),
+    0 12px 25px rgba(0,0,0,0.06);
+}
+
+.line-clamp-2{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.skeleton{
+  background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:16px;
+}
+
+@keyframes shimmer{
+  0%{ background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
+.suggest-item.active{ background:#eff6ff; }
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible{
+  outline:2px solid #2563eb;
+  outline-offset:2px;
+}
+
+.hero-section{ position:relative; }
+.hero-inner{ position:relative; z-index:10; }
+.glow-wrap{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+}
+
+#suggestBox{ z-index:9999 !important; }
+
+/* Filter sidebar */
+.filter-sidebar{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:24px;
+}
+
+.filter-checkbox{
+  accent-color:#2563eb;
+  cursor:pointer;
+}
+
+.filter-section{
+  border-bottom:1px solid #f1f5f9;
+}
+
+.filter-section:last-child{ border-bottom:none; }
+
+.price-input{
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  padding:8px 12px;
+  font-size:13px;
+  width:100%;
+  outline:none;
+  transition:.2s;
+}
+
+.price-input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.brand-search{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  padding:8px 12px 8px 34px;
+  font-size:13px;
+  width:100%;
+  outline:none;
+}
+
+/* Active filter chips */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#eff6ff;
+  color:#1d4ed8;
+  border:1px solid #bfdbfe;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.chip button{
+  background:transparent;
+  border:none;
+  color:#1d4ed8;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1;
+}
+
+/* Sort dropdown */
+.sort-btn{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:10px 16px;
+  font-size:13px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.sort-btn:hover{ border-color:#2563eb; }
+
+.sort-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  min-width:200px;
+  overflow:hidden;
+  z-index:30;
+}
+
+.sort-option{
+  padding:12px 16px;
+  font-size:13px;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.sort-option:hover{ background:#f8fafc; }
+.sort-option.active{ background:#eff6ff; color:#1d4ed8; font-weight:600; }
+
+/* Mobile bottom bar */
+.mobile-bar{
+  position:fixed;
+  bottom:80px;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid var(--border);
+  display:flex;
+  z-index:40;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.06);
+}
+
+.mobile-bar button{
+  flex:1;
+  padding:14px;
+  font-weight:600;
+  font-size:13px;
+  background:transparent;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.mobile-bar button:first-child{ border-right:1px solid var(--border); }
+
+/* Filter drawer (mobile) */
+.drawer-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,0.5);
+  z-index:60;
+  display:none;
+}
+
+.drawer-overlay.open{ display:block; }
+
+.drawer{
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  width:85%;
+  max-width:380px;
+  background:white;
+  z-index:70;
+  transform:translateX(-100%);
+  transition:transform .3s ease;
+  overflow-y:auto;
+}
+
+.drawer.open{ transform:translateX(0); }
+
+@media(max-width:768px){
+  .mobile-grid{ grid-template-columns:repeat(2,1fr); }
+  .hero-title{ font-size:34px !important; line-height:42px !important; }
+  .product-card img{ height:140px !important; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
+  <div class="flex items-center gap-3">
+    <div id="logoWrap" class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="handleLogoError(this)"/>
+    </div>
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">Smart Shopping Platform</p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button type="button" onclick="getUserLocation()" class="hidden md:flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-4 py-2 cursor-pointer hover:border-blue-500 transition shadow-sm">
+      <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+        <i class="fa-solid fa-location-dot text-blue-700"></i>
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">Deliver To</span>
+        <span id="userLocation" class="text-[13px] font-semibold">Detect Location</span>
+      </div>
+    </button>
+
+    <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+      Login
+    </button>
+  </div>
+</header>
+
+<!-- Compact hero with search -->
+<section class="hero-section hero-bg pt-24 pb-8">
+  <div class="glow-wrap">
+    <div class="glow top-[-100px] right-[-100px]"></div>
+  </div>
+
+  <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
+
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-[13px] mb-4">
+      <a href="homepage.html" class="text-blue-700 hover:underline font-semibold">Home</a>
+      <span class="text-slate-400">/</span>
+      <span class="text-slate-500">Search Results</span>
+    </div>
+
+    <form id="searchForm" role="search" class="max-w-3xl relative" onsubmit="return handleSearchSubmit(event)">
+      <label for="searchInput" class="sr-only">Search products</label>
+      <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[18px] z-10"></i>
+      <input
+        id="searchInput"
+        name="q"
+        type="search"
+        autocomplete="off"
+        placeholder="Search products, brands or categories..."
+        aria-label="Search products"
+        class="w-full bg-white border border-slate-200 rounded-2xl pl-14 pr-32 py-4 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition text-[15px]"
+      />
+      <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-6 py-2.5 rounded-xl font-semibold hover:opacity-90 transition">
+        Search
+      </button>
+      <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
+    </form>
+  </div>
+</section>
+
+<!-- Main content: filters + results -->
+<section class="max-w-7xl mx-auto px-4 md:px-10">
+  <div class="flex flex-col md:flex-row gap-6">
+
+    <!-- Filters sidebar (desktop) -->
+    <aside class="hidden md:block w-72 flex-shrink-0">
+      <div class="filter-sidebar p-5 sticky top-24" id="filterPanel">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-bold text-[17px] flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-blue-700"></i>
+            Filters
+          </h3>
+          <button type="button" id="clearAllBtn" class="text-[12px] text-blue-700 font-semibold hover:underline">Clear All</button>
+        </div>
+
+        <div id="filterContent"></div>
+      </div>
+    </aside>
+
+    <!-- Results column -->
+    <div class="flex-1 min-w-0">
+
+      <!-- Results header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 id="sectionTitle" class="text-[24px] md:text-[28px] font-bold text-slate-900">Search Results</h2>
+          <p id="sectionSub" class="text-slate-500 text-sm mt-1">Updated in real-time</p>
+        </div>
+
+        <div class="hidden md:block relative" id="sortWrap">
+          <button type="button" class="sort-btn" id="sortBtn">
+            <i class="fa-solid fa-arrow-down-wide-short text-blue-700"></i>
+            <span>Sort: <span id="sortLabel">Popularity</span></span>
+            <i class="fa-solid fa-chevron-down text-[11px] text-slate-400"></i>
+          </button>
+          <div class="sort-menu hidden" id="sortMenu">
+            <div class="sort-option active" data-sort="popular">Popularity</div>
+            <div class="sort-option" data-sort="price_low">Price: Low to High</div>
+            <div class="sort-option" data-sort="price_high">Price: High to Low</div>
+            <div class="sort-option" data-sort="discount">Biggest Discount</div>
+            <div class="sort-option" data-sort="rating">Customer Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active filter chips -->
+      <div id="activeChips" class="flex flex-wrap gap-2 mb-5"></div>
+
+      <!-- Products grid -->
+      <div id="productGrid" class="grid mobile-grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" aria-live="polite"></div>
+
+      <div id="loadMoreWrap" class="text-center mt-10 hidden">
+        <button id="loadMoreBtn" type="button" class="bg-white border border-blue-200 text-blue-700 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition disabled:opacity-50">
+          Load More
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile filter/sort bar -->
+<div class="mobile-bar md:hidden">
+  <button type="button" onclick="openDrawer('sort')">
+    <i class="fa-solid fa-arrow-down-wide-short text-blue-700"></i>
+    Sort
+  </button>
+  <button type="button" onclick="openDrawer('filter')">
+    <i class="fa-solid fa-filter text-blue-700"></i>
+    Filter
+  </button>
+</div>
+
+<!-- Mobile drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="flex items-center justify-between p-5 border-b border-slate-200 sticky top-0 bg-white z-10">
+    <h3 class="font-bold text-[17px]" id="drawerTitle">Filters</h3>
+    <button type="button" onclick="closeDrawer()" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div class="p-5" id="drawerContent"></div>
+  <div class="sticky bottom-0 bg-white border-t border-slate-200 p-4 flex gap-3">
+    <button type="button" onclick="clearAllFilters()" class="flex-1 border border-slate-200 rounded-xl py-3 font-semibold">Clear</button>
+    <button type="button" onclick="closeDrawer()" class="flex-1 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-xl py-3 font-semibold">Apply</button>
+  </div>
+</aside>
+
+<footer class="mt-24 bg-slate-950 text-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+      <p class="text-slate-400 leading-8 text-sm">
+        Compare prices across top online stores and discover the best deals instantly.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="block hover:text-white">Home</a>
+        <a href="about.html" class="block hover:text-white">About Us</a>
+        <a href="explore.html" class="block hover:text-white">Explore</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="block hover:text-white">Privacy Policy</a>
+        <a href="terms.html" class="block hover:text-white">Terms</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="X" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-800 py-8 px-4 md:px-10 max-w-7xl mx-auto text-center text-slate-500 text-sm">
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.
+  </div>
+</footer>
+
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+  <button type="button" onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+  <button type="button" class="flex flex-col items-center text-blue-700">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+  <button type="button" onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+  <button type="button" onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
+  </button>
+  <button type="button" onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
+</nav>
+
+<script>
+const API = "https://visco1.onrender.com";
+const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+
+const productGrid  = document.getElementById("productGrid");
+const sectionTitle = document.getElementById("sectionTitle");
+const sectionSub   = document.getElementById("sectionSub");
+const loadMoreWrap = document.getElementById("loadMoreWrap");
+const loadMoreBtn  = document.getElementById("loadMoreBtn");
+const suggestBox   = document.getElementById("suggestBox");
+const searchInput  = document.getElementById("searchInput");
+const filterContent= document.getElementById("filterContent");
+const activeChips  = document.getElementById("activeChips");
+
+const params = new URLSearchParams(location.search);
+
+const state = {
+  query: params.get("q") || "",
+  page: 1,
+  limit: 16,
+  totalPages: 1,
+  items: [],
+  sort: "popular",
+  minPrice: null,
+  maxPrice: null,
+  brands: new Set(),
+  categories: new Set(),
+  rating: null,
+  priceRange: { min: 0, max: 100000 },
+  availableBrands: [],
+  availableCategories: [],
+  brandSearch: ""
+};
+
+function escapeHtml(str){
+  if(str == null) return "";
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
+
+function handleLogoError(img){
+  const wrap = img.parentElement;
+  if(!wrap) return;
+  wrap.innerHTML = '<i class="fa-solid fa-bag-shopping text-blue-700 text-xl"></i>';
+}
+
+function handleImgError(img){
+  if(img.dataset.fallback === "1") return;
+  img.dataset.fallback = "1";
+  img.src = PLACEHOLDER_IMG;
+}
+
+async function getUserLocation(){
+  const text = document.getElementById("userLocation");
+  text.innerText = "Locating...";
+  if(!navigator.geolocation){ text.innerText = "Not supported"; return; }
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    try{
+      const r = await fetch(`[nominatim.openstreetmap.org](https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude})`);
+      const d = await r.json();
+      const addr = d.address || {};
+      const city = addr.city || addr.town || addr.village || "Your Location";
+      text.innerText = city;
+      localStorage.setItem("userLocation", city);
+    }catch{ text.innerText = "Location Found"; }
+  }, () => { text.innerText = "Unavailable"; });
+}
+
+const savedLocation = localStorage.getItem("userLocation");
+if(savedLocation) document.getElementById("userLocation").innerText = savedLocation;
+
+const token = localStorage.getItem("token");
+const loginBtn = document.getElementById("loginBtn");
+if(token){
+  loginBtn.innerText = "Logout";
+  loginBtn.onclick = () => { localStorage.clear(); location.reload(); };
+}else{
+  loginBtn.onclick = () => { location.href = "index.html"; };
+}
+
+async function apiGet(path){
+  const res = await fetch(API + path);
+  if(!res.ok) throw new Error(`HTTP ${res.status}`);
+  const json = await res.json();
+  if(!json.success) throw new Error(json.error || "Bad response");
+  return json;
+}
+
+function skeletonGrid(n = 8){
+  let html = "";
+  for(let i = 0; i < n; i++){
+    html += `
+      <div class="product-card rounded-3xl p-3 md:p-4">
+        <div class="skeleton w-full h-[220px]"></div>
+        <div class="skeleton h-4 mt-4 w-3/4"></div>
+        <div class="skeleton h-4 mt-2 w-1/2"></div>
+        <div class="skeleton h-10 mt-4"></div>
+      </div>`;
+  }
+  productGrid.innerHTML = html;
+}
+
+function renderProducts(products, append = false){
+  if(!append) productGrid.innerHTML = "";
+
+  if(!products.length && !append){
+    productGrid.innerHTML = `
+      <div class="col-span-full text-center py-20 text-slate-400">
+        <i class="fa-solid fa-box-open text-5xl mb-4"></i>
+        <div class="font-semibold">No products found</div>
+        <div class="text-sm mt-2">Try adjusting your filters or search term</div>
+      </div>`;
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+
+  products.forEach(p => {
+    const offers   = Array.isArray(p.offers) ? p.offers : [];
+    const best     = offers[0];
+    const lowest   = Number(p.lowestPrice) || (best ? Number(best.price) : 0);
+    const highest  = Number(p.highestPrice) || lowest;
+    const discount = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+
+    const safeTitle  = escapeHtml(p.title || "Untitled Product");
+    const safeImg    = escapeHtml(p.image || "");
+    const safeStore  = best ? escapeHtml(best.store || "Store") : "";
+    const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
+    const reviewsTxt = p.reviews ? `(${Number(p.reviews).toLocaleString("en-IN")})` : "";
+
+    const card = document.createElement("article");
+    card.className = "product-card rounded-3xl p-3 md:p-4 flex flex-col overflow-hidden";
+    card.innerHTML = `
+      <div class="relative">
+        ${best ? `
+          <div class="absolute top-3 left-3 z-10">
+            <span class="bg-gradient-to-r from-blue-700 to-blue-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">
+              🏆 ${safeStore}
+            </span>
+          </div>` : ""}
+        ${discount >= 15 ? `
+          <div class="absolute top-3 right-3 z-10">
+            <span class="bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full">
+              🔥 ${discount}% OFF
+            </span>
+          </div>` : ""}
+        <img src="${safeImg}" alt="${safeTitle}" class="w-full h-[220px] object-contain rounded-2xl bg-slate-100 p-4" loading="lazy" onerror="handleImgError(this)"/>
+      </div>
+
+      <div class="pt-4 flex-grow">
+        <h3 class="font-semibold text-[14px] md:text-[15px] line-clamp-2 min-h-[44px]">${safeTitle}</h3>
+
+        ${ratingNum ? `
+          <div class="flex items-center gap-1 mt-2 text-[12px] text-slate-500">
+            <i class="fa-solid fa-star text-amber-400"></i>
+            <span class="font-semibold text-slate-700">${ratingNum}</span>
+            ${reviewsTxt ? `<span>${reviewsTxt}</span>` : ""}
+          </div>` : ""}
+
+        ${highest > lowest ? `
+          <div class="mt-3 text-slate-400 line-through text-sm">₹${formatINR(highest)}</div>` : `<div class="mt-3 h-[20px]"></div>`}
+
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-blue-700 font-bold text-[24px]">₹${formatINR(lowest)}</span>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-2">
+        <button type="button" class="cmp-btn w-full border border-blue-700 text-blue-700 rounded-xl py-3 font-semibold hover:bg-blue-50 transition">
+          Compare ${offers.length} ${offers.length === 1 ? "Store" : "Stores"}
+        </button>
+        <button type="button" class="buy-btn w-full bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-xl py-3 font-semibold hover:opacity-90 transition disabled:opacity-50" ${best ? "" : "disabled"}>
+          ${best ? "Buy Now" : "Unavailable"}
+        </button>
+      </div>`;
+
+    card.querySelector(".cmp-btn").addEventListener("click", () => compare(p.id));
+    const buyBtn = card.querySelector(".buy-btn");
+    if(best && best.offerId){
+      buyBtn.addEventListener("click", () => {
+        window.open(`${API}/go/${encodeURIComponent(best.offerId)}`, "_blank", "noopener,noreferrer");
+      });
+    }
+    frag.appendChild(card);
+  });
+
+  productGrid.appendChild(frag);
+}
+
+function compare(id){
+  if(!id) return;
+  localStorage.setItem("productId", id);
+  window.location = "detailspage.html";
+}
+
+function buildQueryString(){
+  const qp = new URLSearchParams();
+  qp.set("q", state.query);
+  qp.set("page", state.page);
+  qp.set("limit", state.limit);
+  qp.set("sort", state.sort);
+  if(state.minPrice != null) qp.set("min_price", state.minPrice);
+  if(state.maxPrice != null) qp.set("max_price", state.maxPrice);
+  if(state.brands.size) qp.set("brands", [...state.brands].join(","));
+  if(state.categories.size) qp.set("categories", [...state.categories].join(","));
+  if(state.rating != null) qp.set("min_rating", state.rating);
+  return qp.toString();
+}
+
+async function loadResults(reset = true){
+  if(!state.query){
+    sectionTitle.innerText = "Enter a search term";
+    sectionSub.innerText = "Use the search bar above to find products";
+    productGrid.innerHTML = "";
+    return;
+  }
+
+  sectionTitle.innerText = `Results for "${state.query}"`;
+  sectionSub.innerText = "Filtered and sorted to match your preferences";
+
+  if(reset){
+    state.page = 1;
+    skeletonGrid();
+  }
+
+  try{
+    const json = await apiGet(`/api/search?${buildQueryString()}`);
+    state.items = json.data || [];
+    state.totalPages = json.pagination?.pages || 1;
+
+    // Extract facets if available
+    if(json.facets){
+      state.availableBrands = json.facets.brands || [];
+      state.availableCategories = json.facets.categories || [];
+      if(json.facets.priceRange){
+        state.priceRange = json.facets.priceRange;
+      }
+    }else if(reset){
+      // Derive facets from results
+      deriveFacets(state.items);
+    }
+
+    renderProducts(state.items, !reset);
+    renderFilters();
+    renderChips();
+
+    if(state.page < state.totalPages){
+      loadMoreWrap.classList.remove("hidden");
+    }else{
+      loadMoreWrap.classList.add("hidden");
+    }
+  }catch{
+    productGrid.innerHTML = `
+      <div class="col-span-full text-center py-20 text-red-500">
+        <i class="fa-solid fa-triangle-exclamation text-4xl mb-3"></i>
+        <div class="font-semibold">Server unavailable</div>
+        <button onclick="loadResults(true)" class="mt-4 text-blue-700 underline">Retry</button>
+      </div>`;
+  }
+}
+
+function deriveFacets(items){
+  const brandMap = new Map();
+  const catMap = new Map();
+  let minP = Infinity, maxP = 0;
+
+  items.forEach(p => {
+    const price = Number(p.lowestPrice) || 0;
+    if(price > 0){
+      if(price < minP) minP = price;
+      if(price > maxP) maxP = price;
+    }
+    if(p.brand){
+      brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
+    }
+    if(p.category){
+      catMap.set(p.category, (catMap.get(p.category) || 0) + 1);
+    }
+  });
+
+  state.availableBrands = [...brandMap.entries()]
+    .map(([brand, count]) => ({ brand, count }))
+    .sort((a,b) => b.count - a.count);
+
+  state.availableCategories = [...catMap.entries()]
+    .map(([category, count]) => ({ category, count }))
+    .sort((a,b) => b.count - a.count);
+
+  if(minP !== Infinity){
+    state.priceRange = { min: Math.floor(minP), max: Math.ceil(maxP) };
+  }
+}
+
+function renderFilters(){
+  const minR = state.priceRange.min;
+  const maxR = state.priceRange.max;
+
+  const filteredBrands = state.brandSearch
+    ? state.availableBrands.filter(b => b.brand.toLowerCase().includes(state.brandSearch.toLowerCase()))
+    : state.availableBrands;
+
+  const html = `
+    <!-- Price Range -->
+    <div class="filter-section pb-5 mb-5">
+      <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Price Range</h4>
+      <div class="flex items-center gap-2">
+        <div class="flex-1">
+          <label class="text-[11px] text-slate-500 mb-1 block">Min</label>
+          <input type="number" class="price-input" id="minPriceInput" placeholder="₹${minR}" value="${state.minPrice ?? ''}"/>
+        </div>
+        <div class="flex-1">
+          <label class="text-[11px] text-slate-500 mb-1 block">Max</label>
+          <input type="number" class="price-input" id="maxPriceInput" placeholder="₹${maxR}" value="${state.maxPrice ?? ''}"/>
+        </div>
+      </div>
+      <button type="button" id="applyPriceBtn" class="mt-3 w-full bg-blue-50 text-blue-700 rounded-lg py-2 text-[12px] font-semibold hover:bg-blue-100 transition">Apply</button>
+      <p class="text-[11px] text-slate-400 mt-2">Range: ₹${formatINR(minR)} – ₹${formatINR(maxR)}</p>
+    </div>
+
+    ${state.availableBrands.length ? `
+    <!-- Brands -->
+    <div class="filter-section pb-5 mb-5">
+      <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Brands</h4>
+      <div class="relative mb-3">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[12px]"></i>
+        <input type="text" class="brand-search" placeholder="Search brands" id="brandSearchInput" value="${escapeHtml(state.brandSearch)}"/>
+      </div>
+      <div class="max-h-48 overflow-y-auto space-y-2 pr-1">
+        ${filteredBrands.slice(0, 50).map(b => `
+          <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
+            <input type="checkbox" class="filter-checkbox brand-check" value="${escapeHtml(b.brand)}" ${state.brands.has(b.brand) ? 'checked' : ''}/>
+            <span class="text-[13px] text-slate-700 capitalize flex-1 truncate">${escapeHtml(b.brand)}</span>
+            <span class="text-[11px] text-slate-400">${b.count}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>` : ""}
+
+    ${state.availableCategories.length ? `
+    <!-- Categories -->
+    <div class="filter-section pb-5 mb-5">
+      <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Categories</h4>
+      <div class="max-h-48 overflow-y-auto space-y-2 pr-1">
+        ${state.availableCategories.slice(0, 30).map(c => `
+          <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
+            <input type="checkbox" class="filter-checkbox cat-check" value="${escapeHtml(c.category)}" ${state.categories.has(c.category) ? 'checked' : ''}/>
+            <span class="text-[13px] text-slate-700 flex-1 truncate">${escapeHtml(c.category)}</span>
+            <span class="text-[11px] text-slate-400">${c.count}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>` : ""}
+
+    <!-- Rating -->
+    <div class="filter-section pb-3">
+      <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Customer Rating</h4>
+      <div class="space-y-2">
+        ${[4,3].map(r => `
+          <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
+            <input type="radio" name="rating" class="filter-checkbox rating-check" value="${r}" ${state.rating === r ? 'checked' : ''}/>
+            <span class="text-[13px] text-slate-700">${r}★ &amp; above</span>
+          </label>
+        `).join("")}
+        <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
+          <input type="radio" name="rating" class="filter-checkbox rating-check" value="" ${state.rating == null ? 'checked' : ''}/>
+          <span class="text-[13px] text-slate-700">Any rating</span>
+        </label>
+      </div>
+    </div>
+  `;
+
+  filterContent.innerHTML = html;
+  attachFilterListeners(filterContent);
+
+  // Mirror to drawer
+  const drawerContent = document.getElementById("drawerContent");
+  if(drawerContent && document.getElementById("drawer").classList.contains("open") && document.getElementById("drawerTitle").innerText === "Filters"){
+    drawerContent.innerHTML = html;
+    attachFilterListeners(drawerContent);
+  }
+}
+
+function attachFilterListeners(root){
+  const applyBtn = root.querySelector("#applyPriceBtn");
+  if(applyBtn){
+    applyBtn.addEventListener("click", () => {
+      const minV = root.querySelector("#minPriceInput").value;
+      const maxV = root.querySelector("#maxPriceInput").value;
+      state.minPrice = minV ? Number(minV) : null;
+      state.maxPrice = maxV ? Number(maxV) : null;
+      loadResults(true);
+    });
+  }
+
+  const brandInput = root.querySelector("#brandSearchInput");
+  if(brandInput){
+    brandInput.addEventListener("input", (e) => {
+      state.brandSearch = e.target.value;
+      renderFilters();
+      // Restore focus
+      const ni = filterContent.querySelector("#brandSearchInput");
+      if(ni){ ni.focus(); ni.setSelectionRange(ni.value.length, ni.value.length); }
+    });
+  }
+
+  root.querySelectorAll(".brand-check").forEach(cb => {
+    cb.addEventListener("change", (e) => {
+      if(e.target.checked) state.brands.add(e.target.value);
+      else state.brands.delete(e.target.value);
+      loadResults(true);
+    });
+  });
+
+  root.querySelectorAll(".cat-check").forEach(cb => {
+    cb.addEventListener("change", (e) => {
+      if(e.target.checked) state.categories.add(e.target.value);
+      else state.categories.delete(e.target.value);
+      loadResults(true);
+    });
+  });
+
+  root.querySelectorAll(".rating-check").forEach(cb => {
+    cb.addEventListener("change", (e) => {
+      const v = e.target.value;
+      state.rating = v ? Number(v) : null;
+      loadResults(true);
+    });
+  });
+}
+
+function renderChips(){
+  const chips = [];
+
+  if(state.minPrice != null || state.maxPrice != null){
+    const label = `₹${formatINR(state.minPrice ?? 0)} - ₹${formatINR(state.maxPrice ?? '∞')}`;
+    chips.push({ label, clear: () => { state.minPrice = null; state.maxPrice = null; }});
+  }
+
+  state.brands.forEach(b => {
+    chips.push({ label: b, clear: () => state.brands.delete(b) });
+  });
+
+  state.categories.forEach(c => {
+    chips.push({ label: c, clear: () => state.categories.delete(c) });
+  });
+
+  if(state.rating != null){
+    chips.push({ label: `${state.rating}★ & above`, clear: () => state.rating = null });
+  }
+
+  if(!chips.length){
+    activeChips.innerHTML = "";
+    return;
+  }
+
+  activeChips.innerHTML = chips.map((c, i) => `
+    <span class="chip">
+      ${escapeHtml(c.label)}
+      <button type="button" data-i="${i}" aria-label="Remove filter">×</button>
+    </span>
+  `).join("");
+
+  activeChips.querySelectorAll("button").forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      chips[i].clear();
+      loadResults(true);
+    });
+  });
+}
+
+function clearAllFilters(){
+  state.minPrice = null;
+  state.maxPrice = null;
+  state.brands.clear();
+  state.categories.clear();
+  state.rating = null;
+  state.brandSearch = "";
+  loadResults(true);
+}
+
+document.getElementById("clearAllBtn").addEventListener("click", clearAllFilters);
+
+// Sort menu
+const sortBtn = document.getElementById("sortBtn");
+const sortMenu = document.getElementById("sortMenu");
+const sortLabel = document.getElementById("sortLabel");
+
+sortBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  sortMenu.classList.toggle("hidden");
+});
+
+sortMenu.querySelectorAll(".sort-option").forEach(opt => {
+  opt.addEventListener("click", () => {
+    sortMenu.querySelectorAll(".sort-option").forEach(o => o.classList.remove("active"));
+    opt.classList.add("active");
+    state.sort = opt.dataset.sort;
+    sortLabel.innerText = opt.innerText;
+    sortMenu.classList.add("hidden");
+    loadResults(true);
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if(!sortBtn.contains(e.target) && !sortMenu.contains(e.target)){
+    sortMenu.classList.add("hidden");
+  }
+  if(!suggestBox.contains(e.target) && e.target !== searchInput){
+    suggestBox.classList.add("hidden");
+  }
+});
+
+// Search
+function handleSearchSubmit(e){
+  e.preventDefault();
+  const q = searchInput.value.trim();
+  suggestBox.classList.add("hidden");
+  if(q){
+    state.query = q;
+    history.replaceState(null, "", `?q=${encodeURIComponent(q)}`);
+    loadResults(true);
+  }
+  return false;
+}
+
+let suggestTimer;
+searchInput.addEventListener("input", (e) => {
+  const q = e.target.value.trim();
+  clearTimeout(suggestTimer);
+  if(!q){ suggestBox.classList.add("hidden"); return; }
+  suggestTimer = setTimeout(async () => {
+    try{
+      const json = await apiGet(`/api/search?q=${encodeURIComponent(q)}&suggest=true`);
+      const list = (json.data || []).slice(0, 8);
+      if(!list.length){ suggestBox.classList.add("hidden"); return; }
+      suggestBox.innerHTML = list.map((item, i) => `
+        <div class="px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-q="${escapeHtml(item)}">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
+          <span>${escapeHtml(item)}</span>
+        </div>`).join("");
+      [...suggestBox.children].forEach(el => {
+        el.addEventListener("click", () => {
+          searchInput.value = el.dataset.q;
+          suggestBox.classList.add("hidden");
+          state.query = el.dataset.q;
+          history.replaceState(null, "", `?q=${encodeURIComponent(el.dataset.q)}`);
+          loadResults(true);
+        });
+      });
+      suggestBox.classList.remove("hidden");
+    }catch{ suggestBox.classList.add("hidden"); }
+  }, 250);
+});
+
+// Load more
+loadMoreBtn.addEventListener("click", async () => {
+  loadMoreBtn.disabled = true;
+  loadMoreBtn.innerText = "Loading...";
+  state.page += 1;
+  try{
+    const json = await apiGet(`/api/search?${buildQueryString()}`);
+    renderProducts(json.data || [], true);
+    state.totalPages = json.pagination?.pages || state.totalPages;
+    if(state.page >= state.totalPages) loadMoreWrap.classList.add("hidden");
+  }catch{ state.page -= 1; }
+  finally{
+    loadMoreBtn.disabled = false;
+    loadMoreBtn.innerText = "Load More";
+  }
+});
+
+// Drawer (mobile)
+function openDrawer(type){
+  const drawer = document.getElementById("drawer");
+  const overlay = document.getElementById("drawerOverlay");
+  const title = document.getElementById("drawerTitle");
+  const content = document.getElementById("drawerContent");
+
+  if(type === "filter"){
+    title.innerText = "Filters";
+    content.innerHTML = filterContent.innerHTML;
+    attachFilterListeners(content);
+  }else{
+    title.innerText = "Sort By";
+    content.innerHTML = `
+      <div class="space-y-2">
+        ${['popular','price_low','price_high','discount','rating'].map(s => {
+          const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
+          return `
+          <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 rounded-xl p-3 border border-slate-100">
+            <input type="radio" name="msort" class="filter-checkbox" value="${s}" ${state.sort === s ? 'checked' : ''}/>
+            <span class="text-[14px] font-medium">${labels[s]}</span>
+          </label>`;
+        }).join("")}
+      </div>`;
+    content.querySelectorAll('input[name="msort"]').forEach(r => {
+      r.addEventListener("change", (e) => {
+        state.sort = e.target.value;
+        const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
+        sortLabel.innerText = labels[state.sort];
+        document.querySelectorAll("#sortMenu .sort-option").forEach(o => {
+          o.classList.toggle("active", o.dataset.sort === state.sort);
+        });
+        loadResults(true);
+        closeDrawer();
+      });
+    });
+  }
+
+  drawer.classList.add("open");
+  overlay.classList.add("open");
+}
+
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("drawerOverlay").classList.remove("open");
+}
+
+// Init
+document.getElementById("footerYear").innerText = new Date().getFullYear();
+
+if(state.query){
+  searchInput.value = state.query;
+}
+
+loadResults(true);
+</script>
+
+</body>
+</html>
