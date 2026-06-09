@@ -31,6 +31,50 @@
   --muted:#64748b;
   --success:#22c55e;
 }
+  html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  max-width: 100%;
+}/* Prevent long text from breaking layout */
+h1, h2, h3, p, div, span {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Product title */
+.hero-title {
+  word-break: break-word;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Canvas chart */
+#priceChart {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* Main container */
+main {
+  overflow-x: hidden;
+}
+
+/* Related products */
+#relatedGrid {
+  overflow-x: hidden;
+}
+
+/* Price cards */
+.info-card {
+  min-width: 0;
+}
 
 body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom:90px; }
 
