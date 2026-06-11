@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,11 +7,6 @@
 
 <title>Account | Visco Compare</title>
 
-<link rel="icon" type="image/png" href="favicon.png"/>
-<link rel="shortcut icon" type="image/png" href="favicon.png"/>
-<link rel="apple-touch-icon" href="favicon.png"/>
-
-  
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,160 +15,88 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
-
-*{
-  font-family:'Poppins',sans-serif;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-:root{
-  --primary:#2563eb;
-  --primary-dark:#1d4ed8;
-  --primary-soft:#dbeafe;
-  --bg:#f8fbff;
-  --card:#ffffff;
-  --border:#e2e8f0;
-  --text:#0f172a;
-  --muted:#64748b;
-}
-
-body{
-  background:var(--bg);
-  overflow-x:hidden;
-  color:var(--text);
-  padding-bottom:90px;
-}
-
-.glass{
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-}
-
-.hero-bg{
-  background:
-    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
-    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
-}
-
-.glow{
-  position:absolute;
-  width:450px;
-  height:450px;
-  border-radius:999px;
-  background:rgba(37,99,235,0.12);
-  filter:blur(100px);
-  z-index:0;
-  pointer-events:none;
-}
-
-.product-card{
-  transition:.3s ease;
-  background:white;
-  border:1px solid var(--border);
-}
-
-.product-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(37,99,235,0.10);
-}
-
-.footer-link{
-  transition:all .2s ease;
-}
-
-.footer-link:hover{
-  color:white;
-  transform:translateX(4px);
-}
-
+*{font-family:'Poppins',sans-serif;margin:0;padding:0;box-sizing:border-box;}
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--primary-soft:#dbeafe;--bg:#f8fbff;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--muted:#64748b;}
+body{background:var(--bg);overflow-x:hidden;color:var(--text);padding-bottom:90px;}
+.glass{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.hero-bg{background:radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);}
+.glow{position:absolute;width:450px;height:450px;border-radius:999px;background:rgba(37,99,235,0.12);filter:blur(100px);z-index:0;pointer-events:none;}
+.product-card{transition:.3s ease;background:white;border:1px solid var(--border);}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(37,99,235,0.10);}
+.footer-link{transition:all .2s ease;}
+.footer-link:hover{color:white;transform:translateX(4px);}
+.skel{background:linear-gradient(90deg,#e2e8f0 0%,#f1f5f9 50%,#e2e8f0 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px;color:transparent;}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
 </style>
 </head>
 
 <body>
 
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
-
   <div class="flex items-center gap-3">
-
-    <button type="button" onclick="history.back()" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+    <button type="button" onclick="history.length>1 ? history.back() : location.href='homepage.html'" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
       <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
-
     <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
-      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+      <img src="logo.png" alt="" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
-
     <div>
       <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
       <p class="text-[11px] text-slate-400 -mt-1">My Account</p>
     </div>
-
   </div>
-
   <button type="button" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
     <i class="fa-solid fa-gear text-blue-700"></i>
   </button>
-
 </header>
 
 <section class="relative overflow-hidden hero-bg pt-28 pb-12">
-
   <div class="glow top-[-100px] right-[-100px]"></div>
   <div class="glow bottom-[-120px] left-[-120px]"></div>
 
   <div class="relative z-10 max-w-3xl mx-auto px-4 md:px-10 text-center">
-
     <div class="relative inline-block mb-5">
-
       <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-4xl font-extrabold shadow-2xl shadow-blue-200">
-        <span id="user-initial">JD</span>
+        <span id="user-initial">··</span>
       </div>
-
       <button type="button" class="absolute bottom-1 right-1 bg-white p-2.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 transition">
         <i class="fa-solid fa-pen text-blue-700 text-xs"></i>
       </button>
-
     </div>
 
-    <h1 class="text-[28px] font-extrabold tracking-[-1px] text-slate-900" id="user-name">USER</h1>
+    <h1 class="text-[28px] font-extrabold tracking-[-1px] text-slate-900" id="user-name">
+      <span class="skel inline-block w-40 h-7"></span>
+    </h1>
 
     <div class="flex justify-center items-center gap-2 mt-2 text-slate-500 text-sm">
-      <span id="user-phone">+91 9999999999</span>
-      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-      <span class="text-green-600 font-bold text-xs">Active</span>
+      <span id="user-phone"><span class="skel inline-block w-32 h-4"></span></span>
+      <span id="status-dot" class="w-2 h-2 bg-slate-300 rounded-full"></span>
+      <span id="status-text" class="text-slate-400 font-bold text-xs">···</span>
     </div>
-
   </div>
-
 </section>
 
 <main class="max-w-3xl mx-auto px-4 md:px-10">
 
   <section class="grid grid-cols-2 gap-4 mb-8">
-
     <div class="product-card rounded-3xl p-5 text-center">
       <div class="w-12 h-12 mx-auto rounded-xl bg-blue-50 flex items-center justify-center mb-3">
         <i class="fa-solid fa-bell text-blue-700"></i>
       </div>
-      <div class="text-blue-700 text-[28px] font-extrabold">12</div>
+      <div class="text-blue-700 text-[28px] font-extrabold" id="stat-alerts">—</div>
       <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Alerts</div>
     </div>
-
     <div class="product-card rounded-3xl p-5 text-center">
-      <div class="w-12 h-12 mx-auto rounded-xl bg-green-50 flex items-center justify-center mb-3">
-        <i class="fa-solid fa-piggy-bank text-green-600"></i>
+      <div class="w-12 h-12 mx-auto rounded-xl bg-red-50 flex items-center justify-center mb-3">
+        <i class="fa-solid fa-heart text-red-500"></i>
       </div>
-      <div class="text-green-600 text-[28px] font-extrabold">₹240</div>
-      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Saved</div>
+      <div class="text-red-500 text-[28px] font-extrabold" id="stat-wishlist">—</div>
+      <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wide mt-1">Wishlist</div>
     </div>
-
   </section>
 
   <section class="space-y-3 mb-8">
-
-    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer" onclick="location.href='wishlist.html'">
       <div class="flex items-center gap-4">
         <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
           <i class="fa-solid fa-heart text-red-500"></i>
@@ -187,7 +109,7 @@ body{
       <i class="fa-solid fa-chevron-right text-slate-400"></i>
     </div>
 
-    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
+    <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer" onclick="location.href='alerts.html'">
       <div class="flex items-center gap-4">
         <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center">
           <i class="fa-solid fa-bell text-amber-500"></i>
@@ -197,7 +119,7 @@ body{
           <div class="text-xs text-slate-400">Get notified on price drops</div>
         </div>
       </div>
-      <span class="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">3</span>
+      <span id="badge-alerts" class="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full hidden">0</span>
     </div>
 
     <div class="product-card rounded-2xl p-5 flex justify-between items-center cursor-pointer">
@@ -220,66 +142,51 @@ body{
         </div>
         <div>
           <div class="font-semibold">Support</div>
-          <div class="text-xs text-slate-400">Help & FAQs</div>
+          <div class="text-xs text-slate-400">Help &amp; FAQs</div>
         </div>
       </div>
       <i class="fa-solid fa-chevron-right text-slate-400"></i>
     </div>
-
   </section>
 
   <section class="mb-8 p-7 rounded-3xl text-white bg-gradient-to-br from-blue-700 to-blue-500 relative overflow-hidden shadow-xl shadow-blue-100">
-
     <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
     <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
-
     <div class="relative z-10">
-
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold mb-3">
         ⚡ PREMIUM
       </div>
-
       <h2 class="text-2xl font-extrabold">Upgrade to Pro</h2>
-      <p class="text-sm opacity-90 mt-2 max-w-xs">Real-time price tracking, smart alerts & exclusive deals</p>
-
+      <p class="text-sm opacity-90 mt-2 max-w-xs">Real-time price tracking, smart alerts &amp; exclusive deals</p>
       <button type="button" class="mt-5 bg-white text-blue-700 px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition shadow-lg">
         Learn More →
       </button>
-
     </div>
-
   </section>
 
-  <button type="button" onclick="logout()" class="w-full product-card rounded-2xl p-4 text-red-600 font-bold border-red-100 hover:bg-red-50 transition flex items-center justify-center gap-3">
+  <button type="button" id="logoutBtn" class="w-full product-card rounded-2xl p-4 text-red-600 font-bold border-red-100 hover:bg-red-50 transition flex items-center justify-center gap-3">
     <i class="fa-solid fa-right-from-bracket"></i>
-    Logout Account
+    <span id="logoutLabel">Logout Account</span>
   </button>
 
 </main>
 
 <footer class="mt-16 bg-slate-950 text-white">
-
   <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
-
     <div>
-
       <div class="flex items-center gap-3 mb-5">
         <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
           <i class="fa-solid fa-bag-shopping text-white"></i>
         </div>
         <h2 class="font-bold text-2xl">Visco Compare</h2>
       </div>
-
       <p class="text-slate-400 leading-8 text-sm">
         Compare prices across top online stores and discover the best deals instantly.
       </p>
-
       <div class="inline-flex items-center gap-2 mt-5 bg-blue-500/10 border border-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm font-semibold">
         ⚡ Smart Shopping Platform
       </div>
-
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Quick Links</h3>
       <nav class="space-y-3 text-slate-400">
@@ -288,7 +195,6 @@ body{
         <a href="explore.html" class="footer-link block">Explore</a>
       </nav>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Legal</h3>
       <nav class="space-y-3 text-slate-400">
@@ -296,7 +202,6 @@ body{
         <a href="terms.html" class="footer-link block">Terms</a>
       </nav>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Connect</h3>
       <div class="flex gap-3">
@@ -305,70 +210,154 @@ body{
         <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
     </div>
-
   </div>
-
   <div class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
     © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
     <span class="text-[12px]">We may earn commissions from affiliate links.</span>
   </div>
-
 </footer>
 
 <nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
-
   <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-house text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Home</span>
   </button>
-
   <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Search</span>
   </button>
-
   <button onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-compass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Explore</span>
   </button>
-
   <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-fire text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Deals</span>
   </button>
-
   <button class="flex flex-col items-center text-blue-700">
     <i class="fa-solid fa-user text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Profile</span>
   </button>
-
 </nav>
 
 <script>
+(function(){
+  const _e = "aHR0cHM6Ly92aXNjbzEub25yZW5kZXIuY29t";
+  const _h = atob(_e);
+  const $ = id => document.getElementById(id);
 
-document.getElementById("footerYear").innerText = new Date().getFullYear();
+  document.getElementById("footerYear").innerText = new Date().getFullYear();
 
-function loadUser(){
-  const name = localStorage.getItem("userName") || "John Doe";
-  const phone = localStorage.getItem("userPhone") || "+91 9999999999";
+  async function call(path){
+    const t = localStorage.getItem("vc_t");
+    try{
+      const res = await fetch(_h + path, {
+        method: "GET",
+        headers: t ? {"Authorization":"Bearer " + t} : {},
+        cache: "no-store",
+        credentials: "omit",
+        mode: "cors"
+      });
+      let data = {};
+      try { data = await res.json(); } catch(_){}
+      return { ok: res.ok, status: res.status, data };
+    }catch(_){
+      return { ok:false, status:0, data:{} };
+    }
+  }
 
-  document.getElementById("user-name").innerText = name;
-  document.getElementById("user-phone").innerText = phone;
+  function setInitial(name){
+    const initial = (name || "").trim().split(/\s+/).map(w => w[0]).join("").slice(0,2).toUpperCase() || "U";
+    $("user-initial").innerText = initial;
+  }
 
-  const initial = name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
-  document.getElementById("user-initial").innerText = initial || "JD";
-}
+  function renderGuest(){
+    $("user-name").innerText = "Guest User";
+    $("user-phone").innerText = "Not signed in";
+    $("status-dot").className = "w-2 h-2 bg-slate-400 rounded-full";
+    $("status-text").className = "text-slate-500 font-bold text-xs";
+    $("status-text").innerText = "Guest";
+    setInitial("Guest");
+    $("stat-alerts").innerText = "0";
+    $("stat-wishlist").innerText = "0";
+    $("logoutLabel").innerText = "Sign In";
+    $("logoutBtn").onclick = () => location.href = "index.html";
+  }
 
-function logout(){
-  localStorage.removeItem("token");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("userPhone");
-  localStorage.removeItem("guest");
-  window.location.href = "index.html";
-}
+  function renderUser(u){
+    $("user-name").innerText = u.name || "User";
+    $("user-phone").innerText = u.phone || "";
+    $("status-dot").className = "w-2 h-2 bg-green-500 rounded-full";
+    $("status-text").className = "text-green-600 font-bold text-xs";
+    $("status-text").innerText = "Active";
+    setInitial(u.name);
 
-window.onload = loadUser;
+    const stats = u.stats || {};
+    $("stat-alerts").innerText = stats.alerts ?? 0;
+    $("stat-wishlist").innerText = stats.wishlist ?? 0;
 
+    const badge = $("badge-alerts");
+    if((stats.alerts ?? 0) > 0){
+      badge.innerText = stats.alerts;
+      badge.classList.remove("hidden");
+    }
+
+    if(u.name) localStorage.setItem("vc_n", u.name);
+    if(u.phone) localStorage.setItem("vc_p", u.phone);
+
+    $("logoutLabel").innerText = "Logout Account";
+    $("logoutBtn").onclick = logout;
+  }
+
+  async function loadUser(){
+    const token = localStorage.getItem("vc_t");
+
+    // No token at all → guest view (don't auto-redirect, lets users sign in from here)
+    if(!token){
+      renderGuest();
+      return;
+    }
+
+    // Show cached data instantly so the page never sits empty
+    const cachedName = localStorage.getItem("vc_n");
+    const cachedPhone = localStorage.getItem("vc_p");
+    if(cachedName || cachedPhone){
+      renderUser({ name: cachedName, phone: cachedPhone, stats: {} });
+    }
+
+    // Verify with server
+    const r = await call("/auth/me");
+
+    if(r.ok && r.data && r.data.success){
+      renderUser(r.data.data || {});
+      return;
+    }
+
+    // Token invalid/expired (401/403) → clear and offer sign-in
+    if(r.status === 401 || r.status === 403){
+      localStorage.removeItem("vc_t");
+      localStorage.removeItem("vc_n");
+      localStorage.removeItem("vc_p");
+      renderGuest();
+      return;
+    }
+
+    // Network/server error → keep showing cached data; just relabel logout
+    if(!cachedName && !cachedPhone){
+      renderGuest();
+    }
+  }
+
+  function logout(){
+    localStorage.removeItem("vc_t");
+    localStorage.removeItem("vc_n");
+    localStorage.removeItem("vc_p");
+    localStorage.removeItem("guest");
+    location.href = "index.html";
+  }
+
+  loadUser();
+})();
 </script>
 
 </body>
