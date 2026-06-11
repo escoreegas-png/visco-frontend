@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
+<title>My Wishlist | Visco Compare</title>
+
+<link rel="icon" type="image/png" href="favicon.png"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+*{font-family:'Poppins',sans-serif;margin:0;padding:0;box-sizing:border-box;}
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--bg:#f8fbff;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--muted:#64748b;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);overflow-x:hidden;color:var(--text);padding-bottom:90px;}
+.glass{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.hero-bg{background:radial-gradient(circle at top right,rgba(37,99,235,0.15),transparent 25%),radial-gradient(circle at bottom left,rgba(59,130,246,0.12),transparent 25%);}
+.glow{position:absolute;width:450px;height:450px;border-radius:999px;background:rgba(37,99,235,0.12);filter:blur(100px);z-index:0;pointer-events:none;}
+.footer-link{transition:all .2s ease;}
+.footer-link:hover{color:white;transform:translateX(4px);}
+
+/* ── UNIFORM Product Card (shared with homepage) ── */
+#productGrid{align-items:stretch;}
+.product-card{
+  background:white;border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  transition:.25s ease;display:flex;flex-direction:column;position:relative;height:100%;width:100%;
+}
+.product-card:hover{transform:translateY(-4px);border-color:#bfdbfe;box-shadow:0 12px 30px rgba(37,99,235,0.12);}
+.pc-image-wrap{position:relative;background:#f8fafc;padding:18px;width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.pc-image-wrap img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transition:transform .3s ease;}
+.product-card:hover .pc-image-wrap img{transform:scale(1.05);}
+.pc-discount-badge{position:absolute;top:10px;left:10px;background:#ef4444;color:white;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;letter-spacing:.3px;z-index:2;}
+.pc-remove-btn{position:absolute;top:10px;right:10px;background:white;border:1px solid var(--border);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#ef4444;font-size:13px;transition:.2s;z-index:3;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+.pc-remove-btn:hover{background:#fee2e2;border-color:#fecaca;transform:scale(1.1);}
+.pc-body{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1;}
+.pc-title{font-size:13px;font-weight:500;color:#334155;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:36px;margin-bottom:8px;}
+.pc-rating-row{height:18px;margin-bottom:8px;display:flex;align-items:center;}
+.pc-rating{display:inline-flex;align-items:center;gap:4px;background:#10b981;color:white;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;width:fit-content;height:18px;}
+.pc-price-row{display:flex;align-items:baseline;gap:8px;height:24px;margin-bottom:4px;}
+.pc-price{font-size:18px;font-weight:800;color:#0f172a;line-height:1;}
+.pc-mrp{font-size:12px;color:#94a3b8;text-decoration:line-through;line-height:1;}
+.pc-saving-row{height:14px;margin-bottom:10px;display:flex;align-items:center;}
+.pc-saving{font-size:11px;color:#10b981;font-weight:600;line-height:1;}
+.pc-spacer{flex:1;}
+.pc-bottom-section{display:flex;flex-direction:column;gap:8px;}
+.pc-stores{display:flex;align-items:center;gap:6px;padding:8px 10px;background:#f1f5f9;border-radius:10px;font-size:11px;color:#475569;font-weight:600;height:32px;}
+.pc-store-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#2563eb;flex-shrink:0;}
+.pc-cta{display:block;width:100%;text-align:center;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;font-size:12px;font-weight:700;padding:9px;border-radius:10px;border:none;cursor:pointer;transition:.2s;letter-spacing:.3px;}
+.pc-cta:hover{opacity:.9;transform:translateY(-1px);}
+.pc-cta i{margin-right:5px;}
+
+.skeleton{background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:16px;width:100%;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.skeleton-card{aspect-ratio:1/1.5;min-height:340px;}
+
+@media(max-width:768px){
+  .hero-title{font-size:30px !important;line-height:38px !important;}
+  .pc-image-wrap{padding:14px;}
+  .pc-title{font-size:12px;height:32px;}
+  .pc-price{font-size:16px;}
+  .pc-mrp{font-size:11px;}
+  .pc-stores{font-size:10px;padding:7px 9px;height:30px;}
+  .pc-cta{font-size:11px;padding:8px;}
+  #productGrid{gap:12px;}
+}
+</style>
+</head>
+
+<body>
+
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
+  <div class="flex items-center gap-3">
+    <button type="button" onclick="history.length>1 ? history.back() : location.href='homepage.html'" class="w-10 h-10 rounded-xl bg-blue-50 hover:bg-blue-100 transition flex items-center justify-center">
+      <i class="fa-solid fa-arrow-left text-blue-700"></i>
+    </button>
+    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+      <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+    </div>
+    <div>
+      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+      <p class="text-[11px] text-slate-400 -mt-1">My Wishlist</p>
+    </div>
+  </div>
+
+  <button onclick="location.href='account.html'" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
+    <i class="fa-solid fa-user text-blue-700"></i>
+  </button>
+</header>
+
+<section class="relative hero-bg pt-28 pb-12 overflow-hidden">
+  <div class="glow top-[-100px] right-[-100px]"></div>
+  <div class="glow bottom-[-120px] left-[-120px]"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10 text-center">
+    <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-5">
+      ❤️ Your Saved Products
+    </div>
+    <h1 class="hero-title text-[44px] leading-[52px] font-extrabold tracking-[-1.5px] text-slate-900">
+      My Wishlist
+    </h1>
+    <p class="max-w-xl mx-auto mt-4 text-slate-500 text-[15px] md:text-[16px] leading-7">
+      All your favourite finds, with live prices from every connected store.
+    </p>
+
+    <div id="statsBar" class="hidden mt-6 inline-flex items-center gap-4 bg-white border border-slate-200 rounded-full px-5 py-2.5 shadow-sm">
+      <div class="flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-heart text-red-500"></i>
+        <span class="font-semibold text-slate-700"><span id="countItems">0</span> items</span>
+      </div>
+      <span class="text-slate-300">•</span>
+      <div class="flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-tag text-blue-700"></i>
+        <span class="font-semibold text-slate-700">Total ₹<span id="totalValue">0</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-7xl mx-auto px-4 md:px-10">
+  <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5" aria-live="polite"></div>
+</main>
+
+<footer class="mt-24 bg-slate-950 text-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-white"></i>
+        </div>
+        <h2 class="font-bold text-2xl">Visco Compare</h2>
+      </div>
+      <p class="text-slate-400 leading-8 text-sm">
+        India's No.1 price comparison platform. Compare prices across top online stores and discover the best deals instantly.
+      </p>
+    </div>
+    <div>
+      <h3 class="font-bold text-lg mb-5">Quick Links</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="homepage.html" class="footer-link block">Home</a>
+        <a href="account.html" class="footer-link block">My Account</a>
+        <a href="wishlist.html" class="footer-link block">Wishlist</a>
+      </nav>
+    </div>
+    <div>
+      <h3 class="font-bold text-lg mb-5">Legal</h3>
+      <nav class="space-y-3 text-slate-400">
+        <a href="privacy.html" class="footer-link block">Privacy Policy</a>
+        <a href="terms.html" class="footer-link block">Terms</a>
+      </nav>
+    </div>
+    <div>
+      <h3 class="font-bold text-lg mb-5">Connect</h3>
+      <div class="flex gap-3">
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="w-11 h-11 rounded-xl bg-slate-800 hover:bg-blue-700 transition flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 py-8 px-4 md:px-10 max-w-7xl mx-auto text-center text-slate-500 text-sm">
+    © <span id="footerYear">2026</span> Visco Compare. All rights reserved.<br>
+    <span class="text-[12px]">We may earn commissions from affiliate links.</span>
+  </div>
+</footer>
+
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50">
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-house text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Home</span>
+  </button>
+  <button onclick="location.href='searchpage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Search</span>
+  </button>
+  <button onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-compass text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Explore</span>
+  </button>
+  <button class="flex flex-col items-center text-red-500">
+    <i class="fa-solid fa-heart text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Wishlist</span>
+  </button>
+  <button onclick="location.href='account.html'" class="flex flex-col items-center text-slate-500">
+    <i class="fa-solid fa-user text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Profile</span>
+  </button>
+</nav>
+
+<div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-semibold opacity-0 transition pointer-events-none z-[100] shadow-2xl"></div>
+
+<script>
+const API = "https://visco1.onrender.com";
+const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+
+const grid = document.getElementById("productGrid");
+document.getElementById("footerYear").innerText = new Date().getFullYear();
+
+function escapeHtml(str){
+  if(str == null) return "";
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
+function handleImgError(img){
+  if(img.dataset.fallback === "1") return;
+  img.dataset.fallback = "1";
+  img.src = PLACEHOLDER_IMG;
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.remove("opacity-0"); t.classList.add("opacity-100");
+  setTimeout(()=>{t.classList.add("opacity-0"); t.classList.remove("opacity-100");}, 2500);
+}
+
+function skeletonGrid(n=8){
+  let h = "";
+  for(let i=0; i<n; i++) h += `<div class="skeleton skeleton-card"></div>`;
+  grid.innerHTML = h;
+}
+
+async function apiCall(path, opts={}){
+  const token = localStorage.getItem("vc_t");
+  const headers = { ...(opts.headers||{}) };
+  if(token) headers["Authorization"] = "Bearer " + token;
+  if(opts.body && !headers["Content-Type"]) headers["Content-Type"] = "application/json";
+  try{
+    const res = await fetch(API + path, {
+      method: opts.method || "GET",
+      headers,
+      body: opts.body || undefined,
+      cache: "no-store",
+      credentials: "omit",
+      mode: "cors"
+    });
+    let data = {};
+    try { data = await res.json(); } catch(_){}
+    return { ok: res.ok, status: res.status, data };
+  }catch(_){
+    return { ok:false, status:0, data:{} };
+  }
+}
+
+function emptyState(title, sub, btnLabel, btnAction){
+  return `
+    <div class="col-span-full text-center py-20 px-4">
+      <div class="w-20 h-20 mx-auto rounded-full bg-blue-50 flex items-center justify-center mb-5">
+        <i class="fa-regular fa-heart text-blue-700 text-3xl"></i>
+      </div>
+      <h2 class="text-xl font-bold text-slate-800">${title}</h2>
+      <p class="text-slate-500 mt-2 max-w-md mx-auto">${sub}</p>
+      <button onclick="${btnAction}" class="mt-6 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-7 py-3 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+        ${btnLabel}
+      </button>
+    </div>`;
+}
+
+function renderProducts(products){
+  grid.innerHTML = "";
+
+  if(!products.length){
+    grid.innerHTML = emptyState(
+      "Your wishlist is empty",
+      "Save products you love and we'll keep an eye on the prices for you.",
+      "Browse Products",
+      `location.href='homepage.html'`
+    );
+    document.getElementById("statsBar").classList.add("hidden");
+    return;
+  }
+
+  // Stats
+  const total = products.reduce((s,p)=> s + (Number(p.lowestPrice)||0), 0);
+  document.getElementById("statsBar").classList.remove("hidden");
+  document.getElementById("countItems").innerText = products.length;
+  document.getElementById("totalValue").innerText = formatINR(total);
+
+  const frag = document.createDocumentFragment();
+  products.forEach(p => {
+    const offers   = Array.isArray(p.offers) ? p.offers : [];
+    const lowest   = Number(p.lowestPrice) || 0;
+    const highest  = Number(p.highestPrice) || lowest;
+    const discount = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+    const saving   = highest > lowest ? highest - lowest : 0;
+    const safeTitle  = escapeHtml(p.title || "Untitled Product");
+    const safeImg    = escapeHtml(p.image || "");
+    const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
+    const storesText = offers.length === 1 ? "1 store" : `${offers.length || 0} stores`;
+
+    const card = document.createElement("article");
+    card.className = "product-card";
+    card.innerHTML = `
+      <div class="pc-image-wrap">
+        ${discount >= 10 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
+        <button class="pc-remove-btn" title="Remove from wishlist" data-remove="${escapeHtml(p.id)}">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img src="${safeImg}" alt="${safeTitle}" loading="lazy" onerror="handleImgError(this)"/>
+      </div>
+      <div class="pc-body">
+        <div class="pc-title">${safeTitle}</div>
+        <div class="pc-rating-row">
+          ${ratingNum ? `<span class="pc-rating"><i class="fa-solid fa-star" style="font-size:9px;"></i><span>${ratingNum}</span></span>` : ``}
+        </div>
+        <div class="pc-price-row">
+          <span class="pc-price">₹${formatINR(lowest)}</span>
+          ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
+        </div>
+        <div class="pc-saving-row">
+          ${saving > 0 ? `<span class="pc-saving">You save ₹${formatINR(saving)}</span>` : ``}
+        </div>
+        <div class="pc-spacer"></div>
+        <div class="pc-bottom-section">
+          <div class="pc-stores">
+            <span class="pc-store-dot"></span>
+            <span>Compare across ${storesText}</span>
+          </div>
+          <button class="pc-cta" type="button" data-open="${escapeHtml(p.id)}">
+            <i class="fa-solid fa-bolt"></i>View Deal
+          </button>
+        </div>
+      </div>
+    `;
+    frag.appendChild(card);
+  });
+  grid.appendChild(frag);
+
+  // Wire up interactions
+  grid.querySelectorAll("[data-open]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute("data-open");
+      localStorage.setItem("productId", id);
+      location.href = "detailspage.html";
+    });
+  });
+  grid.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      if(e.target.closest("[data-remove]") || e.target.closest("[data-open]")) return;
+      const openBtn = card.querySelector("[data-open]");
+      if(openBtn){
+        localStorage.setItem("productId", openBtn.getAttribute("data-open"));
+        location.href = "detailspage.html";
+      }
+    });
+  });
+  grid.querySelectorAll("[data-remove]").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute("data-remove");
+      btn.disabled = true;
+      const r = await apiCall(`/me/wishlist/${encodeURIComponent(id)}`, { method: "DELETE" });
+      if(r.ok && r.data && r.data.success){
+        toast("Removed from wishlist");
+        loadWishlist();
+      }else{
+        toast("Could not remove");
+        btn.disabled = false;
+      }
+    });
+  });
+}
+
+async function loadWishlist(){
+  const token = localStorage.getItem("vc_t");
+  if(!token){
+    document.getElementById("statsBar").classList.add("hidden");
+    grid.innerHTML = emptyState(
+      "Sign in to view your wishlist",
+      "Your saved products live in your account so you can access them on any device.",
+      "Sign In",
+      `location.href='index.html'`
+    );
+    return;
+  }
+
+  skeletonGrid(8);
+  const r = await apiCall("/me/wishlist");
+
+  if(r.status === 401 || r.status === 403){
+    localStorage.removeItem("vc_t");
+    grid.innerHTML = emptyState(
+      "Session expired",
+      "Please sign in again to access your wishlist.",
+      "Sign In",
+      `location.href='index.html'`
+    );
+    document.getElementById("statsBar").classList.add("hidden");
+    return;
+  }
+
+  if(!r.ok || !r.data || !r.data.success){
+    grid.innerHTML = `
+      <div class="col-span-full text-center py-20 text-red-500">
+        <i class="fa-solid fa-triangle-exclamation text-4xl mb-3"></i>
+        <div class="font-semibold">Couldn't load wishlist</div>
+        <button onclick="loadWishlist()" class="mt-4 text-blue-700 underline">Retry</button>
+      </div>`;
+    document.getElementById("statsBar").classList.add("hidden");
+    return;
+  }
+
+  renderProducts(r.data.data || []);
+}
+
+loadWishlist();
+</script>
+
+</body>
+</html>
