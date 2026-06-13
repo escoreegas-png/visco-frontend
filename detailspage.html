@@ -646,6 +646,89 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   .gauge-needle{ height:42px; }
   .section-card{ padding:18px; }
 }
+
+  /* MOBILE FIX */
+html,body{
+    width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+canvas{
+    max-width:100% !important;
+}
+
+@media (max-width:768px){
+
+    .product-main{
+        display:block !important;
+    }
+
+    .gallery-sticky{
+        position:static !important;
+        width:100% !important;
+    }
+
+    .main-image-card{
+        padding:12px !important;
+    }
+
+    .offer-row{
+        flex-wrap:wrap !important;
+    }
+
+    .offer-thumb{
+        width:60px !important;
+        height:60px !important;
+    }
+
+    .offer-title{
+        white-space:normal !important;
+        overflow:visible !important;
+    }
+
+    .gauge-wrap{
+        flex-direction:column !important;
+        text-align:center;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr !important;
+    }
+
+    .alert-box{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .alert-box input,
+    .alert-btn{
+        width:100%;
+    }
+
+    .section-card{
+        padding:14px !important;
+        margin-bottom:14px !important;
+    }
+
+    .current-price{
+        font-size:24px !important;
+    }
+
+    .rp-card{
+        min-width:0 !important;
+    }
+}
+
+  
 </style>
 </head>
 
