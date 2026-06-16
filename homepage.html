@@ -36,99 +36,22 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 
 .glass{ backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
 
-/* ===== HERO (Buyhatke-style dark/gradient band) ===== */
-.hero-band{
+.hero-bg{
   background:
-    radial-gradient(circle at 80% 0%, rgba(255,255,255,0.12), transparent 30%),
-    radial-gradient(circle at 0% 100%, rgba(255,255,255,0.08), transparent 35%),
-    linear-gradient(135deg,#1d4ed8 0%, #2563eb 55%, #1e40af 100%);
-  position:relative;
-  overflow:hidden;
+    radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
 }
-.hero-band::before,
-.hero-band::after{
-  content:"";
+
+.glow{
   position:absolute;
-  width:420px; height:420px;
+  width:450px; height:450px;
   border-radius:999px;
-  background:rgba(255,255,255,0.08);
-  filter:blur(90px);
+  background:rgba(37,99,235,0.12);
+  filter:blur(100px);
+  z-index:0;
   pointer-events:none;
 }
-.hero-band::before{ top:-140px; right:-120px; }
-.hero-band::after{ bottom:-160px; left:-140px; }
-
-.hero-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(255,255,255,0.15);
-  border:1px solid rgba(255,255,255,0.25);
-  color:#fff;
-  padding:8px 18px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:600;
-  backdrop-filter:blur(8px);
-}
-
-/* ===== Magic strip (Buyhatke "type before any link") ===== */
-.magic-strip{
-  background:#0f172a;
-  color:#fff;
-  padding:14px;
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:center;
-  gap:10px 16px;
-}
-.magic-pill{
-  background:#facc15;
-  color:#0f172a;
-  font-weight:600;
-  padding:4px 12px;
-  border-radius:999px;
-  display:inline-flex;
-  align-items:center;
-  font-size:13px;
-}
-
-/* ===== Marquee chips ===== */
-.marquee-wrap{
-  background:#eef4ff;
-  padding:14px 0;
-  overflow:hidden;
-}
-.marquee-track{
-  display:flex;
-  gap:14px;
-  width:max-content;
-  animation:marquee 35s linear infinite;
-}
-.marquee-wrap:hover .marquee-track{ animation-play-state:paused; }
-@keyframes marquee{
-  from{ transform:translateX(0); }
-  to{ transform:translateX(-50%); }
-}
-.marquee-chip{
-  flex:none;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:9px 16px;
-  font-size:13px;
-  font-weight:600;
-  color:#334155;
-  white-space:nowrap;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  transition:.2s;
-}
-.marquee-chip:hover{ border-color:#2563eb; color:#2563eb; box-shadow:0 4px 12px rgba(37,99,235,0.15); }
-.marquee-chip .dot{ width:6px; height:6px; border-radius:50%; background:#2563eb; }
 
 .category-btn{ transition:all .25s ease; }
 .category-btn.active{
@@ -200,48 +123,113 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 4px 10px rgba(239,68,68,0.3);
 }
 
-.pc-body{ padding:12px 14px 14px; display:flex; flex-direction:column; flex:1; }
+.pc-body{
+  padding:12px 14px 14px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
 
 .pc-title{
-  font-size:13px; font-weight:500; color:#334155; line-height:1.4;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  overflow:hidden; height:36px; margin-bottom:8px;
+  font-size:13px;
+  font-weight:500;
+  color:#334155;
+  line-height:1.4;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  height:36px;
+  margin-bottom:8px;
 }
 
-.pc-rating-row{ height:18px; margin-bottom:8px; display:flex; align-items:center; }
+.pc-rating-row{
+  height:18px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+}
 .pc-rating{
-  display:inline-flex; align-items:center; gap:4px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
   background:linear-gradient(135deg,#10b981,#059669);
-  color:white; font-size:11px; font-weight:700;
-  padding:2px 6px; border-radius:4px; width:fit-content; height:18px;
+  color:white;
+  font-size:11px;
+  font-weight:700;
+  padding:2px 6px;
+  border-radius:4px;
+  width:fit-content;
+  height:18px;
 }
 
-.pc-price-row{ display:flex; align-items:baseline; gap:8px; height:24px; margin-bottom:4px; }
+.pc-price-row{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  height:24px;
+  margin-bottom:4px;
+}
 .pc-price{ font-size:18px; font-weight:800; color:#0f172a; line-height:1; }
 .pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; line-height:1; }
 
-.pc-saving-row{ height:14px; margin-bottom:10px; display:flex; align-items:center; }
-.pc-saving{ font-size:11px; color:#10b981; font-weight:600; line-height:1; }
+.pc-saving-row{
+  height:14px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+}
+.pc-saving{
+  font-size:11px;
+  color:#10b981;
+  font-weight:600;
+  line-height:1;
+}
 
 .pc-spacer{ flex:1; }
-.pc-bottom-section{ display:flex; flex-direction:column; gap:8px; }
+
+.pc-bottom-section{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
 
 .pc-stores{
-  display:flex; align-items:center; gap:6px;
-  padding:8px 10px; background:#f1f5f9; border-radius:10px;
-  font-size:11px; color:#475569; font-weight:600; height:32px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 10px;
+  background:#f1f5f9;
+  border-radius:10px;
+  font-size:11px;
+  color:#475569;
+  font-weight:600;
+  height:32px;
 }
 .pc-store-dot{
-  display:inline-block; width:6px; height:6px; border-radius:50%;
-  background:#2563eb; flex-shrink:0; box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+  display:inline-block;
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#2563eb;
+  flex-shrink:0;
+  box-shadow:0 0 0 3px rgba(37,99,235,0.15);
 }
 
 .pc-cta{
-  display:block; width:100%; text-align:center;
+  display:block;
+  width:100%;
+  text-align:center;
   background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:white; font-size:12px; font-weight:700; padding:9px;
-  border-radius:10px; border:none; cursor:pointer; transition:.2s;
-  letter-spacing:0.3px; box-shadow:0 4px 12px rgba(37,99,235,0.25);
+  color:white;
+  font-size:12px;
+  font-weight:700;
+  padding:9px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  transition:.2s;
+  letter-spacing:0.3px;
+  box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
 .pc-cta:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 .pc-cta i{ margin-right:5px; }
@@ -251,99 +239,148 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 
 .skeleton{
   background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);
-  background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:16px; width:100%;
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:16px;
+  width:100%;
 }
-@keyframes shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
+@keyframes shimmer{
+  0%{ background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
 .skeleton-card{ aspect-ratio:1/1.5; min-height:340px; }
 
 .suggest-item.active{ background:#eff6ff; }
 
-button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2563eb; outline-offset:2px; }
+button:focus-visible, input:focus-visible, a:focus-visible{
+  outline:2px solid #2563eb;
+  outline-offset:2px;
+}
+
+.hero-section{ position:relative; }
+.hero-inner{ position:relative; z-index:10; }
+.glow-wrap{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
 
 #suggestBox{ z-index:9999 !important; }
 
+/* ===== Trust badges row ===== */
+.trust-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:22px;
+}
+.trust-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,0.75);
+  border:1px solid var(--border);
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  color:#334155;
+  backdrop-filter:blur(8px);
+}
+.trust-chip i{ color:#2563eb; }
+
 /* ===== Stats strip ===== */
-.stats-strip{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:680px; margin:34px auto 0; }
+.stats-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:680px;
+  margin:34px auto 0;
+}
 .stat-box{
-  background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);
-  border-radius:16px; padding:16px 10px; text-align:center; backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.7);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 10px;
+  text-align:center;
+  backdrop-filter:blur(8px);
 }
-.stat-num{ font-size:24px; font-weight:800; color:#fff; line-height:1; }
-.stat-label{ font-size:11px; color:rgba(255,255,255,0.8); font-weight:600; margin-top:5px; }
+.stat-num{
+  font-size:24px;
+  font-weight:800;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.stat-label{ font-size:11px; color:#64748b; font-weight:600; margin-top:5px; }
 
-.section-accent{ width:42px; height:4px; border-radius:99px; background:linear-gradient(135deg,#2563eb,#1d4ed8); margin-bottom:10px; }
-
-/* ===== Why-use feature cards (Buyhatke style) ===== */
-.feature-card{
-  background:#fff; border:1px solid var(--border); border-radius:16px;
-  overflow:hidden; transition:.25s; cursor:pointer; position:relative;
+/* Section header accent */
+.section-accent{
+  width:42px; height:4px;
+  border-radius:99px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  margin-bottom:10px;
 }
-.feature-card:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(37,99,235,0.14); border-color:#bfdbfe; }
-.feature-icon{
-  width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(160deg,#eff6ff,#dbeafe); font-size:42px; color:#2563eb;
-}
-.feature-tag{
-  position:absolute; top:8px; left:8px; background:#facc15; color:#0f172a;
-  font-size:10px; font-weight:700; padding:3px 8px; border-radius:4px;
-}
-
-/* ===== Discount tiles ===== */
-.disc-tile{
-  border-radius:14px; padding:22px 10px; text-align:center; cursor:pointer; transition:.25s;
-  background:radial-gradient(75% 75% at 50% 50%,#eff6ff 48%,#bfdbfe 100%);
-  box-shadow:0 6px 16px rgba(37,99,235,0.1);
-}
-.disc-tile:hover{ transform:scale(1.05); }
-.disc-tile .min{ font-size:13px; font-weight:600; color:#1e3a8a; }
-.disc-tile .pct{ font-size:34px; font-weight:800; color:#1d4ed8; line-height:1.1; }
-.disc-tile .off{ font-size:13px; font-weight:700; color:#1e3a8a; }
-
-/* ===== Supported stores grid ===== */
-.store-circle{
-  width:72px; height:72px; border-radius:50%; border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center; background:#fff;
-  font-size:22px; color:#2563eb; transition:.2s; margin:0 auto;
-}
-.store-circle:hover{ border-color:#2563eb; transform:translateY(-3px); box-shadow:0 8px 18px rgba(37,99,235,0.15); }
-
-/* ===== FAQ accordion ===== */
-.faq-item{ border-bottom:1px solid var(--border); }
-.faq-q{
-  width:100%; display:flex; justify-content:space-between; align-items:center; gap:14px;
-  padding:18px 4px; font-weight:600; font-size:15px; color:#0f172a; cursor:pointer; text-align:left;
-}
-.faq-q i{ transition:transform .25s; color:#2563eb; }
-.faq-item.open .faq-q i{ transform:rotate(180deg); }
-.faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; color:#64748b; font-size:14px; line-height:1.7; }
-.faq-item.open .faq-a{ max-height:240px; padding-bottom:18px; }
 
 /* Profile chip */
 .profile-chip{
-  display:flex; align-items:center; gap:10px; background:white; border:1px solid var(--border);
-  padding:6px 14px 6px 6px; border-radius:999px; cursor:pointer; transition:.2s; box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:white;
+  border:1px solid var(--border);
+  padding:6px 14px 6px 6px;
+  border-radius:999px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04);
 }
-.profile-chip:hover{ border-color:#2563eb; box-shadow:0 4px 12px rgba(37,99,235,0.15); }
+.profile-chip:hover{
+  border-color:#2563eb;
+  box-shadow:0 4px 12px rgba(37,99,235,0.15);
+}
 .profile-chip .avatar{
-  width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0;
+  width:34px; height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:13px;
+  flex-shrink:0;
 }
-.profile-chip .name{ font-size:13px; font-weight:600; color:#0f172a; max-width:110px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.profile-chip .name{
+  font-size:13px;
+  font-weight:600;
+  color:#0f172a;
+  max-width:110px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 
-/* ===== Compact search ===== */
-#searchForm{ max-width:620px; }
-#searchInput{ padding-top:16px; padding-bottom:16px; font-size:15px; }
+/* ===== Compact, medium search bar ===== */
+#searchForm{ max-width:560px; }
+#searchInput{
+  padding-top:14px;
+  padding-bottom:14px;
+  font-size:14px;
+}
 
 /* ===== Mobile ===== */
 @media(max-width:768px){
-  .hero-band{ padding-top:90px !important; }
-  .hero-title{ font-size:30px !important; line-height:38px !important; }
-  .stats-strip{ gap:8px; margin-top:24px; }
+  .hero-section{ padding-top:88px !important; padding-bottom:28px !important; }
+  .hero-title{ font-size:28px !important; line-height:36px !important; }
+  .trust-row{ gap:8px; margin-top:16px; }
+  .trust-chip{ font-size:11px; padding:6px 11px; }
+  .stats-strip{ gap:8px; margin-top:22px; }
   .stat-box{ padding:12px 6px; border-radius:13px; }
-  .stat-num{ font-size:20px; }
+  .stat-num{ font-size:19px; }
   .stat-label{ font-size:9.5px; }
-  #searchForm{ max-width:100%; margin-top:22px !important; }
-  #searchInput{ padding-top:13px; padding-bottom:13px; font-size:13px; }
+  #searchForm{ max-width:100%; margin-top:20px !important; }
+  #searchInput{ padding-top:12px; padding-bottom:12px; font-size:13px; }
   .pc-image-wrap{ padding:14px; }
   .pc-title{ font-size:12px; height:32px; }
   .pc-price{ font-size:16px; }
@@ -353,11 +390,10 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
   #productGrid{ gap:12px; }
   .profile-chip .name{ display:none; }
   .profile-chip{ padding:4px; }
-  .store-circle{ width:60px; height:60px; font-size:18px; }
-  .feature-icon{ font-size:32px; }
 }
+
 @media(max-width:380px){
-  .hero-title{ font-size:26px !important; line-height:34px !important; }
+  .hero-title{ font-size:25px !important; line-height:33px !important; }
   .pc-image-wrap{ padding:10px; }
   .pc-body{ padding:10px 10px 12px; }
 }
@@ -366,7 +402,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
 
 <body>
 
-<!-- ===== HEADER ===== -->
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
   <div class="flex items-center gap-3">
     <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
@@ -388,74 +423,76 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
         <span id="userLocation" class="text-[13px] font-semibold">Detect Location</span>
       </div>
     </button>
+
     <div id="authSlot"></div>
   </div>
 </header>
 
-<!-- ===== HERO BAND ===== -->
-<section class="hero-band pt-28 pb-14">
-  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10 text-center">
-    <div class="hero-pill mb-5">🏆 India's No.1 Smart Price Comparison</div>
+<section class="hero-section hero-bg pt-28 pb-12">
+  <div class="glow-wrap">
+    <div class="glow top-[-100px] right-[-100px]"></div>
+    <div class="glow bottom-[-120px] left-[-120px]"></div>
+  </div>
 
-    <h1 class="hero-title text-[50px] leading-[58px] font-extrabold tracking-[-1.5px] text-white">
-      Find The Best Deals <br>Across Every Store
-    </h1>
+  <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
+    <div class="text-center">
+      <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-5">
+        🏆 India's No.1 Smart Price Comparison
+      </div>
 
-    <p class="max-w-xl mx-auto mt-4 text-blue-50/90 text-[15px] md:text-[16px] leading-7">
-      Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.
-    </p>
+      <h1 class="hero-title text-[52px] leading-[60px] font-extrabold tracking-[-2px] text-slate-900">
+        Find The Best Deals <br>
+        Across Every Store
+      </h1>
 
-    <form id="searchForm" role="search" class="mx-auto mt-8 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
-      <label for="searchInput" class="sr-only">Search products</label>
-      <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[17px] z-10"></i>
-      <input
-        id="searchInput" name="q" type="search" autocomplete="off"
-        placeholder="Search products, brands or categories..."
-        aria-label="Search products"
-        class="w-full bg-white border border-transparent rounded-2xl pr-5 shadow-2xl outline-none focus:ring-4 focus:ring-blue-300/40 transition relative"
-        style="padding-left:46px;"
-      />
-      <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
-    </form>
+      <p class="max-w-xl mx-auto mt-4 text-slate-500 text-[14px] md:text-[16px] leading-7">
+        Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.
+      </p>
 
-    <div class="stats-strip">
-      <div class="stat-box"><div class="stat-num">10k+</div><div class="stat-label">Products Tracked</div></div>
-      <div class="stat-box"><div class="stat-num">30+</div><div class="stat-label">Online Stores</div></div>
-      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Free</div></div>
+      <!-- Medium / compact search -->
+      <form id="searchForm" role="search" class="mx-auto mt-7 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
+        <label for="searchInput" class="sr-only">Search products</label>
+        <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[17px] z-10"></i>
+        <input
+          id="searchInput"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Search products, brands or categories..."
+          aria-label="Search products"
+          class="w-full bg-white border border-slate-200 rounded-2xl pl-13 pr-5 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition relative"
+          style="padding-left:46px;"
+        />
+        <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
+      </form>
+
+      <!-- Trust badges -->
+      <div class="trust-row">
+        <span class="trust-chip"><i class="fa-solid fa-bolt"></i> Real-time Prices</span>
+        <span class="trust-chip"><i class="fa-solid fa-shield-halved"></i> 100% Free</span>
+        <span class="trust-chip"><i class="fa-solid fa-store"></i> 30+ Stores</span>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-num">10k+</div>
+          <div class="stat-label">Products Tracked</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Online Stores</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">free </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== MAGIC STRIP ===== -->
-<div class="magic-strip">
-  <span class="font-bold text-base">✨ Smart Way to Shop Online</span>
-  <span class="hidden sm:inline text-yellow-300">✦</span>
-  <span class="text-sm flex items-center gap-2">
-    Compare on <span class="magic-pill">Visco Compare</span> before you buy anything
-  </span>
-</div>
-
-<!-- ===== MARQUEE CHIPS ===== -->
-<div class="marquee-wrap">
-  <div class="marquee-track" id="marqueeTrack"></div>
-</div>
-
-<!-- ===== DISCOUNT TILES ===== -->
-<section class="max-w-7xl mx-auto px-4 md:px-10 mt-12">
-  <div class="text-center mb-8">
-    <h2 class="text-[24px] md:text-[28px] font-bold text-slate-900">Best Discounts</h2>
-    <p class="text-slate-500 text-sm mt-1">Grab the biggest price drops across stores</p>
-  </div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-    <div class="disc-tile" onclick="goDrops()"><div class="min">Min.</div><div class="pct">40%</div><div class="off">off</div></div>
-    <div class="disc-tile" onclick="goDrops()"><div class="min">Min.</div><div class="pct">50%</div><div class="off">off</div></div>
-    <div class="disc-tile" onclick="goDrops()"><div class="min">Min.</div><div class="pct">60%</div><div class="off">off</div></div>
-    <div class="disc-tile" onclick="goDrops()"><div class="min">Min.</div><div class="pct">70%</div><div class="off">off</div></div>
-  </div>
-</section>
-
-<!-- ===== CATEGORY BAR ===== -->
-<section class="px-4 md:px-10 mt-12 max-w-7xl mx-auto">
+<section class="px-4 md:px-10 mb-8 max-w-7xl mx-auto">
   <div id="categoryBar" class="flex gap-3 overflow-auto hide-scrollbar pb-2" role="tablist" aria-label="Product categories">
     <button type="button" class="category-btn active px-6 py-3 rounded-full font-semibold border whitespace-nowrap" data-category="" role="tab" aria-selected="true">
       ✨ All
@@ -463,8 +500,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
   </div>
 </section>
 
-<!-- ===== PRODUCT GRID ===== -->
-<section class="max-w-7xl mx-auto px-4 md:px-10 mt-6">
+<section class="max-w-7xl mx-auto px-4 md:px-10">
   <div class="flex items-end justify-between mb-7 flex-wrap gap-4">
     <div>
       <div class="section-accent"></div>
@@ -482,85 +518,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
   </div>
 </section>
 
-<!-- ===== WHY USE VISCO ===== -->
-<section class="max-w-7xl mx-auto px-4 md:px-10 mt-20">
-  <div class="text-center mb-10">
-    <h2 class="text-[24px] md:text-[30px] font-bold text-slate-900">Why use Visco Compare?</h2>
-    <p class="text-slate-500 text-sm mt-1">Tools designed to help you shop smarter and save more</p>
-  </div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-    <div class="feature-card">
-      <span class="feature-tag">Popular</span>
-      <div class="feature-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-      <div class="p-4"><h3 class="font-bold text-sm text-slate-900">Price Compare</h3><p class="text-xs text-slate-500 mt-1 leading-relaxed">Side-by-side prices from every major store in real-time.</p></div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
-      <div class="p-4"><h3 class="font-bold text-sm text-slate-900">Real-time Deals</h3><p class="text-xs text-slate-500 mt-1 leading-relaxed">Live discounts updated every minute, never miss a drop.</p></div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="fa-solid fa-piggy-bank"></i></div>
-      <div class="p-4"><h3 class="font-bold text-sm text-slate-900">Smart Savings</h3><p class="text-xs text-slate-500 mt-1 leading-relaxed">See exactly how much you save before you buy.</p></div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-      <div class="p-4"><h3 class="font-bold text-sm text-slate-900">100% Free</h3><p class="text-xs text-slate-500 mt-1 leading-relaxed">No charges, no sign-up walls. Compare freely, always.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SUPPORTED STORES ===== -->
-<section class="max-w-7xl mx-auto px-4 md:px-10 mt-20">
-  <div class="text-center mb-10">
-    <h2 class="text-[24px] md:text-[30px] font-bold text-slate-900">Stores Supported</h2>
-    <p class="text-slate-500 text-sm mt-1">We track prices across 30+ leading online stores</p>
-  </div>
-  <div class="grid grid-cols-4 md:grid-cols-8 gap-5 max-w-4xl mx-auto">
-    <div class="store-circle"><i class="fa-brands fa-amazon"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-cart-flatbed"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-shirt"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-gem"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-store"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-mobile-screen"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-laptop"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-couch"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-spray-can-sparkles"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-headphones"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-shoe-prints"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-basket-shopping"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-tags"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-gift"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-blender"></i></div>
-    <div class="store-circle"><i class="fa-solid fa-plus"></i></div>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section class="max-w-4xl mx-auto px-4 md:px-10 mt-20">
-  <div class="text-center mb-8">
-    <h2 class="text-[24px] md:text-[30px] font-bold text-slate-900">Frequently Asked Questions</h2>
-  </div>
-  <div id="faqList" class="bg-white border border-slate-200 rounded-2xl px-5 md:px-7">
-    <div class="faq-item">
-      <button class="faq-q" type="button" onclick="toggleFaq(this)">How does Visco Compare work?<i class="fa-solid fa-chevron-down"></i></button>
-      <div class="faq-a">We pull live prices for the same product across multiple online stores so you can instantly see who's cheapest before you buy.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" type="button" onclick="toggleFaq(this)">Is Visco Compare free to use?<i class="fa-solid fa-chevron-down"></i></button>
-      <div class="faq-a">Yes — comparing prices is 100% free. We may earn a small commission through affiliate links at no extra cost to you.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" type="button" onclick="toggleFaq(this)">How often are prices updated?<i class="fa-solid fa-chevron-down"></i></button>
-      <div class="faq-a">Prices and deals refresh continuously from our connected stores, so what you see is the latest available data.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" type="button" onclick="toggleFaq(this)">Which stores do you support?<i class="fa-solid fa-chevron-down"></i></button>
-      <div class="faq-a">We compare across 30+ leading online stores including Amazon, Flipkart, Myntra, Ajio and many more.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
 <footer class="mt-24 bg-slate-950 text-white">
   <div class="max-w-7xl mx-auto px-4 md:px-10 py-16 grid md:grid-cols-4 gap-10">
     <div>
@@ -613,22 +570,26 @@ button:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid #2
   </div>
 </footer>
 
-<!-- ===== BOTTOM NAV ===== -->
 <nav class="fixed bottom-0 left-0 w-full h-20 bg-white/80 glass border-t border-slate-200 flex justify-around items-center z-50" aria-label="Primary">
   <button type="button" data-nav="home" onclick="goHome()" class="nav-btn flex flex-col items-center text-blue-700">
-    <i class="fa-solid fa-house text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Home</span>
+    <i class="fa-solid fa-house text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Home</span>
   </button>
   <button type="button" data-nav="search" onclick="goSearch()" class="nav-btn flex flex-col items-center text-slate-500">
-    <i class="fa-solid fa-magnifying-glass text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Search</span>
+    <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Search</span>
   </button>
   <button type="button" data-nav="explore" onclick="goExplore()" class="nav-btn flex flex-col items-center text-slate-500">
-    <i class="fa-solid fa-compass text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Explore</span>
+    <i class="fa-solid fa-compass text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Explore</span>
   </button>
   <button type="button" data-nav="deals" onclick="goDrops()" class="nav-btn flex flex-col items-center text-slate-500">
-    <i class="fa-solid fa-fire text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Deals</span>
+    <i class="fa-solid fa-fire text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Deals</span>
   </button>
   <button type="button" data-nav="account" onclick="goAccount()" class="nav-btn flex flex-col items-center text-slate-500">
-    <i class="fa-solid fa-user text-[20px]"></i><span class="text-[11px] font-semibold mt-1">Profile</span>
+    <i class="fa-solid fa-user text-[20px]"></i>
+    <span class="text-[11px] font-semibold mt-1">Profile</span>
   </button>
 </nav>
 
@@ -675,32 +636,6 @@ function handleImgError(img){
   img.dataset.fallback = "1";
   img.src = PLACEHOLDER_IMG;
 }
-
-/* ===== FAQ toggle (UI only) ===== */
-function toggleFaq(btn){
-  const item = btn.parentElement;
-  const wasOpen = item.classList.contains("open");
-  document.querySelectorAll(".faq-item").forEach(f => f.classList.remove("open"));
-  if(!wasOpen) item.classList.add("open");
-}
-
-/* ===== Decorative marquee chips (UI only) ===== */
-function buildMarquee(){
-  const track = document.getElementById("marqueeTrack");
-  const chips = [
-    "Mobiles","Laptops","Headphones","Smart Watches","Fashion","Footwear",
-    "Beauty","Home & Kitchen","Appliances","Gaming","Cameras","Grocery"
-  ];
-  const make = () => chips.map(c => `<span class="marquee-chip"><span class="dot"></span>${c}</span>`).join("");
-  track.innerHTML = make() + make(); // duplicate for seamless loop
-  // clicking a chip just runs a search using your existing flow
-  track.querySelectorAll(".marquee-chip").forEach(chip => {
-    chip.addEventListener("click", () => {
-      window.location = `searchpage.html?q=${encodeURIComponent(chip.innerText.trim())}`;
-    });
-  });
-}
-buildMarquee();
 
 async function getUserLocation(){
   const text = document.getElementById("userLocation");
@@ -1050,8 +985,13 @@ function goHome(){
   loadTrending(true);
 }
 
-function goSearch(){ window.location = "searchpage.html"; }
-function goExplore(){ window.location = "homepage.html"; }
+function goSearch(){
+  window.location = "searchpage.html";
+}
+
+function goExplore(){
+  window.location = "homepage.html";
+}
 
 async function goDrops(){
   setActiveNav("deals");
@@ -1064,13 +1004,15 @@ async function goDrops(){
     const json = await apiGet(`/api/deals?limit=24&min_discount=10`);
     renderProducts(json.data || []);
     loadMoreWrap.classList.add("hidden");
-    document.getElementById("productGrid").scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 400, behavior: "smooth" });
   }catch{
     productGrid.innerHTML = errorBlock("loadTrending");
   }
 }
 
-function goAccount(){ window.location = "account.html"; }
+function goAccount(){
+  window.location = "account.html";
+}
 
 document.getElementById("footerYear").innerText = new Date().getFullYear();
 
