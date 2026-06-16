@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="favicon.png"/>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -39,7 +39,8 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .hero-bg{
   background:
     radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 25%),
-    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%);
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.12), transparent 25%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
 }
 
 .glow{
@@ -65,27 +66,32 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 
 #productGrid{ align-items:stretch; }
 
+/* ===== Product card ===== */
 .product-card{
   background:white;
   border:1px solid var(--border);
   border-radius:16px;
   overflow:hidden;
-  transition:.25s ease;
+  transition:.28s cubic-bezier(.2,.7,.3,1);
   display:flex;
   flex-direction:column;
   position:relative;
   height:100%;
   width:100%;
+  opacity:0;
+  transform:translateY(14px);
+  animation:cardIn .45s forwards;
 }
+@keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
 .product-card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px);
   border-color:#bfdbfe;
-  box-shadow:0 12px 30px rgba(37,99,235,0.12);
+  box-shadow:0 16px 36px rgba(37,99,235,0.16);
 }
 
 .pc-image-wrap{
   position:relative;
-  background:#f8fafc;
+  background:linear-gradient(160deg,#ffffff,#f4f8ff);
   padding:18px;
   width:100%;
   aspect-ratio:1/1;
@@ -101,12 +107,12 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   object-fit:contain;
   transition:transform .3s ease;
 }
-.product-card:hover .pc-image-wrap img{ transform:scale(1.05); }
+.product-card:hover .pc-image-wrap img{ transform:scale(1.07); }
 
 .pc-discount-badge{
   position:absolute;
   top:10px; left:10px;
-  background:#ef4444;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
   color:white;
   font-size:11px;
   font-weight:700;
@@ -114,6 +120,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   border-radius:6px;
   letter-spacing:0.3px;
   z-index:2;
+  box-shadow:0 4px 10px rgba(239,68,68,0.3);
 }
 
 .pc-body{
@@ -146,7 +153,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   display:inline-flex;
   align-items:center;
   gap:4px;
-  background:#10b981;
+  background:linear-gradient(135deg,#10b981,#059669);
   color:white;
   font-size:11px;
   font-weight:700;
@@ -205,6 +212,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   border-radius:50%;
   background:#2563eb;
   flex-shrink:0;
+  box-shadow:0 0 0 3px rgba(37,99,235,0.15);
 }
 
 .pc-cta{
@@ -221,8 +229,9 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   cursor:pointer;
   transition:.2s;
   letter-spacing:0.3px;
+  box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
-.pc-cta:hover{ opacity:0.9; transform:translateY(-1px); }
+.pc-cta:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 .pc-cta i{ margin-right:5px; }
 
 .footer-link{ transition:all .2s ease; }
@@ -255,7 +264,65 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 #suggestBox{ z-index:9999 !important; }
 
-/* Profile chip (replaces Login button when signed in) */
+/* ===== Trust badges row ===== */
+.trust-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:22px;
+}
+.trust-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,0.75);
+  border:1px solid var(--border);
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  color:#334155;
+  backdrop-filter:blur(8px);
+}
+.trust-chip i{ color:#2563eb; }
+
+/* ===== Stats strip ===== */
+.stats-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:680px;
+  margin:34px auto 0;
+}
+.stat-box{
+  background:rgba(255,255,255,0.7);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 10px;
+  text-align:center;
+  backdrop-filter:blur(8px);
+}
+.stat-num{
+  font-size:24px;
+  font-weight:800;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.stat-label{ font-size:11px; color:#64748b; font-weight:600; margin-top:5px; }
+
+/* Section header accent */
+.section-accent{
+  width:42px; height:4px;
+  border-radius:99px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  margin-bottom:10px;
+}
+
+/* Profile chip */
 .profile-chip{
   display:flex;
   align-items:center;
@@ -294,8 +361,26 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   text-overflow:ellipsis;
 }
 
+/* ===== Compact, medium search bar ===== */
+#searchForm{ max-width:560px; }
+#searchInput{
+  padding-top:14px;
+  padding-bottom:14px;
+  font-size:14px;
+}
+
+/* ===== Mobile ===== */
 @media(max-width:768px){
-  .hero-title{ font-size:34px !important; line-height:42px !important; }
+  .hero-section{ padding-top:88px !important; padding-bottom:28px !important; }
+  .hero-title{ font-size:28px !important; line-height:36px !important; }
+  .trust-row{ gap:8px; margin-top:16px; }
+  .trust-chip{ font-size:11px; padding:6px 11px; }
+  .stats-strip{ gap:8px; margin-top:22px; }
+  .stat-box{ padding:12px 6px; border-radius:13px; }
+  .stat-num{ font-size:19px; }
+  .stat-label{ font-size:9.5px; }
+  #searchForm{ max-width:100%; margin-top:20px !important; }
+  #searchInput{ padding-top:12px; padding-bottom:12px; font-size:13px; }
   .pc-image-wrap{ padding:14px; }
   .pc-title{ font-size:12px; height:32px; }
   .pc-price{ font-size:16px; }
@@ -308,6 +393,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 }
 
 @media(max-width:380px){
+  .hero-title{ font-size:25px !important; line-height:33px !important; }
   .pc-image-wrap{ padding:10px; }
   .pc-body{ padding:10px 10px 12px; }
 }
@@ -338,12 +424,11 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       </div>
     </button>
 
-    <!-- Auth slot: replaced dynamically based on login state -->
     <div id="authSlot"></div>
   </div>
 </header>
 
-<section class="hero-section hero-bg pt-32 pb-20">
+<section class="hero-section hero-bg pt-28 pb-12">
   <div class="glow-wrap">
     <div class="glow top-[-100px] right-[-100px]"></div>
     <div class="glow bottom-[-120px] left-[-120px]"></div>
@@ -351,22 +436,23 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
   <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
     <div class="text-center">
-      <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-6">
+      <div class="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-5 py-2 rounded-full font-semibold text-sm mb-5">
         🏆 India's No.1 Smart Price Comparison
       </div>
 
-      <h1 class="hero-title text-[65px] leading-[74px] font-extrabold tracking-[-2px] text-slate-900">
+      <h1 class="hero-title text-[52px] leading-[60px] font-extrabold tracking-[-2px] text-slate-900">
         Find The Best Deals <br>
         Across Every Store
       </h1>
 
-      <p class="max-w-2xl mx-auto mt-6 text-slate-500 text-[15px] md:text-[18px] leading-8">
-        Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time with smart shopping technology.
+      <p class="max-w-xl mx-auto mt-4 text-slate-500 text-[14px] md:text-[16px] leading-7">
+        Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.
       </p>
 
-      <form id="searchForm" role="search" class="max-w-3xl mx-auto mt-10 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
+      <!-- Medium / compact search -->
+      <form id="searchForm" role="search" class="mx-auto mt-7 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
         <label for="searchInput" class="sr-only">Search products</label>
-        <i class="fa-solid fa-magnifying-glass absolute left-5 top-[26px] -translate-y-1/2 text-blue-700 text-[20px] z-10"></i>
+        <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[17px] z-10"></i>
         <input
           id="searchInput"
           name="q"
@@ -374,15 +460,39 @@ button:focus-visible, input:focus-visible, a:focus-visible{
           autocomplete="off"
           placeholder="Search products, brands or categories..."
           aria-label="Search products"
-          class="w-full bg-white border border-slate-200 rounded-3xl pl-14 pr-5 py-5 shadow-2xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition text-[15px] relative"
+          class="w-full bg-white border border-slate-200 rounded-2xl pl-13 pr-5 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition relative"
+          style="padding-left:46px;"
         />
         <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
       </form>
+
+      <!-- Trust badges -->
+      <div class="trust-row">
+        <span class="trust-chip"><i class="fa-solid fa-bolt"></i> Real-time Prices</span>
+        <span class="trust-chip"><i class="fa-solid fa-shield-halved"></i> 100% Free</span>
+        <span class="trust-chip"><i class="fa-solid fa-store"></i> 30+ Stores</span>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-num">10k+</div>
+          <div class="stat-label">Products Tracked</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Online Stores</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">free </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="px-4 md:px-10 mb-10 max-w-7xl mx-auto">
+<section class="px-4 md:px-10 mb-8 max-w-7xl mx-auto">
   <div id="categoryBar" class="flex gap-3 overflow-auto hide-scrollbar pb-2" role="tablist" aria-label="Product categories">
     <button type="button" class="category-btn active px-6 py-3 rounded-full font-semibold border whitespace-nowrap" data-category="" role="tab" aria-selected="true">
       ✨ All
@@ -391,10 +501,11 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 </section>
 
 <section class="max-w-7xl mx-auto px-4 md:px-10">
-  <div class="flex items-end justify-between mb-8 flex-wrap gap-4">
+  <div class="flex items-end justify-between mb-7 flex-wrap gap-4">
     <div>
-      <h2 id="sectionTitle" class="text-[30px] font-bold text-slate-900">Trending Deals</h2>
-      <p id="sectionSub" class="text-slate-500 mt-1">Updated every minute from top stores</p>
+      <div class="section-accent"></div>
+      <h2 id="sectionTitle" class="text-[26px] md:text-[30px] font-bold text-slate-900">Trending Deals</h2>
+      <p id="sectionSub" class="text-slate-500 mt-1 text-sm">Updated every minute from top stores</p>
     </div>
   </div>
 
@@ -536,7 +647,7 @@ async function getUserLocation(){
       const lat = pos.coords.latitude, lon = pos.coords.longitude;
       localStorage.setItem("userLat", lat);
       localStorage.setItem("userLng", lon);
-      const r = await fetch(`[nominatim.openstreetmap.org](https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon})`);
+      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
       const d = await r.json();
       const addr = d.address || {};
       const city = addr.city || addr.town || addr.village || addr.county || "Your Location";
@@ -552,17 +663,12 @@ async function getUserLocation(){
 const savedLocation = localStorage.getItem("userLocation");
 if(savedLocation) document.getElementById("userLocation").innerText = savedLocation;
 
-/* ============================================
-   AUTH SLOT — show profile chip or Login button
-   Uses unified keys: vc_t, vc_n, vc_p, guest
-   ============================================ */
 function renderAuthSlot(){
   const slot = document.getElementById("authSlot");
   const token = localStorage.getItem("vc_t");
   const name  = localStorage.getItem("vc_n") || "";
 
   if(token){
-    // Logged in — show profile chip linking to account page
     const initial = (name.trim().split(/\s+/).map(w => w[0]).join("").slice(0,2) || "U").toUpperCase();
     const safeName = escapeHtml(name || "Account");
     slot.innerHTML = `
@@ -573,7 +679,6 @@ function renderAuthSlot(){
     `;
     document.getElementById("profileChip").onclick = () => { window.location = "account.html"; };
   }else{
-    // Not logged in — show Login button
     slot.innerHTML = `
       <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
         Login
@@ -614,7 +719,7 @@ function renderProducts(products, append = false){
 
   const frag = document.createDocumentFragment();
 
-  products.forEach(p => {
+  products.forEach((p, idx) => {
     const offers   = Array.isArray(p.offers) ? p.offers : [];
     const best     = offers[0];
     const lowest   = Number(p.lowestPrice) || (best ? Number(best.price) : 0);
@@ -629,6 +734,7 @@ function renderProducts(products, append = false){
 
     const card = document.createElement("article");
     card.className = "product-card";
+    card.style.animationDelay = `${Math.min(idx, 11) * 0.04}s`;
     card.innerHTML = `
       <div class="pc-image-wrap">
         ${discount >= 10 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
@@ -913,7 +1019,6 @@ document.getElementById("footerYear").innerText = new Date().getFullYear();
 loadCategories();
 loadTrending(true);
 
-/* Refresh auth slot when returning to the tab (e.g., after logging in on another tab) */
 window.addEventListener("storage", (e) => {
   if(["vc_t","vc_n","vc_p"].includes(e.key)) renderAuthSlot();
 });
