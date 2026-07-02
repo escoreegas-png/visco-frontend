@@ -6,11 +6,11 @@
 <meta name="description" content="Visco Compare — Search results with smart filters."/>
 <meta name="theme-color" content="#2563eb"/>
 <title>Search Results — Visco Compare</title>
-  
+
 <link rel="icon" type="image/png" href="favicon.png"/>
 <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 <link rel="apple-touch-icon" href="favicon.png"/>
-  
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,53 +55,70 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .hide-scrollbar::-webkit-scrollbar{ display:none; }
 .hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
 
-/* Buyhatke-style product card */
+/* ===== Product card — MATCHES homepage exactly ===== */
 .product-card{
   background:white;
   border:1px solid var(--border);
   border-radius:16px;
   overflow:hidden;
-  transition:.25s ease;
+  transition:.28s cubic-bezier(.2,.7,.3,1);
   display:flex;
   flex-direction:column;
   position:relative;
+  height:100%;
+  width:100%;
+  opacity:0;
+  transform:translateY(14px);
+  animation:cardIn .45s forwards;
   cursor:pointer;
 }
+@keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
 .product-card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px);
   border-color:#bfdbfe;
-  box-shadow:0 12px 30px rgba(37,99,235,0.12);
+  box-shadow:0 16px 36px rgba(37,99,235,0.16);
 }
 
 .pc-image-wrap{
   position:relative;
-  background:#f8fafc;
+  background:linear-gradient(160deg,#ffffff,#f4f8ff);
   padding:18px;
+  width:100%;
   aspect-ratio:1/1;
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-shrink:0;
+  overflow:hidden;
 }
 .pc-image-wrap img{
-  width:100%; height:100%;
+  max-width:100%; max-height:100%;
+  width:auto; height:auto;
   object-fit:contain;
   transition:transform .3s ease;
 }
-.product-card:hover .pc-image-wrap img{ transform:scale(1.05); }
+.product-card:hover .pc-image-wrap img{ transform:scale(1.07); }
 
 .pc-discount-badge{
   position:absolute;
   top:10px; left:10px;
-  background:#ef4444;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
   color:white;
   font-size:11px;
   font-weight:700;
   padding:4px 9px;
   border-radius:6px;
   letter-spacing:0.3px;
+  z-index:2;
+  box-shadow:0 4px 10px rgba(239,68,68,0.3);
 }
 
-.pc-body{ padding:12px 14px 14px; display:flex; flex-direction:column; flex:1; }
+.pc-body{
+  padding:12px 14px 14px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
 
 .pc-title{
   font-size:13px;
@@ -112,33 +129,59 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  min-height:36px;
+  height:36px;
   margin-bottom:8px;
+  flex-shrink:0;
 }
 
+.pc-rating-row{
+  height:20px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+}
 .pc-rating{
   display:inline-flex;
   align-items:center;
   gap:4px;
-  background:#10b981;
+  background:linear-gradient(135deg,#10b981,#059669);
   color:white;
   font-size:11px;
   font-weight:700;
   padding:2px 6px;
   border-radius:4px;
   width:fit-content;
-  margin-bottom:8px;
 }
 
 .pc-price-row{
   display:flex;
   align-items:baseline;
   gap:8px;
+  height:24px;
   margin-bottom:4px;
+  flex-shrink:0;
 }
-.pc-price{ font-size:18px; font-weight:800; color:#0f172a; }
-.pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; }
-.pc-saving{ font-size:11px; color:#10b981; font-weight:600; margin-bottom:10px; }
+.pc-price{ font-size:18px; font-weight:800; color:#0f172a; line-height:1; }
+.pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; line-height:1; }
+
+.pc-saving-row{
+  height:16px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+}
+.pc-saving{ font-size:11px; color:#10b981; font-weight:600; line-height:1; }
+
+.pc-spacer{ flex:1; }
+
+.pc-bottom-section{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  flex-shrink:0;
+}
 
 .pc-stores{
   display:flex;
@@ -147,16 +190,18 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   padding:8px 10px;
   background:#f1f5f9;
   border-radius:10px;
-  margin-bottom:10px;
   font-size:11px;
   color:#475569;
   font-weight:600;
+  height:32px;
 }
 .pc-store-dot{
   display:inline-block;
   width:6px; height:6px;
   border-radius:50%;
   background:#2563eb;
+  flex-shrink:0;
+  box-shadow:0 0 0 3px rgba(37,99,235,0.15);
 }
 
 .pc-cta{
@@ -173,10 +218,12 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   cursor:pointer;
   transition:.2s;
   letter-spacing:0.3px;
+  box-shadow:0 4px 12px rgba(37,99,235,0.25);
 }
-.pc-cta:hover{ opacity:0.9; transform:translateY(-1px); }
+.pc-cta:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 .pc-cta i{ margin-right:5px; }
 
+/* Skeleton */
 .skeleton{
   background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);
   background-size:200% 100%;
@@ -187,15 +234,12 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   0%{ background-position:200% 0; }
   100%{ background-position:-200% 0; }
 }
+.skeleton-card{ aspect-ratio:1/1.6; min-height:360px; }
 
 button:focus-visible, input:focus-visible, a:focus-visible{
   outline:2px solid #2563eb;
   outline-offset:2px;
 }
-
-.hero-section{ position:relative; }
-.hero-inner{ position:relative; z-index:10; }
-.glow-wrap{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
 
 #suggestBox{ z-index:9999 !important; }
 
@@ -217,10 +261,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   outline:none;
   transition:.2s;
 }
-.price-input:focus{
-  border-color:#2563eb;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.1);
-}
+.price-input:focus{ border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,0.1); }
 .brand-search{
   background:#f8fafc;
   border:1px solid #e2e8f0;
@@ -279,15 +320,11 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   overflow:hidden;
   z-index:30;
 }
-.sort-option{
-  padding:12px 16px;
-  font-size:13px;
-  cursor:pointer;
-  transition:.15s;
-}
+.sort-option{ padding:12px 16px; font-size:13px; cursor:pointer; transition:.15s; }
 .sort-option:hover{ background:#f8fafc; }
 .sort-option.active{ background:#eff6ff; color:#1d4ed8; font-weight:600; }
 
+/* Mobile bar */
 .mobile-bar{
   position:fixed;
   bottom:80px;
@@ -299,16 +336,9 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   box-shadow:0 -4px 20px rgba(0,0,0,0.06);
 }
 .mobile-bar button{
-  flex:1;
-  padding:14px;
-  font-weight:600;
-  font-size:13px;
-  background:transparent;
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+  flex:1; padding:14px; font-weight:600; font-size:13px;
+  background:transparent; border:none;
+  display:flex; align-items:center; justify-content:center; gap:8px;
 }
 .mobile-bar button:first-child{ border-right:1px solid var(--border); }
 
@@ -323,8 +353,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 .drawer{
   position:fixed;
   top:0; bottom:0; left:0;
-  width:85%;
-  max-width:380px;
+  width:85%; max-width:380px;
   background:white;
   z-index:70;
   transform:translateX(-100%);
@@ -335,10 +364,54 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 .suggest-item.active{ background:#eff6ff; }
 
+/* Search history in suggest */
+.sh-section-label{
+  padding:8px 16px 4px;
+  font-size:10px;
+  font-weight:700;
+  color:#94a3b8;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  border-bottom:1px solid #f1f5f9;
+}
+
+/* Profile chip */
+.profile-chip{
+  display:flex; align-items:center; gap:10px;
+  background:white; border:1px solid var(--border);
+  padding:6px 14px 6px 6px; border-radius:999px;
+  cursor:pointer; transition:.2s;
+}
+.profile-chip:hover{ border-color:#2563eb; }
+.profile-chip .avatar{
+  width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px; flex-shrink:0;
+}
+.profile-chip .name{
+  font-size:13px; font-weight:600; color:#0f172a;
+  max-width:110px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* Section accent */
+.section-accent{
+  width:42px; height:4px;
+  border-radius:99px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  margin-bottom:10px;
+}
+
 @media(max-width:768px){
-  .pc-image-wrap{ padding:12px; }
-  .pc-title{ font-size:12px; min-height:32px; }
+  .pc-image-wrap{ padding:14px; }
+  .pc-title{ font-size:12px; height:32px; }
   .pc-price{ font-size:16px; }
+  .pc-mrp{ font-size:11px; }
+  .pc-stores{ font-size:10px; padding:7px 9px; height:30px; }
+  .pc-cta{ font-size:11px; padding:8px; }
+  #productGrid{ gap:12px; }
+  .profile-chip .name{ display:none; }
+  .profile-chip{ padding:4px; }
 }
 </style>
 </head>
@@ -366,20 +439,21 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         <span id="userLocation" class="text-[13px] font-semibold">Detect Location</span>
       </div>
     </button>
-    <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
-      Login
-    </button>
+    <div id="authSlot"></div>
   </div>
 </header>
 
-<section class="hero-section hero-bg pt-24 pb-8">
-  <div class="glow-wrap">
-    <div class="glow top-[-100px] right-[-100px]"></div>
+<!-- Hero / Search bar -->
+<section class="hero-bg pt-24 pb-8 relative">
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+    <div class="glow" style="top:-100px;right:-100px;"></div>
   </div>
 
-  <div class="hero-inner max-w-7xl mx-auto px-4 md:px-10">
+  <div class="max-w-7xl mx-auto px-4 md:px-10 relative z-10">
     <div class="flex items-center gap-2 text-[13px] mb-4">
-      <a href="homepage.html" class="text-blue-700 hover:underline font-semibold">Home</a>
+      <a href="homepage.html" class="text-blue-700 hover:underline font-semibold">
+        <i class="fa-solid fa-house text-[11px]"></i> Home
+      </a>
       <span class="text-slate-400">/</span>
       <span class="text-slate-500">Search Results</span>
     </div>
@@ -404,15 +478,15 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-4 md:px-10">
+<section class="max-w-7xl mx-auto px-4 md:px-10 mt-2">
   <div class="flex flex-col md:flex-row gap-6">
 
+    <!-- Filter sidebar (desktop) -->
     <aside class="hidden md:block w-72 flex-shrink-0">
       <div class="filter-sidebar p-5 sticky top-24" id="filterPanel">
         <div class="flex items-center justify-between mb-5">
           <h3 class="font-bold text-[17px] flex items-center gap-2">
-            <i class="fa-solid fa-sliders text-blue-700"></i>
-            Filters
+            <i class="fa-solid fa-sliders text-blue-700"></i> Filters
           </h3>
           <button type="button" id="clearAllBtn" class="text-[12px] text-blue-700 font-semibold hover:underline">Clear All</button>
         </div>
@@ -420,11 +494,13 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       </div>
     </aside>
 
+    <!-- Main content -->
     <div class="flex-1 min-w-0">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>
+          <div class="section-accent"></div>
           <h2 id="sectionTitle" class="text-[24px] md:text-[28px] font-bold text-slate-900">Search Results</h2>
-          <p id="sectionSub" class="text-slate-500 text-sm mt-1">Updated in real-time</p>
+          <p id="sectionSub" class="text-slate-500 text-sm mt-1">In-stock products only</p>
         </div>
 
         <div class="hidden md:block relative" id="sortWrap">
@@ -443,8 +519,10 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         </div>
       </div>
 
+      <!-- Active filter chips -->
       <div id="activeChips" class="flex flex-wrap gap-2 mb-5"></div>
 
+      <!-- Products grid -->
       <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5" aria-live="polite"></div>
 
       <div id="loadMoreWrap" class="text-center mt-10 hidden">
@@ -456,14 +534,13 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
+<!-- Mobile sort/filter bar -->
 <div class="mobile-bar md:hidden">
   <button type="button" onclick="openDrawer('sort')">
-    <i class="fa-solid fa-arrow-down-wide-short text-blue-700"></i>
-    Sort
+    <i class="fa-solid fa-arrow-down-wide-short text-blue-700"></i> Sort
   </button>
   <button type="button" onclick="openDrawer('filter')">
-    <i class="fa-solid fa-filter text-blue-700"></i>
-    Filter
+    <i class="fa-solid fa-filter text-blue-700"></i> Filter
   </button>
 </div>
 
@@ -491,28 +568,23 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         </div>
         <h2 class="font-bold text-2xl">Visco Compare</h2>
       </div>
-      <p class="text-slate-400 leading-8 text-sm">
-        Compare prices across top online stores and discover the best deals instantly.
-      </p>
+      <p class="text-slate-400 leading-8 text-sm">Compare prices across top online stores and discover the best deals instantly.</p>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Quick Links</h3>
       <nav class="space-y-3 text-slate-400">
-        <a href="homepage.html" class="block hover:text-white">Home</a>
-        <a href="about.html" class="block hover:text-white">About Us</a>
-        <a href="explore.html" class="block hover:text-white">Explore</a>
+        <a href="homepage.html" class="block hover:text-white transition">Home</a>
+        <a href="about.html" class="block hover:text-white transition">About Us</a>
+        <a href="homepage.html" class="block hover:text-white transition">Explore</a>
       </nav>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Legal</h3>
       <nav class="space-y-3 text-slate-400">
-        <a href="privacy.html" class="block hover:text-white">Privacy Policy</a>
-        <a href="terms.html" class="block hover:text-white">Terms</a>
+        <a href="privacy.html" class="block hover:text-white transition">Privacy Policy</a>
+        <a href="terms.html" class="block hover:text-white transition">Terms</a>
       </nav>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Connect</h3>
       <div class="flex gap-3">
@@ -522,7 +594,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       </div>
     </div>
   </div>
-
   <div class="border-t border-slate-800 py-8 px-4 md:px-10 max-w-7xl mx-auto text-center text-slate-500 text-sm">
     © <span id="footerYear">2026</span> Visco Compare. All rights reserved.
   </div>
@@ -537,7 +608,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
     <i class="fa-solid fa-magnifying-glass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Search</span>
   </button>
-  <button type="button" onclick="location.href='explore.html'" class="flex flex-col items-center text-slate-500">
+  <button type="button" onclick="location.href='homepage.html'" class="flex flex-col items-center text-slate-500">
     <i class="fa-solid fa-compass text-[20px]"></i>
     <span class="text-[11px] font-semibold mt-1">Explore</span>
   </button>
@@ -554,23 +625,25 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 <script>
 const API = "https://visco1.onrender.com";
 const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+const SEARCH_HISTORY_KEY = "vc_search_history";
+const MAX_HISTORY = 10;
 
-const productGrid  = document.getElementById("productGrid");
-const sectionTitle = document.getElementById("sectionTitle");
-const sectionSub   = document.getElementById("sectionSub");
-const loadMoreWrap = document.getElementById("loadMoreWrap");
-const loadMoreBtn  = document.getElementById("loadMoreBtn");
-const suggestBox   = document.getElementById("suggestBox");
-const searchInput  = document.getElementById("searchInput");
-const filterContent= document.getElementById("filterContent");
-const activeChips  = document.getElementById("activeChips");
+const productGrid   = document.getElementById("productGrid");
+const sectionTitle  = document.getElementById("sectionTitle");
+const sectionSub    = document.getElementById("sectionSub");
+const loadMoreWrap  = document.getElementById("loadMoreWrap");
+const loadMoreBtn   = document.getElementById("loadMoreBtn");
+const suggestBox    = document.getElementById("suggestBox");
+const searchInput   = document.getElementById("searchInput");
+const filterContent = document.getElementById("filterContent");
+const activeChips   = document.getElementById("activeChips");
 
 const params = new URLSearchParams(location.search);
 
 const state = {
   query: params.get("q") || "",
   page: 1,
-  limit: 16,
+  limit: 20,
   totalPages: 1,
   items: [],
   sort: "popular",
@@ -582,13 +655,18 @@ const state = {
   priceRange: { min: 0, max: 100000 },
   availableBrands: [],
   availableCategories: [],
-  brandSearch: ""
+  brandSearch: "",
+  suggestions: [],
+  suggestIndex: -1
 };
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function escapeHtml(str){
   if(str == null) return "";
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
+
 function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
 
 function handleLogoError(img){
@@ -603,8 +681,81 @@ function handleImgError(img){
   img.src = PLACEHOLDER_IMG;
 }
 
+// ── Availability check (same logic as detailspage) ───────────────────────────
+
+function isOfferAvailable(o){
+  if(typeof o.isAvailable === "boolean") return o.isAvailable;
+  const code = String(o.stock || "").toUpperCase();
+  if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+  if(code === "IN_STOCK") return true;
+  return o.price != null && Number(o.price) > 0;
+}
+
+function isProductAvailable(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  if(typeof p.isAvailable === "boolean") return p.isAvailable;
+  if(!offers.length) return Number(p.lowestPrice) > 0;
+  return offers.some(isOfferAvailable);
+}
+
+function getLowestInStockPrice(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  const inStock = offers.filter(isOfferAvailable);
+  if(!inStock.length) return Number(p.lowestPrice) || 0;
+  inStock.sort((a,b) => Number(a.price) - Number(b.price));
+  return Number(inStock[0].price);
+}
+
+function getInStockCount(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  return offers.filter(isOfferAvailable).length || offers.length;
+}
+
+// ── Search History ────────────────────────────────────────────────────────────
+
+function getSearchHistory(){
+  try{ return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]"); }
+  catch{ return []; }
+}
+
+function addSearchHistory(query){
+  if(!query || query.trim().length < 2) return;
+  let h = getSearchHistory().filter(q => q.toLowerCase() !== query.toLowerCase());
+  h.unshift(query.trim());
+  if(h.length > MAX_HISTORY) h = h.slice(0, MAX_HISTORY);
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(h));
+}
+
+// ── Auth slot ─────────────────────────────────────────────────────────────────
+
+function renderAuthSlot(){
+  const slot = document.getElementById("authSlot");
+  const token = localStorage.getItem("vc_t");
+  const name  = localStorage.getItem("vc_n") || "";
+
+  if(token){
+    const initial = (name.trim().split(/\s+/).map(w => w[0]).join("").slice(0,2) || "U").toUpperCase();
+    slot.innerHTML = `
+      <button type="button" id="profileChip" class="profile-chip">
+        <span class="avatar">${initial}</span>
+        <span class="name">${escapeHtml(name || "Account")}</span>
+      </button>`;
+    document.getElementById("profileChip").onclick = () => { window.location = "account.html"; };
+  } else {
+    slot.innerHTML = `
+      <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+        Login
+      </button>`;
+    document.getElementById("loginBtn").onclick = () => { window.location = "index.html"; };
+  }
+}
+renderAuthSlot();
+
+// ── Location ──────────────────────────────────────────────────────────────────
+
 async function getUserLocation(){
   const text = document.getElementById("userLocation");
+  const original = text.innerText;
   text.innerText = "Locating...";
   if(!navigator.geolocation){ text.innerText = "Not supported"; return; }
   navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -615,21 +766,17 @@ async function getUserLocation(){
       const city = addr.city || addr.town || addr.village || "Your Location";
       text.innerText = city;
       localStorage.setItem("userLocation", city);
-    }catch{ text.innerText = "Location Found"; }
-  }, () => { text.innerText = "Unavailable"; });
+    } catch{ text.innerText = "Location Found"; }
+  }, () => { text.innerText = original; });
 }
 
 const savedLocation = localStorage.getItem("userLocation");
-if(savedLocation) document.getElementById("userLocation").innerText = savedLocation;
-
-const token = localStorage.getItem("token");
-const loginBtn = document.getElementById("loginBtn");
-if(token){
-  loginBtn.innerText = "Logout";
-  loginBtn.onclick = () => { localStorage.clear(); location.reload(); };
-}else{
-  loginBtn.onclick = () => { location.href = "index.html"; };
+if(savedLocation){
+  const loc = document.getElementById("userLocation");
+  if(loc) loc.innerText = savedLocation;
 }
+
+// ── API ───────────────────────────────────────────────────────────────────────
 
 async function apiGet(path){
   const res = await fetch(API + path);
@@ -639,31 +786,30 @@ async function apiGet(path){
   return json;
 }
 
-function skeletonGrid(n = 8){
+// ── Skeleton ──────────────────────────────────────────────────────────────────
+
+function skeletonGrid(n = 12){
   let html = "";
   for(let i = 0; i < n; i++){
-    html += `
-      <div class="product-card">
-        <div class="skeleton w-full aspect-square"></div>
-        <div class="p-3">
-          <div class="skeleton h-3 w-3/4 mb-2"></div>
-          <div class="skeleton h-3 w-1/2 mb-3"></div>
-          <div class="skeleton h-5 w-1/3 mb-3"></div>
-          <div class="skeleton h-8 w-full"></div>
-        </div>
-      </div>`;
+    html += `<div class="skeleton skeleton-card"></div>`;
   }
   productGrid.innerHTML = html;
 }
 
+// ── Render Products ───────────────────────────────────────────────────────────
+// Uses identical card markup to homepage — shows only in-stock products
+
 function renderProducts(products, append = false){
   if(!append) productGrid.innerHTML = "";
 
-  if(!products.length && !append){
+  // Filter to in-stock only
+  const available = products.filter(p => isProductAvailable(p));
+
+  if(!available.length && !append){
     productGrid.innerHTML = `
       <div class="col-span-full text-center py-20 text-slate-400">
         <i class="fa-solid fa-box-open text-5xl mb-4"></i>
-        <div class="font-semibold">No products found</div>
+        <div class="font-semibold mt-4">No in-stock products found</div>
         <div class="text-sm mt-2">Try adjusting your filters or search term</div>
       </div>`;
     return;
@@ -671,54 +817,66 @@ function renderProducts(products, append = false){
 
   const frag = document.createDocumentFragment();
 
-  products.forEach(p => {
-    const offers   = Array.isArray(p.offers) ? p.offers : [];
-    const best     = offers[0];
-    const lowest   = Number(p.lowestPrice) || (best ? Number(best.price) : 0);
-    const highest  = Number(p.highestPrice) || lowest;
-    const discount = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
-    const saving   = highest > lowest ? highest - lowest : 0;
+  available.forEach((p, idx) => {
+    const lowest    = getLowestInStockPrice(p);
+    const highest   = Number(p.highestPrice) || lowest;
+    const discount  = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+    const saving    = highest > lowest ? highest - lowest : 0;
+    const storeCount = getInStockCount(p);
+    const storesText = storeCount === 1 ? "1 store" : `${storeCount} stores`;
 
-    const safeTitle  = escapeHtml(p.title || "Untitled Product");
-    const safeImg    = escapeHtml(p.image || "");
-    const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
-    const storesText = offers.length === 1 ? "1 store" : `${offers.length} stores`;
+    const safeTitle = escapeHtml(p.title || "Untitled Product");
+    const safeImg   = escapeHtml(p.image || "");
+    const ratingNum = p.rating ? Number(p.rating).toFixed(1) : null;
 
     const card = document.createElement("article");
     card.className = "product-card";
+    card.style.animationDelay = `${Math.min(idx, 11) * 0.04}s`;
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", safeTitle);
+
     card.innerHTML = `
       <div class="pc-image-wrap">
-        ${discount >= 10 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
+        ${discount >= 5 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
         <img src="${safeImg}" alt="${safeTitle}" loading="lazy" onerror="handleImgError(this)"/>
       </div>
 
       <div class="pc-body">
         <div class="pc-title">${safeTitle}</div>
 
-        ${ratingNum ? `
-          <div class="pc-rating">
-            <i class="fa-solid fa-star" style="font-size:9px;"></i>
-            <span>${ratingNum}</span>
-          </div>` : ""}
+        <div class="pc-rating-row">
+          ${ratingNum ? `
+            <span class="pc-rating">
+              <i class="fa-solid fa-star" style="font-size:9px;"></i>
+              <span>${ratingNum}</span>
+            </span>` : ""}
+        </div>
 
         <div class="pc-price-row">
           <span class="pc-price">₹${formatINR(lowest)}</span>
           ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
         </div>
-        ${saving > 0 ? `<div class="pc-saving">You save ₹${formatINR(saving)}</div>` : `<div style="height:4px;"></div>`}
 
-        ${offers.length ? `
+        <div class="pc-saving-row">
+          ${saving > 0 ? `<span class="pc-saving">You save ₹${formatINR(saving)}</span>` : ""}
+        </div>
+
+        <div class="pc-spacer"></div>
+
+        <div class="pc-bottom-section">
           <div class="pc-stores">
             <span class="pc-store-dot"></span>
             <span>Compare across ${storesText}</span>
-          </div>` : ""}
+          </div>
+          <button class="pc-cta" type="button">
+            <i class="fa-solid fa-bolt"></i>View Deal
+          </button>
+        </div>
+      </div>`;
 
-        <button class="pc-cta" type="button">
-          <i class="fa-solid fa-bolt"></i>View Deal
-        </button>
-      </div>
-    `;
     card.addEventListener("click", () => compare(p.id));
+    card.addEventListener("keydown", (e) => { if(e.key === "Enter") compare(p.id); });
     frag.appendChild(card);
   });
 
@@ -730,6 +888,8 @@ function compare(id){
   localStorage.setItem("productId", id);
   window.location = "detailspage.html";
 }
+
+// ── Build query ───────────────────────────────────────────────────────────────
 
 function buildQueryString(){
   const qp = new URLSearchParams();
@@ -745,6 +905,8 @@ function buildQueryString(){
   return qp.toString();
 }
 
+// ── Load results ──────────────────────────────────────────────────────────────
+
 async function loadResults(reset = true){
   if(!state.query){
     sectionTitle.innerText = "Enter a search term";
@@ -754,7 +916,7 @@ async function loadResults(reset = true){
   }
 
   sectionTitle.innerText = `Results for "${state.query}"`;
-  sectionSub.innerText = "Filtered and sorted to match your preferences";
+  sectionSub.innerText = "In-stock products · Sorted to match your preferences";
 
   if(reset){ state.page = 1; skeletonGrid(); }
 
@@ -767,7 +929,7 @@ async function loadResults(reset = true){
       state.availableBrands = json.facets.brands || [];
       state.availableCategories = json.facets.categories || [];
       if(json.facets.priceRange) state.priceRange = json.facets.priceRange;
-    }else if(reset){
+    } else if(reset){
       deriveFacets(state.items);
     }
 
@@ -777,7 +939,7 @@ async function loadResults(reset = true){
 
     if(state.page < state.totalPages) loadMoreWrap.classList.remove("hidden");
     else loadMoreWrap.classList.add("hidden");
-  }catch{
+  } catch{
     productGrid.innerHTML = `
       <div class="col-span-full text-center py-20 text-red-500">
         <i class="fa-solid fa-triangle-exclamation text-4xl mb-3"></i>
@@ -787,27 +949,31 @@ async function loadResults(reset = true){
   }
 }
 
+// ── Facets ────────────────────────────────────────────────────────────────────
+
 function deriveFacets(items){
   const brandMap = new Map();
-  const catMap = new Map();
+  const catMap   = new Map();
   let minP = Infinity, maxP = 0;
   items.forEach(p => {
-    const price = Number(p.lowestPrice) || 0;
+    if(!isProductAvailable(p)) return;
+    const price = getLowestInStockPrice(p);
     if(price > 0){
       if(price < minP) minP = price;
       if(price > maxP) maxP = price;
     }
-    if(p.brand) brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
-    if(p.category) catMap.set(p.category, (catMap.get(p.category) || 0) + 1);
+    if(p.brand)    brandMap.set(p.brand,    (brandMap.get(p.brand)    || 0) + 1);
+    if(p.category) catMap.set(p.category,   (catMap.get(p.category)   || 0) + 1);
   });
-  state.availableBrands = [...brandMap.entries()].map(([brand, count]) => ({ brand, count })).sort((a,b) => b.count - a.count);
-  state.availableCategories = [...catMap.entries()].map(([category, count]) => ({ category, count })).sort((a,b) => b.count - a.count);
-  if(minP !== Infinity) state.priceRange = { min: Math.floor(minP), max: Math.ceil(maxP) };
+  state.availableBrands     = [...brandMap.entries()].map(([brand,count]) => ({brand,count})).sort((a,b)=>b.count-a.count);
+  state.availableCategories = [...catMap.entries()].map(([category,count]) => ({category,count})).sort((a,b)=>b.count-a.count);
+  if(minP !== Infinity) state.priceRange = { min:Math.floor(minP), max:Math.ceil(maxP) };
 }
 
+// ── Filters ───────────────────────────────────────────────────────────────────
+
 function renderFilters(){
-  const minR = state.priceRange.min;
-  const maxR = state.priceRange.max;
+  const { min:minR, max:maxR } = state.priceRange;
   const filteredBrands = state.brandSearch
     ? state.availableBrands.filter(b => b.brand.toLowerCase().includes(state.brandSearch.toLowerCase()))
     : state.availableBrands;
@@ -818,11 +984,11 @@ function renderFilters(){
       <div class="flex items-center gap-2">
         <div class="flex-1">
           <label class="text-[11px] text-slate-500 mb-1 block">Min</label>
-          <input type="number" class="price-input" id="minPriceInput" placeholder="₹${minR}" value="${state.minPrice ?? ''}"/>
+          <input type="number" class="price-input" id="minPriceInput" placeholder="₹${minR}" value="${state.minPrice ?? ""}"/>
         </div>
         <div class="flex-1">
           <label class="text-[11px] text-slate-500 mb-1 block">Max</label>
-          <input type="number" class="price-input" id="maxPriceInput" placeholder="₹${maxR}" value="${state.maxPrice ?? ''}"/>
+          <input type="number" class="price-input" id="maxPriceInput" placeholder="₹${maxR}" value="${state.maxPrice ?? ""}"/>
         </div>
       </div>
       <button type="button" id="applyPriceBtn" class="mt-3 w-full bg-blue-50 text-blue-700 rounded-lg py-2 text-[12px] font-semibold hover:bg-blue-100 transition">Apply</button>
@@ -837,13 +1003,12 @@ function renderFilters(){
         <input type="text" class="brand-search" placeholder="Search brands" id="brandSearchInput" value="${escapeHtml(state.brandSearch)}"/>
       </div>
       <div class="max-h-48 overflow-y-auto space-y-2 pr-1">
-        ${filteredBrands.slice(0, 50).map(b => `
+        ${filteredBrands.slice(0,50).map(b => `
           <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
-            <input type="checkbox" class="filter-checkbox brand-check" value="${escapeHtml(b.brand)}" ${state.brands.has(b.brand) ? 'checked' : ''}/>
+            <input type="checkbox" class="filter-checkbox brand-check" value="${escapeHtml(b.brand)}" ${state.brands.has(b.brand)?"checked":""}/>
             <span class="text-[13px] text-slate-700 capitalize flex-1 truncate">${escapeHtml(b.brand)}</span>
             <span class="text-[11px] text-slate-400">${b.count}</span>
-          </label>
-        `).join("")}
+          </label>`).join("")}
       </div>
     </div>` : ""}
 
@@ -851,13 +1016,12 @@ function renderFilters(){
     <div class="filter-section pb-5 mb-5">
       <h4 class="font-semibold text-[14px] mb-3 text-slate-800">Categories</h4>
       <div class="max-h-48 overflow-y-auto space-y-2 pr-1">
-        ${state.availableCategories.slice(0, 30).map(c => `
+        ${state.availableCategories.slice(0,30).map(c => `
           <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
-            <input type="checkbox" class="filter-checkbox cat-check" value="${escapeHtml(c.category)}" ${state.categories.has(c.category) ? 'checked' : ''}/>
+            <input type="checkbox" class="filter-checkbox cat-check" value="${escapeHtml(c.category)}" ${state.categories.has(c.category)?"checked":""}/>
             <span class="text-[13px] text-slate-700 flex-1 truncate">${escapeHtml(c.category)}</span>
             <span class="text-[11px] text-slate-400">${c.count}</span>
-          </label>
-        `).join("")}
+          </label>`).join("")}
       </div>
     </div>` : ""}
 
@@ -866,39 +1030,35 @@ function renderFilters(){
       <div class="space-y-2">
         ${[4,3].map(r => `
           <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
-            <input type="radio" name="rating" class="filter-checkbox rating-check" value="${r}" ${state.rating === r ? 'checked' : ''}/>
+            <input type="radio" name="rating" class="filter-checkbox rating-check" value="${r}" ${state.rating===r?"checked":""}/>
             <span class="text-[13px] text-slate-700">${r}★ &amp; above</span>
-          </label>
-        `).join("")}
+          </label>`).join("")}
         <label class="flex items-center gap-2 cursor-pointer hover:bg-slate-50 rounded-lg px-2 py-1">
-          <input type="radio" name="rating" class="filter-checkbox rating-check" value="" ${state.rating == null ? 'checked' : ''}/>
+          <input type="radio" name="rating" class="filter-checkbox rating-check" value="" ${state.rating==null?"checked":""}/>
           <span class="text-[13px] text-slate-700">Any rating</span>
         </label>
       </div>
-    </div>
-  `;
+    </div>`;
 
   filterContent.innerHTML = html;
   attachFilterListeners(filterContent);
 
+  const drawer = document.getElementById("drawer");
   const drawerContent = document.getElementById("drawerContent");
-  if(drawerContent && document.getElementById("drawer").classList.contains("open") && document.getElementById("drawerTitle").innerText === "Filters"){
+  if(drawerContent && drawer.classList.contains("open") && document.getElementById("drawerTitle").innerText === "Filters"){
     drawerContent.innerHTML = html;
     attachFilterListeners(drawerContent);
   }
 }
 
 function attachFilterListeners(root){
-  const applyBtn = root.querySelector("#applyPriceBtn");
-  if(applyBtn){
-    applyBtn.addEventListener("click", () => {
-      const minV = root.querySelector("#minPriceInput").value;
-      const maxV = root.querySelector("#maxPriceInput").value;
-      state.minPrice = minV ? Number(minV) : null;
-      state.maxPrice = maxV ? Number(maxV) : null;
-      loadResults(true);
-    });
-  }
+  root.querySelector("#applyPriceBtn")?.addEventListener("click", () => {
+    const minV = root.querySelector("#minPriceInput").value;
+    const maxV = root.querySelector("#maxPriceInput").value;
+    state.minPrice = minV ? Number(minV) : null;
+    state.maxPrice = maxV ? Number(maxV) : null;
+    loadResults(true);
+  });
 
   const brandInput = root.querySelector("#brandSearchInput");
   if(brandInput){
@@ -928,44 +1088,48 @@ function attachFilterListeners(root){
 
   root.querySelectorAll(".rating-check").forEach(cb => {
     cb.addEventListener("change", (e) => {
-      const v = e.target.value;
-      state.rating = v ? Number(v) : null;
+      state.rating = e.target.value ? Number(e.target.value) : null;
       loadResults(true);
     });
   });
 }
 
+// ── Chips ─────────────────────────────────────────────────────────────────────
+
 function renderChips(){
   const chips = [];
   if(state.minPrice != null || state.maxPrice != null){
-    chips.push({ label: `₹${formatINR(state.minPrice ?? 0)} - ₹${formatINR(state.maxPrice ?? '∞')}`, clear: () => { state.minPrice = null; state.maxPrice = null; }});
+    chips.push({ label:`₹${formatINR(state.minPrice??0)} – ₹${formatINR(state.maxPrice??'∞')}`, clear:()=>{ state.minPrice=null; state.maxPrice=null; } });
   }
-  state.brands.forEach(b => chips.push({ label: b, clear: () => state.brands.delete(b) }));
-  state.categories.forEach(c => chips.push({ label: c, clear: () => state.categories.delete(c) }));
-  if(state.rating != null) chips.push({ label: `${state.rating}★ & above`, clear: () => state.rating = null });
+  state.brands.forEach(b => chips.push({ label:b, clear:()=>state.brands.delete(b) }));
+  state.categories.forEach(c => chips.push({ label:c, clear:()=>state.categories.delete(c) }));
+  if(state.rating != null) chips.push({ label:`${state.rating}★ & above`, clear:()=>state.rating=null });
 
   if(!chips.length){ activeChips.innerHTML = ""; return; }
 
-  activeChips.innerHTML = chips.map((c, i) => `
-    <span class="chip">${escapeHtml(c.label)}<button type="button" data-i="${i}" aria-label="Remove filter">×</button></span>
-  `).join("");
+  activeChips.innerHTML = chips.map((c,i) => `
+    <span class="chip">${escapeHtml(c.label)}
+      <button type="button" data-i="${i}" aria-label="Remove filter">×</button>
+    </span>`).join("");
 
-  activeChips.querySelectorAll("button").forEach((btn, i) => {
+  activeChips.querySelectorAll("button").forEach((btn,i) => {
     btn.addEventListener("click", () => { chips[i].clear(); loadResults(true); });
   });
 }
 
 function clearAllFilters(){
-  state.minPrice = null; state.maxPrice = null;
+  state.minPrice=null; state.maxPrice=null;
   state.brands.clear(); state.categories.clear();
-  state.rating = null; state.brandSearch = "";
+  state.rating=null; state.brandSearch="";
   loadResults(true);
 }
 
 document.getElementById("clearAllBtn").addEventListener("click", clearAllFilters);
 
-const sortBtn = document.getElementById("sortBtn");
-const sortMenu = document.getElementById("sortMenu");
+// ── Sort ──────────────────────────────────────────────────────────────────────
+
+const sortBtn   = document.getElementById("sortBtn");
+const sortMenu  = document.getElementById("sortMenu");
 const sortLabel = document.getElementById("sortLabel");
 
 sortBtn.addEventListener("click", (e) => {
@@ -984,16 +1148,14 @@ sortMenu.querySelectorAll(".sort-option").forEach(opt => {
   });
 });
 
-document.addEventListener("click", (e) => {
-  if(!sortBtn.contains(e.target) && !sortMenu.contains(e.target)) sortMenu.classList.add("hidden");
-  if(!suggestBox.contains(e.target) && e.target !== searchInput) suggestBox.classList.add("hidden");
-});
+// ── Search form ───────────────────────────────────────────────────────────────
 
 function handleSearchSubmit(e){
   e.preventDefault();
   const q = searchInput.value.trim();
   suggestBox.classList.add("hidden");
   if(q){
+    addSearchHistory(q);
     state.query = q;
     history.replaceState(null, "", `?q=${encodeURIComponent(q)}`);
     loadResults(true);
@@ -1001,34 +1163,140 @@ function handleSearchSubmit(e){
   return false;
 }
 
+// ── Autocomplete ──────────────────────────────────────────────────────────────
+
 let suggestTimer;
+
+searchInput.addEventListener("focus", () => {
+  const q = searchInput.value.trim();
+  if(!q){
+    showHistoryInSuggest();
+  }
+});
+
+function showHistoryInSuggest(){
+  const history = getSearchHistory();
+  if(!history.length) return;
+  suggestBox.innerHTML = `
+    <div class="sh-section-label">Recent Searches</div>
+    ${history.slice(0,6).map(h => `
+      <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-q="${escapeHtml(h)}">
+        <i class="fa-solid fa-clock-rotate-left text-slate-400 text-xs"></i>
+        <span class="flex-1">${escapeHtml(h)}</span>
+        <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">Recent</span>
+      </div>`).join("")}`;
+
+  suggestBox.querySelectorAll(".suggest-item").forEach(el => {
+    el.addEventListener("click", () => {
+      const q2 = el.dataset.q;
+      if(q2){
+        searchInput.value = q2;
+        suggestBox.classList.add("hidden");
+        addSearchHistory(q2);
+        state.query = q2;
+        history.replaceState(null, "", `?q=${encodeURIComponent(q2)}`);
+        loadResults(true);
+      }
+    });
+  });
+
+  suggestBox.classList.remove("hidden");
+}
+
 searchInput.addEventListener("input", (e) => {
   const q = e.target.value.trim();
   clearTimeout(suggestTimer);
-  if(!q){ suggestBox.classList.add("hidden"); return; }
+
+  if(!q){
+    showHistoryInSuggest();
+    state.suggestions = [];
+    return;
+  }
+
   suggestTimer = setTimeout(async () => {
     try{
       const json = await apiGet(`/api/search?q=${encodeURIComponent(q)}&suggest=true`);
       const list = (json.data || []).slice(0, 8);
-      if(!list.length){ suggestBox.classList.add("hidden"); return; }
-      suggestBox.innerHTML = list.map((item) => `
-        <div class="px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-q="${escapeHtml(item)}">
-          <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
-          <span>${escapeHtml(item)}</span>
-        </div>`).join("");
-      [...suggestBox.children].forEach(el => {
+      state.suggestions = list;
+      state.suggestIndex = -1;
+
+      const history = getSearchHistory().filter(h => h.toLowerCase().includes(q.toLowerCase())).slice(0,2);
+
+      if(!list.length && !history.length){ suggestBox.classList.add("hidden"); return; }
+
+      let html = "";
+
+      if(history.length){
+        html += `<div class="sh-section-label">Recent</div>`;
+        history.forEach(h => {
+          html += `
+            <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 flex items-center gap-3" data-q="${escapeHtml(h)}" data-type="history">
+              <i class="fa-solid fa-clock-rotate-left text-slate-400 text-xs"></i>
+              <span class="flex-1">${escapeHtml(h)}</span>
+            </div>`;
+        });
+      }
+
+      if(list.length){
+        html += `<div class="sh-section-label">Suggestions</div>`;
+        list.forEach((item, i) => {
+          html += `
+            <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-index="${i}">
+              <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
+              <span>${escapeHtml(item)}</span>
+            </div>`;
+        });
+      }
+
+      suggestBox.innerHTML = html;
+
+      suggestBox.querySelectorAll(".suggest-item").forEach(el => {
         el.addEventListener("click", () => {
-          searchInput.value = el.dataset.q;
-          suggestBox.classList.add("hidden");
-          state.query = el.dataset.q;
-          history.replaceState(null, "", `?q=${encodeURIComponent(el.dataset.q)}`);
-          loadResults(true);
+          const q2 = el.dataset.q || list[el.dataset.index];
+          if(q2){
+            searchInput.value = q2;
+            suggestBox.classList.add("hidden");
+            addSearchHistory(q2);
+            state.query = q2;
+            history.replaceState(null, "", `?q=${encodeURIComponent(q2)}`);
+            loadResults(true);
+          }
         });
       });
+
       suggestBox.classList.remove("hidden");
-    }catch{ suggestBox.classList.add("hidden"); }
+    } catch{ suggestBox.classList.add("hidden"); }
   }, 250);
 });
+
+searchInput.addEventListener("keydown", (e) => {
+  if(suggestBox.classList.contains("hidden")) return;
+  const items = suggestBox.querySelectorAll(".suggest-item");
+  if(!items.length) return;
+  if(e.key === "ArrowDown"){
+    e.preventDefault();
+    state.suggestIndex = (state.suggestIndex + 1) % items.length;
+    updateSuggestActive(items);
+  } else if(e.key === "ArrowUp"){
+    e.preventDefault();
+    state.suggestIndex = (state.suggestIndex - 1 + items.length) % items.length;
+    updateSuggestActive(items);
+  } else if(e.key === "Enter" && state.suggestIndex >= 0){
+    e.preventDefault();
+    items[state.suggestIndex]?.click();
+  } else if(e.key === "Escape"){
+    suggestBox.classList.add("hidden");
+  }
+});
+
+function updateSuggestActive(items){
+  items.forEach((el,i) => {
+    el.classList.toggle("active", i === state.suggestIndex);
+    if(i === state.suggestIndex) el.scrollIntoView({ block:"nearest" });
+  });
+}
+
+// ── Load More ─────────────────────────────────────────────────────────────────
 
 loadMoreBtn.addEventListener("click", async () => {
   loadMoreBtn.disabled = true;
@@ -1039,31 +1307,34 @@ loadMoreBtn.addEventListener("click", async () => {
     renderProducts(json.data || [], true);
     state.totalPages = json.pagination?.pages || state.totalPages;
     if(state.page >= state.totalPages) loadMoreWrap.classList.add("hidden");
-  }catch{ state.page -= 1; }
+    else loadMoreWrap.classList.remove("hidden");
+  } catch{ state.page -= 1; }
   finally{
     loadMoreBtn.disabled = false;
     loadMoreBtn.innerText = "Load More";
   }
 });
 
+// ── Drawers ───────────────────────────────────────────────────────────────────
+
 function openDrawer(type){
-  const drawer = document.getElementById("drawer");
-  const overlay = document.getElementById("drawerOverlay");
-  const title = document.getElementById("drawerTitle");
-  const content = document.getElementById("drawerContent");
+  const drawer   = document.getElementById("drawer");
+  const overlay  = document.getElementById("drawerOverlay");
+  const title    = document.getElementById("drawerTitle");
+  const content  = document.getElementById("drawerContent");
 
   if(type === "filter"){
     title.innerText = "Filters";
     content.innerHTML = filterContent.innerHTML;
     attachFilterListeners(content);
-  }else{
+  } else {
     title.innerText = "Sort By";
-    const labels = { popular:'Popularity', price_low:'Price: Low to High', price_high:'Price: High to Low', discount:'Biggest Discount', rating:'Customer Rating' };
+    const labels = { popular:"Popularity", price_low:"Price: Low to High", price_high:"Price: High to Low", discount:"Biggest Discount", rating:"Customer Rating" };
     content.innerHTML = `
       <div class="space-y-2">
         ${Object.keys(labels).map(s => `
           <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 rounded-xl p-3 border border-slate-100">
-            <input type="radio" name="msort" class="filter-checkbox" value="${s}" ${state.sort === s ? 'checked' : ''}/>
+            <input type="radio" name="msort" class="filter-checkbox" value="${s}" ${state.sort===s?"checked":""}/>
             <span class="text-[14px] font-medium">${labels[s]}</span>
           </label>`).join("")}
       </div>`;
@@ -1071,7 +1342,7 @@ function openDrawer(type){
       r.addEventListener("change", (e) => {
         state.sort = e.target.value;
         sortLabel.innerText = labels[state.sort];
-        document.querySelectorAll("#sortMenu .sort-option").forEach(o => o.classList.toggle("active", o.dataset.sort === state.sort));
+        document.querySelectorAll("#sortMenu .sort-option").forEach(o => o.classList.toggle("active", o.dataset.sort===state.sort));
         loadResults(true);
         closeDrawer();
       });
@@ -1087,10 +1358,23 @@ function closeDrawer(){
   document.getElementById("drawerOverlay").classList.remove("open");
 }
 
+// ── Click outside ─────────────────────────────────────────────────────────────
+
+document.addEventListener("click", (e) => {
+  if(!sortBtn.contains(e.target) && !sortMenu.contains(e.target)) sortMenu.classList.add("hidden");
+  if(!suggestBox.contains(e.target) && e.target !== searchInput) suggestBox.classList.add("hidden");
+});
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
 document.getElementById("footerYear").innerText = new Date().getFullYear();
 
 if(state.query) searchInput.value = state.query;
 loadResults(true);
+
+window.addEventListener("storage", (e) => {
+  if(["vc_t","vc_n"].includes(e.key)) renderAuthSlot();
+});
 </script>
 
 </body>
