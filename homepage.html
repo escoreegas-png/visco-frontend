@@ -481,7 +481,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
   <div class="flex items-center gap-3">
-    <!-- Logo click → homepage -->
     <div class="logo-link flex items-center gap-3" onclick="location.href='homepage.html'" role="link" tabindex="0" aria-label="Go to homepage">
       <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
         <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="handleLogoError(this)"/>
@@ -507,7 +506,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </header>
 
-<!-- Hero -->
 <section class="hero-section hero-bg pt-28 pb-12">
   <div class="glow-wrap">
     <div class="glow top-[-100px] right-[-100px]"></div>
@@ -529,7 +527,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.
       </p>
 
-      <!-- Search -->
       <form id="searchForm" role="search" class="mx-auto mt-7 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
         <label for="searchInput" class="sr-only">Search products</label>
         <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[17px] z-10"></i>
@@ -546,14 +543,12 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-96 overflow-y-auto"></div>
       </form>
 
-      <!-- Trust badges -->
       <div class="trust-row">
         <span class="trust-chip"><i class="fa-solid fa-bolt"></i> Real-time Prices</span>
         <span class="trust-chip"><i class="fa-solid fa-shield-halved"></i> 100% Free</span>
         <span class="trust-chip"><i class="fa-solid fa-store"></i> 30+ Stores</span>
       </div>
 
-      <!-- Stats -->
       <div class="stats-strip">
         <div class="stat-box">
           <div class="stat-num">10k+</div>
@@ -572,7 +567,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Categories -->
 <section class="px-4 md:px-10 mb-8 max-w-7xl mx-auto">
   <div id="categoryBar" class="flex gap-3 overflow-auto hide-scrollbar pb-2 pt-6" role="tablist" aria-label="Product categories">
     <button type="button" class="category-btn active px-6 py-3 rounded-full font-semibold border border-slate-200 bg-white whitespace-nowrap" data-category="" role="tab" aria-selected="true">
@@ -581,7 +575,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Search History -->
 <section class="max-w-7xl mx-auto px-4 md:px-10 mb-4 hidden" id="searchHistorySection">
   <div class="search-history-section">
     <div class="flex items-center justify-between mb-2">
@@ -594,7 +587,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Products -->
 <section class="max-w-7xl mx-auto px-4 md:px-10">
   <div class="flex items-end justify-between mb-7 flex-wrap gap-4">
     <div>
@@ -614,7 +606,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Wishlist Section -->
 <section class="max-w-7xl mx-auto px-4 md:px-10 mt-14 hidden" id="wishlistSection">
   <div class="flex items-end justify-between mb-6 flex-wrap gap-4">
     <div>
@@ -740,43 +731,97 @@ function escapeHtml(str){
 
 function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
 
+function isOfferAvailable(o){
+  if(typeof o?.isAvailable === "boolean") return o.isAvailable;
+  const code = String(o?.stock || "").toUpperCase();
+  if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+  if(code === "IN_STOCK") return true;
+  return o?.price != null && Number(o.price) > 0;
+}
+
 function isProductAvailable(p){
   const offers = Array.isArray(p.offers) ? p.offers : [];
   if(typeof p.isAvailable === "boolean") return p.isAvailable;
-  return offers.some(o => {
-    const code = String(o.stock || "").toUpperCase();
-    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-    return o.price != null && Number(o.price) > 0;
-  });
+  return offers.some(isOfferAvailable);
 }
 
-// ── KEY FIX: Always return lowest price from in-stock offers only ─────────────
-function getLowestInStockPrice(p){
-  const offers = Array.isArray(p.offers) ? p.offers : [];
-  const inStock = offers.filter(o => {
-    const code = String(o.stock || "").toUpperCase();
-    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-    return o.price != null && Number(o.price) > 0;
-  });
-  if(inStock.length === 0){
-    // Fall back to lowestPrice from API only if no offers array data
-    return Number(p.lowestPrice) || 0;
+// Shared helper aligned with Product Details page pricing logic
+function getCurrentBestAvailablePrice(product){
+  const offers = Array.isArray(product?.offers) ? product.offers : [];
+  const availableStores = offers.filter(isOfferAvailable);
+
+  if(!availableStores.length){
+    return 0;
   }
-  inStock.sort((a,b) => Number(a.price) - Number(b.price));
-  return Number(inStock[0].price);
+
+  availableStores.sort((a, b) => (Number(a.price) || Infinity) - (Number(b.price) || Infinity));
+  return Number(availableStores[0].price) || 0;
 }
 
-// ── KEY FIX: Get the highest in-stock price (to use as "MRP" for discount calc) ─
-function getHighestInStockPrice(p){
-  const offers = Array.isArray(p.offers) ? p.offers : [];
-  const inStock = offers.filter(o => {
-    const code = String(o.stock || "").toUpperCase();
-    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-    return o.price != null && Number(o.price) > 0;
-  });
-  if(inStock.length === 0) return Number(p.highestPrice) || 0;
-  inStock.sort((a,b) => Number(b.price) - Number(a.price));
-  return Number(inStock[0].price);
+function getCurrentBestAvailableOffer(product){
+  const offers = Array.isArray(product?.offers) ? product.offers : [];
+  const availableStores = offers.filter(isOfferAvailable);
+
+  if(!availableStores.length){
+    return null;
+  }
+
+  availableStores.sort((a, b) => (Number(a.price) || Infinity) - (Number(b.price) || Infinity));
+  return availableStores[0];
+}
+
+function getHighestAvailablePrice(product){
+  const offers = Array.isArray(product?.offers) ? product.offers : [];
+  const availableStores = offers.filter(isOfferAvailable);
+
+  if(!availableStores.length){
+    return Number(product?.highestPrice) || 0;
+  }
+
+  availableStores.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+  return Number(availableStores[0].price) || 0;
+}
+
+function getAverageAvailablePrice(product){
+  const offers = Array.isArray(product?.offers) ? product.offers : [];
+  const availableStores = offers.filter(isOfferAvailable);
+
+  if(!availableStores.length){
+    return 0;
+  }
+
+  const total = availableStores.reduce((sum, o) => sum + (Number(o.price) || 0), 0);
+  return Math.round(total / availableStores.length);
+}
+
+function getHomepagePricing(product){
+  const currentBestPrice = getCurrentBestAvailablePrice(product);
+  const highestAvailablePrice = getHighestAvailablePrice(product);
+
+  const mrpForDisplay = highestAvailablePrice > currentBestPrice
+    ? highestAvailablePrice
+    : (Number(product?.highestPrice) || currentBestPrice);
+
+  const discount = mrpForDisplay > currentBestPrice
+    ? Math.round(((mrpForDisplay - currentBestPrice) / mrpForDisplay) * 100)
+    : 0;
+
+  const saveAmount = mrpForDisplay > currentBestPrice
+    ? mrpForDisplay - currentBestPrice
+    : 0;
+
+  const offers = Array.isArray(product?.offers) ? product.offers : [];
+  const inStockOffers = offers.filter(isOfferAvailable);
+
+  return {
+    currentBestPrice,
+    mrpForDisplay,
+    discount,
+    saveAmount,
+    inStockOffers,
+    bestOffer: getCurrentBestAvailableOffer(product),
+    averageAvailablePrice: getAverageAvailablePrice(product)
+  };
 }
 
 function handleLogoError(img){
@@ -851,7 +896,7 @@ async function getUserLocation(){
       const lat = pos.coords.latitude, lon = pos.coords.longitude;
       localStorage.setItem("userLat", lat);
       localStorage.setItem("userLng", lon);
-      const r = await fetch(`[nominatim.openstreetmap.org](https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon})`);
+      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
       const d = await r.json();
       const addr = d.address || {};
       const city = addr.city || addr.town || addr.village || addr.county || "Your Location";
@@ -938,28 +983,14 @@ function renderProducts(products, append = false){
   const frag = document.createDocumentFragment();
 
   available.forEach((p, idx) => {
+    const pricing = getHomepagePricing(p);
+    const lowest = pricing.currentBestPrice;
+    const mrpForDiscount = pricing.mrpForDisplay;
+    const discount = pricing.discount;
+    const saving = pricing.saveAmount;
+    const inStockOffers = pricing.inStockOffers;
+
     const offers = Array.isArray(p.offers) ? p.offers : [];
-
-    // ── PRICE FIX: use only in-stock offers for price display ──────────────
-    const lowest  = getLowestInStockPrice(p);
-    const highest = getHighestInStockPrice(p);
-
-    // For discount badge: compare lowest in-stock vs highest in-stock
-    // If only 1 in-stock store, compare against API highestPrice (which may include OOS)
-    const mrpForDiscount = (highest > lowest)
-      ? highest
-      : (Number(p.highestPrice) || lowest);
-    const discount = mrpForDiscount > lowest
-      ? Math.round(((mrpForDiscount - lowest) / mrpForDiscount) * 100)
-      : 0;
-    const saving = mrpForDiscount > lowest ? mrpForDiscount - lowest : 0;
-
-    // Count only in-stock offers for the store count
-    const inStockOffers = offers.filter(o => {
-      const code = String(o.stock || "").toUpperCase();
-      if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-      return o.price != null && Number(o.price) > 0;
-    });
     const storeCount = inStockOffers.length || offers.length;
     const storesText = storeCount === 1 ? "1 store" : `${storeCount} stores`;
 
@@ -1045,17 +1076,14 @@ async function loadWishlistPreview(){
     section.classList.remove("hidden");
 
     rows.innerHTML = items.map(p => {
-      const lowest  = getLowestInStockPrice(p);
-      const mrp     = getHighestInStockPrice(p);
-      const mrpFinal = mrp > lowest ? mrp : (Number(p.highestPrice) || lowest);
-      const saving  = mrpFinal > lowest ? mrpFinal - lowest : 0;
-      const discount = mrpFinal > lowest ? Math.round(((mrpFinal-lowest)/mrpFinal)*100) : 0;
-      const offers  = Array.isArray(p.offers) ? p.offers : [];
-      const inStockOffers = offers.filter(o => {
-        const code = String(o.stock || "").toUpperCase();
-        if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-        return o.price != null && Number(o.price) > 0;
-      });
+      const pricing = getHomepagePricing(p);
+      const lowest = pricing.currentBestPrice;
+      const mrpFinal = pricing.mrpForDisplay;
+      const saving = pricing.saveAmount;
+      const discount = pricing.discount;
+
+      const offers = Array.isArray(p.offers) ? p.offers : [];
+      const inStockOffers = pricing.inStockOffers;
       const storeCount = inStockOffers.length || offers.length;
 
       return `
