@@ -88,7 +88,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 16px 36px rgba(37,99,235,0.16);
 }
 
-/* Fixed-height image wrap — always square */
 .pc-image-wrap{
   position:relative;
   background:linear-gradient(160deg,#ffffff,#f4f8ff);
@@ -123,7 +122,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 4px 10px rgba(239,68,68,0.3);
 }
 
-/* Body takes remaining space */
 .pc-body{
   padding:12px 14px 14px;
   display:flex;
@@ -131,7 +129,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   flex:1;
 }
 
-/* Fixed 2-line title */
 .pc-title{
   font-size:13px;
   font-weight:500;
@@ -146,7 +143,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   flex-shrink:0;
 }
 
-/* Fixed rating row height */
 .pc-rating-row{
   height:20px;
   margin-bottom:8px;
@@ -167,7 +163,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   width:fit-content;
 }
 
-/* Fixed price row */
 .pc-price-row{
   display:flex;
   align-items:baseline;
@@ -179,7 +174,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .pc-price{ font-size:18px; font-weight:800; color:#0f172a; line-height:1; }
 .pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; line-height:1; }
 
-/* Fixed saving row */
 .pc-saving-row{
   height:16px;
   margin-bottom:10px;
@@ -194,7 +188,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   line-height:1;
 }
 
-/* Pushes CTA to bottom */
 .pc-spacer{ flex:1; }
 
 .pc-bottom-section{
@@ -244,7 +237,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .pc-cta:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 .pc-cta i{ margin-right:5px; }
 
-/* Search history */
 .search-history-section{
   background:white;
   border:1px solid var(--border);
@@ -449,6 +441,9 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   cursor:pointer; white-space:nowrap; flex-shrink:0;
 }
 
+/* Logo clickable */
+.logo-link{ cursor:pointer; }
+
 /* ===== Mobile ===== */
 @media(max-width:768px){
   .hero-section{ padding-top:88px !important; padding-bottom:28px !important; }
@@ -486,12 +481,15 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 <header class="fixed top-0 left-0 w-full h-16 z-50 bg-white/80 glass border-b border-slate-200 flex items-center justify-between px-4 md:px-10">
   <div class="flex items-center gap-3">
-    <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
-      <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="handleLogoError(this)"/>
-    </div>
-    <div>
-      <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
-      <p class="text-[11px] text-slate-400 -mt-1">Smart Shopping Platform</p>
+    <!-- Logo click → homepage -->
+    <div class="logo-link flex items-center gap-3" onclick="location.href='homepage.html'" role="link" tabindex="0" aria-label="Go to homepage">
+      <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
+        <img src="logo.png" alt="Visco Compare Logo" class="w-full h-full object-contain" onerror="handleLogoError(this)"/>
+      </div>
+      <div>
+        <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
+        <p class="text-[11px] text-slate-400 -mt-1">Smart Shopping Platform</p>
+      </div>
     </div>
   </div>
 
@@ -545,7 +543,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
           class="w-full bg-white border border-slate-200 rounded-2xl pr-5 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition relative"
           style="padding-left:46px; padding-top:14px; padding-bottom:14px; font-size:14px;"
         />
-        <!-- Suggest box -->
         <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-96 overflow-y-auto"></div>
       </form>
 
@@ -584,7 +581,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Search History (shown when search input focused and history exists) -->
+<!-- Search History -->
 <section class="max-w-7xl mx-auto px-4 md:px-10 mb-4 hidden" id="searchHistorySection">
   <div class="search-history-section">
     <div class="flex items-center justify-between mb-2">
@@ -617,7 +614,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   </div>
 </section>
 
-<!-- Wishlist Section (if logged in) -->
+<!-- Wishlist Section -->
 <section class="max-w-7xl mx-auto px-4 md:px-10 mt-14 hidden" id="wishlistSection">
   <div class="flex items-end justify-between mb-6 flex-wrap gap-4">
     <div>
@@ -746,7 +743,6 @@ function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
 function isProductAvailable(p){
   const offers = Array.isArray(p.offers) ? p.offers : [];
   if(typeof p.isAvailable === "boolean") return p.isAvailable;
-  // Check if at least one offer is in stock with a valid price
   return offers.some(o => {
     const code = String(o.stock || "").toUpperCase();
     if(code === "OUT_OF_STOCK" || code === "OOS") return false;
@@ -754,6 +750,7 @@ function isProductAvailable(p){
   });
 }
 
+// ── KEY FIX: Always return lowest price from in-stock offers only ─────────────
 function getLowestInStockPrice(p){
   const offers = Array.isArray(p.offers) ? p.offers : [];
   const inStock = offers.filter(o => {
@@ -761,8 +758,24 @@ function getLowestInStockPrice(p){
     if(code === "OUT_OF_STOCK" || code === "OOS") return false;
     return o.price != null && Number(o.price) > 0;
   });
-  if(inStock.length === 0) return Number(p.lowestPrice) || 0;
+  if(inStock.length === 0){
+    // Fall back to lowestPrice from API only if no offers array data
+    return Number(p.lowestPrice) || 0;
+  }
   inStock.sort((a,b) => Number(a.price) - Number(b.price));
+  return Number(inStock[0].price);
+}
+
+// ── KEY FIX: Get the highest in-stock price (to use as "MRP" for discount calc) ─
+function getHighestInStockPrice(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  const inStock = offers.filter(o => {
+    const code = String(o.stock || "").toUpperCase();
+    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+    return o.price != null && Number(o.price) > 0;
+  });
+  if(inStock.length === 0) return Number(p.highestPrice) || 0;
+  inStock.sort((a,b) => Number(b.price) - Number(a.price));
   return Number(inStock[0].price);
 }
 
@@ -907,7 +920,6 @@ function skeletonGrid(n = 12){
 function renderProducts(products, append = false){
   if(!append) productGrid.innerHTML = "";
 
-  // Filter out OOS products
   const available = products.filter(p => isProductAvailable(p));
 
   if(!available.length && !append){
@@ -926,11 +938,23 @@ function renderProducts(products, append = false){
   const frag = document.createDocumentFragment();
 
   available.forEach((p, idx) => {
-    const offers    = Array.isArray(p.offers) ? p.offers : [];
-    const lowest    = getLowestInStockPrice(p);
-    const highest   = Number(p.highestPrice) || lowest;
-    const discount  = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
-    const saving    = highest > lowest ? highest - lowest : 0;
+    const offers = Array.isArray(p.offers) ? p.offers : [];
+
+    // ── PRICE FIX: use only in-stock offers for price display ──────────────
+    const lowest  = getLowestInStockPrice(p);
+    const highest = getHighestInStockPrice(p);
+
+    // For discount badge: compare lowest in-stock vs highest in-stock
+    // If only 1 in-stock store, compare against API highestPrice (which may include OOS)
+    const mrpForDiscount = (highest > lowest)
+      ? highest
+      : (Number(p.highestPrice) || lowest);
+    const discount = mrpForDiscount > lowest
+      ? Math.round(((mrpForDiscount - lowest) / mrpForDiscount) * 100)
+      : 0;
+    const saving = mrpForDiscount > lowest ? mrpForDiscount - lowest : 0;
+
+    // Count only in-stock offers for the store count
     const inStockOffers = offers.filter(o => {
       const code = String(o.stock || "").toUpperCase();
       if(code === "OUT_OF_STOCK" || code === "OOS") return false;
@@ -969,7 +993,7 @@ function renderProducts(products, append = false){
 
         <div class="pc-price-row">
           <span class="pc-price">₹${formatINR(lowest)}</span>
-          ${highest > lowest ? `<span class="pc-mrp">₹${formatINR(highest)}</span>` : ""}
+          ${mrpForDiscount > lowest ? `<span class="pc-mrp">₹${formatINR(mrpForDiscount)}</span>` : ""}
         </div>
 
         <div class="pc-saving-row">
@@ -1021,12 +1045,18 @@ async function loadWishlistPreview(){
     section.classList.remove("hidden");
 
     rows.innerHTML = items.map(p => {
-      const lowest  = Number(p.lowestPrice) || 0;
-      const highest = Number(p.highestPrice) || lowest;
-      const saving  = highest > lowest ? highest - lowest : 0;
-      const discount = highest > lowest ? Math.round(((highest-lowest)/highest)*100) : 0;
+      const lowest  = getLowestInStockPrice(p);
+      const mrp     = getHighestInStockPrice(p);
+      const mrpFinal = mrp > lowest ? mrp : (Number(p.highestPrice) || lowest);
+      const saving  = mrpFinal > lowest ? mrpFinal - lowest : 0;
+      const discount = mrpFinal > lowest ? Math.round(((mrpFinal-lowest)/mrpFinal)*100) : 0;
       const offers  = Array.isArray(p.offers) ? p.offers : [];
-      const storeCount = offers.length;
+      const inStockOffers = offers.filter(o => {
+        const code = String(o.stock || "").toUpperCase();
+        if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+        return o.price != null && Number(o.price) > 0;
+      });
+      const storeCount = inStockOffers.length || offers.length;
 
       return `
         <div class="wishlist-row-card" onclick="compare('${escapeHtml(String(p.id))}')">
@@ -1038,7 +1068,7 @@ async function loadWishlistPreview(){
             <div class="wishlist-row-title">${escapeHtml(p.title||"Untitled")}</div>
             <div style="display:flex;align-items:baseline;gap:6px;">
               <span class="wishlist-row-price">₹${formatINR(lowest)}</span>
-              ${highest > lowest ? `<span class="wishlist-row-mrp">₹${formatINR(highest)}</span>` : ""}
+              ${mrpFinal > lowest ? `<span class="wishlist-row-mrp">₹${formatINR(mrpFinal)}</span>` : ""}
               ${discount >= 5 ? `<span style="font-size:11px;color:#ef4444;font-weight:700;">${discount}% OFF</span>` : ""}
             </div>
             ${saving > 0 ? `<div class="wishlist-row-saving">You save ₹${formatINR(saving)}</div>` : ""}
@@ -1183,9 +1213,7 @@ function handleSearchSubmit(e){
 
 searchInput.addEventListener("focus", () => {
   const q = searchInput.value.trim();
-  if(!q){
-    renderSearchHistory();
-  }
+  if(!q) renderSearchHistory();
 });
 
 searchInput.addEventListener("input", (e) => {
@@ -1210,14 +1238,12 @@ searchInput.addEventListener("input", (e) => {
       state.suggestions = list;
       state.suggestIndex = -1;
 
-      // Blend with history matches
       const history = getSearchHistory().filter(h => h.toLowerCase().includes(q.toLowerCase())).slice(0, 3);
 
       if(!list.length && !history.length){ suggestBox.classList.add("hidden"); return; }
 
       let html = "";
 
-      // History matches first
       history.forEach(h => {
         html += `
           <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 flex items-center gap-3" data-q="${escapeHtml(h)}" data-type="history">
@@ -1227,7 +1253,6 @@ searchInput.addEventListener("input", (e) => {
           </div>`;
       });
 
-      // API suggestions
       list.forEach((item, i) => {
         html += `
           <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-index="${i}">
