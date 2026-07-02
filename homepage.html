@@ -64,8 +64,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .hide-scrollbar::-webkit-scrollbar{ display:none; }
 .hide-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
 
-#productGrid{ align-items:stretch; }
-
 /* ===== Product card ===== */
 .product-card{
   background:white;
@@ -81,6 +79,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   opacity:0;
   transform:translateY(14px);
   animation:cardIn .45s forwards;
+  cursor:pointer;
 }
 @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
 .product-card:hover{
@@ -89,6 +88,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 16px 36px rgba(37,99,235,0.16);
 }
 
+/* Fixed-height image wrap — always square */
 .pc-image-wrap{
   position:relative;
   background:linear-gradient(160deg,#ffffff,#f4f8ff);
@@ -123,6 +123,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   box-shadow:0 4px 10px rgba(239,68,68,0.3);
 }
 
+/* Body takes remaining space */
 .pc-body{
   padding:12px 14px 14px;
   display:flex;
@@ -130,6 +131,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   flex:1;
 }
 
+/* Fixed 2-line title */
 .pc-title{
   font-size:13px;
   font-weight:500;
@@ -141,13 +143,16 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   overflow:hidden;
   height:36px;
   margin-bottom:8px;
+  flex-shrink:0;
 }
 
+/* Fixed rating row height */
 .pc-rating-row{
-  height:18px;
+  height:20px;
   margin-bottom:8px;
   display:flex;
   align-items:center;
+  flex-shrink:0;
 }
 .pc-rating{
   display:inline-flex;
@@ -160,24 +165,27 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   padding:2px 6px;
   border-radius:4px;
   width:fit-content;
-  height:18px;
 }
 
+/* Fixed price row */
 .pc-price-row{
   display:flex;
   align-items:baseline;
   gap:8px;
   height:24px;
   margin-bottom:4px;
+  flex-shrink:0;
 }
 .pc-price{ font-size:18px; font-weight:800; color:#0f172a; line-height:1; }
 .pc-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; line-height:1; }
 
+/* Fixed saving row */
 .pc-saving-row{
-  height:14px;
+  height:16px;
   margin-bottom:10px;
   display:flex;
   align-items:center;
+  flex-shrink:0;
 }
 .pc-saving{
   font-size:11px;
@@ -186,12 +194,14 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   line-height:1;
 }
 
+/* Pushes CTA to bottom */
 .pc-spacer{ flex:1; }
 
 .pc-bottom-section{
   display:flex;
   flex-direction:column;
   gap:8px;
+  flex-shrink:0;
 }
 
 .pc-stores{
@@ -234,6 +244,34 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .pc-cta:hover{ filter:brightness(1.08); transform:translateY(-1px); }
 .pc-cta i{ margin-right:5px; }
 
+/* Search history */
+.search-history-section{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 20px;
+  margin-top:10px;
+}
+.history-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid #f1f5f9;
+  cursor:pointer;
+  transition:.15s;
+}
+.history-item:last-child{ border-bottom:none; }
+.history-item:hover{ color:var(--primary); }
+.history-item .hi-icon{ color:#94a3b8; font-size:13px; flex-shrink:0; }
+.history-item .hi-text{ font-size:13px; font-weight:500; flex:1; }
+.history-item .hi-del{
+  color:#94a3b8; font-size:11px; padding:2px 6px;
+  border-radius:4px; cursor:pointer; transition:.15s;
+  background:none; border:none;
+}
+.history-item .hi-del:hover{ color:#ef4444; background:#fef2f2; }
+
 .footer-link{ transition:all .2s ease; }
 .footer-link:hover{ color:white; transform:translateX(4px); }
 
@@ -249,7 +287,7 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   100%{ background-position:-200% 0; }
 }
 
-.skeleton-card{ aspect-ratio:1/1.5; min-height:340px; }
+.skeleton-card{ aspect-ratio:1/1.6; min-height:360px; }
 
 .suggest-item.active{ background:#eff6ff; }
 
@@ -264,7 +302,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 #suggestBox{ z-index:9999 !important; }
 
-/* ===== Trust badges row ===== */
+/* ===== Trust badges ===== */
 .trust-row{
   display:flex;
   flex-wrap:wrap;
@@ -314,7 +352,6 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 }
 .stat-label{ font-size:11px; color:#64748b; font-weight:600; margin-top:5px; }
 
-/* Section header accent */
 .section-accent{
   width:42px; height:4px;
   border-radius:99px;
@@ -361,12 +398,55 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   text-overflow:ellipsis;
 }
 
-/* ===== Compact, medium search bar ===== */
 #searchForm{ max-width:560px; }
 #searchInput{
   padding-top:14px;
   padding-bottom:14px;
   font-size:14px;
+}
+
+/* ===== Wishlist row (horizontal card) ===== */
+.wishlist-row-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:12px 16px;
+  transition:.25s;
+  cursor:pointer;
+}
+.wishlist-row-card:hover{
+  border-color:#bfdbfe;
+  box-shadow:0 8px 24px rgba(37,99,235,0.12);
+  transform:translateY(-2px);
+}
+.wishlist-row-img{
+  width:70px; height:70px;
+  border-radius:10px;
+  background:#f8fafc;
+  padding:6px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.wishlist-row-img img{ max-width:100%; max-height:100%; object-fit:contain; }
+.wishlist-row-info{ flex:1; min-width:0; }
+.wishlist-row-title{
+  font-size:13px; font-weight:600; color:#334155;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  margin-bottom:4px;
+}
+.wishlist-row-price{ font-size:16px; font-weight:800; color:#0f172a; }
+.wishlist-row-mrp{ font-size:12px; color:#94a3b8; text-decoration:line-through; margin-left:6px; }
+.wishlist-row-saving{ font-size:11px; color:#10b981; font-weight:600; margin-top:2px; }
+.wishlist-row-stores{ font-size:11px; color:#64748b; font-weight:600; margin-top:4px; }
+.wishlist-row-cta{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white; font-size:12px; font-weight:700;
+  padding:8px 14px; border-radius:10px; border:none;
+  cursor:pointer; white-space:nowrap; flex-shrink:0;
 }
 
 /* ===== Mobile ===== */
@@ -390,6 +470,8 @@ button:focus-visible, input:focus-visible, a:focus-visible{
   #productGrid{ gap:12px; }
   .profile-chip .name{ display:none; }
   .profile-chip{ padding:4px; }
+  .wishlist-row-img{ width:56px; height:56px; }
+  .wishlist-row-title{ font-size:12px; }
 }
 
 @media(max-width:380px){
@@ -423,11 +505,11 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         <span id="userLocation" class="text-[13px] font-semibold">Detect Location</span>
       </div>
     </button>
-
     <div id="authSlot"></div>
   </div>
 </header>
 
+<!-- Hero -->
 <section class="hero-section hero-bg pt-28 pb-12">
   <div class="glow-wrap">
     <div class="glow top-[-100px] right-[-100px]"></div>
@@ -449,7 +531,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.
       </p>
 
-      <!-- Medium / compact search -->
+      <!-- Search -->
       <form id="searchForm" role="search" class="mx-auto mt-7 relative" onsubmit="return handleSearchSubmit(event)" style="z-index:1000;">
         <label for="searchInput" class="sr-only">Search products</label>
         <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-700 text-[17px] z-10"></i>
@@ -460,10 +542,11 @@ button:focus-visible, input:focus-visible, a:focus-visible{
           autocomplete="off"
           placeholder="Search products, brands or categories..."
           aria-label="Search products"
-          class="w-full bg-white border border-slate-200 rounded-2xl pl-13 pr-5 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition relative"
-          style="padding-left:46px;"
+          class="w-full bg-white border border-slate-200 rounded-2xl pr-5 shadow-xl outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition relative"
+          style="padding-left:46px; padding-top:14px; padding-bottom:14px; font-size:14px;"
         />
-        <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-80 overflow-y-auto"></div>
+        <!-- Suggest box -->
+        <div id="suggestBox" role="listbox" class="hidden absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden text-left max-h-96 overflow-y-auto"></div>
       </form>
 
       <!-- Trust badges -->
@@ -473,7 +556,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         <span class="trust-chip"><i class="fa-solid fa-store"></i> 30+ Stores</span>
       </div>
 
-      <!-- Stats strip -->
+      <!-- Stats -->
       <div class="stats-strip">
         <div class="stat-box">
           <div class="stat-num">10k+</div>
@@ -485,21 +568,36 @@ button:focus-visible, input:focus-visible, a:focus-visible{
         </div>
         <div class="stat-box">
           <div class="stat-num">100%</div>
-          <div class="stat-label">free </div>
+          <div class="stat-label">Free</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Categories -->
 <section class="px-4 md:px-10 mb-8 max-w-7xl mx-auto">
-  <div id="categoryBar" class="flex gap-3 overflow-auto hide-scrollbar pb-2" role="tablist" aria-label="Product categories">
-    <button type="button" class="category-btn active px-6 py-3 rounded-full font-semibold border whitespace-nowrap" data-category="" role="tab" aria-selected="true">
+  <div id="categoryBar" class="flex gap-3 overflow-auto hide-scrollbar pb-2 pt-6" role="tablist" aria-label="Product categories">
+    <button type="button" class="category-btn active px-6 py-3 rounded-full font-semibold border border-slate-200 bg-white whitespace-nowrap" data-category="" role="tab" aria-selected="true">
       ✨ All
     </button>
   </div>
 </section>
 
+<!-- Search History (shown when search input focused and history exists) -->
+<section class="max-w-7xl mx-auto px-4 md:px-10 mb-4 hidden" id="searchHistorySection">
+  <div class="search-history-section">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-bold text-slate-700 flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> Recent Searches
+      </span>
+      <button type="button" onclick="clearSearchHistory()" class="text-xs text-red-500 font-semibold hover:underline">Clear All</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+</section>
+
+<!-- Products -->
 <section class="max-w-7xl mx-auto px-4 md:px-10">
   <div class="flex items-end justify-between mb-7 flex-wrap gap-4">
     <div>
@@ -507,6 +605,7 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       <h2 id="sectionTitle" class="text-[26px] md:text-[30px] font-bold text-slate-900">Trending Deals</h2>
       <p id="sectionSub" class="text-slate-500 mt-1 text-sm">Updated every minute from top stores</p>
     </div>
+    <div id="resultCount" class="text-sm text-slate-500 font-semibold"></div>
   </div>
 
   <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5" aria-live="polite"></div>
@@ -516,6 +615,19 @@ button:focus-visible, input:focus-visible, a:focus-visible{
       Load More
     </button>
   </div>
+</section>
+
+<!-- Wishlist Section (if logged in) -->
+<section class="max-w-7xl mx-auto px-4 md:px-10 mt-14 hidden" id="wishlistSection">
+  <div class="flex items-end justify-between mb-6 flex-wrap gap-4">
+    <div>
+      <div class="section-accent"></div>
+      <h2 class="text-[26px] md:text-[28px] font-bold text-slate-900">❤️ Your Wishlist</h2>
+      <p class="text-slate-500 mt-1 text-sm">Items you've saved for later</p>
+    </div>
+    <a href="wishlist.html" class="text-blue-700 font-semibold text-sm hover:underline">View all →</a>
+  </div>
+  <div id="wishlistRows" class="flex flex-col gap-3"></div>
 </section>
 
 <footer class="mt-24 bg-slate-950 text-white">
@@ -595,7 +707,9 @@ button:focus-visible, input:focus-visible, a:focus-visible{
 
 <script>
 const API = "https://visco1.onrender.com";
-const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+const PLACEHOLDER_IMG = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f1f5f9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,Arial' font-size='16' fill='%2394a3b8'%3ENo Image%3C/text%3E%3C/svg%3E";
+const SEARCH_HISTORY_KEY = "vc_search_history";
+const MAX_HISTORY = 10;
 
 const productGrid   = document.getElementById("productGrid");
 const sectionTitle  = document.getElementById("sectionTitle");
@@ -605,18 +719,22 @@ const loadMoreBtn   = document.getElementById("loadMoreBtn");
 const suggestBox    = document.getElementById("suggestBox");
 const categoryBar   = document.getElementById("categoryBar");
 const searchInput   = document.getElementById("searchInput");
+const resultCount   = document.getElementById("resultCount");
 
 const state = {
   mode: "trending",
   query: "",
   category: "",
   page: 1,
-  limit: 12,
+  limit: 20,
   totalPages: 1,
   items: [],
   suggestIndex: -1,
-  suggestions: []
+  suggestions: [],
+  allItems: []
 };
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
 function escapeHtml(str){
   if(str == null) return "";
@@ -624,6 +742,29 @@ function escapeHtml(str){
 }
 
 function formatINR(n){ return (Number(n)||0).toLocaleString("en-IN"); }
+
+function isProductAvailable(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  if(typeof p.isAvailable === "boolean") return p.isAvailable;
+  // Check if at least one offer is in stock with a valid price
+  return offers.some(o => {
+    const code = String(o.stock || "").toUpperCase();
+    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+    return o.price != null && Number(o.price) > 0;
+  });
+}
+
+function getLowestInStockPrice(p){
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  const inStock = offers.filter(o => {
+    const code = String(o.stock || "").toUpperCase();
+    if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+    return o.price != null && Number(o.price) > 0;
+  });
+  if(inStock.length === 0) return Number(p.lowestPrice) || 0;
+  inStock.sort((a,b) => Number(a.price) - Number(b.price));
+  return Number(inStock[0].price);
+}
 
 function handleLogoError(img){
   const wrap = img.parentElement;
@@ -637,6 +778,56 @@ function handleImgError(img){
   img.src = PLACEHOLDER_IMG;
 }
 
+// ── Search History ────────────────────────────────────────────────────────────
+
+function getSearchHistory(){
+  try{ return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]"); }
+  catch{ return []; }
+}
+
+function addSearchHistory(query){
+  if(!query || query.trim().length < 2) return;
+  let h = getSearchHistory().filter(q => q.toLowerCase() !== query.toLowerCase());
+  h.unshift(query.trim());
+  if(h.length > MAX_HISTORY) h = h.slice(0, MAX_HISTORY);
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(h));
+}
+
+function removeSearchHistoryItem(query){
+  let h = getSearchHistory().filter(q => q !== query);
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(h));
+  renderSearchHistory();
+}
+
+function clearSearchHistory(){
+  localStorage.removeItem(SEARCH_HISTORY_KEY);
+  document.getElementById("searchHistorySection").classList.add("hidden");
+}
+
+function renderSearchHistory(){
+  const history = getSearchHistory();
+  const section = document.getElementById("searchHistorySection");
+  const list = document.getElementById("historyList");
+  if(!history.length){ section.classList.add("hidden"); return; }
+  section.classList.remove("hidden");
+  list.innerHTML = history.map(q => `
+    <div class="history-item" onclick="applyHistorySearch('${escapeHtml(q).replace(/'/g,"\\'")}')">
+      <i class="hi-icon fa-solid fa-clock-rotate-left"></i>
+      <span class="hi-text">${escapeHtml(q)}</span>
+      <button class="hi-del" onclick="event.stopPropagation();removeSearchHistoryItem('${escapeHtml(q).replace(/'/g,"\\'")}')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>`).join("");
+}
+
+function applyHistorySearch(query){
+  searchInput.value = query;
+  document.getElementById("searchHistorySection").classList.add("hidden");
+  window.location = `searchpage.html?q=${encodeURIComponent(query)}`;
+}
+
+// ── Location ──────────────────────────────────────────────────────────────────
+
 async function getUserLocation(){
   const text = document.getElementById("userLocation");
   const original = text.innerText;
@@ -647,7 +838,7 @@ async function getUserLocation(){
       const lat = pos.coords.latitude, lon = pos.coords.longitude;
       localStorage.setItem("userLat", lat);
       localStorage.setItem("userLng", lon);
-      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
+      const r = await fetch(`[nominatim.openstreetmap.org](https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon})`);
       const d = await r.json();
       const addr = d.address || {};
       const city = addr.city || addr.town || addr.village || addr.county || "Your Location";
@@ -663,6 +854,8 @@ async function getUserLocation(){
 const savedLocation = localStorage.getItem("userLocation");
 if(savedLocation) document.getElementById("userLocation").innerText = savedLocation;
 
+// ── Auth slot ─────────────────────────────────────────────────────────────────
+
 function renderAuthSlot(){
   const slot = document.getElementById("authSlot");
   const token = localStorage.getItem("vc_t");
@@ -675,19 +868,20 @@ function renderAuthSlot(){
       <button type="button" id="profileChip" class="profile-chip" aria-label="Open profile">
         <span class="avatar">${initial}</span>
         <span class="name">${safeName}</span>
-      </button>
-    `;
+      </button>`;
     document.getElementById("profileChip").onclick = () => { window.location = "account.html"; };
-  }else{
+    loadWishlistPreview();
+  } else {
     slot.innerHTML = `
       <button id="loginBtn" type="button" class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
         Login
-      </button>
-    `;
+      </button>`;
     document.getElementById("loginBtn").onclick = () => { window.location = "index.html"; };
   }
 }
 renderAuthSlot();
+
+// ── API ───────────────────────────────────────────────────────────────────────
 
 async function apiGet(path, { signal } = {}){
   const res = await fetch(API + path, { signal });
@@ -697,47 +891,68 @@ async function apiGet(path, { signal } = {}){
   return json;
 }
 
-function skeletonGrid(n = 8){
+// ── Skeleton ──────────────────────────────────────────────────────────────────
+
+function skeletonGrid(n = 12){
   let html = "";
   for(let i = 0; i < n; i++){
     html += `<div class="skeleton skeleton-card"></div>`;
   }
   productGrid.innerHTML = html;
+  resultCount.innerText = "";
 }
+
+// ── Render Products ───────────────────────────────────────────────────────────
 
 function renderProducts(products, append = false){
   if(!append) productGrid.innerHTML = "";
 
-  if(!products.length && !append){
+  // Filter out OOS products
+  const available = products.filter(p => isProductAvailable(p));
+
+  if(!available.length && !append){
     productGrid.innerHTML = `
       <div class="col-span-full text-center py-20 text-slate-400">
         <i class="fa-solid fa-box-open text-5xl mb-4"></i>
-        <div class="font-semibold">No products found</div>
+        <div class="font-semibold mt-4">No products available right now</div>
+        <div class="text-sm mt-2">Try a different category or check back later</div>
       </div>`;
+    resultCount.innerText = "";
     return;
   }
 
+  if(!append) resultCount.innerText = `${available.length} products`;
+
   const frag = document.createDocumentFragment();
 
-  products.forEach((p, idx) => {
-    const offers   = Array.isArray(p.offers) ? p.offers : [];
-    const best     = offers[0];
-    const lowest   = Number(p.lowestPrice) || (best ? Number(best.price) : 0);
-    const highest  = Number(p.highestPrice) || lowest;
-    const discount = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
-    const saving   = highest > lowest ? highest - lowest : 0;
+  available.forEach((p, idx) => {
+    const offers    = Array.isArray(p.offers) ? p.offers : [];
+    const lowest    = getLowestInStockPrice(p);
+    const highest   = Number(p.highestPrice) || lowest;
+    const discount  = highest > 0 && highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+    const saving    = highest > lowest ? highest - lowest : 0;
+    const inStockOffers = offers.filter(o => {
+      const code = String(o.stock || "").toUpperCase();
+      if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+      return o.price != null && Number(o.price) > 0;
+    });
+    const storeCount = inStockOffers.length || offers.length;
+    const storesText = storeCount === 1 ? "1 store" : `${storeCount} stores`;
 
-    const safeTitle  = escapeHtml(p.title || "Untitled Product");
-    const safeImg    = escapeHtml(p.image || "");
-    const ratingNum  = p.rating ? Number(p.rating).toFixed(1) : null;
-    const storesText = offers.length === 1 ? "1 store" : `${offers.length || 0} stores`;
+    const safeTitle = escapeHtml(p.title || "Untitled Product");
+    const safeImg   = escapeHtml(p.image || "");
+    const ratingNum = p.rating ? Number(p.rating).toFixed(1) : null;
 
     const card = document.createElement("article");
     card.className = "product-card";
     card.style.animationDelay = `${Math.min(idx, 11) * 0.04}s`;
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", safeTitle);
+
     card.innerHTML = `
       <div class="pc-image-wrap">
-        ${discount >= 10 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
+        ${discount >= 5 ? `<span class="pc-discount-badge">${discount}% OFF</span>` : ""}
         <img src="${safeImg}" alt="${safeTitle}" loading="lazy" onerror="handleImgError(this)"/>
       </div>
 
@@ -749,7 +964,7 @@ function renderProducts(products, append = false){
             <span class="pc-rating">
               <i class="fa-solid fa-star" style="font-size:9px;"></i>
               <span>${ratingNum}</span>
-            </span>` : ``}
+            </span>` : ""}
         </div>
 
         <div class="pc-price-row">
@@ -758,7 +973,7 @@ function renderProducts(products, append = false){
         </div>
 
         <div class="pc-saving-row">
-          ${saving > 0 ? `<span class="pc-saving">You save ₹${formatINR(saving)}</span>` : ``}
+          ${saving > 0 ? `<span class="pc-saving">You save ₹${formatINR(saving)}</span>` : ""}
         </div>
 
         <div class="pc-spacer"></div>
@@ -768,15 +983,14 @@ function renderProducts(products, append = false){
             <span class="pc-store-dot"></span>
             <span>Compare across ${storesText}</span>
           </div>
-
-          <button class="pc-cta" type="button">
+          <button class="pc-cta" type="button" aria-label="View deal for ${safeTitle}">
             <i class="fa-solid fa-bolt"></i>View Deal
           </button>
         </div>
-      </div>
-    `;
+      </div>`;
 
     card.addEventListener("click", () => compare(p.id));
+    card.addEventListener("keydown", (e) => { if(e.key === "Enter") compare(p.id); });
     frag.appendChild(card);
   });
 
@@ -789,6 +1003,57 @@ function compare(id){
   window.location = "detailspage.html";
 }
 
+// ── Wishlist Preview ──────────────────────────────────────────────────────────
+
+async function loadWishlistPreview(){
+  const token = localStorage.getItem("vc_t");
+  if(!token) return;
+  try{
+    const res = await fetch(API + "/me/wishlist", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const json = await res.json();
+    if(!json.success || !json.data?.length) return;
+
+    const items = json.data.slice(0, 5);
+    const section = document.getElementById("wishlistSection");
+    const rows = document.getElementById("wishlistRows");
+    section.classList.remove("hidden");
+
+    rows.innerHTML = items.map(p => {
+      const lowest  = Number(p.lowestPrice) || 0;
+      const highest = Number(p.highestPrice) || lowest;
+      const saving  = highest > lowest ? highest - lowest : 0;
+      const discount = highest > lowest ? Math.round(((highest-lowest)/highest)*100) : 0;
+      const offers  = Array.isArray(p.offers) ? p.offers : [];
+      const storeCount = offers.length;
+
+      return `
+        <div class="wishlist-row-card" onclick="compare('${escapeHtml(String(p.id))}')">
+          <div class="wishlist-row-img">
+            <img src="${escapeHtml(p.image||"")}" alt="${escapeHtml(p.title||"")}"
+                 onerror="this.src='${PLACEHOLDER_IMG}'"/>
+          </div>
+          <div class="wishlist-row-info">
+            <div class="wishlist-row-title">${escapeHtml(p.title||"Untitled")}</div>
+            <div style="display:flex;align-items:baseline;gap:6px;">
+              <span class="wishlist-row-price">₹${formatINR(lowest)}</span>
+              ${highest > lowest ? `<span class="wishlist-row-mrp">₹${formatINR(highest)}</span>` : ""}
+              ${discount >= 5 ? `<span style="font-size:11px;color:#ef4444;font-weight:700;">${discount}% OFF</span>` : ""}
+            </div>
+            ${saving > 0 ? `<div class="wishlist-row-saving">You save ₹${formatINR(saving)}</div>` : ""}
+            ${storeCount > 0 ? `<div class="wishlist-row-stores"><i class="fa-solid fa-store" style="color:#2563eb;font-size:10px;"></i> ${storeCount} store${storeCount>1?"s":""}</div>` : ""}
+          </div>
+          <button class="wishlist-row-cta" onclick="event.stopPropagation();compare('${escapeHtml(String(p.id))}')">
+            <i class="fa-solid fa-bolt"></i> View Deal
+          </button>
+        </div>`;
+    }).join("");
+  } catch(e){ /* silent */ }
+}
+
+// ── Trending ──────────────────────────────────────────────────────────────────
+
 async function loadTrending(reset = true){
   state.mode = "trending";
   sectionTitle.innerText = "Trending Deals";
@@ -800,16 +1065,18 @@ async function loadTrending(reset = true){
     state.totalPages = 1;
     renderProducts(state.items);
     loadMoreWrap.classList.add("hidden");
-  }catch{
+  } catch{
     productGrid.innerHTML = errorBlock("loadTrending");
   }
 }
+
+// ── Category ──────────────────────────────────────────────────────────────────
 
 async function loadByCategory(category, reset = true){
   state.mode = "category";
   state.category = category;
   sectionTitle.innerText = category;
-  sectionSub.innerText   = "Filtered results";
+  sectionSub.innerText   = "Filtered results — in-stock only";
   if(reset){ state.page = 1; skeletonGrid(); }
   try{
     const json = await apiGet(`/api/products?category=${encodeURIComponent(category)}&page=${state.page}&limit=${state.limit}&sort=popular`);
@@ -817,7 +1084,7 @@ async function loadByCategory(category, reset = true){
     state.totalPages = json.pagination?.pages || 1;
     renderProducts(state.items, !reset);
     updateLoadMore();
-  }catch{
+  } catch{
     productGrid.innerHTML = errorBlock("retryCategory");
   }
 }
@@ -837,9 +1104,13 @@ loadMoreBtn.addEventListener("click", async () => {
       const json = await apiGet(`/api/products?category=${encodeURIComponent(state.category)}&page=${state.page}&limit=${state.limit}&sort=popular`);
       renderProducts(json.data || [], true);
       state.totalPages = json.pagination?.pages || state.totalPages;
+    } else if(state.mode === "deals"){
+      const json = await apiGet(`/api/deals?limit=${state.limit}&min_discount=10&page=${state.page}`);
+      renderProducts(json.data || [], true);
+      state.totalPages = json.pagination?.pages || state.totalPages;
     }
     updateLoadMore();
-  }catch{ state.page -= 1; }
+  } catch{ state.page -= 1; }
   finally{
     loadMoreBtn.disabled = false;
     loadMoreBtn.innerText = originalText;
@@ -854,6 +1125,8 @@ function errorBlock(retryFn){
       <button onclick="${retryFn === 'retryCategory' ? `loadByCategory(state.category,true)` : `loadTrending(true)`}" class="mt-4 text-blue-700 underline">Retry</button>
     </div>`;
 }
+
+// ── Categories bar ────────────────────────────────────────────────────────────
 
 async function loadCategories(){
   try{
@@ -881,7 +1154,7 @@ async function loadCategories(){
       frag.appendChild(btn);
     });
     categoryBar.appendChild(frag);
-  }catch{}
+  } catch{}
 }
 
 document.querySelector('.category-btn[data-category=""]').addEventListener("click", (e) => {
@@ -891,6 +1164,8 @@ document.querySelector('.category-btn[data-category=""]').addEventListener("clic
   setActiveNav("home");
 });
 
+// ── Autocomplete / suggest ────────────────────────────────────────────────────
+
 let suggestTimer;
 let suggestAbort;
 
@@ -898,17 +1173,34 @@ function handleSearchSubmit(e){
   e.preventDefault();
   const q = searchInput.value.trim();
   suggestBox.classList.add("hidden");
+  document.getElementById("searchHistorySection").classList.add("hidden");
   if(q){
+    addSearchHistory(q);
     window.location = `searchpage.html?q=${encodeURIComponent(q)}`;
   }
   return false;
 }
 
+searchInput.addEventListener("focus", () => {
+  const q = searchInput.value.trim();
+  if(!q){
+    renderSearchHistory();
+  }
+});
+
 searchInput.addEventListener("input", (e) => {
   const q = e.target.value.trim();
   clearTimeout(suggestTimer);
   if(suggestAbort) suggestAbort.abort();
-  if(!q){ suggestBox.classList.add("hidden"); state.suggestions = []; return; }
+
+  if(!q){
+    suggestBox.classList.add("hidden");
+    state.suggestions = [];
+    renderSearchHistory();
+    return;
+  }
+
+  document.getElementById("searchHistorySection").classList.add("hidden");
 
   suggestTimer = setTimeout(async () => {
     try{
@@ -917,19 +1209,47 @@ searchInput.addEventListener("input", (e) => {
       const list = (json.data || []).slice(0, 8);
       state.suggestions = list;
       state.suggestIndex = -1;
-      if(!list.length){ suggestBox.classList.add("hidden"); return; }
-      suggestBox.innerHTML = list.map((item, i) => `
-        <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-index="${i}">
-          <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
-          <span>${escapeHtml(item)}</span>
-        </div>`).join("");
-      [...suggestBox.children].forEach((el, i) => {
+
+      // Blend with history matches
+      const history = getSearchHistory().filter(h => h.toLowerCase().includes(q.toLowerCase())).slice(0, 3);
+
+      if(!list.length && !history.length){ suggestBox.classList.add("hidden"); return; }
+
+      let html = "";
+
+      // History matches first
+      history.forEach(h => {
+        html += `
+          <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 flex items-center gap-3" data-q="${escapeHtml(h)}" data-type="history">
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 text-xs"></i>
+            <span class="flex-1">${escapeHtml(h)}</span>
+            <span class="text-[10px] text-slate-400 font-medium">History</span>
+          </div>`;
+      });
+
+      // API suggestions
+      list.forEach((item, i) => {
+        html += `
+          <div class="suggest-item px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-slate-100 last:border-0 flex items-center gap-3" data-index="${i}">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
+            <span>${escapeHtml(item)}</span>
+          </div>`;
+      });
+
+      suggestBox.innerHTML = html;
+
+      suggestBox.querySelectorAll(".suggest-item").forEach(el => {
         el.addEventListener("click", () => {
-          window.location = `searchpage.html?q=${encodeURIComponent(list[i])}`;
+          const q2 = el.dataset.q || state.suggestions[el.dataset.index];
+          if(q2){
+            addSearchHistory(q2);
+            window.location = `searchpage.html?q=${encodeURIComponent(q2)}`;
+          }
         });
       });
+
       suggestBox.classList.remove("hidden");
-    }catch(err){
+    } catch(err){
       if(err.name !== "AbortError") suggestBox.classList.add("hidden");
     }
   }, 250);
@@ -942,14 +1262,19 @@ searchInput.addEventListener("keydown", (e) => {
     e.preventDefault();
     state.suggestIndex = (state.suggestIndex + 1) % items.length;
     updateSuggestActive(items);
-  }else if(e.key === "ArrowUp"){
+  } else if(e.key === "ArrowUp"){
     e.preventDefault();
     state.suggestIndex = (state.suggestIndex - 1 + items.length) % items.length;
     updateSuggestActive(items);
-  }else if(e.key === "Enter" && state.suggestIndex >= 0){
+  } else if(e.key === "Enter" && state.suggestIndex >= 0){
     e.preventDefault();
-    window.location = `searchpage.html?q=${encodeURIComponent(state.suggestions[state.suggestIndex])}`;
-  }else if(e.key === "Escape"){
+    const el = items[state.suggestIndex];
+    const q2 = el?.dataset.q || state.suggestions[el?.dataset.index];
+    if(q2){
+      addSearchHistory(q2);
+      window.location = `searchpage.html?q=${encodeURIComponent(q2)}`;
+    }
+  } else if(e.key === "Escape"){
     suggestBox.classList.add("hidden");
   }
 });
@@ -957,7 +1282,7 @@ searchInput.addEventListener("keydown", (e) => {
 function updateSuggestActive(items){
   items.forEach((el, i) => {
     el.classList.toggle("active", i === state.suggestIndex);
-    if(i === state.suggestIndex) el.scrollIntoView({ block: "nearest" });
+    if(i === state.suggestIndex) el.scrollIntoView({ block:"nearest" });
   });
 }
 
@@ -965,54 +1290,53 @@ document.addEventListener("click", (e) => {
   if(!suggestBox.contains(e.target) && e.target !== searchInput){
     suggestBox.classList.add("hidden");
   }
+  if(!document.getElementById("searchHistorySection").contains(e.target) && e.target !== searchInput){
+    document.getElementById("searchHistorySection").classList.add("hidden");
+  }
 });
+
+// ── Nav helpers ───────────────────────────────────────────────────────────────
 
 function setActiveNav(key){
   document.querySelectorAll(".nav-btn").forEach(btn => {
-    if(btn.dataset.nav === key){
-      btn.classList.remove("text-slate-500");
-      btn.classList.add("text-blue-700");
-    }else{
-      btn.classList.remove("text-blue-700");
-      btn.classList.add("text-slate-500");
-    }
+    btn.classList.toggle("text-blue-700", btn.dataset.nav === key);
+    btn.classList.toggle("text-slate-500", btn.dataset.nav !== key);
   });
 }
 
 function goHome(){
   setActiveNav("home");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top:0, behavior:"smooth" });
+  document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+  document.querySelector('.category-btn[data-category=""]').classList.add("active");
   loadTrending(true);
 }
 
-function goSearch(){
-  window.location = "searchpage.html";
-}
-
-function goExplore(){
-  window.location = "homepage.html";
-}
+function goSearch(){ window.location = "searchpage.html"; }
+function goExplore(){ window.location = "homepage.html"; }
 
 async function goDrops(){
   setActiveNav("deals");
   document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
   state.mode = "deals";
+  state.page = 1;
   sectionTitle.innerText = "🔥 Hot Deals";
   sectionSub.innerText   = "Biggest discounts available now";
   skeletonGrid();
   try{
-    const json = await apiGet(`/api/deals?limit=24&min_discount=10`);
+    const json = await apiGet(`/api/deals?limit=${state.limit}&min_discount=5`);
+    state.totalPages = json.pagination?.pages || 1;
     renderProducts(json.data || []);
-    loadMoreWrap.classList.add("hidden");
-    window.scrollTo({ top: 400, behavior: "smooth" });
-  }catch{
+    updateLoadMore();
+    window.scrollTo({ top:400, behavior:"smooth" });
+  } catch{
     productGrid.innerHTML = errorBlock("loadTrending");
   }
 }
 
-function goAccount(){
-  window.location = "account.html";
-}
+function goAccount(){ window.location = "account.html"; }
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
 
 document.getElementById("footerYear").innerText = new Date().getFullYear();
 
