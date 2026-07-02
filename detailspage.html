@@ -60,7 +60,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 
 .footer-link:hover{ color:white; transform:translateX(4px); }
 
-/* Breadcrumb */
 .breadcrumb{
   display:flex; align-items:center; gap:6px;
   font-size:13px; color:var(--muted);
@@ -125,7 +124,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   0%{ transform:scale(1); } 50%{ transform:scale(1.25); } 100%{ transform:scale(1); }
 }
 
-/* Out-of-stock OOS overlay on main image */
 .oos-overlay{
   position:absolute;
   top:14px; left:14px;
@@ -151,7 +149,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   color:var(--primary); font-size:11px;
 }
 
-/* Product-level availability banner */
 .avail-banner{
   display:inline-flex; align-items:center; gap:8px;
   margin-top:10px;
@@ -233,8 +230,10 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .alert-btn{
   background:var(--primary); color:white; padding:10px 16px;
   border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; transition:.2s;
+  border:none;
 }
 .alert-btn:hover{ background:var(--primary-dark); }
+.alert-btn:disabled{ background:#94a3b8; cursor:not-allowed; }
 
 .compare-section{ margin-top:24px; }
 .offer-row{
@@ -245,20 +244,16 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .offer-row:hover{ background:#f8fafc; border-color:#bfdbfe; }
 .offer-row.best{ background:#eff6ff; border-color:#bfdbfe; }
 
-/* Out-of-stock offer styling */
 .offer-row.oos{
   background:#fafafa;
   border-color:#f1f5f9;
   cursor:default;
 }
 .offer-row.oos:hover{ background:#fafafa; border-color:#f1f5f9; }
-.offer-row.oos .offer-thumb,
-.offer-row.oos .offer-store .font-bold,
-.offer-row.oos .offer-title,
-.offer-row.oos .offer-price{
-  opacity:0.55;
-}
-.offer-row.oos .offer-price{ text-decoration:line-through; }
+.offer-row.oos .offer-thumb{ opacity:0.55; }
+.offer-row.oos .offer-store .font-bold{ opacity:0.55; }
+.offer-row.oos .offer-title{ opacity:0.55; }
+.offer-row.oos .offer-price{ opacity:0.55; text-decoration:line-through; }
 
 .offer-thumb{
   width:80px; height:80px; background:#f8fafc; border-radius:10px;
@@ -286,7 +281,6 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   margin-left:6px; text-transform:uppercase; letter-spacing:0.5px;
 }
 
-/* Out-of-stock badge inside the offer row */
 .oos-badge{
   display:inline-flex; align-items:center; gap:4px;
   background:#fee2e2; color:#b91c1c;
@@ -307,19 +301,29 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
 .time-pills{ background:#f1f5f9; padding:3px; border-radius:999px; display:inline-flex; gap:2px; }
 .time-pill{
   padding:5px 12px; border-radius:999px; font-size:12px; font-weight:600;
-  color:var(--muted); cursor:pointer; transition:.2s; background:transparent;
+  color:var(--muted); cursor:pointer; transition:.2s; background:transparent; border:none;
 }
 .time-pill.active{ background:white; color:var(--primary); box-shadow:0 1px 3px rgba(0,0,0,0.08); }
 
 .section-card{ background:white; border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; }
 .section-title{ font-size:18px; font-weight:700; color:var(--text); margin-bottom:16px; }
 
-.spec-table{ width:100%; }
+.spec-table{ width:100%; border-collapse:collapse; }
 .spec-table tr{ border-bottom:1px solid #f1f5f9; }
 .spec-table tr:last-child{ border-bottom:none; }
 .spec-table td{ padding:12px 0; font-size:13px; }
-.spec-table td:first-child{ color:var(--muted); font-weight:500; width:40%; }
+.spec-table td:first-child{ color:var(--muted); font-weight:500; width:42%; }
 .spec-table td:last-child{ color:var(--text); font-weight:600; }
+
+/* Spec section tabs */
+.spec-tabs{ display:flex; gap:2px; background:#f1f5f9; padding:3px; border-radius:10px; margin-bottom:16px; }
+.spec-tab{
+  flex:1; padding:8px; border-radius:8px; font-size:12px; font-weight:600;
+  color:var(--muted); cursor:pointer; text-align:center; transition:.2s; border:none; background:transparent;
+}
+.spec-tab.active{ background:white; color:var(--primary); box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.spec-panel{ display:none; }
+.spec-panel.active{ display:block; }
 
 .rp-card{
   background:white; border:1px solid var(--border); border-radius:14px;
@@ -375,51 +379,37 @@ body{ background:var(--bg); overflow-x:hidden; color:var(--text); padding-bottom
   background:#0f172a; color:white; padding:12px 22px; border-radius:999px;
   font-size:13px; font-weight:600; opacity:0; pointer-events:none;
   transition:opacity .25s ease; z-index:200; box-shadow:0 12px 30px rgba(0,0,0,0.25);
+  white-space:nowrap;
 }
 #toast.show{ opacity:1; }
 
-@media (max-width: 768px){
+@media(max-width:768px){
   .hero-bg{ padding-top:10px !important; padding-bottom:0 !important; }
   .breadcrumb{ font-size:11px; }
   header{ height:60px !important; }
   .current-price{ font-size:24px !important; }
   h1{ line-height:1.3 !important; }
-  .section-card{ padding:14px !important; border-radius:12px; }
-  .offer-row{ padding:10px !important; }
-  .offer-thumb{ width:60px; height:60px; }
+  .section-card{ padding:14px !important; border-radius:12px; margin-bottom:14px !important; }
+  .offer-row{ padding:10px !important; flex-wrap:wrap !important; }
+  .offer-thumb{ width:60px !important; height:60px !important; }
+  .offer-title{ white-space:normal !important; overflow:visible !important; }
   .cta-btn{ padding:12px; font-size:14px; }
-}
-
-@media(max-width:768px){
-  .product-main{ gap:20px; }
-  .gallery-sticky{ position:static; }
-  .current-price{ font-size:28px; }
-  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .product-main{ display:block !important; gap:20px; }
+  .gallery-sticky{ position:static !important; width:100% !important; }
+  .main-image-card{ padding:12px !important; }
+  .gauge-wrap{ flex-direction:column !important; text-align:center; }
+  .stats-grid{ grid-template-columns:1fr 1fr !important; }
+  .alert-box{ flex-direction:column; gap:10px; }
+  .alert-box input, .alert-btn{ width:100%; }
   .gauge{ width:110px; height:65px; }
   .gauge-needle{ height:42px; }
-  .section-card{ padding:18px; }
+  .rp-card{ min-width:0 !important; }
 }
 
 html,body{ width:100%; overflow-x:hidden; }
 *{ max-width:100%; }
 img{ max-width:100%; height:auto; }
 canvas{ max-width:100% !important; }
-
-@media (max-width:768px){
-  .product-main{ display:block !important; }
-  .gallery-sticky{ position:static !important; width:100% !important; }
-  .main-image-card{ padding:12px !important; }
-  .offer-row{ flex-wrap:wrap !important; }
-  .offer-thumb{ width:60px !important; height:60px !important; }
-  .offer-title{ white-space:normal !important; overflow:visible !important; }
-  .gauge-wrap{ flex-direction:column !important; text-align:center; }
-  .stats-grid{ grid-template-columns:1fr 1fr !important; }
-  .alert-box{ flex-direction:column; gap:10px; }
-  .alert-box input, .alert-btn{ width:100%; }
-  .section-card{ padding:14px !important; margin-bottom:14px !important; }
-  .current-price{ font-size:24px !important; }
-  .rp-card{ min-width:0 !important; }
-}
 </style>
 </head>
 
@@ -431,14 +421,14 @@ canvas{ max-width:100% !important; }
       <i class="fa-solid fa-arrow-left text-blue-700"></i>
     </button>
     <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-blue-200 overflow-hidden">
-      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
+      <img src="logo.png" alt="Visco Logo" class="w-full h-full object-contain"
+           onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping text-blue-700 text-xl\'></i>'"/>
     </div>
     <div>
       <h1 class="font-bold text-[18px] md:text-[20px] text-blue-700">Visco Compare</h1>
       <p class="text-[11px] text-slate-400 -mt-1">Product Details</p>
     </div>
   </div>
-
   <div class="flex items-center gap-2">
     <button onclick="shareProduct()" class="w-11 h-11 rounded-xl bg-white border border-slate-200 hover:border-blue-500 transition flex items-center justify-center">
       <i class="fa-solid fa-share-nodes text-blue-700"></i>
@@ -465,6 +455,8 @@ canvas{ max-width:100% !important; }
       <div class="skeleton h-[400px] rounded-2xl"></div>
       <div class="skeleton h-[400px] rounded-2xl"></div>
     </div>
+    <div class="skeleton h-[200px] rounded-2xl"></div>
+    <div class="skeleton h-[160px] rounded-2xl"></div>
   </div>
   <div id="main-content" class="hidden"></div>
 </main>
@@ -482,7 +474,6 @@ canvas{ max-width:100% !important; }
         Compare prices across top online stores and discover the best deals instantly.
       </p>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Quick Links</h3>
       <div class="space-y-3 text-slate-400">
@@ -491,7 +482,6 @@ canvas{ max-width:100% !important; }
         <a href="homepage.html" class="footer-link block transition">Explore</a>
       </div>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Legal</h3>
       <div class="space-y-3 text-slate-400">
@@ -499,7 +489,6 @@ canvas{ max-width:100% !important; }
         <a href="terms.html" class="footer-link block transition">Terms</a>
       </div>
     </div>
-
     <div>
       <h3 class="font-bold text-lg mb-5">Connect</h3>
       <div class="flex gap-3">
@@ -509,7 +498,6 @@ canvas{ max-width:100% !important; }
       </div>
     </div>
   </div>
-
   <div class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm leading-7">
     <p>© <span id="footerYear">2026</span> Visco Compare. All rights reserved.</p>
     <p class="mt-3 text-[12px] max-w-4xl mx-auto px-4">
@@ -553,15 +541,18 @@ canvas{ max-width:100% !important; }
 <div id="toast"></div>
 
 <script>
-const API = "https://visco1.onrender.com";
+const API = "[visco1.onrender.com](https://visco1.onrender.com)";
 const id  = localStorage.getItem("productId");
 let currentProduct = null;
 let isWishlisted = false;
 let wishlistBusy = false;
 let priceChart = null;
 let activeTimeRange = "all";
+let cachedHistory = null;
 
 document.getElementById("footerYear").innerText = new Date().getFullYear();
+
+// ─── Utility ────────────────────────────────────────────────────────────────
 
 function goBack(){
   if(window.history.length > 1) window.history.back();
@@ -579,37 +570,49 @@ function showToast(msg){
   t.innerText = msg;
   t.classList.add("show");
   clearTimeout(t._timer);
-  t._timer = setTimeout(()=> t.classList.remove("show"), 2200);
+  t._timer = setTimeout(() => t.classList.remove("show"), 2400);
 }
 
-async function shareProduct(){
-  if(!currentProduct) return;
-  const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare`;
-  if(navigator.share){
-    try{ await navigator.share({title: currentProduct.title, text, url: location.href}); }catch(e){}
-  }else{
-    navigator.clipboard.writeText(`${text}\n${location.href}`);
-    showToast("Link copied!");
-  }
+function isOfferAvailable(o){
+  if(typeof o.isAvailable === "boolean") return o.isAvailable;
+  const code = String(o.stock || "").toUpperCase();
+  if(code === "OUT_OF_STOCK" || code === "OOS") return false;
+  if(code === "IN_STOCK") return true;
+  return o.price != null && Number(o.price) > 0;
 }
 
-function shareWhatsApp(){
-  if(!currentProduct) return;
-  const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare\n${location.href}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+function storeInitial(name){ return (name || "?").charAt(0).toUpperCase(); }
+
+function calcGaugeAngle(current, lowest, highest){
+  if(!current || !lowest || !highest || highest === lowest) return 0;
+  const ratio = (highest - current) / (highest - lowest);
+  return (ratio * 180) - 90;
 }
 
-/* ------------ API helpers ------------ */
+function getRecommendation(currentPrice, lowest, average){
+  if(!currentPrice || !lowest || !average)
+    return { text:"Fair Value", sub:"Acceptable to purchase now", color:"#84cc16" };
+  if(currentPrice <= lowest * 1.05)
+    return { text:"Great Deal", sub:"Best time to buy", color:"#22c55e" };
+  if(currentPrice <= average)
+    return { text:"Fair Value", sub:"Acceptable to purchase now", color:"#84cc16" };
+  if(currentPrice <= average * 1.1)
+    return { text:"Wait a bit", sub:"Price might drop soon", color:"#f59e0b" };
+  return { text:"Bad Time", sub:"Wait for a price drop", color:"#ef4444" };
+}
+
+// ─── API helpers ─────────────────────────────────────────────────────────────
+
 async function apiGet(path){
   const res = await fetch(API + path);
-  const json = await res.json().catch(()=>({}));
+  const json = await res.json().catch(() => ({}));
   if(!res.ok || !json.success) throw new Error(json.error || "Request failed");
   return json.data;
 }
 
-async function apiAuth(path, opts={}){
+async function apiAuth(path, opts = {}){
   const token = localStorage.getItem("vc_t");
-  const headers = { ...(opts.headers||{}) };
+  const headers = { ...(opts.headers || {}) };
   if(token) headers["Authorization"] = "Bearer " + token;
   if(opts.body && !headers["Content-Type"]) headers["Content-Type"] = "application/json";
   try{
@@ -617,26 +620,46 @@ async function apiAuth(path, opts={}){
       method: opts.method || "GET",
       headers,
       body: opts.body || undefined,
-      cache:"no-store",
-      credentials:"omit",
-      mode:"cors"
+      cache: "no-store",
+      credentials: "omit",
+      mode: "cors"
     });
     let data = {};
-    try{ data = await res.json(); }catch(_){}
+    try{ data = await res.json(); } catch(_){}
     return { ok: res.ok, status: res.status, data };
-  }catch(_){
-    return { ok:false, status:0, data:{} };
+  } catch(_){
+    return { ok: false, status: 0, data: {} };
   }
 }
 
-/* ------------ Wishlist ------------ */
+// ─── Share ───────────────────────────────────────────────────────────────────
+
+async function shareProduct(){
+  if(!currentProduct) return;
+  const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare`;
+  if(navigator.share){
+    try{ await navigator.share({ title: currentProduct.title, text, url: location.href }); }
+    catch(e){}
+  } else {
+    await navigator.clipboard.writeText(`${text}\n${location.href}`);
+    showToast("Link copied!");
+  }
+}
+
+function shareWhatsApp(){
+  if(!currentProduct) return;
+  const text = `${currentProduct.title} — Best price ₹${currentProduct.lowestPrice} on Visco Compare\n${location.href}`;
+  window.open(`[wa.me](https://wa.me/?text=${encodeURIComponent(text)})`, "_blank");
+}
+
+// ─── Wishlist ────────────────────────────────────────────────────────────────
+
 async function checkWishlistState(productId){
   const token = localStorage.getItem("vc_t");
   if(!token) return false;
   const r = await apiAuth("/me/wishlist");
   if(!r.ok || !r.data || !r.data.success) return false;
-  const list = r.data.data || [];
-  return list.some(p => String(p.id) === String(productId));
+  return (r.data.data || []).some(p => String(p.id) === String(productId));
 }
 
 function paintWishlistBtn(){
@@ -645,13 +668,13 @@ function paintWishlistBtn(){
   const icon = btn.querySelector("i");
   if(isWishlisted){
     btn.classList.add("active");
-    btn.setAttribute("aria-label","Remove from wishlist");
-    btn.setAttribute("title","Remove from wishlist");
+    btn.setAttribute("aria-label", "Remove from wishlist");
+    btn.setAttribute("title", "Remove from wishlist");
     icon.className = "fa-solid fa-heart";
-  }else{
+  } else {
     btn.classList.remove("active");
-    btn.setAttribute("aria-label","Add to wishlist");
-    btn.setAttribute("title","Add to wishlist");
+    btn.setAttribute("aria-label", "Add to wishlist");
+    btn.setAttribute("title", "Add to wishlist");
     icon.className = "fa-regular fa-heart";
   }
 }
@@ -661,65 +684,100 @@ async function toggleWishlist(){
   const token = localStorage.getItem("vc_t");
   if(!token){
     showToast("Please sign in to save items");
-    setTimeout(()=> location.href = "index.html", 900);
+    setTimeout(() => location.href = "index.html", 900);
     return;
   }
-
   wishlistBusy = true;
   const btn = document.getElementById("wishlistBtn");
   btn.disabled = true;
   btn.classList.add("pulse");
-  setTimeout(()=> btn.classList.remove("pulse"), 500);
+  setTimeout(() => btn.classList.remove("pulse"), 500);
 
   const productId = currentProduct.id;
-
   if(isWishlisted){
-    const r = await apiAuth(`/me/wishlist/${encodeURIComponent(productId)}`, { method:"DELETE" });
-    if(r.ok && r.data && r.data.success){
+    const r = await apiAuth(`/me/wishlist/${encodeURIComponent(productId)}`, { method: "DELETE" });
+    if(r.ok && r.data?.success){
       isWishlisted = false; paintWishlistBtn(); showToast("Removed from wishlist");
-    }else if(r.status === 401){
+    } else if(r.status === 401){
       localStorage.removeItem("vc_t"); showToast("Session expired. Please sign in.");
-      setTimeout(()=> location.href = "index.html", 900);
-    }else{ showToast("Couldn't remove. Try again."); }
-  }else{
-    const r = await apiAuth("/me/wishlist", { method:"POST", body: JSON.stringify({ product_id: productId }) });
-    if(r.ok && r.data && r.data.success){
-      isWishlisted = true; paintWishlistBtn(); showToast("Added to wishlist ❤");
-    }else if(r.status === 401){
+      setTimeout(() => location.href = "index.html", 900);
+    } else { showToast("Couldn't remove. Try again."); }
+  } else {
+    const r = await apiAuth("/me/wishlist", { method: "POST", body: JSON.stringify({ product_id: productId }) });
+    if(r.ok && r.data?.success){
+      isWishlisted = true; paintWishlistBtn(); showToast("Added to wishlist ❤️");
+    } else if(r.status === 401){
       localStorage.removeItem("vc_t"); showToast("Session expired. Please sign in.");
-      setTimeout(()=> location.href = "index.html", 900);
-    }else{ showToast("Couldn't add. Try again."); }
+      setTimeout(() => location.href = "index.html", 900);
+    } else { showToast("Couldn't add. Try again."); }
   }
-
   btn.disabled = false;
   wishlistBusy = false;
 }
 
-/* ------------ Price Alert ------------ */
+// ─── Price Alert ─────────────────────────────────────────────────────────────
+
 async function setPriceAlert(){
   const token = localStorage.getItem("vc_t");
   if(!token){
     showToast("Please sign in to set price alerts");
-    setTimeout(()=> location.href = "index.html", 900);
+    setTimeout(() => location.href = "index.html", 900);
     return;
   }
-  const val = document.getElementById("alertPrice").value;
-  if(!val || isNaN(val)){ showToast("Enter a valid price"); return; }
-  showToast(`Alert set at ₹${Number(val).toLocaleString()}`);
+  const val = parseFloat(document.getElementById("alertPrice").value);
+  if(!val || isNaN(val) || val <= 0){
+    showToast("Enter a valid target price");
+    return;
+  }
+  if(!currentProduct?.id){
+    showToast("Product not loaded yet");
+    return;
+  }
+
+  const alertBtn = document.querySelector(".alert-btn");
+  if(alertBtn){ alertBtn.disabled = true; alertBtn.textContent = "Saving…"; }
+
+  const r = await apiAuth("/me/alerts", {
+    method: "POST",
+    body: JSON.stringify({ product_id: currentProduct.id, target_price: val })
+  });
+
+  if(alertBtn){ alertBtn.disabled = false; alertBtn.textContent = "Set Alert"; }
+
+  if(r.ok && r.data?.success){
+    showToast(`🔔 Alert set for ₹${val.toLocaleString()}`);
+  } else if(r.status === 401){
+    localStorage.removeItem("vc_t");
+    showToast("Session expired. Please sign in.");
+    setTimeout(() => location.href = "index.html", 900);
+  } else {
+    showToast("Couldn't set alert. Try again.");
+  }
 }
 
-/* Notify-me on an out-of-stock store: reuses the alert flow */
 function notifyWhenBack(store){
   const token = localStorage.getItem("vc_t");
   if(!token){
     showToast("Sign in to get back-in-stock alerts");
-    setTimeout(()=> location.href = "index.html", 900);
+    setTimeout(() => location.href = "index.html", 900);
     return;
   }
-  showToast(`We'll notify you when ${store} restocks`);
+  showToast(`🔔 We'll notify you when ${store} restocks`);
 }
 
-/* ------------ Helpers ------------ */
+// ─── Spec tabs ───────────────────────────────────────────────────────────────
+
+function switchSpecTab(tabName){
+  document.querySelectorAll(".spec-tab").forEach(t => {
+    t.classList.toggle("active", t.dataset.tab === tabName);
+  });
+  document.querySelectorAll(".spec-panel").forEach(p => {
+    p.classList.toggle("active", p.dataset.panel === tabName);
+  });
+}
+
+// ─── Error state ─────────────────────────────────────────────────────────────
+
 function showError(msg){
   document.getElementById("loading").classList.add("hidden");
   const main = document.getElementById("main-content");
@@ -727,41 +785,18 @@ function showError(msg){
   main.innerHTML = `
     <div class="text-center py-20">
       <i class="fa-solid fa-triangle-exclamation text-red-500 text-5xl mb-4"></i>
-      <div class="font-semibold text-lg text-slate-700">${escapeHtml(msg)}</div>
-      <button onclick="loadProduct()" class="mt-5 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
+      <div class="font-semibold text-lg text-slate-700 mt-4">${escapeHtml(msg)}</div>
+      <button onclick="loadProduct()"
+        class="mt-6 bg-gradient-to-r from-blue-700 to-blue-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-blue-100 hover:scale-105 transition">
         Retry
       </button>
     </div>`;
 }
 
-function storeInitial(name){ return name ? name.charAt(0).toUpperCase() : "?"; }
+// ─── Main product loader ─────────────────────────────────────────────────────
 
-function isOfferAvailable(o){
-  // Tolerant: prefer explicit flag, else infer from stock code / presence of price.
-  if(typeof o.isAvailable === "boolean") return o.isAvailable;
-  const code = String(o.stock || "").toUpperCase();
-  if(code === "OUT_OF_STOCK" || code === "OOS") return false;
-  if(code === "IN_STOCK") return true;
-  return o.price != null && Number(o.price) > 0;
-}
-
-function calcGaugeAngle(currentPrice, lowest, highest){
-  if(!currentPrice || !lowest || !highest || highest === lowest) return 0;
-  const ratio = (highest - currentPrice) / (highest - lowest);
-  return (ratio * 180) - 90;
-}
-
-function getRecommendation(currentPrice, lowest, average){
-  if(!currentPrice || !lowest || !average) return { text:"Fair Value", sub:"Acceptable to purchase now", color:"#84cc16" };
-  if(currentPrice <= lowest * 1.05) return { text:"Great Deal", sub:"Best time to buy", color:"#22c55e" };
-  if(currentPrice <= average) return { text:"Fair Value", sub:"Acceptable to purchase now", color:"#84cc16" };
-  if(currentPrice <= average * 1.1) return { text:"Wait a bit", sub:"Price might drop soon", color:"#f59e0b" };
-  return { text:"Bad Time", sub:"Wait for a price drop", color:"#ef4444" };
-}
-
-/* ------------ Main load ------------ */
 async function loadProduct(){
-  if(!id){ showError("No product selected"); return; }
+  if(!id){ showError("No product selected."); return; }
 
   try{
     const p = await apiGet(`/api/product/${encodeURIComponent(id)}`);
@@ -775,74 +810,73 @@ async function loadProduct(){
     bc.innerHTML = `
       <a href="homepage.html"><i class="fa-solid fa-house text-[11px]"></i> Home</a>
       ${p.mainCategory ? `<span class="sep">/</span><a href="#">${escapeHtml(p.mainCategory)}</a>` : ""}
-      ${p.subCategory ? `<span class="sep">/</span><a href="#">${escapeHtml(p.subCategory)}</a>` : ""}
+      ${p.subCategory  ? `<span class="sep">/</span><a href="#">${escapeHtml(p.subCategory)}</a>`  : ""}
       <span class="sep">/</span>
-      <span class="current">${escapeHtml((p.title || "Product").substring(0, 50))}${(p.title||"").length>50?'…':''}</span>
-    `;
+      <span class="current">${escapeHtml((p.title || "Product").substring(0,50))}${(p.title||"").length>50?"…":""}</span>`;
 
-    const allOffers = Array.isArray(p.offers) ? p.offers.slice() : [];
-
-    // Split by availability
+    const allOffers    = Array.isArray(p.offers) ? p.offers.slice() : [];
     const inStockOffers = allOffers.filter(isOfferAvailable);
-    const oosOffers = allOffers.filter(o => !isOfferAvailable(o));
+    const oosOffers    = allOffers.filter(o => !isOfferAvailable(o));
 
-    // In-stock sorted cheapest first; OOS appended after.
-    inStockOffers.sort((a,b)=> (Number(a.price)||Infinity) - (Number(b.price)||Infinity));
+    // Cheapest in-stock first; OOS appended after
+    inStockOffers.sort((a,b) => (Number(a.price)||Infinity) - (Number(b.price)||Infinity));
     const orderedOffers = [...inStockOffers, ...oosOffers];
-
     const bestOffer = inStockOffers[0] || null;
 
-    const productAvailable = (typeof p.isAvailable === "boolean")
-      ? p.isAvailable
-      : inStockOffers.length > 0;
+    const productAvailable = typeof p.isAvailable === "boolean"
+      ? p.isAvailable : inStockOffers.length > 0;
 
-    const lowestPrice  = p.lowestPrice  || (bestOffer ? Number(bestOffer.price) : 0);
-    const highestPrice = p.highestPrice || (inStockOffers.length
-        ? Number(inStockOffers[inStockOffers.length-1].price) : lowestPrice);
+    // Use cheapest IN-STOCK price as "current price"; highest as MRP
+    const lowestPrice  = (bestOffer ? Number(bestOffer.price) : 0) || p.lowestPrice  || 0;
+    const highestPrice = p.highestPrice
+      || (inStockOffers.length > 1 ? Number(inStockOffers[inStockOffers.length-1].price) : lowestPrice);
     const avgPrice     = p.averagePrice || Math.round((lowestPrice + highestPrice) / 2);
     const discount     = highestPrice > lowestPrice
-        ? Math.round(((highestPrice - lowestPrice) / highestPrice) * 100) : 0;
+      ? Math.round(((highestPrice - lowestPrice) / highestPrice) * 100) : 0;
 
-    const rec = getRecommendation(lowestPrice, lowestPrice, avgPrice);
+    const rec        = getRecommendation(lowestPrice, lowestPrice, avgPrice);
     const gaugeAngle = calcGaugeAngle(lowestPrice, lowestPrice, highestPrice);
 
-    // Compare prices list (every store, with OOS visibly marked)
+    const inStockCount = inStockOffers.length;
+    const oosCount     = oosOffers.length;
+
+    // ── Offer rows ──────────────────────────────────────────────────────────
     let offerRows = "";
-    orderedOffers.forEach((o)=>{
+    orderedOffers.forEach(o => {
       const available = isOfferAvailable(o);
-      const isBest = available && bestOffer && o.store === bestOffer.store
-                     && Number(o.price) === Number(bestOffer.price);
+      const isBest    = available && bestOffer && o.store === bestOffer.store
+                        && Number(o.price) === Number(bestOffer.price);
       const storeName = escapeHtml(o.store || "Store");
       const priceText = (o.price != null && Number(o.price) > 0)
         ? `₹${Number(o.price).toLocaleString()}` : "Price unavailable";
 
       if(available){
-        // In-stock → clickable affiliate row
         offerRows += `
           <a href="${API}/go/${o.offerId}" target="_blank" rel="noopener" class="block">
-            <div class="offer-row ${isBest ? 'best' : ''}">
+            <div class="offer-row${isBest ? " best" : ""}">
               <div class="offer-thumb">
-                <img src="${escapeHtml(p.image || '')}" alt="${storeName}" onerror="this.style.display='none'"/>
+                <img src="${escapeHtml(p.image||"")}" alt="${storeName}"
+                     onerror="this.style.display='none'"/>
               </div>
               <div class="offer-info">
                 <div class="offer-store">
                   <div class="store-logo">${storeInitial(o.store)}</div>
                   <span class="font-bold text-sm">${storeName}</span>
-                  ${isBest ? '<span class="best-badge">Best Price</span>' : ''}
+                  ${isBest ? '<span class="best-badge">Best Price</span>' : ""}
                 </div>
-                <div class="offer-title">${escapeHtml(p.title || '')}</div>
+                <div class="offer-title">${escapeHtml(p.title||"")}</div>
                 <div class="offer-price">${priceText}</div>
                 <div class="offer-delivery"><i class="fa-solid fa-truck-fast"></i> Free delivery</div>
               </div>
-              <i class="fa-solid fa-chevron-right text-slate-300"></i>
+              <i class="fa-solid fa-chevron-right text-slate-300 flex-shrink-0"></i>
             </div>
           </a>`;
-      }else{
-        // Out-of-stock → non-clickable, greyed, with OOS badge + notify button
+      } else {
         offerRows += `
           <div class="offer-row oos">
             <div class="offer-thumb">
-              <img src="${escapeHtml(p.image || '')}" alt="${storeName}" onerror="this.style.display='none'"/>
+              <img src="${escapeHtml(p.image||"")}" alt="${storeName}"
+                   onerror="this.style.display='none'"/>
             </div>
             <div class="offer-info">
               <div class="offer-store">
@@ -850,13 +884,14 @@ async function loadProduct(){
                 <span class="font-bold text-sm">${storeName}</span>
                 <span class="oos-badge"><i class="fa-solid fa-circle-xmark text-[9px]"></i> Out of Stock</span>
               </div>
-              <div class="offer-title">${escapeHtml(p.title || '')}</div>
+              <div class="offer-title">${escapeHtml(p.title||"")}</div>
               <div class="offer-price">${priceText}</div>
               <div class="oos-price-note">
                 <i class="fa-solid fa-circle-info"></i> Currently unavailable on ${storeName}
               </div>
             </div>
-            <button class="notify-btn" onclick="notifyWhenBack('${storeName.replace(/'/g, "\\'")}')">
+            <button class="notify-btn flex-shrink-0"
+                    onclick="notifyWhenBack('${storeName.replace(/'/g,"\\'")}')">
               <i class="fa-regular fa-bell"></i> Notify me
             </button>
           </div>`;
@@ -867,18 +902,18 @@ async function loadProduct(){
       offerRows = `<div class="text-center text-slate-400 py-8">No offers currently available</div>`;
     }
 
-    // Thumbnails
+    // ── Thumbnails ───────────────────────────────────────────────────────────
     const thumbs = [p.image].filter(Boolean);
-    let thumbStrip = "";
-    thumbs.forEach((src, i)=>{
-      thumbStrip += `<div class="thumb ${i===0?'active':''}"><img src="${escapeHtml(src)}" alt="thumb"/></div>`;
-    });
+    const thumbStrip = thumbs.map((src, i) =>
+      `<div class="thumb${i===0?" active":""}"><img src="${escapeHtml(src)}" alt="thumb"/></div>`
+    ).join("");
 
-    // Build the buy/CTA block based on availability
+    // ── CTA buttons ──────────────────────────────────────────────────────────
     const buyCtaTop = (productAvailable && bestOffer)
       ? `<a href="${API}/go/${bestOffer.offerId}" target="_blank" rel="noopener">
            <button class="cta-btn">
-             Buy on ${escapeHtml(bestOffer.store)} <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1"></i>
+             Buy on ${escapeHtml(bestOffer.store)}
+             <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1"></i>
            </button>
          </a>`
       : `<button class="cta-btn disabled" disabled>
@@ -887,17 +922,110 @@ async function loadProduct(){
 
     const buyCtaSide = (productAvailable && bestOffer)
       ? `<a href="${API}/go/${bestOffer.offerId}" target="_blank" rel="noopener">
-           <button class="cta-btn" style="margin-top:0;">Buy on ${escapeHtml(bestOffer.store)}</button>
+           <button class="cta-btn" style="margin-top:0;">
+             Buy on ${escapeHtml(bestOffer.store)}
+           </button>
          </a>`
       : `<button class="cta-btn disabled" style="margin-top:0;" disabled>
            <i class="fa-solid fa-circle-xmark mr-1"></i> Out of Stock
          </button>`;
 
-    const oosCount = oosOffers.length;
-    const inStockCount = inStockOffers.length;
+    // ── Specs: build from product fields + known device data ─────────────────
+    // Pull additional specs from product data if present (e.g. scraped fields),
+    // otherwise show the standard product-info fields only.
+    const specs = p.specs || {};  // optional map from backend
 
+    const overviewRows = [
+      ["Brand",       p.brand         || specs.brand       || "—"],
+      ["Category",    p.mainCategory  || "—"],
+      ["Sub-category",p.subCategory   || "—"],
+      ["Model",       specs.model     || p.baseTitle || p.title || "—"],
+      ["OS",          specs.os        || "—"],
+      ["Colour",      specs.color     || specs.colour || "—"],
+    ];
+
+    const displayRows = [
+      ["Screen size",      specs.screenSize    || "—"],
+      ["Display type",     specs.displayType   || "—"],
+      ["Resolution",       specs.resolution    || "—"],
+      ["Refresh rate",     specs.refreshRate   || "—"],
+      ["Peak brightness",  specs.peakBrightness|| "—"],
+    ];
+
+    const performanceRows = [
+      ["Processor",    specs.processor  || specs.chipset || "—"],
+      ["RAM",          specs.ram        || "—"],
+      ["Storage",      specs.storage    || "—"],
+      ["Expandable",   specs.expandable || "—"],
+    ];
+
+    const cameraRows = [
+      ["Rear camera",  specs.rearCamera  || "—"],
+      ["Front camera", specs.frontCamera || "—"],
+      ["OIS",          specs.ois         || "—"],
+    ];
+
+    const batteryRows = [
+      ["Battery",       specs.battery      || "—"],
+      ["Fast charging", specs.fastCharging || "—"],
+    ];
+
+    const connectivityRows = [
+      ["5G bands",  specs.bands5g  || "—"],
+      ["4G bands",  specs.bands4g  || "—"],
+      ["Wi-Fi",     specs.wifi     || "—"],
+      ["Bluetooth", specs.bluetooth|| "—"],
+      ["NFC",       specs.nfc      || "—"],
+      ["USB",       specs.usb      || "—"],
+    ];
+
+    const buildRows = [
+      ["Dimensions",        specs.dimensions || "—"],
+      ["Weight",            specs.weight     || "—"],
+      ["Water resistance",  specs.waterResistance || "—"],
+      ["SIM",               specs.sim        || "—"],
+    ];
+
+    function buildTable(rows){
+      return `<table class="spec-table">${
+        rows.map(([k,v]) => `<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(String(v))}</td></tr>`).join("")
+      }</table>`;
+    }
+
+    // Determine which tabs have real data (not all "—")
+    const hasSpecs = Object.keys(specs).length > 0;
+
+    const specsHtml = hasSpecs ? `
+      <div class="spec-tabs">
+        <button class="spec-tab active" data-tab="overview"  onclick="switchSpecTab('overview')">Overview</button>
+        <button class="spec-tab"        data-tab="display"   onclick="switchSpecTab('display')">Display</button>
+        <button class="spec-tab"        data-tab="perf"      onclick="switchSpecTab('perf')">Performance</button>
+        <button class="spec-tab"        data-tab="camera"    onclick="switchSpecTab('camera')">Camera</button>
+        <button class="spec-tab"        data-tab="battery"   onclick="switchSpecTab('battery')">Battery</button>
+        <button class="spec-tab"        data-tab="connect"   onclick="switchSpecTab('connect')">Connectivity</button>
+        <button class="spec-tab"        data-tab="build"     onclick="switchSpecTab('build')">Build</button>
+      </div>
+      <div class="spec-panel active" data-panel="overview">${buildTable(overviewRows)}</div>
+      <div class="spec-panel"        data-panel="display">${buildTable(displayRows)}</div>
+      <div class="spec-panel"        data-panel="perf">${buildTable(performanceRows)}</div>
+      <div class="spec-panel"        data-panel="camera">${buildTable(cameraRows)}</div>
+      <div class="spec-panel"        data-panel="battery">${buildTable(batteryRows)}</div>
+      <div class="spec-panel"        data-panel="connect">${buildTable(connectivityRows)}</div>
+      <div class="spec-panel"        data-panel="build">${buildTable(buildRows)}</div>
+    ` : buildTable([
+      ["Availability",    productAvailable ? "In Stock" : "Out of Stock"],
+      ["Category",        p.mainCategory || "—"],
+      ["Sub-category",    p.subCategory  || "—"],
+      ["Brand",           p.brand        || "—"],
+      ["Stores compared", `${allOffers.length} (${inStockCount} in stock)`],
+      ["Delivery",        "Varies by store"],
+      ["Warranty",        "As per brand"],
+    ]);
+
+    // ── Render ───────────────────────────────────────────────────────────────
     document.getElementById("main-content").innerHTML = `
       <div class="product-main">
+
         <!-- LEFT: Gallery -->
         <div class="gallery-sticky">
           <div class="main-image-card">
@@ -905,15 +1033,18 @@ async function loadProduct(){
             <button id="wishlistBtn" class="wishlist-btn" onclick="toggleWishlist()" aria-label="Add to wishlist">
               <i class="fa-regular fa-heart"></i>
             </button>
-            <img id="mainImage" src="${escapeHtml(p.image || '')}" alt="${escapeHtml(p.title || '')}"
-                 style="${!productAvailable ? 'opacity:0.7;filter:grayscale(0.2);' : ''}"
-                 onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'"/>
+            <img id="mainImage"
+                 src="${escapeHtml(p.image||"")}"
+                 alt="${escapeHtml(p.title||"")}"
+                 style="${!productAvailable ? "opacity:0.7;filter:grayscale(0.2);" : ""}"
+                 onerror="this.src='[placehold.co](https://placehold.co/400x400?text=No+Image)'"/>
           </div>
           ${thumbs.length > 1 ? `<div class="thumb-strip">${thumbStrip}</div>` : ""}
         </div>
 
         <!-- RIGHT: Info + Sidebar -->
         <div class="grid lg:grid-cols-[1fr_360px] gap-6">
+
           <!-- Info column -->
           <div>
             <div class="brand-pill">
@@ -921,35 +1052,40 @@ async function loadProduct(){
               <span>${escapeHtml(p.brand || (bestOffer && bestOffer.store) || "Visco")}</span>
             </div>
 
-            <h1 class="text-[20px] md:text-[22px] font-bold leading-snug text-slate-900">${escapeHtml(p.title || 'Untitled Product')}</h1>
+            <h1 class="text-[20px] md:text-[22px] font-bold leading-snug text-slate-900">
+              ${escapeHtml(p.title || "Untitled Product")}
+            </h1>
 
-            <div class="avail-banner ${productAvailable ? 'in' : 'out'}">
-              <i class="fa-solid ${productAvailable ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
+            <div class="avail-banner ${productAvailable ? "in" : "out"}">
+              <i class="fa-solid ${productAvailable ? "fa-circle-check" : "fa-circle-xmark"}"></i>
               ${productAvailable
-                ? `In Stock${inStockCount ? ` · ${inStockCount} store${inStockCount>1?'s':''}` : ''}`
-                : `Out of Stock${oosCount ? ` · ${oosCount} store${oosCount>1?'s':''}` : ''}`}
+                ? `In Stock${inStockCount ? ` · ${inStockCount} store${inStockCount>1?"s":""}` : ""}`
+                : `Out of Stock${oosCount ? ` · ${oosCount} store${oosCount>1?"s":""} unavailable` : ""}`}
             </div>
 
-            ${ p.rating ? `
+            ${p.rating ? `
               <div class="rating-row">
                 <span class="rating-badge"><i class="fa-solid fa-star text-[11px]"></i> ${p.rating}</span>
-                ${ p.reviews ? `<span class="rating-count">${Number(p.reviews).toLocaleString()} ratings</span>` : "" }
-              </div>` : "" }
+                ${p.reviews ? `<span class="rating-count">${Number(p.reviews).toLocaleString()} ratings</span>` : ""}
+              </div>` : ""}
 
             <div class="price-block">
-              ${ productAvailable ? `
+              ${productAvailable ? `
                 <div>
                   <span class="current-price">₹${Number(lowestPrice).toLocaleString()}</span>
-                  ${ highestPrice > lowestPrice ? `<span class="mrp-strike">₹${Number(highestPrice).toLocaleString()}</span>` : "" }
+                  ${highestPrice > lowestPrice
+                    ? `<span class="mrp-strike">₹${Number(highestPrice).toLocaleString()}</span>` : ""}
                 </div>
-                ${ discount > 0 ? `
+                ${discount > 0 ? `
                   <div class="mt-2">
-                    <span class="discount-tag"><i class="fa-solid fa-arrow-down text-[10px]"></i> ${discount}% OFF</span>
-                  </div>` : "" }
+                    <span class="discount-tag">
+                      <i class="fa-solid fa-arrow-down text-[10px]"></i> ${discount}% OFF
+                    </span>
+                  </div>` : ""}
               ` : `
                 <div class="text-slate-500 font-semibold text-[15px]">
                   <i class="fa-solid fa-circle-info text-amber-500 mr-1"></i>
-                  This product is not currently available at any store. Set a back-in-stock alert below.
+                  Not available at any store right now. Set a back-in-stock alert below.
                 </div>
               `}
             </div>
@@ -957,8 +1093,12 @@ async function loadProduct(){
             <div class="flex items-center justify-between flex-wrap gap-3 mt-4">
               <div class="share-row">
                 <span>Share</span>
-                <div class="share-icon-btn" onclick="shareWhatsApp()" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></div>
-                <div class="share-icon-btn" onclick="shareProduct()" title="More"><i class="fa-solid fa-share-nodes"></i></div>
+                <div class="share-icon-btn" onclick="shareWhatsApp()" title="WhatsApp">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="share-icon-btn" onclick="shareProduct()" title="More">
+                  <i class="fa-solid fa-share-nodes"></i>
+                </div>
               </div>
             </div>
 
@@ -968,9 +1108,9 @@ async function loadProduct(){
             <div class="compare-section">
               <div class="flex items-center justify-between mb-3">
                 <h3 class="font-bold text-base">
-                  ${allOffers.length} Store${allOffers.length>1?'s':''}
-                  ${inStockCount ? `· ${inStockCount} available` : ''}
-                  ${oosCount ? `· ${oosCount} out of stock` : ''}
+                  ${allOffers.length} Store${allOffers.length !== 1 ? "s" : ""}
+                  ${inStockCount ? `· ${inStockCount} available` : ""}
+                  ${oosCount ? `· ${oosCount} out of stock` : ""}
                 </h3>
               </div>
               <div class="space-y-2">${offerRows}</div>
@@ -983,39 +1123,46 @@ async function loadProduct(){
               <div class="side-card-header flex">
                 <button class="border-b-2 border-blue-600">Price Drop</button>
               </div>
-
               <div class="p-5">
                 <h4 class="font-bold text-[15px] text-slate-900">Should you buy now?</h4>
 
                 <div class="gauge-wrap">
                   <div class="gauge">
                     <svg viewBox="0 0 140 80">
-                      <path d="M 10 75 A 60 60 0 0 1 130 75" fill="none" stroke="url(#gradGauge)" stroke-width="14" stroke-linecap="round"/>
                       <defs>
                         <linearGradient id="gradGauge" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stop-color="#ef4444"/>
-                          <stop offset="50%" stop-color="#f59e0b"/>
+                          <stop offset="0%"   stop-color="#ef4444"/>
+                          <stop offset="50%"  stop-color="#f59e0b"/>
                           <stop offset="100%" stop-color="#22c55e"/>
                         </linearGradient>
                       </defs>
+                      <path d="M 10 75 A 60 60 0 0 1 130 75"
+                            fill="none" stroke="url(#gradGauge)"
+                            stroke-width="14" stroke-linecap="round"/>
                     </svg>
-                    <div class="gauge-needle" style="transform: translateX(-50%) rotate(${productAvailable ? gaugeAngle : -90}deg);"></div>
+                    <div class="gauge-needle"
+                         style="transform: translateX(-50%) rotate(${productAvailable ? gaugeAngle : -90}deg);"></div>
                     <div class="gauge-center"></div>
                   </div>
                   <div>
                     <p class="text-xs text-slate-500 font-medium">Our Recommendation</p>
-                    <p class="text-base font-bold mt-1" style="color:${productAvailable ? rec.color : '#ef4444'};">
-                      ${productAvailable ? rec.text : 'Unavailable'}
+                    <p class="text-base font-bold mt-1"
+                       style="color:${productAvailable ? rec.color : "#ef4444"};">
+                      ${productAvailable ? rec.text : "Unavailable"}
                     </p>
                     <p class="text-xs text-slate-500 mt-1">
-                      ${productAvailable ? rec.sub : 'Out of stock everywhere right now'}
+                      ${productAvailable ? rec.sub : "Out of stock everywhere right now"}
                     </p>
                   </div>
                 </div>
 
                 <div class="flex items-center justify-between text-[10px] text-slate-500 font-semibold mt-2">
-                  <span class="flex items-center gap-1"><span class="w-2 h-2 bg-red-500 rounded-sm"></span> Bad Time</span>
-                  <span class="flex items-center gap-1"><span class="w-2 h-2 bg-green-500 rounded-sm"></span> Good Time</span>
+                  <span class="flex items-center gap-1">
+                    <span class="w-2 h-2 bg-red-500 rounded-sm"></span> Bad Time
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-500 rounded-sm"></span> Good Time
+                  </span>
                 </div>
 
                 <div class="mt-5">
@@ -1023,31 +1170,32 @@ async function loadProduct(){
                   <div class="stats-grid">
                     <div class="stat-cell">
                       <div class="stat-label"><i class="fa-solid fa-arrow-up text-red-500"></i> Highest</div>
-                      <div class="stat-value">${productAvailable ? '₹'+Number(highestPrice).toLocaleString() : '—'}</div>
+                      <div class="stat-value">${productAvailable ? "₹"+Number(highestPrice).toLocaleString() : "—"}</div>
                     </div>
                     <div class="stat-cell">
                       <div class="stat-label"><i class="fa-solid fa-arrows-up-down text-amber-500"></i> Average</div>
-                      <div class="stat-value">${productAvailable ? '₹'+Number(avgPrice).toLocaleString() : '—'}</div>
+                      <div class="stat-value">${productAvailable ? "₹"+Number(avgPrice).toLocaleString() : "—"}</div>
                     </div>
                     <div class="stat-cell">
                       <div class="stat-label"><i class="fa-solid fa-arrow-down text-green-500"></i> Lowest</div>
-                      <div class="stat-value">${productAvailable ? '₹'+Number(lowestPrice).toLocaleString() : '—'}</div>
+                      <div class="stat-value">${productAvailable ? "₹"+Number(lowestPrice).toLocaleString() : "—"}</div>
                     </div>
                     <div class="stat-cell highlight">
                       <div class="stat-label"><i class="fa-solid fa-tag text-amber-600"></i> Sale Price</div>
-                      <div class="stat-value">${productAvailable ? '₹'+Number(lowestPrice).toLocaleString() : '—'}</div>
+                      <div class="stat-value">${productAvailable ? "₹"+Number(lowestPrice).toLocaleString() : "—"}</div>
                     </div>
                   </div>
                 </div>
 
                 <div class="mt-5">
                   <h4 class="font-bold text-[14px] text-slate-900 text-center mb-3">
-                    ${productAvailable ? 'Set price drop alert' : 'Notify me when available'}
+                    ${productAvailable ? "Set price drop alert" : "Notify me when available"}
                   </h4>
                   <div class="alert-box">
                     <i class="fa-regular fa-bell text-slate-400 ml-2"></i>
-                    <input type="number" id="alertPrice" placeholder="Enter price"
-                           value="${productAvailable ? lowestPrice : ''}"/>
+                    <input type="number" id="alertPrice" min="1"
+                           placeholder="Enter target price"
+                           value="${productAvailable ? lowestPrice : ""}"/>
                     <button class="alert-btn" onclick="setPriceAlert()">Set Alert</button>
                   </div>
                   <p class="text-center text-xs text-slate-500 my-3">OR</p>
@@ -1056,10 +1204,11 @@ async function loadProduct(){
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- Price Trends -->
+      <!-- Price History -->
       <div class="section-card mt-6">
         <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
           <h2 class="section-title mb-0">Price History</h2>
@@ -1074,52 +1223,46 @@ async function loadProduct(){
         <canvas id="priceChart" style="max-height:300px;"></canvas>
       </div>
 
-      <!-- Product Information -->
+      <!-- Product Specifications -->
       <div class="section-card">
-        <h2 class="section-title">Product Information</h2>
-        <table class="spec-table">
-          <tr><td>Availability</td><td>${productAvailable ? 'In Stock' : 'Out of Stock'}</td></tr>
-          <tr><td>Category</td><td>${escapeHtml(p.mainCategory || "—")}</td></tr>
-          <tr><td>Sub Category</td><td>${escapeHtml(p.subCategory || "—")}</td></tr>
-          <tr><td>Brand</td><td>${escapeHtml(p.brand || "—")}</td></tr>
-          <tr><td>Stores Compared</td><td>${allOffers.length} (${inStockCount} in stock)</td></tr>
-          <tr><td>Delivery</td><td>Varies by store</td></tr>
-          <tr><td>Warranty</td><td>As per brand</td></tr>
-        </table>
+        <h2 class="section-title">Specifications</h2>
+        ${specsHtml}
       </div>
 
       <!-- Related Products -->
       <div class="section-card">
         <h2 class="section-title">Related Products</h2>
         <div id="relatedGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="col-span-full text-center text-slate-400 py-8">Loading...</div>
+          <div class="col-span-full text-center text-slate-400 py-8">
+            <i class="fa-solid fa-spinner fa-spin mr-2"></i> Loading…
+          </div>
         </div>
       </div>
     `;
 
     // Thumbnail click handlers
-    document.querySelectorAll(".thumb").forEach(t=>{
-      t.addEventListener("click", ()=>{
-        document.querySelectorAll(".thumb").forEach(x=> x.classList.remove("active"));
+    document.querySelectorAll(".thumb").forEach(t => {
+      t.addEventListener("click", () => {
+        document.querySelectorAll(".thumb").forEach(x => x.classList.remove("active"));
         t.classList.add("active");
         document.getElementById("mainImage").src = t.querySelector("img").src;
       });
     });
 
+    // Wishlist state
     isWishlisted = await checkWishlistState(p.id);
     paintWishlistBtn();
 
     loadPriceHistory();
     loadRelated();
 
-  }catch(err){
+  } catch(err){
     console.error(err);
-    showError(err.message || "Backend not reachable");
+    showError(err.message || "Could not reach backend. Please try again.");
   }
 }
 
-/* ------------ Price History Chart ------------ */
-let cachedHistory = null;
+// ─── Price History Chart ──────────────────────────────────────────────────────
 
 async function loadPriceHistory(){
   try{
@@ -1127,38 +1270,37 @@ async function loadPriceHistory(){
     cachedHistory = data.history || [];
     if(!cachedHistory.length){ drawFallbackChart(); return; }
     renderChart(cachedHistory);
-  }catch(e){
+  } catch(e){
     drawFallbackChart();
   }
 }
 
 function changeTimeRange(range){
   activeTimeRange = range;
-  document.querySelectorAll(".time-pill").forEach(p=>{
+  document.querySelectorAll(".time-pill").forEach(p => {
     p.classList.toggle("active", p.dataset.range === range);
   });
-  if(cachedHistory && cachedHistory.length){
-    let filtered = cachedHistory;
-    if(range !== "all"){
-      const now = new Date();
-      const months = range === "1m" ? 1 : range === "3m" ? 3 : 6;
-      const cutoff = new Date(now.setMonth(now.getMonth() - months));
-      filtered = cachedHistory.filter(h => new Date(h.date) >= cutoff);
-    }
-    if(filtered.length) renderChart(filtered);
+  if(!cachedHistory?.length) return;
+  let filtered = cachedHistory;
+  if(range !== "all"){
+    const months = range === "1m" ? 1 : range === "3m" ? 3 : 6;
+    const cutoff = new Date();
+    cutoff.setMonth(cutoff.getMonth() - months);
+    filtered = cachedHistory.filter(h => new Date(h.date) >= cutoff);
   }
+  if(filtered.length) renderChart(filtered);
 }
 
 function renderChart(history){
   const byStore = {};
-  history.forEach(h=>{
+  history.forEach(h => {
     const s = h.store || "Price";
     if(!byStore[s]) byStore[s] = [];
-    byStore[s].push({x: h.date, y: h.price});
+    byStore[s].push({ x: h.date, y: h.price });
   });
 
   const colors = ["#2563eb","#10b981","#f59e0b","#ef4444","#8b5cf6"];
-  const datasets = Object.keys(byStore).map((store, i)=>({
+  const datasets = Object.keys(byStore).map((store, i) => ({
     label: store,
     data: byStore[store],
     borderColor: colors[i % colors.length],
@@ -1166,31 +1308,34 @@ function renderChart(history){
     fill: i === 0, tension: 0.35, borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 5
   }));
 
-  document.getElementById("chartLegend").innerHTML = Object.keys(byStore).map((s,i)=>`
+  document.getElementById("chartLegend").innerHTML = Object.keys(byStore).map((s,i) => `
     <div class="flex items-center gap-2 text-xs font-semibold text-slate-600">
-      <div class="w-3 h-3 rounded-full" style="background:${colors[i % colors.length]};"></div>
+      <div class="w-3 h-3 rounded-full flex-shrink-0" style="background:${colors[i%colors.length]};"></div>
       ${escapeHtml(s)}
     </div>`).join("");
 
-  const labels = [...new Set(history.map(h=>h.date))].sort();
+  const labels = [...new Set(history.map(h => h.date))].sort();
 
   if(priceChart) priceChart.destroy();
-  priceChart = new Chart(document.getElementById("priceChart"),{
-    type:"line",
-    data:{ labels, datasets },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{ display:false },
-        tooltip:{
-          backgroundColor:"#0f172a", titleFont:{ size:12, weight:"600" }, bodyFont:{ size:12 },
-          padding:12, cornerRadius:8, displayColors:true,
-          callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ₹${Number(ctx.parsed.y).toLocaleString()}` }
+  priceChart = new Chart(document.getElementById("priceChart"), {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#0f172a",
+          titleFont: { size: 12, weight: "600" },
+          bodyFont: { size: 12 },
+          padding: 12, cornerRadius: 8, displayColors: true,
+          callbacks: { label: ctx => `${ctx.dataset.label}: ₹${Number(ctx.parsed.y).toLocaleString()}` }
         }
       },
-      scales:{
-        x:{ grid:{ display:false }, ticks:{ color:"#94a3b8", font:{ size:11 } } },
-        y:{ grid:{ color:"rgba(0,0,0,0.04)" }, ticks:{ color:"#94a3b8", font:{ size:11 }, callback:(v)=>"₹"+v } }
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#94a3b8", font: { size: 11 } } },
+        y: { grid: { color: "rgba(0,0,0,0.04)" }, ticks: { color: "#94a3b8", font: { size: 11 },
+             callback: v => "₹" + Number(v).toLocaleString() } }
       }
     }
   });
@@ -1198,19 +1343,21 @@ function renderChart(history){
 
 function drawFallbackChart(){
   if(!currentProduct) return;
-  // Use only in-stock offers for the fallback projection.
   const offers = (currentProduct.offers || []).filter(isOfferAvailable);
   if(!offers.length) return;
 
   const colors = ["#2563eb","#10b981","#f59e0b","#ef4444"];
   const labels = ["Jan","Feb","Mar","Apr","May","Jun"];
 
-  const datasets = offers.slice(0,4).map((o, i)=>{
+  const datasets = offers.slice(0,4).map((o, i) => {
     const base = Number(o.price) || 0;
     const data = [
-      base + Math.round(base*0.08), base + Math.round(base*0.04),
-      base + Math.round(base*0.12), base - Math.round(base*0.02),
-      base + Math.round(base*0.06), base
+      base + Math.round(base*0.08),
+      base + Math.round(base*0.04),
+      base + Math.round(base*0.12),
+      base - Math.round(base*0.02),
+      base + Math.round(base*0.06),
+      base
     ];
     return {
       label: o.store, data,
@@ -1221,67 +1368,69 @@ function drawFallbackChart(){
     };
   });
 
-  document.getElementById("chartLegend").innerHTML = offers.slice(0,4).map((o,i)=>`
+  document.getElementById("chartLegend").innerHTML = offers.slice(0,4).map((o,i) => `
     <div class="flex items-center gap-2 text-xs font-semibold text-slate-600">
-      <div class="w-3 h-3 rounded-full" style="background:${colors[i % colors.length]};"></div>
+      <div class="w-3 h-3 rounded-full flex-shrink-0" style="background:${colors[i%colors.length]};"></div>
       ${escapeHtml(o.store)}
     </div>`).join("");
 
   if(priceChart) priceChart.destroy();
-  priceChart = new Chart(document.getElementById("priceChart"),{
-    type:"line",
-    data:{ labels, datasets },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{ display:false },
-        tooltip:{
-          backgroundColor:"#0f172a", padding:12, cornerRadius:8,
-          callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ₹${Number(ctx.parsed.y).toLocaleString()}` }
+  priceChart = new Chart(document.getElementById("priceChart"), {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#0f172a", padding: 12, cornerRadius: 8,
+          callbacks: { label: ctx => `${ctx.dataset.label}: ₹${Number(ctx.parsed.y).toLocaleString()}` }
         }
       },
-      scales:{
-        x:{ grid:{ display:false }, ticks:{ color:"#94a3b8", font:{ size:11 } } },
-        y:{ grid:{ color:"rgba(0,0,0,0.04)" }, ticks:{ color:"#94a3b8", font:{ size:11 }, callback:(v)=>"₹"+v } }
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#94a3b8", font: { size: 11 } } },
+        y: { grid: { color: "rgba(0,0,0,0.04)" }, ticks: { color: "#94a3b8", font: { size: 11 },
+             callback: v => "₹" + Number(v).toLocaleString() } }
       }
     }
   });
 }
 
-/* ------------ Related products ------------ */
+// ─── Related Products ─────────────────────────────────────────────────────────
+
 async function loadRelated(){
   const grid = document.getElementById("relatedGrid");
+  if(!grid) return;
   try{
     const list = await apiGet(`/api/related/${encodeURIComponent(id)}?limit=8`);
     if(!list.length){
       grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">No related products</div>`;
       return;
     }
-
     grid.innerHTML = "";
-    list.forEach(rp=>{
-      const offers = Array.isArray(rp.offers) ? rp.offers : [];
-      const available = (typeof rp.isAvailable === "boolean")
+    list.forEach(rp => {
+      const offers    = Array.isArray(rp.offers) ? rp.offers : [];
+      const available = typeof rp.isAvailable === "boolean"
         ? rp.isAvailable : offers.some(isOfferAvailable);
-      const lowest = Number(rp.lowestPrice) || 0;
+      const lowest  = Number(rp.lowestPrice) || 0;
       const highest = Number(rp.highestPrice) || lowest;
-      const discount = highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
+      const disc    = highest > lowest ? Math.round(((highest - lowest) / highest) * 100) : 0;
       const storesText = offers.length > 1 ? `${offers.length} stores`
-        : (offers.length === 1 ? "1 store" : "Compare");
+        : offers.length === 1 ? "1 store" : "Compare";
 
       const div = document.createElement("div");
       div.className = "rp-card";
       div.innerHTML = `
         <div class="rp-image-wrap">
-          ${discount >= 10 && available ? `<span class="rp-discount">${discount}% OFF</span>` : ""}
+          ${disc >= 10 && available ? `<span class="rp-discount">${disc}% OFF</span>` : ""}
           ${!available ? `<span class="rp-oos">Out of Stock</span>` : ""}
-          <img src="${escapeHtml(rp.image || '')}" alt="${escapeHtml(rp.title || '')}"
-               style="${!available ? 'opacity:0.65;filter:grayscale(0.3);' : ''}"
-               onerror="this.src='[via.placeholder.com](https://via.placeholder.com/200x200?text=No+Image)'"/>
+          <img src="${escapeHtml(rp.image||"")}" alt="${escapeHtml(rp.title||"")}"
+               style="${!available ? "opacity:0.65;filter:grayscale(0.3);" : ""}"
+               onerror="this.src='[placehold.co](https://placehold.co/200x200?text=No+Image)'"/>
         </div>
         <div class="rp-body">
           <div>
-            <div class="rp-title">${escapeHtml(rp.title || '')}</div>
+            <div class="rp-title">${escapeHtml(rp.title||"")}</div>
             <div class="rp-price-row">
               ${available
                 ? `<span class="rp-price">₹${lowest.toLocaleString()}</span>
@@ -1290,25 +1439,23 @@ async function loadRelated(){
             </div>
           </div>
           <div class="rp-stores">
-            <span class="rp-store-dot" style="${!available ? 'background:#ef4444;' : ''}"></span>
-            <span>${available ? storesText : 'Out of stock'}</span>
+            <span class="rp-store-dot" style="${!available ? "background:#ef4444;" : ""}"></span>
+            <span>${available ? storesText : "Out of stock"}</span>
           </div>
-        </div>
-      `;
-      div.addEventListener("click", ()=>{
+        </div>`;
+      div.addEventListener("click", () => {
         localStorage.setItem("productId", rp.id);
         location.reload();
       });
       grid.appendChild(div);
     });
-
-  }catch(e){
-    grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">Couldn't load related products</div>`;
+  } catch(e){
+    if(grid) grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">Couldn't load related products</div>`;
   }
 }
 
+// ─── Boot ─────────────────────────────────────────────────────────────────────
 loadProduct();
 </script>
-
 </body>
 </html>
