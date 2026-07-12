@@ -1,2133 +1,2077 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Visco Compare — Cinematic Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visco Compare — AI-Powered Product Intelligence</title>
+<meta name="description" content="AI-powered product comparison. Compare prices across stores in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+/* ============================================================
+   RESET & ROOT
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+html, body { height: 100%; }
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --bg: #f8fbff;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --muted: #64748b;
+  --bg: #0B0F19;
+  --bg2: #0E1320;
+  --card: #141A26;
+  --card2: #1A2135;
+  --border: rgba(255,255,255,.06);
+  --border2: rgba(255,255,255,.11);
+  --accent: #8B5CF6;
+  --accent2: #4F46E5;
+  --accent-glow: rgba(139,92,246,.22);
+  --accent-glow2: rgba(79,70,229,.18);
+  --success: #10B981;
+  --success-bg: rgba(16,185,129,.12);
+  --warning: #F59E0B;
+  --warning-bg: rgba(245,158,11,.12);
+  --danger: #EF4444;
+  --danger-bg: rgba(239,68,68,.12);
+  --text: #F8FAFC;
+  --text2: #CBD5E1;
+  --muted: #94A3B8;
+  --muted2: #64748B;
+  --radius: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.22,1,.36,1);
+  --ease2: cubic-bezier(.4,0,.2,1);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.2s !important; transition-duration: 0.15s !important; }
-}
-
-html, body { width: 100%; height: 100%; overflow: hidden; }
 
 body {
-  background: #060d1a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   min-height: 100vh;
-  position: relative;
 }
 
-/* ── Background ── */
-.bg-scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
-.bg-grad {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(37,99,235,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(99,102,241,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 100% at 50% 50%, rgba(15,23,42,0.95) 0%, #060d1a 100%);
-}
-.bg-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select { font-family: inherit; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--accent-glow); color: var(--text); }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.2); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
 }
 
-.particle {
-  position: absolute; border-radius: 50%; pointer-events: none;
-  animation: particleDrift linear infinite;
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(.93); } to { opacity: 1; transform: scale(1); } }
+@keyframes shimmer {
+  from { background-position: -600px 0; }
+  to { background-position: 600px 0; }
 }
-@keyframes particleDrift {
-  0%   { transform: translateY(110vh) translateX(0) scale(0); opacity: 0; }
-  10%  { opacity: 1; transform: translateY(90vh) translateX(10px) scale(1); }
-  90%  { opacity: 0.6; }
-  100% { transform: translateY(-10vh) translateX(-20px) scale(0.5); opacity: 0; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes barberpole {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+@keyframes countUp {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes ripple {
+  from { transform: scale(0); opacity: .5; }
+  to { transform: scale(3); opacity: 0; }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px) scale(.96); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes toastOut {
+  to { opacity: 0; transform: translateX(20px); }
+}
+@keyframes dotBounce {
+  0%,80%,100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+}
+@keyframes progressPulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: .7; }
 }
 
-/* ── Floating logo ── */
-#floating-logo {
-  position: fixed; z-index: 9000; pointer-events: none;
+/* ============================================================
+   UTILITIES
+============================================================ */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.015) 100%);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--border);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* ============================================================
+   TOAST
+============================================================ */
+#toastArea {
+  position: fixed; top: 20px; right: 20px; z-index: 9999;
+  display: flex; flex-direction: column; gap: 10px;
+  width: min(360px, calc(100vw - 40px));
+  pointer-events: none;
+}
+.toast {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; border-radius: var(--radius-md);
+  background: var(--card2); border: 1px solid var(--border2);
+  box-shadow: 0 16px 40px rgba(0,0,0,.4);
+  animation: toastIn .35s var(--ease) both;
+  pointer-events: all; position: relative; overflow: hidden;
+}
+.toast.out { animation: toastOut .3s var(--ease) forwards; }
+.toast::after {
+  content: ''; position: absolute; bottom: 0; left: 0; height: 2px;
+  background: var(--accent);
+  animation: typing linear forwards;
+  animation-duration: var(--td, 4s);
+}
+.toast-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
+.toast-body { flex: 1; }
+.toast-title { font-size: 13.5px; font-weight: 600; }
+.toast-msg { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.toast-close { background: none; border: none; color: var(--muted); padding: 2px; border-radius: 6px; flex-shrink: 0; cursor: pointer; }
+.toast-close:hover { color: var(--text); }
+.toast.success .toast-icon { color: var(--success); }
+.toast.error .toast-icon { color: var(--danger); }
+.toast.warning .toast-icon { color: var(--warning); }
+.toast.info .toast-icon { color: var(--accent); }
+
+/* ============================================================
+   HEADER / NAV
+============================================================ */
+header.site-header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(11,15,25,.8);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex; align-items: center; gap: 20px;
+  height: 64px;
+}
+.logo {
   display: flex; align-items: center; gap: 10px;
-  opacity: 0; transition: opacity 1.2s ease;
-  filter: drop-shadow(0 4px 24px rgba(37,99,235,0.5));
+  flex-shrink: 0;
 }
-#floating-logo.visible { opacity: 0.22; }
-#floating-logo .fl-icon {
-  width: 44px; height: 44px; border-radius: 14px;
-  background: linear-gradient(135deg, rgba(37,99,235,0.9), rgba(29,78,216,0.9));
+.logo-mark {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 20px rgba(37,99,235,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+  font-weight: 800; font-size: 14px; color: #fff;
+  box-shadow: 0 4px 14px var(--accent-glow);
 }
-#floating-logo .fl-icon i { color: white; font-size: 18px; }
-#floating-logo .fl-text { font-size: 16px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+.logo-text {
+  font-size: 16px; font-weight: 700; letter-spacing: -.02em;
+}
+.logo-text span { color: var(--accent); }
 
-/* ── Stage ── */
-.stage-wrap {
-  position: relative; z-index: 10;
+.nav-links {
+  display: flex; align-items: center; gap: 4px; margin-left: auto;
+}
+.nav-link {
+  padding: 7px 14px; border-radius: var(--radius-sm);
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+  transition: color .2s, background .2s;
+}
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,.05); }
+.nav-link.active { color: var(--text); }
+
+.nav-actions {
+  display: flex; align-items: center; gap: 8px; margin-left: 8px;
+}
+.theme-btn {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: rgba(255,255,255,.05); border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: all .2s;
+}
+.theme-btn:hover { color: var(--text); background: rgba(255,255,255,.08); }
+
+.status-pill {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
+  font-size: 12px; font-weight: 500; color: var(--muted);
+}
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.status-dot.online { background: var(--success); animation: glow 2s infinite; }
+.status-dot.offline { background: var(--muted2); }
+.status-dot.searching { background: var(--accent); animation: pulse 1.4s infinite; }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+}
+
+/* ============================================================
+   HERO / SEARCH SECTION
+============================================================ */
+.hero {
+  min-height: 60vh;
   display: flex; flex-direction: column;
-  align-items: center; gap: 20px;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
 }
 
-.phone-outer { position: relative; }
-
-.phone-glow {
-  position: absolute; inset: -20px; border-radius: 64px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.25), transparent 70%);
-  animation: phoneGlowPulse 3s ease-in-out infinite;
+.hero::before {
+  content: '';
+  position: absolute; inset: -20% -10% auto -10%;
+  height: 500px;
+  background: radial-gradient(ellipse at center top, rgba(139,92,246,.13) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
 }
-@keyframes phoneGlowPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.04); }
-}
-
-.phone-frame {
-  width: min(375px, calc(100vw - 32px));
-  height: min(760px, calc(100vh - 120px));
-  border-radius: 44px;
-  border: 8px solid #1a2540;
-  box-shadow:
-    0 0 0 1px #0f1829,
-    0 0 0 2px #2a3a5c,
-    0 60px 120px rgba(0,0,0,0.8),
-    0 20px 40px rgba(37,99,235,0.15),
-    inset 0 0 0 1px rgba(255,255,255,0.05);
-  overflow: hidden; position: relative;
-  background: var(--bg); z-index: 1;
-}
-.phone-frame::before {
+.hero::after {
   content: '';
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 110px; height: 26px;
-  background: #0f1829; border-radius: 0 0 18px 18px; z-index: 9999;
-}
-.phone-outer::before {
-  content: ''; position: absolute;
-  left: -10px; top: 120px; width: 4px; height: 70px;
-  background: #1a2540; border-radius: 2px 0 0 2px; z-index: 2;
-}
-.phone-outer::after {
-  content: ''; position: absolute;
-  right: -10px; top: 140px; width: 4px; height: 50px;
-  background: #1a2540; border-radius: 0 2px 2px 0; z-index: 2;
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
 }
 
-.screen-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.hero-inner { position: relative; z-index: 1; width: 100%; max-width: 780px; }
 
-/* ── Pages ── */
-.page {
-  position: absolute; inset: 0; background: var(--bg);
-  overflow: hidden; opacity: 0; transform: translateX(100%);
-  pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1);
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.25);
+  font-size: 12px; font-weight: 600; color: var(--accent);
+  margin-bottom: 28px;
+  animation: fadeSlideDown .6s var(--ease) both;
 }
-.page.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
-.page.exit-left { opacity: 0; transform: translateX(-50px) scale(0.97); pointer-events: none; }
+.hero-badge svg { flex-shrink: 0; }
 
-/* ── Cursor ── */
-#cursor {
-  position: fixed; width: 20px; height: 20px;
-  background: rgba(255,255,255,0.95); border: 2px solid #2563eb;
-  border-radius: 50%; pointer-events: none; z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: width 0.15s, height 0.15s, background 0.15s, border-color 0.15s;
-  box-shadow: 0 0 12px rgba(37,99,235,0.5), 0 0 24px rgba(37,99,235,0.2);
-  opacity: 0;
-}
-#cursor.clicking { width: 12px; height: 12px; background: #2563eb; box-shadow: 0 0 20px rgba(37,99,235,0.8); }
-#cursor-trail {
-  position: fixed; width: 6px; height: 6px;
-  background: rgba(37,99,235,0.5); border-radius: 50%;
-  pointer-events: none; z-index: 99998;
-  transform: translate(-50%, -50%); opacity: 0;
-  transition: left 0.2s ease, top 0.2s ease;
-}
-#cursor-trail2 {
-  position: fixed; width: 36px; height: 36px;
-  border: 1.5px solid rgba(37,99,235,0.3); border-radius: 50%;
-  pointer-events: none; z-index: 99997;
-  transform: translate(-50%, -50%); opacity: 0;
-  transition: left 0.35s ease, top 0.35s ease;
+.hero h1 {
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.08;
+  margin-bottom: 16px;
+  animation: fadeSlideUp .6s .06s var(--ease) both;
 }
 
-/* ── Header ── */
-.hdr {
-  position: absolute; top: 0; left: 0; right: 0; height: 60px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(226,232,240,0.8);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 14px; z-index: 100;
-}
-.logo-row { display: flex; align-items: center; gap: 9px; }
-.logo-box {
-  width: 38px; height: 38px; border-radius: 12px;
-  background: white; box-shadow: 0 4px 14px rgba(37,99,235,0.2);
-  overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.logo-box img { width: 100%; height: 100%; object-fit: contain; }
-.logo-text { font-size: 14px; font-weight: 800; color: #2563eb; line-height: 1.1; }
-.logo-sub { font-size: 8.5px; color: #94a3b8; font-weight: 500; }
-.hdr-right { display: flex; align-items: center; gap: 8px; }
-.hdr-location {
-  display: flex; align-items: center; gap: 6px;
-  background: #f8fbff; border: 1px solid #e2e8f0;
-  border-radius: 10px; padding: 5px 10px; cursor: pointer;
-}
-.hdr-location-icon {
-  width: 26px; height: 26px; border-radius: 8px; background: #eff6ff;
-  display: flex; align-items: center; justify-content: center;
-}
-.hdr-location-icon i { color: #2563eb; font-size: 10px; }
-.hdr-location-text { font-size: 10px; font-weight: 600; color: #334155; }
-.hdr-location-label { font-size: 8px; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
-.hdr-login {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; font-size: 11px; font-weight: 700;
-  padding: 7px 14px; border-radius: 10px; border: none; cursor: pointer;
-  box-shadow: 0 4px 10px rgba(37,99,235,0.3); white-space: nowrap;
+.hero p.subtitle {
+  font-size: clamp(15px, 2vw, 17px);
+  color: var(--muted);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+  animation: fadeSlideUp .6s .12s var(--ease) both;
 }
 
-/* ── Bottom Nav ── */
-.bot-nav {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 68px;
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(226,232,240,0.9);
-  display: flex; justify-content: space-around; align-items: center;
-  padding-bottom: 6px; z-index: 100;
-  box-shadow: 0 -4px 20px rgba(37,99,235,0.06);
+/* Search Box */
+.search-container {
+  width: 100%;
+  animation: fadeSlideUp .6s .18s var(--ease) both;
 }
-.nav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  color: #94a3b8; font-size: 9.5px; font-weight: 600;
-  padding: 6px 10px; border-radius: 14px;
-  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; min-width: 52px;
+.search-box {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 8px 8px 20px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 0 var(--accent-glow);
+  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
   position: relative;
 }
-.nav-item.active { color: #2563eb; background: #eff6ff; transform: translateY(-2px); }
-.nav-item.active::after {
-  content: ''; position: absolute; bottom: -1px;
-  width: 20px; height: 3px; border-radius: 99px;
-  background: linear-gradient(90deg, #2563eb, #60a5fa);
-  box-shadow: 0 0 8px rgba(37,99,235,0.4);
+.search-box:focus-within {
+  border-color: rgba(139,92,246,.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 5px var(--accent-glow);
 }
-.nav-item i { font-size: 18px; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-item.active i { transform: scale(1.15); filter: drop-shadow(0 2px 6px rgba(37,99,235,0.4)); }
-
-/* ── Home scroll ── */
-.home-scroll {
-  position: absolute; top: 60px; left: 0; right: 0; bottom: 68px;
-  overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain;
-}
-.home-scroll::-webkit-scrollbar { display: none; }
-
-/* ── Hero ── */
-.hero {
-  background: linear-gradient(180deg, #f0f6ff 0%, #eef4ff 60%, #f8fbff 100%);
-  padding: 20px 16px 16px; text-align: center; position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; top: -60px; right: -60px;
-  width: 200px; height: 200px; border-radius: 50%;
-  background: rgba(37,99,235,0.08); pointer-events: none;
-}
-.hero::after {
-  content: ''; position: absolute; bottom: -40px; left: -40px;
-  width: 160px; height: 160px; border-radius: 50%;
-  background: rgba(99,102,241,0.06); pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: linear-gradient(135deg, #dbeafe, #eff6ff);
-  border: 1px solid #bfdbfe; color: #1d4ed8;
-  font-size: 9px; font-weight: 700; padding: 5px 12px;
-  border-radius: 999px; margin-bottom: 11px;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.1);
-}
-.hero-title {
-  font-size: 21px; font-weight: 800; color: #0f172a;
-  line-height: 1.22; letter-spacing: -0.5px; margin-bottom: 7px;
-}
-.hero-sub {
-  font-size: 10.5px; color: #64748b; line-height: 1.6; margin-bottom: 14px;
-  max-width: 280px; margin-left: auto; margin-right: auto;
-}
-.search-bar { position: relative; max-width: 320px; margin: 0 auto; }
-.search-bar i {
-  position: absolute; left: 13px; top: 50%;
-  transform: translateY(-50%); color: #2563eb; font-size: 13px; z-index: 2;
-}
+.search-icon { color: var(--muted); flex-shrink: 0; }
 .search-input {
-  width: 100%; border: 1.5px solid #e2e8f0; border-radius: 14px;
-  padding: 11px 50px 11px 36px; font-size: 11.5px;
-  font-family: 'Poppins', sans-serif; color: #0f172a; background: white; outline: none;
-  box-shadow: 0 4px 20px rgba(37,99,235,0.1);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--text); font-size: 15.5px; font-weight: 400;
+  min-width: 0; padding: 6px 0;
 }
-.search-input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.12), 0 4px 20px rgba(37,99,235,0.1);
-}
-.search-submit {
-  position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
-  width: 32px; height: 32px; border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 3px 8px rgba(37,99,235,0.3);
-}
-.search-submit i { color: white; font-size: 11px; }
-.suggest-drop {
-  position: absolute; left: 0; right: 0; top: calc(100% + 6px);
-  background: white; border: 1px solid #e2e8f0; border-radius: 14px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-  overflow: hidden; display: none; z-index: 200;
-}
-.suggest-drop.show { display: block; }
-.suggest-item {
-  padding: 9px 13px; font-size: 11px; color: #334155;
+.search-input::placeholder { color: var(--muted2); }
+.search-btn {
+  flex-shrink: 0;
   display: flex; align-items: center; gap: 8px;
-  border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: background 0.15s;
-}
-.suggest-item:last-child { border-bottom: none; }
-.suggest-item i { color: #94a3b8; font-size: 10px; flex-shrink: 0; }
-.suggest-item.hl { background: #eff6ff; color: #1d4ed8; font-weight: 700; }
-.suggest-item:hover { background: #f8fafc; }
-
-.trust-row { display: flex; justify-content: center; gap: 5px; margin-top: 12px; flex-wrap: wrap; }
-.trust-chip {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0;
-  padding: 4px 9px; border-radius: 999px;
-  font-size: 8.5px; font-weight: 600; color: #334155; backdrop-filter: blur(6px);
-}
-.trust-chip i { color: #2563eb; font-size: 8px; }
-
-/* ── Stats strip ── */
-.stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 16px 0; }
-.stat-box {
-  background: rgba(255,255,255,0.85); border: 1px solid #e2e8f0;
-  border-radius: 12px; padding: 10px 6px; text-align: center;
-  backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(37,99,235,0.05);
-}
-.stat-num {
-  font-size: 17px; font-weight: 800;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-}
-.stat-lbl { font-size: 8px; color: #64748b; font-weight: 600; margin-top: 2px; }
-
-/* ── Category bar ── */
-.cat-bar { display: flex; gap: 7px; overflow-x: auto; padding: 10px 16px 6px; scrollbar-width: none; }
-.cat-bar::-webkit-scrollbar { display: none; }
-.cat-btn {
-  flex-shrink: 0; padding: 6px 14px; border-radius: 999px;
-  font-size: 10px; font-weight: 600; border: 1.5px solid #e2e8f0;
-  background: white; color: #475569; white-space: nowrap; cursor: pointer; transition: all 0.2s;
-}
-.cat-btn.active {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; border-color: transparent;
-  box-shadow: 0 6px 16px rgba(37,99,235,0.25);
-}
-
-/* ── Section header ── */
-.section-hdr { padding: 10px 16px 8px; display: flex; align-items: flex-end; justify-content: space-between; }
-.section-accent { width: 28px; height: 3px; background: linear-gradient(135deg, #2563eb, #1d4ed8); border-radius: 99px; margin-bottom: 4px; }
-.section-title { font-size: 15px; font-weight: 800; color: #0f172a; }
-.section-sub { font-size: 9px; color: #64748b; margin-top: 1px; }
-
-/* ── Savings ticker (NEW) ── */
-.savings-ticker {
-  margin: 0 16px 12px;
-  background: linear-gradient(135deg, #fef9c3, #fef3c7);
-  border: 1px solid #fde68a; border-radius: 12px;
-  padding: 10px 14px; display: flex; align-items: center; gap: 10px;
-  overflow: hidden; position: relative;
-}
-.savings-ticker::before {
-  content: ''; position: absolute; right: -20px; top: -20px;
-  width: 80px; height: 80px; border-radius: 50%;
-  background: rgba(251,191,36,0.12); pointer-events: none;
-}
-.savings-ticker-icon {
-  width: 34px; height: 34px; border-radius: 10px;
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(245,158,11,0.3);
-}
-.savings-ticker-icon i { color: white; font-size: 14px; }
-.savings-ticker-text { font-size: 10px; font-weight: 700; color: #92400e; }
-.savings-ticker-amount { font-size: 15px; font-weight: 800; color: #b45309; }
-.savings-ticker-sub { font-size: 8.5px; color: #a16207; font-weight: 500; }
-
-/* ── Live price badge (NEW) ── */
-.live-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: #dcfce7; color: #15803d;
-  font-size: 8.5px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
-}
-.live-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: #22c55e;
-  animation: livePulse 1.2s ease-in-out infinite;
-}
-@keyframes livePulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.5);opacity:0.6;} }
-
-/* ── Product grid ── */
-.prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 20px; }
-.prod-card {
-  background: white; border: 1px solid #e2e8f0; border-radius: 14px;
-  overflow: hidden; cursor: pointer;
-  transition: all 0.28s cubic-bezier(0.2,0.7,0.3,1);
-}
-.prod-card:hover { border-color: #bfdbfe; box-shadow: 0 12px 28px rgba(37,99,235,0.15); transform: translateY(-3px); }
-.prod-img {
-  background: linear-gradient(160deg, #fff, #f4f8ff);
-  padding: 14px; aspect-ratio: 1/1;
-  display: flex; align-items: center; justify-content: center;
+  padding: 11px 22px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: 14px; font-weight: 600;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), opacity .2s;
+  box-shadow: 0 6px 20px var(--accent-glow);
   position: relative; overflow: hidden;
 }
-.prod-img img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
-.prod-card:hover .prod-img img { transform: scale(1.07); }
-.disc-badge {
-  position: absolute; top: 8px; left: 8px;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white; font-size: 8px; font-weight: 700;
-  padding: 3px 7px; border-radius: 5px;
-  box-shadow: 0 3px 8px rgba(239,68,68,0.3);
+.search-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px var(--accent-glow);
 }
-.prod-body { padding: 10px 10px 12px; }
-.prod-title {
-  font-size: 10.5px; font-weight: 500; color: #334155;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden; height: 28px; margin-bottom: 6px; line-height: 1.35;
-}
-.prod-rating {
-  display: inline-flex; align-items: center; gap: 3px;
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white; font-size: 9px; font-weight: 700;
-  padding: 2px 6px; border-radius: 4px; margin-bottom: 5px;
-}
-.prod-price { font-size: 15px; font-weight: 800; color: #0f172a; }
-.prod-mrp { font-size: 9px; color: #94a3b8; text-decoration: line-through; margin-left: 4px; }
-.prod-saving { font-size: 9px; color: #10b981; font-weight: 600; display: block; margin-top: 1px; }
-.prod-stores {
-  display: flex; align-items: center; gap: 5px;
-  background: #f1f5f9; border-radius: 8px;
-  padding: 5px 8px; font-size: 9px; font-weight: 600; color: #475569; margin-top: 6px;
-}
-.store-dot {
-  width: 5px; height: 5px; border-radius: 50%; background: #2563eb; flex-shrink: 0;
-  box-shadow: 0 0 0 2.5px rgba(37,99,235,0.2);
-}
-.prod-cta {
-  display: block; width: 100%;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; font-size: 9.5px; font-weight: 700;
-  padding: 7px; border-radius: 8px; text-align: center;
-  margin-top: 7px; border: none; cursor: pointer;
-  box-shadow: 0 3px 10px rgba(37,99,235,0.25);
-  transition: filter 0.2s, transform 0.2s;
-}
-.prod-cta:hover { filter: brightness(1.08); }
+.search-btn:active:not(:disabled) { transform: scale(.97); }
+.search-btn:disabled { opacity: .6; cursor: not-allowed; }
 
-/* ── Search page ── */
-#page-search .search-area {
-  position: absolute; top: 60px; left: 0; right: 0;
-  padding: 12px 16px 10px;
-  background: linear-gradient(180deg, #f0f6ff, rgba(238,244,255,0.5));
-  border-bottom: 1px solid #e2e8f0;
+.chip-row {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-top: 20px;
 }
-.big-search { position: relative; }
-.big-search i {
-  position: absolute; left: 14px; top: 50%;
-  transform: translateY(-50%); color: #2563eb; font-size: 14px; z-index: 2;
+.chip {
+  padding: 7px 16px; border-radius: 999px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
+  font-size: 12.5px; font-weight: 500; color: var(--muted);
+  transition: all .2s var(--ease); cursor: pointer;
 }
-.big-search input {
-  width: 100%; border: 1.5px solid #e2e8f0; border-radius: 14px;
-  padding: 12px 80px 12px 40px; font-size: 12px;
-  font-family: 'Poppins', sans-serif; color: #0f172a; background: white; outline: none;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+.chip:hover {
+  color: var(--text); border-color: rgba(139,92,246,.4);
+  background: rgba(139,92,246,.07); transform: translateY(-1px);
 }
-.big-search input:focus { border-color: #2563eb; }
-.big-search-btn {
-  position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; font-size: 10.5px; font-weight: 700;
-  padding: 7px 13px; border-radius: 10px; border: none; cursor: pointer;
-}
-.results-hdr { position: absolute; top: 116px; left: 0; right: 0; padding: 8px 16px 6px; }
-.search-grid {
-  position: absolute; top: 158px; left: 0; right: 0; bottom: 68px;
-  overflow-y: auto; padding: 0 16px 16px; scrollbar-width: none;
-}
-.search-grid::-webkit-scrollbar { display: none; }
-.search-prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* ── Filter chips (NEW) ── */
-.filter-row {
-  display: flex; gap: 6px; overflow-x: auto; padding: 6px 16px 8px;
-  scrollbar-width: none; position: absolute; top: 152px; left: 0; right: 0;
-  background: white; border-bottom: 1px solid #f1f5f9; z-index: 10;
-}
-.filter-row::-webkit-scrollbar { display: none; }
-.filter-chip {
-  flex-shrink: 0; padding: 4px 11px; border-radius: 999px;
-  font-size: 9.5px; font-weight: 600; border: 1.5px solid #e2e8f0;
-  background: white; color: #475569; white-space: nowrap; cursor: pointer; transition: all 0.2s;
-}
-.filter-chip.active {
-  background: #eff6ff; color: #2563eb; border-color: #bfdbfe;
-}
-.search-grid-adj {
-  position: absolute; top: 196px; left: 0; right: 0; bottom: 68px;
-  overflow-y: auto; padding: 8px 16px 16px; scrollbar-width: none;
-}
-.search-grid-adj::-webkit-scrollbar { display: none; }
+/* ============================================================
+   MAIN CONTENT AREA
+============================================================ */
+main { padding-bottom: 80px; }
 
-/* ── Details page ── */
-#page-details .inner {
-  position: absolute; top: 60px; left: 0; right: 0; bottom: 68px;
-  overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain;
+/* ============================================================
+   STATES
+============================================================ */
+.view { display: none; }
+.view.active { display: block; }
+
+/* --- Loading State --- */
+#loadingView { padding: 60px 0; }
+.loading-center { text-align: center; padding-bottom: 50px; }
+
+.ai-orb {
+  width: 96px; height: 96px;
+  margin: 0 auto 32px;
+  position: relative;
 }
-#page-details .inner::-webkit-scrollbar { display: none; }
-.prod-detail-img {
-  background: linear-gradient(160deg, #fff, #f4f8ff);
-  padding: 24px; aspect-ratio: 1 / 1;
-  display: flex; align-items: center; justify-content: center; position: relative;
-}
-.prod-detail-img img { max-width: 68%; max-height: 68%; object-fit: contain; }
-.wl-btn {
-  position: absolute; top: 12px; right: 12px;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: white; border: 1px solid #e2e8f0;
+.ai-orb-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; color: #94a3b8; cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: all 0.2s;
+  box-shadow: 0 0 40px var(--accent-glow), 0 0 80px var(--accent-glow2);
+  animation: float 3s ease-in-out infinite;
 }
-.wl-btn.active { color: #ef4444; background: #fef2f2; border-color: #fecaca; }
-.detail-info { padding: 14px 16px; }
-.brand-pill-d {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px 4px 4px; border: 1px solid #e2e8f0;
-  border-radius: 999px; font-size: 10px; font-weight: 700; margin-bottom: 8px;
+.ai-orb-inner svg { color: #fff; }
+.ai-orb::before, .ai-orb::after {
+  content: ''; position: absolute; inset: -12px;
+  border-radius: 50%; border: 1.5px solid rgba(139,92,246,.25);
+  animation: pulse 2s ease-in-out infinite;
 }
-.brand-pill-d .dot {
-  width: 22px; height: 22px; border-radius: 50%;
-  background: #dbeafe; display: flex; align-items: center; justify-content: center;
-  color: #2563eb; font-size: 9px;
+.ai-orb::after { inset: -24px; animation-delay: .4s; opacity: .5; }
+
+.loading-phrase {
+  font-size: 20px; font-weight: 700; margin-bottom: 10px;
+  min-height: 32px;
+  animation: fadeIn .4s var(--ease);
 }
-.detail-title { font-size: 13.5px; font-weight: 700; color: #0f172a; line-height: 1.35; margin-bottom: 8px; }
-.avail-banner {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700;
-  padding: 5px 12px; border-radius: 8px; margin-bottom: 10px;
-}
-.rating-row-d { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.rating-badge-d {
-  display: inline-flex; align-items: center; gap: 3px;
-  background: #fef3c7; color: #b45309; font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 6px;
-}
-.price-block-d { border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 12px 0; margin-bottom: 12px; }
-.current-price-d { font-size: 26px; font-weight: 800; color: #0f172a; }
-.mrp-d { font-size: 13px; color: #94a3b8; text-decoration: line-through; margin-left: 8px; }
-.disc-tag-d {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700;
-  padding: 3px 9px; border-radius: 6px; margin-top: 6px;
-}
-.cta-d {
-  display: block; width: 100%;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; font-size: 13px; font-weight: 700;
-  padding: 13px; border-radius: 12px; text-align: center;
-  margin-bottom: 14px; border: none; cursor: pointer;
-  box-shadow: 0 6px 18px rgba(37,99,235,0.35); transition: filter 0.2s;
+.loading-sub {
+  font-size: 14px; color: var(--muted); margin-bottom: 36px;
 }
 
-/* ── Price history chart (NEW) ── */
-.price-history {
-  margin: 0 16px 14px; background: white;
-  border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; overflow: hidden;
+/* Dot loader */
+.dot-loader {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 0 auto 40px;
 }
-.price-history-title {
-  font-size: 12px; font-weight: 700; color: #0f172a; margin-bottom: 12px;
-  display: flex; align-items: center; justify-content: space-between;
+.dot-loader span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  animation: dotBounce 1.4s ease-in-out infinite;
 }
-.chart-wrap { position: relative; height: 72px; }
-.chart-svg { width: 100%; height: 100%; }
-.chart-labels {
+.dot-loader span:nth-child(2) { animation-delay: .15s; }
+.dot-loader span:nth-child(3) { animation-delay: .3s; }
+
+/* Progress Bar */
+.progress-section { max-width: 580px; margin: 0 auto; }
+.progress-label {
   display: flex; justify-content: space-between;
-  margin-top: 4px; font-size: 8px; color: #94a3b8; font-weight: 500;
+  font-size: 13px; color: var(--muted); margin-bottom: 10px;
 }
-.chart-price-labels {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  display: flex; flex-direction: column; justify-content: space-between;
-  font-size: 7.5px; color: #94a3b8; font-weight: 500;
-  padding: 2px 0;
+.progress-label span { font-weight: 600; color: var(--text); }
+.progress-track {
+  height: 6px; border-radius: 999px;
+  background: rgba(255,255,255,.06); overflow: hidden;
+  margin-bottom: 6px;
 }
-.chart-dot-now {
-  position: absolute; right: 0; top: 50%;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #2563eb; border: 2px solid white;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
-  transform: translate(0, -50%);
-  animation: chartDotPulse 1.5s ease-in-out infinite;
+.progress-fill {
+  height: 100%; border-radius: 999px; width: 0%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  transition: width .5s var(--ease);
+  position: relative; overflow: hidden;
 }
-@keyframes chartDotPulse {
-  0%,100%{box-shadow:0 0 0 3px rgba(37,99,235,0.25);}
-  50%{box-shadow:0 0 0 6px rgba(37,99,235,0.1);}
+.progress-fill.active::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 10px, transparent 10px 20px);
+  animation: barberpole .8s linear infinite;
+}
+.progress-fill.done { background: var(--success); }
+.progress-fill.done::after { display: none; }
+.progress-pct {
+  font-size: 12px; color: var(--muted); text-align: right;
+}
+#progressPct { color: var(--accent); font-weight: 700; }
+
+/* Timeline */
+.timeline {
+  display: flex; flex-direction: column; gap: 0;
+  max-width: 400px; margin: 40px auto 0;
+  position: relative;
+}
+.timeline::before {
+  content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+  width: 1px; background: var(--border2); z-index: 0;
+}
+.tl-step {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 10px 0;
+  position: relative; z-index: 1;
+}
+.tl-dot {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--card2); border: 2px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--muted);
+  transition: all .35s var(--ease);
+}
+.tl-step.active .tl-dot {
+  border-color: var(--accent);
+  background: rgba(139,92,246,.15);
+  color: var(--accent);
+  box-shadow: 0 0 0 6px rgba(139,92,246,.1);
+  animation: glow 1.8s infinite;
+}
+.tl-step.done .tl-dot {
+  background: var(--success); border-color: var(--success); color: #fff;
+}
+.tl-content { padding-top: 4px; }
+.tl-title { font-size: 13.5px; font-weight: 600; color: var(--muted); transition: color .3s; }
+.tl-step.active .tl-title { color: var(--text); }
+.tl-step.done .tl-title { color: var(--success); }
+.tl-desc { font-size: 12px; color: var(--muted2); margin-top: 2px; }
+
+/* --- Empty State --- */
+#emptyView { text-align: center; padding: 100px 24px; }
+.empty-icon {
+  width: 90px; height: 90px; margin: 0 auto 28px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(79,70,229,.1));
+  border: 1px solid rgba(139,92,246,.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  animation: float 4s ease-in-out infinite;
+}
+#emptyView h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+#emptyView p { font-size: 15px; color: var(--muted); max-width: 380px; margin: 0 auto 30px; }
+
+/* --- Error State --- */
+#errorView { text-align: center; padding: 100px 24px; }
+.error-card {
+  display: inline-block; max-width: 480px; width: 100%;
+  background: var(--card2); border: 1px solid rgba(239,68,68,.2);
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.3);
+}
+.error-icon {
+  width: 72px; height: 72px; margin: 0 auto 24px;
+  border-radius: 50%;
+  background: rgba(239,68,68,.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--danger);
+}
+#errorView h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+#errorView p { font-size: 14px; color: var(--muted); margin-bottom: 28px; line-height: 1.7; }
+
+/* --- Results State --- */
+#resultsView { animation: fadeIn .4s var(--ease); }
+
+/* ============================================================
+   STATISTICS BAR
+============================================================ */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 18px 20px;
+  transition: transform .25s var(--ease), border-color .25s, box-shadow .25s;
+  overflow: hidden; position: relative;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0; transition: opacity .3s;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border2);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+.stat-card:hover::before { opacity: 1; }
+.stat-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: rgba(139,92,246,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-bottom: 12px;
+}
+.stat-value {
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -.02em; line-height: 1.1;
+  animation: countUp .4s var(--ease);
+}
+.stat-label { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
+
+/* ============================================================
+   RESULTS HEADER / SORT
+============================================================ */
+.results-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
+}
+.results-title { font-size: 20px; font-weight: 700; }
+.results-count { font-size: 13.5px; color: var(--muted); font-weight: 500; }
+
+.sort-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.sort-label { font-size: 12.5px; color: var(--muted); }
+.sort-select {
+  background: var(--card2); border: 1px solid var(--border2);
+  color: var(--text); border-radius: var(--radius-sm);
+  padding: 7px 28px 7px 12px; font-size: 12.5px;
+  -webkit-appearance: none; appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center;
+}
+.sort-select:focus { outline: none; border-color: var(--accent); }
+
+/* ============================================================
+   PRODUCT GRID
+============================================================ */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
 }
 
-/* ── Offers ── */
-.offers-section { padding: 0 16px 14px; }
-.offers-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 9px; }
-.offer-row-d {
-  display: flex; align-items: center; gap: 11px;
-  padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px;
-  margin-bottom: 7px; background: white; cursor: pointer; transition: 0.2s;
-}
-.offer-row-d.best { background: #eff6ff; border-color: #bfdbfe; }
-.offer-row-d:hover { border-color: #93c5fd; }
-.offer-thumb-d {
-  width: 46px; height: 46px; background: #f8fafc;
-  border-radius: 9px; padding: 5px;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  font-size: 10px; font-weight: 800; color: #475569;
-}
-.offer-name { font-size: 11px; font-weight: 700; color: #0f172a; }
-.best-badge-d {
-  background: #22c55e; color: white; font-size: 8px; font-weight: 700;
-  padding: 1px 5px; border-radius: 4px; margin-left: 5px;
-}
-.offer-price-d { font-size: 13px; font-weight: 800; color: #0f172a; margin-top: 2px; }
-.offer-del { font-size: 9px; color: #64748b; }
-
-/* ── Savings meter (NEW) ── */
-.savings-meter {
-  margin: 0 16px 14px; background: white;
-  border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px;
-}
-.savings-meter-title { font-size: 12px; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
-.meter-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.meter-label { font-size: 9px; font-weight: 600; color: #64748b; width: 64px; flex-shrink: 0; }
-.meter-bar-wrap { flex: 1; height: 8px; background: #f1f5f9; border-radius: 99px; overflow: hidden; }
-.meter-bar { height: 100%; border-radius: 99px; transition: width 1s ease; }
-.meter-val { font-size: 9.5px; font-weight: 700; color: #0f172a; width: 54px; text-align: right; flex-shrink: 0; }
-
-/* ── Stats card ── */
-.stats-card { margin: 0 16px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; }
-.stats-card-title { font-size: 12px; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
-.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.mini-stat { background: #f1f5f9; border-radius: 9px; padding: 8px; text-align: center; }
-.mini-stat-lbl { font-size: 8px; color: #64748b; font-weight: 600; margin-bottom: 3px; }
-.mini-stat-val { font-size: 12px; font-weight: 700; color: #0f172a; }
-.deal-verdict {
-  margin-top: 9px; background: #dcfce7; border-radius: 9px;
-  padding: 9px 12px; display: flex; align-items: center; gap: 9px;
-}
-
-/* ── Alert/notify strip (NEW) ── */
-.alert-strip {
-  margin: 0 16px 14px; background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  border: 1px solid #bfdbfe; border-radius: 14px; padding: 12px 14px;
-  display: flex; align-items: center; gap: 12px;
-}
-.alert-strip-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.alert-strip-icon i { color: white; font-size: 14px; }
-.alert-strip-text { font-size: 10px; font-weight: 700; color: #1e40af; flex: 1; }
-.alert-strip-sub { font-size: 8.5px; color: #3b82f6; font-weight: 500; }
-.alert-strip-btn {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white; font-size: 9px; font-weight: 700;
-  padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer; flex-shrink: 0;
-}
-
-/* ── Intro ── */
-#intro {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, #0d1f3c 0%, #060d1a 70%);
-  z-index: 999999;
+/* Product Card */
+.product-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); overflow: hidden;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 16px;
-  transition: opacity 1s ease;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+  animation: fadeSlideUp .5s var(--ease) both;
+  cursor: default;
 }
-#intro.fade-out { opacity: 0; pointer-events: none; }
-.intro-rings {
-  position: absolute; width: 300px; height: 300px; border-radius: 50%;
-  border: 1px solid rgba(37,99,235,0.15);
-  animation: ringPulse 2s ease-in-out infinite;
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  border-color: var(--border2);
 }
-.intro-rings:nth-child(2) { width: 220px; height: 220px; animation-delay: 0.3s; border-color: rgba(37,99,235,0.2); }
-.intro-rings:nth-child(3) { width: 140px; height: 140px; animation-delay: 0.6s; border-color: rgba(37,99,235,0.3); }
-@keyframes ringPulse { 0%,100%{transform:scale(1);opacity:0.4;} 50%{transform:scale(1.06);opacity:1;} }
-.intro-logo-wrap {
-  position: relative; z-index: 2; width: 86px; height: 86px; border-radius: 26px;
-  background: white; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 60px rgba(37,99,235,0.5), 0 0 120px rgba(37,99,235,0.2);
-  overflow: hidden; opacity: 0;
-  animation: logoPop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
+
+.product-img-wrap {
+  position: relative; height: 160px;
+  background: var(--card2); overflow: hidden;
 }
-@keyframes logoPop { 0%{opacity:0;transform:scale(0.4) rotate(-12deg);} 100%{opacity:1;transform:scale(1) rotate(0deg);} }
-.intro-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
-.intro-title { font-size: 30px; font-weight: 800; color: white; opacity: 0; position: relative; z-index: 2; animation: fadeUp 0.7s 0.8s ease forwards; letter-spacing: -0.5px; }
-.intro-sub { font-size: 13px; color: #94a3b8; opacity: 0; position: relative; z-index: 2; animation: fadeUp 0.7s 1.1s ease forwards; }
-.intro-tag {
+.product-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+.product-card:hover .product-img { transform: scale(1.05); }
+
+.avail-badge {
+  position: absolute; bottom: 10px; left: 10px;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .04em;
+}
+.avail-badge.in { background: var(--success-bg); color: var(--success); }
+.avail-badge.limited { background: var(--warning-bg); color: var(--warning); }
+.avail-badge.out { background: var(--danger-bg); color: var(--danger); }
+
+.save-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px; border-radius: 9px;
+  background: rgba(11,15,25,.6); backdrop-filter: blur(8px);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: all .2s;
+}
+.save-btn:hover { color: var(--warning); border-color: var(--warning); }
+.save-btn.saved { color: var(--warning); border-color: var(--warning); background: rgba(245,158,11,.15); }
+
+.product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+.product-meta-top {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+}
+.product-category {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--accent);
+}
+.product-rating {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12.5px; font-weight: 700; color: var(--warning);
+  flex-shrink: 0;
+}
+
+.product-name { font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+.product-brand { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.price-block { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+.price-main {
+  display: flex; align-items: baseline; gap: 8px;
+}
+.price-current { font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+.price-note { font-size: 11.5px; color: var(--success); font-weight: 600; }
+.price-range {
+  display: flex; gap: 14px; font-size: 11.5px; color: var(--muted);
+}
+.price-range b { color: var(--text2); }
+
+.product-footer { margin-top: auto; padding-top: 6px; display: flex; flex-direction: column; gap: 8px; }
+.offers-toggle-btn {
+  width: 100%; padding: 9px 14px; border-radius: var(--radius-sm);
+  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2);
+  color: var(--accent); font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all .2s;
+}
+.offers-toggle-btn:hover {
+  background: rgba(139,92,246,.18);
+  border-color: rgba(139,92,246,.4);
+}
+.offers-toggle-btn svg { transition: transform .25s var(--ease); }
+.offers-toggle-btn.open svg { transform: rotate(180deg); }
+
+/* Offers Accordion */
+.offers-panel {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s var(--ease);
+}
+.offers-panel.open { max-height: 1200px; }
+.offers-list { padding: 8px 0; display: flex; flex-direction: column; gap: 6px; }
+.offer-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--card2); border: 1px solid var(--border);
+  transition: border-color .2s, background .2s;
+  animation: fadeSlideUp .3s var(--ease) both;
+}
+.offer-row:hover { border-color: var(--border2); background: rgba(255,255,255,.03); }
+.offer-logo {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.offer-info { flex: 1; min-width: 0; }
+.offer-store { font-size: 12.5px; font-weight: 700; }
+.offer-tags { display: flex; gap: 5px; margin-top: 3px; flex-wrap: wrap; }
+.o-tag {
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 5px;
+}
+.o-tag.free { background: var(--success-bg); color: var(--success); }
+.o-tag.coupon { background: rgba(139,92,246,.15); color: var(--accent); }
+.o-tag.unavail { background: var(--danger-bg); color: var(--danger); }
+
+.offer-price-col { text-align: right; flex-shrink: 0; }
+.offer-price-val { font-size: 15px; font-weight: 800; }
+.offer-savings { font-size: 10.5px; color: var(--success); font-weight: 700; margin-top: 1px; }
+
+.offer-buy-btn {
+  flex-shrink: 0;
+  padding: 7px 14px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: 12px; font-weight: 600;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 3px 10px var(--accent-glow);
+}
+.offer-buy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
+
+/* ============================================================
+   SKELETON CARDS
+============================================================ */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px; margin-top: 28px;
+}
+.skel-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); overflow: hidden;
+}
+.skel {
+  background: linear-gradient(90deg, var(--card2) 25%, rgba(255,255,255,.04) 37%, var(--card2) 63%);
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+.skel.img { height: 160px; }
+.skel.line { border-radius: 6px; }
+.skel-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.btn {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3);
-  color: #93c5fd; font-size: 12px; font-weight: 600;
-  padding: 9px 20px; border-radius: 999px;
-  opacity: 0; position: relative; z-index: 2;
-  animation: fadeUp 0.7s 1.4s ease forwards;
+  padding: 11px 22px; border-radius: 12px;
+  font-size: 14px; font-weight: 600;
+  transition: all .25s var(--ease);
+  position: relative; overflow: hidden; cursor: pointer;
 }
-@keyframes fadeUp { 0%{opacity:0;transform:translateY(18px);} 100%{opacity:1;transform:translateY(0);} }
-.intro-loading { display: flex; gap: 6px; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.5s 1.7s ease forwards; }
-.intro-dot { width: 7px; height: 7px; border-radius: 50%; background: #2563eb; animation: dotBounce 0.8s ease-in-out infinite; }
-.intro-dot:nth-child(2) { animation-delay: 0.15s; }
-.intro-dot:nth-child(3) { animation-delay: 0.3s; }
-@keyframes dotBounce { 0%,100%{transform:translateY(0);opacity:0.5;} 50%{transform:translateY(-8px);opacity:1;} }
+.btn:active { transform: scale(.97); }
 
-/* ── Progress bar ── */
-#progress-bar {
-  position: fixed; top: 0; left: 0; height: 2.5px;
-  background: linear-gradient(90deg, #2563eb, #60a5fa, #a78bfa);
-  z-index: 99999; transition: width 0.5s ease;
-  box-shadow: 0 0 10px rgba(96,165,250,0.7);
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; box-shadow: 0 6px 20px var(--accent-glow);
+  border: none;
 }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--accent-glow); }
 
-/* ── Ripple / click ── */
-.ripple {
-  position: fixed; border-radius: 50%;
-  border: 2px solid rgba(37,99,235,0.7);
-  width: 16px; height: 16px;
-  transform: translate(-50%,-50%) scale(0);
-  animation: rippleAnim 0.55s ease forwards;
-  pointer-events: none; z-index: 99997;
+.btn-ghost {
+  background: rgba(255,255,255,.05); color: var(--text);
+  border: 1px solid var(--border2);
 }
-@keyframes rippleAnim { 0%{transform:translate(-50%,-50%) scale(0);opacity:1;} 100%{transform:translate(-50%,-50%) scale(4);opacity:0;} }
-.click-pulse { animation: clickPulse 0.45s ease; }
-@keyframes clickPulse { 0%{box-shadow:0 0 0 0 rgba(37,99,235,0.5);} 100%{box-shadow:0 0 0 14px rgba(37,99,235,0);} }
+.btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(139,92,246,.4); }
 
-/* ── Scan line ── */
-.scan-line {
-  position: absolute; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.15), transparent);
-  pointer-events: none; z-index: 50; animation: scanLine 4s linear infinite;
-}
-@keyframes scanLine { 0%{top:-2px;} 100%{top:100%;} }
+.btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 10px; }
 
-/* ═══════════════════════════════════════════════════════════
-   NAVIGATION CONTROLS — redesigned
-═══════════════════════════════════════════════════════════ */
-#nav-controls {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-  z-index: 999990; display: flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
-  background: rgba(6, 13, 26, 0.82);
-  backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 999px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(37,99,235,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
-  user-select: none;
+.btn .ripple-el {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,.4); pointer-events: none;
+  animation: ripple .55s var(--ease) forwards;
 }
 
-/* Step label in controls */
-#step-label {
-  font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);
-  min-width: 40px; text-align: center; letter-spacing: 0.3px;
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
 }
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  font-size: 13px; color: var(--muted);
+}
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo .logo-mark { width: 26px; height: 26px; font-size: 11px; }
+.footer-logo .logo-text { font-size: 14px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-link { color: var(--muted); transition: color .2s; font-size: 13px; }
+.footer-link:hover { color: var(--text); }
 
-.nav-ctrl-btn {
-  position: relative; display: flex; align-items: center; justify-content: center;
-  border: none; cursor: pointer; border-radius: 999px;
-  font-family: 'Poppins', sans-serif; font-weight: 600;
-  outline: none; transition: background 0.2s, box-shadow 0.2s, transform 0.15s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
-  overflow: hidden; -webkit-tap-highlight-color: transparent;
+/* ============================================================
+   HISTORY DROPDOWN
+============================================================ */
+.history-btn {
+  position: relative;
+  padding: 7px 14px; border-radius: var(--radius-sm);
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+  transition: color .2s, background .2s; cursor: pointer; border: none;
+  background: none;
+  display: flex; align-items: center; gap: 6px;
 }
-.nav-ctrl-btn::before {
-  content: ''; position: absolute; inset: 0; border-radius: inherit;
-  background: rgba(255,255,255,0.08); opacity: 0; transition: opacity 0.2s;
-}
-.nav-ctrl-btn:hover::before { opacity: 1; }
-.nav-ctrl-btn:hover { transform: translateY(-2px); }
-.nav-ctrl-btn:active { transform: scale(0.9); transition: transform 0.08s ease; }
+.history-btn:hover { color: var(--text); background: rgba(255,255,255,.05); }
 
-.nav-ctrl-btn.icon-btn {
-  width: 38px; height: 38px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.75); font-size: 13px;
+.history-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  width: 280px; background: var(--card2);
+  border: 1px solid var(--border2); border-radius: var(--radius-md);
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  overflow: hidden; z-index: 300;
+  animation: fadeSlideDown .25s var(--ease);
+  display: none;
 }
-.nav-ctrl-btn.icon-btn:hover {
-  background: rgba(255,255,255,0.14); color: #fff;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.25); border-color: rgba(37,99,235,0.35);
+.history-dropdown.open { display: block; }
+.history-header {
+  padding: 12px 16px;
+  font-size: 11.5px; font-weight: 700;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+  border-bottom: 1px solid var(--border);
 }
+.history-list { max-height: 240px; overflow-y: auto; }
+.history-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; cursor: pointer;
+  transition: background .18s;
+  font-size: 13.5px;
+}
+.history-item:hover { background: rgba(255,255,255,.04); }
+.history-item svg { color: var(--muted); flex-shrink: 0; }
+.history-empty { padding: 20px 16px; text-align: center; font-size: 13px; color: var(--muted); }
+.history-clear {
+  padding: 10px 16px; text-align: center;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px; color: var(--danger); cursor: pointer;
+  transition: background .18s;
+}
+.history-clear:hover { background: var(--danger-bg); }
 
-.nav-ctrl-btn.play-btn {
-  width: 52px; height: 52px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border: 1.5px solid rgba(96,165,250,0.35); color: white; font-size: 17px;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.18), 0 6px 24px rgba(37,99,235,0.5);
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+  .hero { padding: 50px 16px 40px; min-height: auto; }
+  .hero h1 { font-size: 26px; }
+  .search-btn .btn-text { display: none; }
+  .search-btn { padding: 11px 14px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .results-header { flex-direction: column; align-items: flex-start; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  .chip-row .chip:nth-child(n+4) { display: none; }
 }
-.nav-ctrl-btn.play-btn:hover {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 0 0 4px rgba(37,99,235,0.28), 0 8px 32px rgba(37,99,235,0.6);
-}
-.nav-ctrl-btn.play-btn:active { transform: scale(0.88); }
-
-.nav-ctrl-divider { width: 1px; height: 26px; background: rgba(255,255,255,0.1); border-radius: 99px; flex-shrink: 0; }
-
-.nav-ctrl-btn:disabled, .nav-ctrl-btn[disabled] {
-  opacity: 0.28; cursor: not-allowed; transform: none !important; pointer-events: none;
-}
-
-/* Tooltip */
-.nav-ctrl-btn[data-tip]::after {
-  content: attr(data-tip); position: absolute; bottom: calc(100% + 10px); left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  background: rgba(6,13,26,0.94); color: rgba(255,255,255,0.9);
-  font-size: 10px; font-weight: 600; white-space: nowrap;
-  padding: 5px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-  pointer-events: none; opacity: 0; transition: opacity 0.18s ease, transform 0.18s ease; z-index: 10;
-}
-.nav-ctrl-btn[data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Step dots */
-#step-dots { display: flex; align-items: center; gap: 4px; padding: 0 2px; }
-.step-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,0.18); transition: all 0.3s ease; flex-shrink: 0;
-}
-.step-dot.active { background: #60a5fa; width: 18px; border-radius: 3px; box-shadow: 0 0 8px rgba(96,165,250,0.6); }
-.step-dot.done { background: rgba(96,165,250,0.4); }
 
 @media (max-width: 480px) {
-  #nav-controls { bottom: 14px; gap: 6px; padding: 8px 12px; }
-  .nav-ctrl-btn.icon-btn { width: 34px; height: 34px; font-size: 12px; }
-  .nav-ctrl-btn.play-btn { width: 46px; height: 46px; font-size: 15px; }
-  #step-dots, #step-label { display: none; }
-}
-@media (max-width: 360px) {
-  .nav-ctrl-divider { display: none; }
-  #nav-controls { gap: 4px; padding: 7px 10px; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-scene">
-  <div class="bg-grad"></div>
-  <div class="bg-grid"></div>
-</div>
+<!-- TOAST -->
+<div id="toastArea" aria-live="polite" aria-atomic="true"></div>
 
-<div id="progress-bar" style="width:0%"></div>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="logo" id="logoLink">
+      <div class="logo-mark">V</div>
+      <div class="logo-text">Visco <span>Compare</span></div>
+    </a>
 
-<div id="cursor" aria-hidden="true"></div>
-<div id="cursor-trail" aria-hidden="true"></div>
-<div id="cursor-trail2" aria-hidden="true"></div>
-
-<!-- Floating logo watermark -->
-<div id="floating-logo" aria-hidden="true">
-  <div class="fl-icon"><i class="fa-solid fa-bag-shopping"></i></div>
-  <span class="fl-text">Visco Compare</span>
-</div>
-
-<!-- Intro screen -->
-<div id="intro" role="status" aria-label="Loading Visco Compare">
-  <div class="intro-rings"></div>
-  <div class="intro-rings"></div>
-  <div class="intro-rings"></div>
-  <div class="intro-logo-wrap">
-    <img src="https://www.viscocompare.online/logo.png" alt="Visco Compare"
-         onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping\' style=\'color:#2563eb;font-size:34px;\'></i>'"/>
-  </div>
-  <div class="intro-title">Visco Compare</div>
-  <div class="intro-sub">Smart Shopping Platform</div>
-  <div class="intro-tag">
-    <i class="fa-solid fa-bolt" style="color:#fbbf24;"></i>
-    India's No.1 Price Comparison Platform
-  </div>
-  <div class="intro-loading">
-    <div class="intro-dot"></div>
-    <div class="intro-dot"></div>
-    <div class="intro-dot"></div>
-  </div>
-</div>
-
-<!-- Phone -->
-<div class="stage-wrap">
-  <div class="phone-outer">
-    <div class="phone-glow"></div>
-    <div class="phone-frame" role="main" aria-label="Visco Compare App Demo">
-      <div class="screen-container">
-        <div class="scan-line"></div>
-
-        <!-- ═══ PAGE 1: HOMEPAGE ═══ -->
-        <div class="page active" id="page-home">
-          <div class="hdr">
-            <div class="logo-row">
-              <div class="logo-box">
-                <img src="https://www.viscocompare.online/logo.png" alt="Visco Compare"
-                     onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping\' style=\'color:#2563eb;font-size:15px;\'></i>'"/>
-              </div>
-              <div>
-                <div class="logo-text">Visco Compare</div>
-                <div class="logo-sub">Smart Shopping Platform</div>
-              </div>
-            </div>
-            <div class="hdr-right">
-              <div class="hdr-location" id="hdr-loc-btn">
-                <div class="hdr-location-icon"><i class="fa-solid fa-location-dot"></i></div>
-                <div>
-                  <div class="hdr-location-label">Deliver To</div>
-                  <div class="hdr-location-text">Detect Location</div>
-                </div>
-              </div>
-              <button class="hdr-login" type="button">Login</button>
-            </div>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#" class="nav-link active">Search</a>
+      <div style="position:relative;">
+        <button class="history-btn" id="historyBtn" aria-label="Search history" aria-haspopup="true" aria-expanded="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          History
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="history-dropdown" id="historyDropdown">
+          <div class="history-header">Recent Searches</div>
+          <div class="history-list" id="historyList">
+            <div class="history-empty">No recent searches</div>
           </div>
+          <div class="history-clear" id="historyClearBtn">Clear history</div>
+        </div>
+      </div>
+      <a href="#" class="nav-link" id="aboutLink">About</a>
+    </nav>
 
-          <div class="home-scroll" id="home-scroll">
-            <!-- Hero -->
-            <div class="hero">
-              <div class="hero-badge">🏆 India's No.1 Smart Price Comparison</div>
-              <h1 class="hero-title">Find The Best Deals<br>Across Every Store</h1>
-              <p class="hero-sub">Compare prices from Amazon, Flipkart, Myntra, Ajio and more in real-time.</p>
-              <div class="search-bar" id="home-search-wrap">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input id="home-search-input" type="text" class="search-input"
-                       placeholder="Search products, brands..." autocomplete="off"/>
-                <button class="search-submit" type="button"><i class="fa-solid fa-arrow-right"></i></button>
-                <div class="suggest-drop" id="home-suggest">
-                  <div class="suggest-item hl"><i class="fa-solid fa-magnifying-glass"></i> iPhone 15 Pro</div>
-                  <div class="suggest-item"><i class="fa-solid fa-clock-rotate-left"></i> iPhone 14</div>
-                  <div class="suggest-item"><i class="fa-solid fa-magnifying-glass"></i> iPhone 15 Plus</div>
-                  <div class="suggest-item"><i class="fa-solid fa-magnifying-glass"></i> iPhone 15 Pro Max</div>
-                </div>
-              </div>
-              <div class="trust-row">
-                <span class="trust-chip"><i class="fa-solid fa-bolt"></i> Real-time Prices</span>
-                <span class="trust-chip"><i class="fa-solid fa-shield-halved"></i> 100% Free</span>
-                <span class="trust-chip"><i class="fa-solid fa-store"></i> 30+ Stores</span>
-              </div>
-            </div>
+    <div class="nav-actions">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Dark mode active">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <div class="status-pill" id="statusPill" role="status" aria-live="polite">
+        <span class="status-dot online" id="statusDot"></span>
+        <span id="statusLabel">Ready</span>
+      </div>
+    </div>
+  </div>
+</header>
 
-            <!-- Stats -->
-            <div class="stats-strip">
-              <div class="stat-box"><div class="stat-num">10k+</div><div class="stat-lbl">Products Tracked</div></div>
-              <div class="stat-box"><div class="stat-num">30+</div><div class="stat-lbl">Online Stores</div></div>
-              <div class="stat-box"><div class="stat-num">100%</div><div class="stat-lbl">Free</div></div>
-            </div>
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+      AI-Powered Product Intelligence
+    </div>
 
-            <!-- Savings ticker -->
-            <div class="savings-ticker" style="margin-top:12px;">
-              <div class="savings-ticker-icon"><i class="fa-solid fa-piggy-bank"></i></div>
-              <div>
-                <div class="savings-ticker-text">Users saved today</div>
-                <div class="savings-ticker-amount">₹4,82,310</div>
-                <div class="savings-ticker-sub">across 1,240 comparisons</div>
-              </div>
-              <div class="live-badge" style="margin-left:auto;">
-                <div class="live-dot"></div>LIVE
-              </div>
-            </div>
+    <h1>What would you like to<br><span class="gradient-text">compare today?</span></h1>
+    <p class="subtitle">Instantly find and compare the best prices across stores — powered by intelligent real-time analysis.</p>
 
-            <!-- Categories -->
-            <div class="cat-bar">
-              <button type="button" class="cat-btn active">✨ All</button>
-              <button type="button" class="cat-btn">📱 Electronics</button>
-              <button type="button" class="cat-btn">👕 Fashion</button>
-              <button type="button" class="cat-btn">🏠 Home</button>
-              <button type="button" class="cat-btn">💄 Beauty</button>
-              <button type="button" class="cat-btn">💻 Laptops</button>
-            </div>
+    <div class="search-container">
+      <form class="search-box" id="heroSearchForm" role="search">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input
+          class="search-input"
+          id="mainSearchInput"
+          type="text"
+          placeholder="Search mobiles, laptops, TVs, beauty products…"
+          aria-label="Search products"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="search-btn" id="searchBtn" type="submit" aria-label="Start comparison">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span class="btn-text">Compare</span>
+        </button>
+      </form>
 
-            <!-- Section header -->
-            <div class="section-hdr">
-              <div>
-                <div class="section-accent"></div>
-                <div class="section-title">Trending Deals</div>
-                <div class="section-sub">Updated every minute from top stores</div>
-              </div>
-              <div class="live-badge"><div class="live-dot"></div>LIVE</div>
-            </div>
+      <div class="chip-row" id="chipRow">
+        <button class="chip" data-q="iPhone 16">iPhone 16</button>
+        <button class="chip" data-q="Samsung Galaxy S25">Samsung Galaxy S25</button>
+        <button class="chip" data-q="MacBook Air M3">MacBook Air M3</button>
+        <button class="chip" data-q="Sony WH-1000XM5">Sony WH-1000XM5</button>
+        <button class="chip" data-q="Nike Air Max">Nike Air Max</button>
+        <button class="chip" data-q="4K Smart TV">4K Smart TV</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Product grid -->
-            <div class="prod-grid">
-              <div class="prod-card" id="prod-card-1">
-                <div class="prod-img">
-                  <span class="disc-badge">18% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="Apple iPhone 15"
-                       onerror="this.src='https://placehold.co/120x120?text=iPhone+15'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Apple iPhone 15 (128GB, Black)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.6</div>
-                  <div><span class="prod-price">₹64,999</span><span class="prod-mrp">₹79,900</span></div>
-                  <span class="prod-saving">You save ₹14,901</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 5 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card" id="prod-card-2">
-                <div class="prod-img">
-                  <span class="disc-badge">22% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/713NLlBdWvL._SX679_.jpg" alt="Samsung S24 Ultra"
-                       onerror="this.src='https://placehold.co/120x120?text=Samsung+S24'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Samsung Galaxy S24 Ultra 5G</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.5</div>
-                  <div><span class="prod-price">₹1,04,999</span><span class="prod-mrp">₹1,34,999</span></div>
-                  <span class="prod-saving">You save ₹30,000</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 4 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card">
-                <div class="prod-img">
-                  <span class="disc-badge">15% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/61CGHv6kmWL._SX679_.jpg" alt="Google Pixel 8 Pro"
-                       onerror="this.src='https://placehold.co/120x120?text=Pixel+8'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Google Pixel 8 Pro 5G (128GB)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.4</div>
-                  <div><span class="prod-price">₹82,999</span><span class="prod-mrp">₹97,999</span></div>
-                  <span class="prod-saving">You save ₹15,000</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 3 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card">
-                <div class="prod-img">
-                  <img src="https://m.media-amazon.com/images/I/71o8Q5XJS5L._SX679_.jpg" alt="OnePlus 12"
-                       onerror="this.src='https://placehold.co/120x120?text=OnePlus+12'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">OnePlus 12 5G (256GB) Silky Black</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.3</div>
-                  <div><span class="prod-price">₹49,999</span></div>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 3 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-            </div>
+<!-- MAIN CONTENT -->
+<main id="mainContent">
+  <div class="container">
+
+    <!-- EMPTY VIEW -->
+    <div class="view active" id="emptyView">
+      <div style="text-align:center;padding:80px 24px;">
+        <div class="empty-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg>
+        </div>
+        <h3>Start your comparison</h3>
+        <p>Search for any product above to instantly compare prices, availability, and offers across multiple stores.</p>
+      </div>
+    </div>
+
+    <!-- LOADING VIEW -->
+    <div class="view" id="loadingView">
+      <div class="loading-center">
+        <div class="ai-orb">
+          <div class="ai-orb-inner">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
           </div>
-
-          <nav class="bot-nav" aria-label="App navigation">
-            <div class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></div>
-            <div class="nav-item"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></div>
-            <div class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></div>
-            <div class="nav-item"><i class="fa-solid fa-fire"></i><span>Deals</span></div>
-            <div class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></div>
-          </nav>
         </div>
 
-        <!-- ═══ PAGE 2: SEARCH ═══ -->
-        <div class="page" id="page-search">
-          <div class="hdr">
-            <div class="logo-row">
-              <div class="logo-box">
-                <img src="https://www.viscocompare.online/logo.png" alt="Visco Compare"
-                     onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping\' style=\'color:#2563eb;font-size:15px;\'></i>'"/>
-              </div>
-              <div>
-                <div class="logo-text">Visco Compare</div>
-                <div class="logo-sub">Smart Shopping Platform</div>
-              </div>
-            </div>
-            <button class="hdr-login" type="button">Login</button>
-          </div>
-          <div class="search-area">
-            <div class="big-search">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input id="search-page-input" type="text" placeholder="Search products, brands..." autocomplete="off"/>
-              <button type="button" class="big-search-btn">Search</button>
-            </div>
-          </div>
-          <div class="results-hdr">
-            <div class="section-accent"></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <div>
-                <div class="section-title" style="font-size:13.5px;">Results for "iPhone 15 Pro"</div>
-                <div class="section-sub">In-stock · Sorted by best price</div>
-              </div>
-              <div class="live-badge"><div class="live-dot"></div>LIVE</div>
-            </div>
-          </div>
-          <!-- Filter chips -->
-          <div class="filter-row">
-            <div class="filter-chip active">All</div>
-            <div class="filter-chip">Best Price</div>
-            <div class="filter-chip">4★ & above</div>
-            <div class="filter-chip">Free Delivery</div>
-            <div class="filter-chip">Offers</div>
-          </div>
-          <!-- Results grid -->
-          <div class="search-grid-adj" id="search-grid-scroll">
-            <div class="search-prod-grid">
-              <div class="prod-card" id="search-prod-1">
-                <div class="prod-img">
-                  <span class="disc-badge">18% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="iPhone 15 Pro"
-                       onerror="this.src='https://placehold.co/120x120?text=iPhone+15+Pro'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Apple iPhone 15 Pro (128GB, Titanium)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.7</div>
-                  <div><span class="prod-price">₹1,19,900</span><span class="prod-mrp">₹1,34,900</span></div>
-                  <span class="prod-saving">You save ₹15,000</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 5 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card">
-                <div class="prod-img">
-                  <span class="disc-badge">12% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="iPhone 15 Pro Max"
-                       onerror="this.src='https://placehold.co/120x120?text=iPhone+15+Pro+Max'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Apple iPhone 15 Pro Max (256GB)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.8</div>
-                  <div><span class="prod-price">₹1,44,900</span><span class="prod-mrp">₹1,64,900</span></div>
-                  <span class="prod-saving">You save ₹20,000</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 4 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card">
-                <div class="prod-img">
-                  <span class="disc-badge">20% OFF</span>
-                  <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="iPhone 14 Pro"
-                       onerror="this.src='https://placehold.co/120x120?text=iPhone+14+Pro'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Apple iPhone 14 Pro (128GB, Deep Purple)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.6</div>
-                  <div><span class="prod-price">₹89,990</span><span class="prod-mrp">₹1,09,900</span></div>
-                  <span class="prod-saving">You save ₹19,910</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 5 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-              <div class="prod-card">
-                <div class="prod-img">
-                  <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="iPhone 15 Blue"
-                       onerror="this.src='https://placehold.co/120x120?text=iPhone+15'"/>
-                </div>
-                <div class="prod-body">
-                  <div class="prod-title">Apple iPhone 15 (128GB, Blue)</div>
-                  <div class="prod-rating"><i class="fa-solid fa-star" style="font-size:8px;"></i> 4.5</div>
-                  <div><span class="prod-price">₹64,999</span><span class="prod-mrp">₹79,900</span></div>
-                  <span class="prod-saving">You save ₹14,901</span>
-                  <div class="prod-stores"><span class="store-dot"></span> Compare 5 stores</div>
-                  <button class="prod-cta" type="button"><i class="fa-solid fa-bolt" style="font-size:8px;margin-right:3px;"></i>View Deal</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <nav class="bot-nav" aria-label="App navigation">
-            <div class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></div>
-            <div class="nav-item active"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></div>
-            <div class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></div>
-            <div class="nav-item"><i class="fa-solid fa-fire"></i><span>Deals</span></div>
-            <div class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></div>
-          </nav>
+        <div class="loading-phrase" id="loadingPhrase">Initializing search…</div>
+        <div class="loading-sub" id="loadingSub">Visco Compare is analyzing your query</div>
+
+        <div class="dot-loader" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
 
-        <!-- ═══ PAGE 3: PRODUCT DETAILS ═══ -->
-        <div class="page" id="page-details">
-          <div class="hdr">
-            <div class="logo-row">
-              <button type="button" aria-label="Back" style="width:32px;height:32px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;flex-shrink:0;">
-                <i class="fa-solid fa-arrow-left" style="color:#2563eb;font-size:12px;"></i>
-              </button>
-              <div class="logo-box" style="width:30px;height:30px;border-radius:9px;">
-                <img src="https://www.viscocompare.online/logo.png" alt="Visco Compare"
-                     onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-bag-shopping\' style=\'color:#2563eb;font-size:13px;\'></i>'"/>
-              </div>
-              <div>
-                <div class="logo-text" style="font-size:13px;">Visco Compare</div>
-                <div class="logo-sub">Product Details</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:6px;">
-              <button type="button" style="width:32px;height:32px;border-radius:9px;background:white;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <i class="fa-solid fa-share-nodes" style="color:#2563eb;font-size:12px;"></i>
-              </button>
-              <button type="button" style="width:32px;height:32px;border-radius:9px;background:white;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                <i class="fa-solid fa-user" style="color:#2563eb;font-size:12px;"></i>
-              </button>
-            </div>
+        <div class="progress-section">
+          <div class="progress-label">
+            <span>Analysis Progress</span>
+            <span><span id="progressPct">0</span>%</span>
           </div>
-          <div class="inner" id="details-inner">
-            <div class="prod-detail-img">
-              <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg" alt="iPhone 15 Pro"
-                   onerror="this.src='https://placehold.co/200x200?text=iPhone+15+Pro'"/>
-              <button type="button" class="wl-btn" id="wl-btn">
-                <i class="fa-regular fa-heart"></i>
-              </button>
-            </div>
-            <div class="detail-info">
-              <div class="brand-pill-d">
-                <span class="dot"><i class="fa-solid fa-store" style="font-size:9px;"></i></span>
-                Apple
-              </div>
-              <div class="detail-title">Apple iPhone 15 Pro (128GB, Natural Titanium)</div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-                <div class="avail-banner" style="margin-bottom:0;">
-                  <i class="fa-solid fa-circle-check"></i>
-                  In Stock · 5 stores
-                </div>
-                <div class="live-badge"><div class="live-dot"></div>Prices live</div>
-              </div>
-              <div class="rating-row-d">
-                <span class="rating-badge-d"><i class="fa-solid fa-star" style="font-size:9px;"></i> 4.7</span>
-                <span style="font-size:10px;color:#64748b;">12,483 ratings</span>
-              </div>
-              <div class="price-block-d">
-                <div><span class="current-price-d">₹1,19,900</span><span class="mrp-d">₹1,34,900</span></div>
-                <div class="disc-tag-d"><i class="fa-solid fa-arrow-down" style="font-size:9px;"></i> 11% OFF · You save ₹15,000</div>
-              </div>
-              <button type="button" class="cta-d" id="detail-cta">
-                Buy on Amazon <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px;margin-left:4px;"></i>
-              </button>
-            </div>
-
-            <!-- Price History Chart (NEW) -->
-            <div class="price-history">
-              <div class="price-history-title">
-                <span>📈 Price History — 90 Days</span>
-                <span style="font-size:9px;color:#64748b;font-weight:500;">All-time low: ₹1,14,900</span>
-              </div>
-              <div class="chart-wrap">
-                <svg class="chart-svg" viewBox="0 0 300 72" preserveAspectRatio="none" xmlns="[w3.org](http://www.w3.org/2000/svg)">
-                  <defs>
-                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#2563eb" stop-opacity="0.18"/>
-                      <stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"/>
-                    </linearGradient>
-                  </defs>
-                  <!-- Grid lines -->
-                  <line x1="0" y1="18" x2="300" y2="18" stroke="#e2e8f0" stroke-width="0.8"/>
-                  <line x1="0" y1="36" x2="300" y2="36" stroke="#e2e8f0" stroke-width="0.8"/>
-                  <line x1="0" y1="54" x2="300" y2="54" stroke="#e2e8f0" stroke-width="0.8"/>
-                  <!-- Area fill -->
-                  <path d="M0,52 C20,50 40,48 60,42 C80,36 90,55 110,50 C130,45 140,32 160,28 C180,24 200,40 220,36 C240,32 260,20 280,18 L300,20 L300,72 L0,72 Z"
-                        fill="url(#chartGrad)"/>
-                  <!-- Line -->
-                  <path d="M0,52 C20,50 40,48 60,42 C80,36 90,55 110,50 C130,45 140,32 160,28 C180,24 200,40 220,36 C240,32 260,20 280,18 L300,20"
-                        fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Current dot -->
-                  <circle cx="300" cy="20" r="4" fill="#2563eb" stroke="white" stroke-width="2"/>
-                  <!-- All-time low marker -->
-                  <circle cx="280" cy="18" r="3" fill="#22c55e" stroke="white" stroke-width="1.5"/>
-                  <line x1="280" y1="0" x2="280" y2="18" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
-                </svg>
-              </div>
-              <div class="chart-labels">
-                <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span>
-              </div>
-            </div>
-
-            <!-- Offers -->
-            <div class="offers-section">
-              <div class="offers-title">🏪 5 Stores — Compare All Prices</div>
-              <div class="offer-row-d best">
-                <div class="offer-thumb-d" style="background:#fff0f0;font-size:11px;font-weight:800;color:#e47911;">AMZ</div>
-                <div style="flex:1;min-width:0;">
-                  <div class="offer-name">Amazon <span class="best-badge-d">Best Price</span></div>
-                  <div class="offer-price-d">₹1,19,900</div>
-                  <div class="offer-del"><i class="fa-solid fa-truck-fast"></i> Free delivery · Today</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color:#cbd5e1;font-size:10px;"></i>
-              </div>
-              <div class="offer-row-d">
-                <div class="offer-thumb-d" style="background:#fff7f0;font-size:11px;font-weight:800;color:#2874f0;">FLK</div>
-                <div style="flex:1;min-width:0;">
-                  <div class="offer-name">Flipkart</div>
-                  <div class="offer-price-d">₹1,22,999 <span style="font-size:8.5px;color:#ef4444;font-weight:600;">+₹3,099</span></div>
-                  <div class="offer-del"><i class="fa-solid fa-truck-fast"></i> Free delivery</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color:#cbd5e1;font-size:10px;"></i>
-              </div>
-              <div class="offer-row-d">
-                <div class="offer-thumb-d" style="background:#f0f8ff;font-size:11px;font-weight:800;color:#0055a5;">CRM</div>
-                <div style="flex:1;min-width:0;">
-                  <div class="offer-name">Croma</div>
-                  <div class="offer-price-d">₹1,24,900 <span style="font-size:8.5px;color:#ef4444;font-weight:600;">+₹5,000</span></div>
-                  <div class="offer-del"><i class="fa-solid fa-truck-fast"></i> Free delivery</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color:#cbd5e1;font-size:10px;"></i>
-              </div>
-              <div class="offer-row-d">
-                <div class="offer-thumb-d" style="background:#f5f0ff;font-size:11px;font-weight:800;color:#6d28d9;">RLN</div>
-                <div style="flex:1;min-width:0;">
-                  <div class="offer-name">Reliance Digital</div>
-                  <div class="offer-price-d">₹1,26,490 <span style="font-size:8.5px;color:#ef4444;font-weight:600;">+₹6,590</span></div>
-                  <div class="offer-del"><i class="fa-solid fa-truck-fast"></i> Free delivery</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color:#cbd5e1;font-size:10px;"></i>
-              </div>
-            </div>
-
-            <!-- Savings Meter (NEW) -->
-            <div class="savings-meter">
-              <div class="savings-meter-title">💰 Store Price Comparison</div>
-              <div class="meter-row">
-                <div class="meter-label">Amazon</div>
-                <div class="meter-bar-wrap">
-                  <div class="meter-bar" style="width:88%;background:linear-gradient(90deg,#22c55e,#16a34a);"></div>
-                </div>
-                <div class="meter-val" style="color:#15803d;">₹1,19,900</div>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label">Flipkart</div>
-                <div class="meter-bar-wrap">
-                  <div class="meter-bar" style="width:91%;background:linear-gradient(90deg,#3b82f6,#2563eb);"></div>
-                </div>
-                <div class="meter-val">₹1,22,999</div>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label">Croma</div>
-                <div class="meter-bar-wrap">
-                  <div class="meter-bar" style="width:93%;background:linear-gradient(90deg,#f59e0b,#d97706);"></div>
-                </div>
-                <div class="meter-val">₹1,24,900</div>
-              </div>
-              <div class="meter-row">
-                <div class="meter-label">Reliance</div>
-                <div class="meter-bar-wrap">
-                  <div class="meter-bar" style="width:94%;background:linear-gradient(90deg,#ef4444,#dc2626);"></div>
-                </div>
-                <div class="meter-val">₹1,26,490</div>
-              </div>
-            </div>
-
-            <!-- Stats / verdict -->
-            <div class="stats-card">
-              <div class="stats-card-title">💡 Should You Buy Now?</div>
-              <div class="mini-stats">
-                <div class="mini-stat"><div class="mini-stat-lbl">Highest</div><div class="mini-stat-val">₹1,34,900</div></div>
-                <div class="mini-stat"><div class="mini-stat-lbl">Average</div><div class="mini-stat-val">₹1,27,400</div></div>
-                <div class="mini-stat" style="background:#dcfce7;"><div class="mini-stat-lbl" style="color:#22c55e;">Lowest Now</div><div class="mini-stat-val" style="color:#22c55e;">₹1,19,900</div></div>
-                <div class="mini-stat" style="background:#fffbeb;border:1px solid #fde68a;"><div class="mini-stat-lbl">All-time Low</div><div class="mini-stat-val" style="color:#d97706;">₹1,14,900</div></div>
-              </div>
-              <div class="deal-verdict">
-                <i class="fa-solid fa-circle-check" style="color:#22c55e;font-size:16px;flex-shrink:0;"></i>
-                <div>
-                  <div style="font-size:11px;font-weight:700;color:#15803d;">Great Deal — Best Price Right Now</div>
-                  <div style="font-size:9px;color:#16a34a;margin-top:1px;">You're saving ₹15,000 vs. MRP · Near all-time low</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Price Alert strip (NEW) -->
-            <div class="alert-strip">
-              <div class="alert-strip-icon"><i class="fa-solid fa-bell"></i></div>
-              <div>
-                <div class="alert-strip-text">Set a Price Alert</div>
-                <div class="alert-strip-sub">Get notified when price drops below ₹1,14,900</div>
-              </div>
-              <button class="alert-strip-btn">Alert Me</button>
-            </div>
-
-            <div style="height:16px;"></div>
+          <div class="progress-track">
+            <div class="progress-fill active" id="progressFill"></div>
           </div>
-          <nav class="bot-nav" aria-label="App navigation">
-            <div class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></div>
-            <div class="nav-item"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></div>
-            <div class="nav-item"><i class="fa-solid fa-heart"></i><span>Wishlist</span></div>
-            <div class="nav-item active"><i class="fa-solid fa-fire"></i><span>Deals</span></div>
-            <div class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></div>
-          </nav>
+          <div class="progress-pct" id="progressStatus">Starting up…</div>
         </div>
 
-      </div><!-- end screen-container -->
-    </div><!-- end phone-frame -->
-  </div><!-- end phone-outer -->
-</div><!-- end stage-wrap -->
+        <div class="timeline" id="timeline">
+          <div class="tl-step" data-step="searching">
+            <div class="tl-dot">1</div>
+            <div class="tl-content">
+              <div class="tl-title">Searching Products</div>
+              <div class="tl-desc">Querying product catalog</div>
+            </div>
+          </div>
+          <div class="tl-step" data-step="urls">
+            <div class="tl-dot">2</div>
+            <div class="tl-content">
+              <div class="tl-title">URLs Discovered</div>
+              <div class="tl-desc">Locating store listings</div>
+            </div>
+          </div>
+          <div class="tl-step" data-step="parsing">
+            <div class="tl-dot">3</div>
+            <div class="tl-content">
+              <div class="tl-title">Parsing Products</div>
+              <div class="tl-desc">Extracting product details</div>
+            </div>
+          </div>
+          <div class="tl-step" data-step="offers">
+            <div class="tl-dot">4</div>
+            <div class="tl-content">
+              <div class="tl-title">Collecting Offers</div>
+              <div class="tl-desc">Gathering pricing data</div>
+            </div>
+          </div>
+          <div class="tl-step" data-step="comparing">
+            <div class="tl-dot">5</div>
+            <div class="tl-content">
+              <div class="tl-title">Comparing Prices</div>
+              <div class="tl-desc">Ranking by best value</div>
+            </div>
+          </div>
+          <div class="tl-step" data-step="finished">
+            <div class="tl-dot">6</div>
+            <div class="tl-content">
+              <div class="tl-title">Finished</div>
+              <div class="tl-desc">Results ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<!-- ═══ NAVIGATION CONTROLS ═══ -->
-<div id="nav-controls" role="toolbar" aria-label="Demo controls">
-  <button class="nav-ctrl-btn icon-btn" id="btn-prev"
-          data-tip="Previous" aria-label="Previous step" disabled>
-    <i class="fa-solid fa-backward-step"></i>
-  </button>
+      <!-- Skeleton cards shown during load -->
+      <div class="skeleton-grid" id="skeletonGrid"></div>
 
-  <button class="nav-ctrl-btn play-btn" id="btn-play"
-          data-tip="Play / Pause" aria-label="Play or pause demo">
-    <i class="fa-solid fa-play" id="play-icon"></i>
-  </button>
+      <!-- Live products appended here during loading -->
+      <div id="liveResultsDuringLoad"></div>
+    </div>
 
-  <button class="nav-ctrl-btn icon-btn" id="btn-next"
-          data-tip="Next" aria-label="Next step">
-    <i class="fa-solid fa-forward-step"></i>
-  </button>
+    <!-- ERROR VIEW -->
+    <div class="view" id="errorView">
+      <div style="display:flex;justify-content:center;padding:60px 24px;">
+        <div class="error-card">
+          <div class="error-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>
+          </div>
+          <h3>Something went wrong</h3>
+          <p id="errorMsg">We couldn't complete this comparison. This may be a temporary issue. Please try again.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" id="retryBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v6h-6"/></svg>
+              Retry
+            </button>
+            <button class="btn btn-ghost" id="newSearchBtn">New Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="nav-ctrl-divider"></div>
+    <!-- RESULTS VIEW -->
+    <div class="view" id="resultsView">
+      <div class="stats-bar" id="statsBar"></div>
 
-  <div id="step-dots"></div>
-  <span id="step-label">1 / 8</span>
+      <div class="results-header">
+        <div>
+          <div class="results-title" id="resultsTitle">Comparison Results</div>
+          <div class="results-count" id="resultsCount"></div>
+        </div>
+        <div class="sort-row">
+          <span class="sort-label">Sort by</span>
+          <select class="sort-select" id="sortSelect" aria-label="Sort results">
+            <option value="relevance">Relevance</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Best Rating</option>
+            <option value="offers">Most Offers</option>
+          </select>
+        </div>
+      </div>
 
-  <div class="nav-ctrl-divider"></div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
 
-  <button class="nav-ctrl-btn icon-btn" id="btn-replay"
-          data-tip="Replay" aria-label="Replay demo">
-    <i class="fa-solid fa-rotate-left"></i>
-  </button>
+  </div>
+</main>
 
-  <button class="nav-ctrl-btn icon-btn" id="btn-skip"
-          data-tip="Skip to end" aria-label="Skip to end">
-    <i class="fa-solid fa-forward-fast"></i>
-  </button>
-</div>
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <div class="logo-mark">V</div>
+      <div class="logo-text">Visco <span style="color:var(--accent)">Compare</span></div>
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Support</a>
+    </div>
+    <div>© 2026 Visco Compare. All rights reserved.</div>
+  </div>
+</footer>
 
 <script>
+(() => {
 'use strict';
 
-/* ═══════════════════════════════════════════════════════════
-   NAVIGATION CONTROLLER
-═══════════════════════════════════════════════════════════ */
-class NavigationController {
-  constructor(totalSteps) {
-    this.totalSteps      = totalSteps;
-    this.currentStep     = 0;
-    this.isPlaying       = false;
-    this.isPaused        = false;
-    this._pauseResolvers = [];
+/* ============================================================
+   CONFIG
+============================================================ */
+const API_BASE = "http://140.245.229.189:4000";
+const POLL_INTERVAL = 1200;
+const MAX_HISTORY = 12;
 
-    this.$play   = document.getElementById('btn-play');
-    this.$prev   = document.getElementById('btn-prev');
-    this.$next   = document.getElementById('btn-next');
-    this.$replay = document.getElementById('btn-replay');
-    this.$skip   = document.getElementById('btn-skip');
-    this.$icon   = document.getElementById('play-icon');
-    this.$dots   = document.getElementById('step-dots');
-    this.$label  = document.getElementById('step-label');
+/* ============================================================
+   STATE
+============================================================ */
+const state = {
+  jobId: null,
+  polling: false,
+  pollTimer: null,
+  products: [],
+  query: '',
+  history: loadHistory(),
+  savedItems: loadSaved(),
+  lastQuery: '',
+  stats: { products: 0, offers: 0, stores: 0, lowest: null, avgSavings: 0 }
+};
 
-    this._buildDots();
-    this._bindEvents();
-    this._updateUI();
-  }
+/* ============================================================
+   UTILS
+============================================================ */
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-  _buildDots() {
-    this.$dots.innerHTML = '';
-    for (let i = 0; i < this.totalSteps; i++) {
-      const d = document.createElement('div');
-      d.className    = 'step-dot';
-      d.dataset.step = i;
-      this.$dots.appendChild(d);
-    }
-  }
-
-  _bindEvents() {
-    this.$play.addEventListener('click',   () => this.togglePlay());
-    this.$replay.addEventListener('click', () => this.replay());
-    this.$skip.addEventListener('click',   () => this.skip());
-    this.$prev.addEventListener('click',   () => this.prevStep());
-    this.$next.addEventListener('click',   () => this.nextStep());
-  }
-
-  togglePlay() {
-    if (!this.isPlaying)    this.play();
-    else if (this.isPaused) this.resume();
-    else                    this.pause();
-  }
-
-  play() {
-    this.isPlaying = true;
-    this.isPaused  = false;
-    this._updateUI();
-    if (this._onPlay) this._onPlay();
-  }
-
-  pause() {
-    this.isPaused = true;
-    this._updateUI();
-  }
-
-  resume() {
-    this.isPaused = false;
-    this._updateUI();
-    const resolvers = this._pauseResolvers.splice(0);
-    resolvers.forEach(r => r());
-  }
-
-  replay() {
-    this.currentStep = 0;
-    this.isPaused    = false;
-    const resolvers  = this._pauseResolvers.splice(0);
-    resolvers.forEach(r => r());
-    this._updateUI();
-    if (this._onReplay) this._onReplay();
-  }
-
-  skip() {
-    this.currentStep = this.totalSteps - 1;
-    this.isPaused    = false;
-    const resolvers  = this._pauseResolvers.splice(0);
-    resolvers.forEach(r => r());
-    this._updateUI();
-    if (this._onSkip) this._onSkip();
-  }
-
-  prevStep() {
-    if (this.currentStep > 0) {
-      this.currentStep--;
-      this._updateUI();
-      if (this._onStep) this._onStep(this.currentStep, 'prev');
-    }
-  }
-
-  nextStep() {
-    if (this.currentStep < this.totalSteps - 1) {
-      this.currentStep++;
-      this._updateUI();
-      if (this._onStep) this._onStep(this.currentStep, 'next');
-    }
-  }
-
-  advanceTo(step) {
-    this.currentStep = Math.max(0, Math.min(step, this.totalSteps - 1));
-    this._updateUI();
-  }
-
-  waitIfPaused() {
-    if (!this.isPaused) return Promise.resolve();
-    return new Promise(resolve => this._pauseResolvers.push(resolve));
-  }
-
-  _updateUI() {
-    // Play / pause icon
-    if (!this.isPlaying || this.isPaused) {
-      this.$icon.className = 'fa-solid fa-play';
-      this.$play.setAttribute('data-tip', 'Play');
-    } else {
-      this.$icon.className = 'fa-solid fa-pause';
-      this.$play.setAttribute('data-tip', 'Pause');
-    }
-
-    // Prev / Next buttons
-    this.$prev.disabled = this.currentStep <= 0;
-    this.$next.disabled = this.currentStep >= this.totalSteps - 1;
-
-    // Step label
-    if (this.$label) this.$label.textContent = `${this.currentStep + 1} / ${this.totalSteps}`;
-
-    // Dots
-    this.$dots.querySelectorAll('.step-dot').forEach((d, i) => {
-      d.classList.remove('active', 'done');
-      if      (i === this.currentStep) d.classList.add('active');
-      else if (i <  this.currentStep)  d.classList.add('done');
-    });
-  }
-
-  onPlay(fn)   { this._onPlay   = fn; }
-  onReplay(fn) { this._onReplay = fn; }
-  onSkip(fn)   { this._onSkip   = fn; }
-  onStep(fn)   { this._onStep   = fn; }
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
+  );
 }
 
-/* ═══════════════════════════════════════════════════════════
-   GLOBALS
-═══════════════════════════════════════════════════════════ */
-const TOTAL_STEPS = 8;
-const navCtrl     = new NavigationController(TOTAL_STEPS);
-
-/* ═══════════════════════════════════════════════════════════
-   PARTICLES
-═══════════════════════════════════════════════════════════ */
-(function spawnParticles() {
-  const colors = [
-    'rgba(37,99,235,0.6)',
-    'rgba(96,165,250,0.5)',
-    'rgba(167,139,250,0.4)',
-    'rgba(255,255,255,0.2)'
-  ];
-  for (let i = 0; i < 24; i++) {
-    const p    = document.createElement('div');
-    p.className = 'particle';
-    const size  = 2 + Math.random() * 4;
-    p.style.cssText = `
-      width:${size}px;height:${size}px;
-      left:${Math.random()*100}%;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      animation-duration:${8+Math.random()*14}s;
-      animation-delay:${Math.random()*10}s;
-    `;
-    document.querySelector('.bg-scene').appendChild(p);
-  }
-})();
-
-/* ═══════════════════════════════════════════════════════════
-   FLOATING LOGO
-═══════════════════════════════════════════════════════════ */
-const floatingLogo = document.getElementById('floating-logo');
-let floatX = window.innerWidth  * 0.1;
-let floatY = window.innerHeight * 0.15;
-let floatVX = 0.4 + Math.random() * 0.3;
-let floatVY = 0.25 + Math.random() * 0.25;
-let floatVisible = false;
-
-(function animateFloatingLogo() {
-  if (floatVisible) {
-    floatX += floatVX;
-    floatY += floatVY;
-    const fw = 200, fh = 50;
-    if (floatX + fw > window.innerWidth)  floatVX = -Math.abs(floatVX);
-    if (floatX < 0)                        floatVX =  Math.abs(floatVX);
-    if (floatY + fh > window.innerHeight) floatVY = -Math.abs(floatVY);
-    if (floatY < 0)                        floatVY =  Math.abs(floatVY);
-    floatingLogo.style.left = floatX + 'px';
-    floatingLogo.style.top  = floatY + 'px';
-  }
-  requestAnimationFrame(animateFloatingLogo);
-})();
-
-function showFloatingLogo() { floatVisible = true;  floatingLogo.classList.add('visible'); }
-function hideFloatingLogo() { floatVisible = false; floatingLogo.classList.remove('visible'); }
-
-/* ═══════════════════════════════════════════════════════════
-   CURSOR
-═══════════════════════════════════════════════════════════ */
-const cur    = document.getElementById('cursor');
-const trail  = document.getElementById('cursor-trail');
-const trail2 = document.getElementById('cursor-trail2');
-let curX = window.innerWidth  / 2;
-let curY = window.innerHeight / 2;
-
-function setCursor(x, y) {
-  curX = x; curY = y;
-  cur.style.left    = x + 'px';
-  cur.style.top     = y + 'px';
-  setTimeout(() => { trail.style.left  = x + 'px'; trail.style.top  = y + 'px'; }, 90);
-  setTimeout(() => { trail2.style.left = x + 'px'; trail2.style.top = y + 'px'; }, 200);
-}
-setCursor(curX, curY);
-
-function showCursor() {
-  cur.style.opacity    = '1';
-  trail.style.opacity  = '0.8';
-  trail2.style.opacity = '0.5';
+function fmt(n) {
+  const num = Number(n);
+  if (isNaN(num)) return '—';
+  return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 
-function clickAnim(x, y) {
-  cur.classList.add('clicking');
-  setTimeout(() => cur.classList.remove('clicking'), 200);
-  const rip      = document.createElement('div');
-  rip.className  = 'ripple';
-  rip.style.left = x + 'px';
-  rip.style.top  = y + 'px';
-  document.body.appendChild(rip);
-  setTimeout(() => rip.remove(), 600);
+function fmtUSD(n) {
+  const num = Number(n);
+  if (isNaN(num)) return '—';
+  if (num >= 100) return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  return '$' + num.toFixed(2);
 }
 
-async function clickEl(el) {
+function fmtPrice(n) {
+  const num = Number(n);
+  if (isNaN(num) || num <= 0) return '—';
+  return num < 10000 ? '$' + num.toFixed(2) : '₹' + num.toLocaleString('en-IN');
+}
+
+function randId() {
+  return Math.random().toString(36).slice(2, 9);
+}
+
+function debounce(fn, wait) {
+  let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), wait); };
+}
+
+function rippleEffect(btn, e) {
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 1.8;
+  const el = document.createElement('span');
+  el.className = 'ripple-el';
+  el.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(el);
+  setTimeout(() => el.remove(), 600);
+}
+
+/* ============================================================
+   LOCAL STORAGE
+============================================================ */
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem('vc_history') || '[]'); }
+  catch { return []; }
+}
+function saveHistory(h) {
+  try { localStorage.setItem('vc_history', JSON.stringify(h)); } catch {}
+}
+function addHistory(q) {
+  const h = state.history.filter(x => x.toLowerCase() !== q.toLowerCase());
+  h.unshift(q);
+  state.history = h.slice(0, MAX_HISTORY);
+  saveHistory(state.history);
+}
+function loadSaved() {
+  try { return new Set(JSON.parse(localStorage.getItem('vc_saved') || '[]')); }
+  catch { return new Set(); }
+}
+function toggleSaved(id) {
+  if (state.savedItems.has(id)) state.savedItems.delete(id);
+  else state.savedItems.add(id);
+  try { localStorage.setItem('vc_saved', JSON.stringify([...state.savedItems])); } catch {}
+}
+
+/* ============================================================
+   TOASTS
+============================================================ */
+const toastArea = $('#toastArea');
+function showToast(type, title, msg = '', duration = 4000) {
+  const icons = {
+    success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>',
+    error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>',
+    warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a1.5 1.5 0 0 0 1.3 2.3h17.8a1.5 1.5 0 0 0 1.3-2.3L13.7 3.9a1.5 1.5 0 0 0-2.6 0zM12 9v5M12 16.5h.01"/></svg>',
+    info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>'
+  };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.style.setProperty('--td', duration + 'ms');
+  t.innerHTML = `
+    <span class="toast-icon">${icons[type] || icons.info}</span>
+    <div class="toast-body">
+      <div class="toast-title">${esc(title)}</div>
+      ${msg ? `<div class="toast-msg">${esc(msg)}</div>` : ''}
+    </div>
+    <button class="toast-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>`;
+  t.querySelector('.toast-close').onclick = () => removeToast(t);
+  toastArea.appendChild(t);
+  const timer = setTimeout(() => removeToast(t), duration);
+  t._timer = timer;
+}
+function removeToast(t) {
+  if (t._removed) return;
+  t._removed = true;
+  clearTimeout(t._timer);
+  t.classList.add('out');
+  setTimeout(() => t.remove(), 320);
+}
+
+/* ============================================================
+   VIEW MANAGEMENT
+============================================================ */
+function showView(id) {
+  $$('.view').forEach(v => v.classList.remove('active'));
+  const v = $('#' + id);
+  if (v) v.classList.add('active');
+}
+
+/* ============================================================
+   STATUS INDICATOR
+============================================================ */
+function setStatus(mode, label) {
+  const dot = $('#statusDot');
+  const lbl = $('#statusLabel');
+  dot.className = 'status-dot ' + mode;
+  if (lbl) lbl.textContent = label;
+}
+
+/* ============================================================
+   LOADING PHRASES
+============================================================ */
+const PHRASES = [
+  { phrase: 'Searching products…', sub: 'Scanning the product catalog for your query' },
+  { phrase: 'Discovering stores…', sub: 'Locating available stores and listings' },
+  { phrase: 'Collecting offers…', sub: 'Gathering pricing from all found sources' },
+  { phrase: 'Comparing prices…', sub: 'Analyzing and ranking by best value' },
+  { phrase: 'Finding best deals…', sub: 'Identifying top savings opportunities' },
+  { phrase: 'Processing results…', sub: 'Finalizing comparison data for you' }
+];
+let phraseIdx = 0;
+let phraseTimer = null;
+function startPhrases() {
+  phraseIdx = 0;
+  updatePhrase();
+  phraseTimer = setInterval(() => {
+    phraseIdx = (phraseIdx + 1) % PHRASES.length;
+    updatePhrase();
+  }, 2200);
+}
+function stopPhrases() {
+  clearInterval(phraseTimer);
+}
+function updatePhrase() {
+  const el = $('#loadingPhrase');
+  const sub = $('#loadingSub');
   if (!el) return;
-  const r = el.getBoundingClientRect();
-  const x = r.left + r.width  / 2;
-  const y = r.top  + r.height / 2;
-  await moveTo(x, y, 520);
-  await wait(100);
-  clickAnim(x, y);
-  el.classList.add('click-pulse');
-  setTimeout(() => el.classList.remove('click-pulse'), 500);
+  el.style.animation = 'none';
+  el.offsetHeight; // reflow
+  el.style.animation = 'fadeIn .4s var(--ease)';
+  el.textContent = PHRASES[phraseIdx].phrase;
+  if (sub) sub.textContent = PHRASES[phraseIdx].sub;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PROGRESS BAR
-═══════════════════════════════════════════════════════════ */
-const bar = document.getElementById('progress-bar');
-function setProgress(pct) { bar.style.width = pct + '%'; }
+/* ============================================================
+   TIMELINE
+============================================================ */
+const TL_STEPS = ['searching','urls','parsing','offers','comparing','finished'];
+let tlCurrentIdx = -1;
 
-/* ═══════════════════════════════════════════════════════════
-   PAGE TRANSITIONS (FIXED — no ghost active classes)
-═══════════════════════════════════════════════════════════ */
-let currentPage = 'page-home';
-
-function goToPage(id) {
-  return new Promise(resolve => {
-    if (currentPage === id) { resolve(); return; }
-
-    const fromEl = document.getElementById(currentPage);
-    const toEl   = document.getElementById(id);
-
-    // Prepare incoming page off-screen (but visible in DOM flow)
-    toEl.style.opacity   = '0';
-    toEl.style.transform = 'translateX(60px)';
-    toEl.classList.remove('exit-left');
-    toEl.classList.add('active');
-
-    // Animate outgoing
-    fromEl.classList.add('exit-left');
-
-    // Force reflow then slide in
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      toEl.style.opacity   = '';
-      toEl.style.transform = '';
-    }));
-
-    setTimeout(() => {
-      fromEl.classList.remove('active', 'exit-left');
-      fromEl.style.opacity   = '';
-      fromEl.style.transform = '';
-      currentPage = id;
-      resolve();
-    }, 520);
+function advanceTimeline(idx) {
+  if (idx <= tlCurrentIdx) return;
+  tlCurrentIdx = idx;
+  $$('.tl-step').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i < idx) el.classList.add('done');
+    else if (i === idx) el.classList.add('active');
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TYPING
-═══════════════════════════════════════════════════════════ */
-function typeText(el, txt, speed = 80) {
-  return new Promise(resolve => {
-    el.value = '';
-    let i = 0;
-    function next() {
-      if (i < txt.length) {
-        el.value += txt[i++];
-        setTimeout(next, speed + Math.random() * 25);
-      } else {
-        resolve();
+function progressToTimeline(pct) {
+  if (pct < 10) advanceTimeline(0);
+  else if (pct < 25) advanceTimeline(1);
+  else if (pct < 50) advanceTimeline(2);
+  else if (pct < 72) advanceTimeline(3);
+  else if (pct < 92) advanceTimeline(4);
+  else advanceTimeline(5);
+}
+
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+let currentPct = 0;
+let targetPct = 0;
+let pctAnimFrame = null;
+
+function setProgress(pct) {
+  targetPct = Math.min(100, Math.max(0, pct));
+  animateProgress();
+}
+
+function animateProgress() {
+  if (pctAnimFrame) cancelAnimationFrame(pctAnimFrame);
+  const step = () => {
+    const diff = targetPct - currentPct;
+    if (Math.abs(diff) < 0.3) {
+      currentPct = targetPct;
+    } else {
+      currentPct += diff * 0.12;
+    }
+    const fill = $('#progressFill');
+    const pct = $('#progressPct');
+    const statusEl = $('#progressStatus');
+    if (fill) fill.style.width = currentPct.toFixed(1) + '%';
+    if (pct) pct.textContent = Math.round(currentPct);
+    if (statusEl) {
+      if (currentPct < 20) statusEl.textContent = 'Starting analysis…';
+      else if (currentPct < 40) statusEl.textContent = 'Locating listings…';
+      else if (currentPct < 65) statusEl.textContent = 'Extracting product data…';
+      else if (currentPct < 88) statusEl.textContent = 'Comparing prices across stores…';
+      else if (currentPct < 99) statusEl.textContent = 'Finalizing results…';
+      else statusEl.textContent = 'Complete!';
+    }
+    progressToTimeline(currentPct);
+    if (Math.abs(targetPct - currentPct) > 0.3) {
+      pctAnimFrame = requestAnimationFrame(step);
+    }
+  };
+  pctAnimFrame = requestAnimationFrame(step);
+}
+
+/* ============================================================
+   SKELETON CARDS
+============================================================ */
+function renderSkeletons(count = 6) {
+  const grid = $('#skeletonGrid');
+  if (!grid) return;
+  grid.innerHTML = Array.from({ length: count }).map(() => `
+    <div class="skel-card">
+      <div class="skel img"></div>
+      <div class="skel-body">
+        <div class="skel line" style="height:10px;width:40%;"></div>
+        <div class="skel line" style="height:14px;width:85%;"></div>
+        <div class="skel line" style="height:11px;width:55%;"></div>
+        <div class="skel line" style="height:22px;width:45%;margin-top:4px;"></div>
+        <div class="skel line" style="height:11px;width:70%;"></div>
+      </div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   STATS BAR
+============================================================ */
+function renderStats() {
+  const { stats } = state;
+  const items = [
+    {
+      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+      value: stats.products,
+      label: 'Products Found',
+      fmt: v => v.toString()
+    },
+    {
+      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 12.1 12 3.5H4v8l8.6 8.6a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8z"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+      value: stats.offers,
+      label: 'Offers Found',
+      fmt: v => v.toString()
+    },
+    {
+      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5M4 9v11h16V9M4 9h16"/></svg>`,
+      value: stats.stores,
+      label: 'Stores Compared',
+      fmt: v => v.toString()
+    },
+    {
+      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+      value: stats.lowest,
+      label: 'Lowest Price',
+      fmt: v => v ? fmtPrice(v) : '—'
+    },
+    {
+      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+      value: stats.avgSavings,
+      label: 'Avg. Savings',
+      fmt: v => v ? fmtPrice(v) : '—'
+    }
+  ];
+
+  const bar = $('#statsBar');
+  if (!bar) return;
+  bar.innerHTML = items.map(it => `
+    <div class="stat-card">
+      <div class="stat-icon">${it.icon}</div>
+      <div class="stat-value">${it.fmt(it.value)}</div>
+      <div class="stat-label">${it.label}</div>
+    </div>`).join('');
+}
+
+function updateStats(products) {
+  const allOffers = products.flatMap(p => p.offers || []);
+  const prices = products
+    .map(p => p.offers && p.offers.length ? Math.min(...p.offers.map(o => Number(o.price || 0)).filter(x => x > 0)) : 0)
+    .filter(x => x > 0);
+
+  const stores = new Set(allOffers.map(o => o.storeName || o.store || o.name || '').filter(Boolean));
+
+  state.stats = {
+    products: products.length,
+    offers: allOffers.length,
+    stores: stores.size,
+    lowest: prices.length ? Math.min(...prices) : null,
+    avgSavings: (() => {
+      const highs = products
+        .map(p => p.offers && p.offers.length ? Math.max(...p.offers.map(o => Number(o.price || 0)).filter(x => x > 0)) : 0)
+        .filter(x => x > 0);
+      const lows = prices;
+      if (!highs.length || !lows.length) return null;
+      const avgHigh = highs.reduce((a, b) => a + b, 0) / highs.length;
+      const avgLow = lows.reduce((a, b) => a + b, 0) / lows.length;
+      return Math.max(0, avgHigh - avgLow);
+    })()
+  };
+  renderStats();
+}
+
+/* ============================================================
+   AVAILABILITY HELPER
+============================================================ */
+function getAvail(p) {
+  const raw = (p.availability || p.stock || '').toLowerCase();
+  if (raw.includes('out') || raw === 'false' || raw === '0') return 'out';
+  if (raw.includes('limited') || raw.includes('few') || raw.includes('hurry')) return 'limited';
+  return 'in';
+}
+
+function availLabel(code) {
+  return { in: 'In Stock', limited: 'Limited', out: 'Out of Stock' }[code] || 'In Stock';
+}
+
+/* ============================================================
+   PRODUCT IMAGE
+============================================================ */
+function getProductImage(p) {
+  const img = p.image || p.imageUrl || p.img || p.thumbnail || p.photo || '';
+  if (img && img.startsWith('http')) return img;
+  // SVG placeholder with gradient
+  const name = (p.name || p.title || 'P').trim();
+  const letter = name[0].toUpperCase();
+  const hue = ((name.charCodeAt(0) || 65) * 13) % 360;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="hsl(${hue},60%,30%)" stop-opacity=".8"/>
+        <stop offset="100%" stop-color="hsl(${(hue+40)%360},70%,20%)" stop-opacity=".9"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="200" fill="#141A26"/>
+    <rect width="400" height="200" fill="url(#g)"/>
+    <circle cx="200" cy="100" r="55" fill="rgba(255,255,255,.06)"/>
+    <text x="200" y="122" font-family="Inter, sans-serif" font-size="64" font-weight="800"
+      fill="#fff" text-anchor="middle" opacity=".9">${letter}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* ============================================================
+   RENDER PRODUCT CARD
+============================================================ */
+function renderProductCard(p, delay = 0) {
+  const id = p.id || p._id || randId();
+  const name = esc(p.name || p.title || 'Unknown Product');
+  const brand = esc(p.brand || p.manufacturer || '');
+  const category = esc(p.category || p.type || '');
+  const rating = Number(p.rating || p.stars || 0);
+  const avail = getAvail(p);
+  const saved = state.savedItems.has(id);
+  const imgSrc = getProductImage(p);
+
+  const offers = Array.isArray(p.offers) ? p.offers : [];
+  const prices = offers.map(o => Number(o.price || o.amount || 0)).filter(x => x > 0);
+  const lowestPrice = prices.length ? Math.min(...prices) : Number(p.price || p.lowestPrice || 0);
+  const highestPrice = prices.length ? Math.max(...prices) : Number(p.maxPrice || p.highestPrice || 0);
+  const avgPrice = prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : lowestPrice;
+
+  const stars = rating > 0 ? `
+    <div class="product-rating">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+      ${rating.toFixed(1)}
+    </div>` : '';
+
+  const offersHtml = offers.length ? offers.map((o, i) => {
+    const storeName = esc(o.storeName || o.store || o.name || `Store ${i + 1}`);
+    const storeInitial = storeName.trim()[0]?.toUpperCase() || 'S';
+    const price = Number(o.price || o.amount || 0);
+    const isFree = o.freeDelivery || o.freeShipping || o.delivery === 'free';
+    const hasCoupon = o.coupon || o.couponCode || o.hasCoupon;
+    const isAvail = !((o.availability || '').toLowerCase().includes('out'));
+    const savings = price > 0 && highestPrice > price ? highestPrice - price : 0;
+
+    return `
+      <div class="offer-row" style="animation-delay:${i * 60}ms">
+        <div class="offer-logo">${storeInitial}</div>
+        <div class="offer-info">
+          <div class="offer-store">${storeName}</div>
+          <div class="offer-tags">
+            ${isFree ? '<span class="o-tag free">Free delivery</span>' : ''}
+            ${hasCoupon ? '<span class="o-tag coupon">Coupon</span>' : ''}
+            ${!isAvail ? '<span class="o-tag unavail">Out of stock</span>' : ''}
+          </div>
+        </div>
+        <div class="offer-price-col">
+          <div class="offer-price-val">${price > 0 ? fmtPrice(price) : '—'}</div>
+          ${savings > 0 ? `<div class="offer-savings">Save ${fmtPrice(savings)}</div>` : ''}
+        </div>
+        <a href="${esc(o.url || o.link || o.productUrl || '#')}" target="_blank" rel="noopener noreferrer" class="offer-buy-btn">Buy</a>
+      </div>`;
+  }).join('') : '<div style="padding:14px;text-align:center;font-size:13px;color:var(--muted)">No offer details available</div>';
+
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.dataset.id = id;
+  card.style.animationDelay = delay + 'ms';
+
+  card.innerHTML = `
+    <div class="product-img-wrap">
+      <img class="product-img" src="${imgSrc}" alt="${name}" loading="lazy"
+        onerror="this.src='${getProductImage({name:'P'})}'" >
+      <span class="avail-badge ${avail}">${availLabel(avail)}</span>
+      <button class="save-btn ${saved ? 'saved' : ''}" data-id="${id}" aria-label="${saved ? 'Remove from saved' : 'Save product'}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+    <div class="product-body">
+      <div class="product-meta-top">
+        ${category ? `<span class="product-category">${category}</span>` : '<span></span>'}
+        ${stars}
+      </div>
+      <div>
+        <div class="product-name">${name}</div>
+        ${brand ? `<div class="product-brand">${brand}</div>` : ''}
+      </div>
+      <div class="price-block">
+        <div class="price-main">
+          <span class="price-current">${lowestPrice > 0 ? fmtPrice(lowestPrice) : '—'}</span>
+          ${lowestPrice > 0 && highestPrice > lowestPrice ? `<span class="price-note">Lowest</span>` : ''}
+        </div>
+        ${highestPrice > lowestPrice ? `
+          <div class="price-range">
+            <span>High: <b>${fmtPrice(highestPrice)}</b></span>
+            <span>Avg: <b>${fmtPrice(avgPrice)}</b></span>
+          </div>` : ''}
+      </div>
+      <div class="product-footer">
+        <button class="offers-toggle-btn" data-id="${id}" aria-expanded="false">
+          <span>View ${offers.length || 0} offer${offers.length !== 1 ? 's' : ''}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="offers-panel" id="offers-${id}">
+          <div class="offers-list">${offersHtml}</div>
+        </div>
+      </div>
+    </div>`;
+
+  // Save button
+  card.querySelector('.save-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const pid = btn.dataset.id;
+    toggleSaved(pid);
+    const isSaved = state.savedItems.has(pid);
+    btn.classList.toggle('saved', isSaved);
+    btn.querySelector('svg').setAttribute('fill', isSaved ? 'currentColor' : 'none');
+    showToast(isSaved ? 'success' : 'info', isSaved ? 'Saved!' : 'Removed', isSaved ? 'Product added to your saved items.' : 'Removed from saved items.', 2500);
+  });
+
+  // Offers toggle
+  card.querySelector('.offers-toggle-btn').addEventListener('click', (e) => {
+    const btn = e.currentTarget;
+    const pid = btn.dataset.id;
+    const panel = card.querySelector(`#offers-${pid}`);
+    const isOpen = panel.classList.contains('open');
+    panel.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  return card;
+}
+
+/* ============================================================
+   RENDER RESULTS
+============================================================ */
+function renderResults(products, query) {
+  const grid = $('#productGrid');
+  if (!grid) return;
+
+  const title = $('#resultsTitle');
+  const count = $('#resultsCount');
+  if (title) title.textContent = `Results for "${query}"`;
+  if (count) count.textContent = `${products.length} product${products.length !== 1 ? 's' : ''} found`;
+
+  updateStats(products);
+  renderStats();
+
+  grid.innerHTML = '';
+  products.forEach((p, i) => {
+    const card = renderProductCard(p, i * 55);
+    grid.appendChild(card);
+  });
+}
+
+/* ============================================================
+   SORT
+============================================================ */
+function sortProducts(products, mode) {
+  const arr = [...products];
+  const getPrice = p => {
+    const offers = Array.isArray(p.offers) ? p.offers : [];
+    const prices = offers.map(o => Number(o.price || 0)).filter(x => x > 0);
+    return prices.length ? Math.min(...prices) : Number(p.price || 0);
+  };
+  switch (mode) {
+    case 'price-low': return arr.sort((a, b) => getPrice(a) - getPrice(b));
+    case 'price-high': return arr.sort((a, b) => getPrice(b) - getPrice(a));
+    case 'rating': return arr.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+    case 'offers': return arr.sort((a, b) => (b.offers?.length || 0) - (a.offers?.length || 0));
+    default: return arr;
+  }
+}
+
+/* ============================================================
+   API CALLS
+============================================================ */
+async function createJob(query) {
+  const res = await fetch(`${API_BASE}/jobs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if (!data.success && !data.jobId) throw new Error(data.message || 'Failed to create job');
+  return data.jobId || data.id;
+}
+
+async function getJob(jobId) {
+  const res = await fetch(`${API_BASE}/jobs/${jobId}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+/* ============================================================
+   POLL JOB
+============================================================ */
+function parseProducts(data) {
+  // Try all known locations for product data
+  const rv = data.returnvalue || data.result || {};
+  return (
+    rv.products ||
+    rv.data?.products ||
+    data.products ||
+    data.data?.products ||
+    []
+  );
+}
+
+function getProgress(data) {
+  if (typeof data.progress === 'number') return data.progress;
+  if (data.progress?.percentage != null) return Number(data.progress.percentage);
+  if (data.dbStatus) {
+    const s = (data.dbStatus || '').toLowerCase();
+    if (s.includes('complet')) return 100;
+    if (s.includes('compar')) return 85;
+    if (s.includes('offer')) return 65;
+    if (s.includes('pars')) return 45;
+    if (s.includes('url')) return 25;
+    if (s.includes('search')) return 10;
+  }
+  return 0;
+}
+
+async function pollJob() {
+  if (!state.jobId || !state.polling) return;
+
+  try {
+    const data = await getJob(state.jobId);
+    const status = (data.status || '').toLowerCase();
+    const pct = getProgress(data);
+    setProgress(pct);
+
+    // Append any live products
+    const products = parseProducts(data);
+    if (products.length > state.products.length) {
+      const newProds = products.slice(state.products.length);
+      state.products = products;
+
+      // If we're in loading view, append live cards
+      const liveDiv = $('#liveResultsDuringLoad');
+      if (liveDiv) {
+        newProds.forEach((p, i) => {
+          const card = renderProductCard(p, i * 60);
+          liveDiv.appendChild(card);
+        });
+        // Show live div if hidden
+        liveDiv.style.display = '';
+        // Hide skeletons once we have products
+        const skelGrid = $('#skeletonGrid');
+        if (skelGrid) skelGrid.style.display = 'none';
       }
     }
-    next();
-  });
-}
 
-/* ═══════════════════════════════════════════════════════════
-   MOVEMENT & SCROLL
-═══════════════════════════════════════════════════════════ */
-function moveTo(x, y, dur = 600) {
-  return new Promise(resolve => {
-    const sx = curX, sy = curY, t0 = performance.now();
-    function step(now) {
-      const t = Math.min((now - t0) / dur, 1);
-      const e = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-      setCursor(sx + (x-sx)*e, sy + (y-sy)*e);
-      if (t < 1) requestAnimationFrame(step); else resolve();
+    if (status === 'completed' || status === 'complete' || status === 'done') {
+      stopPolling();
+      setProgress(100);
+      advanceTimeline(5); // "Finished"
+      stopPhrases();
+      setStatus('online', 'Ready');
+
+      const finalProducts = parseProducts(data);
+      if (finalProducts.length === 0 && state.products.length === 0) {
+        showView('emptyView');
+        showToast('warning', 'No products found', `No results matched "${state.query}". Try a different search.`);
+      } else {
+        const allProducts = finalProducts.length ? finalProducts : state.products;
+        state.products = allProducts;
+        const sorted = sortProducts(allProducts, $('#sortSelect')?.value || 'relevance');
+        renderResults(sorted, state.query);
+        showView('resultsView');
+        showToast('success', 'Comparison complete!', `Found ${allProducts.length} products across ${state.stats.stores || '?'} stores.`);
+      }
+      return;
     }
-    requestAnimationFrame(step);
-  });
-}
 
-function scrollEl(el, to, dur = 800) {
-  return new Promise(resolve => {
-    if (!el) { resolve(); return; }
-    const start = el.scrollTop, diff = to - start, t0 = performance.now();
-    function step(now) {
-      const t = Math.min((now - t0) / dur, 1);
-      const e = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-      el.scrollTop = start + diff * e;
-      if (t < 1) requestAnimationFrame(step); else resolve();
+    if (status === 'failed' || status === 'error') {
+      stopPolling();
+      stopPhrases();
+      setStatus('offline', 'Error');
+      const msg = data.failedReason || data.message || 'The analysis could not be completed.';
+      $('#errorMsg').textContent = msg;
+      showView('errorView');
+      showToast('error', 'Analysis failed', msg);
+      return;
     }
-    requestAnimationFrame(step);
-  });
+
+    // Update status label
+    const dbStatus = data.dbStatus || data.statusText || '';
+    if (dbStatus) {
+      const sub = $('#loadingSub');
+      if (sub) sub.textContent = dbStatus;
+    }
+
+    if (state.polling) {
+      state.pollTimer = setTimeout(pollJob, POLL_INTERVAL);
+    }
+  } catch (err) {
+    console.warn('[Visco] Poll error:', err.message);
+    if (state.polling) {
+      state.pollTimer = setTimeout(pollJob, POLL_INTERVAL * 2);
+    }
+  }
 }
 
-function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-async function pWait(ms) {
-  await navCtrl.waitIfPaused();
-  await wait(ms);
-  await navCtrl.waitIfPaused();
+function stopPolling() {
+  state.polling = false;
+  clearTimeout(state.pollTimer);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESET (FIXED — properly resets all page states)
-═══════════════════════════════════════════════════════════ */
-async function resetAll() {
-  // Reset inputs
-  document.getElementById('home-search-input').value  = '';
-  document.getElementById('search-page-input').value  = '';
-  document.getElementById('home-suggest').classList.remove('show');
+/* ============================================================
+   MAIN SEARCH
+============================================================ */
+async function performSearch(query) {
+  query = (query || '').trim();
+  if (!query) {
+    showToast('warning', 'Enter a search term', 'Please type a product name to compare.');
+    $('#mainSearchInput')?.focus();
+    return;
+  }
 
-  // Reset wishlist
-  const wl = document.getElementById('wl-btn');
-  wl.classList.remove('active');
-  wl.innerHTML = '<i class="fa-regular fa-heart"></i>';
+  // Stop any active poll
+  stopPolling();
+  stopPhrases();
 
-  // Reset scrolls
-  document.getElementById('home-scroll').scrollTop        = 0;
-  document.getElementById('search-grid-scroll').scrollTop = 0;
-  document.getElementById('details-inner').scrollTop      = 0;
+  state.query = query;
+  state.products = [];
+  state.jobId = null;
+  tlCurrentIdx = -1;
+  currentPct = 0;
+  targetPct = 0;
 
-  // Reset all pages — clear all active/exit states first
-  ['page-home', 'page-search', 'page-details'].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.remove('active', 'exit-left');
-    el.style.opacity   = '';
-    el.style.transform = '';
-  });
+  addHistory(query);
+  renderHistoryDropdown();
 
-  // Only home gets active
-  document.getElementById('page-home').classList.add('active');
-  currentPage = 'page-home';
-
+  // Show loading UI
+  showView('loadingView');
+  setStatus('searching', 'Comparing…');
+  setSearchBusy(true);
   setProgress(0);
-}
+  startPhrases();
+  renderSkeletons(6);
 
-/* ═══════════════════════════════════════════════════════════
-   DEMO STEPS
-═══════════════════════════════════════════════════════════ */
-let running       = false;
-let skipRequested = false;
+  // Clear live results area
+  const liveDiv = $('#liveResultsDuringLoad');
+  if (liveDiv) { liveDiv.innerHTML = ''; liveDiv.style.display = 'none'; }
+  const skelGrid = $('#skeletonGrid');
+  if (skelGrid) skelGrid.style.display = '';
 
-/* Step 0: Intro */
-async function stepIntroAndLogo() {
-  await pWait(1800);
-  document.getElementById('intro').classList.add('fade-out');
-  setProgress(5);
-  showCursor();
-  showFloatingLogo();
-
-  const phone = document.querySelector('.phone-frame').getBoundingClientRect();
-  setCursor(phone.left + phone.width / 2, phone.top + phone.height / 2 - 100);
-  await pWait(600);
-
-  const logoEl = document.querySelector('#page-home .logo-box');
-  const logoR  = logoEl.getBoundingClientRect();
-  await moveTo(logoR.left + logoR.width/2, logoR.top + logoR.height/2, 900);
-  clickAnim(logoR.left + logoR.width/2, logoR.top + logoR.height/2);
-  await pWait(700);
-}
-
-/* Step 1: Homepage */
-async function stepHomepageReveal() {
-  navCtrl.advanceTo(1);
-  setProgress(10);
-
-  const badge = document.querySelector('.hero-badge');
-  await clickEl(badge);
-  await pWait(600);
-
-  for (const chip of document.querySelectorAll('.trust-chip')) {
-    const r = chip.getBoundingClientRect();
-    await moveTo(r.left + r.width/2, r.top + r.height/2, 300);
-    await pWait(250);
+  try {
+    const jobId = await createJob(query);
+    state.jobId = jobId;
+    state.polling = true;
+    setProgress(5);
+    state.pollTimer = setTimeout(pollJob, 600);
+  } catch (err) {
+    stopPolling();
+    stopPhrases();
+    setStatus('offline', 'Error');
+    setSearchBusy(false);
+    const msg = err.message || 'Failed to start comparison.';
+    $('#errorMsg').textContent = msg;
+    showView('errorView');
+    showToast('error', 'Failed to start', msg);
   }
-
-  setProgress(16);
-  const homeScroll = document.getElementById('home-scroll');
-  await scrollEl(homeScroll, 80, 700);
-  await pWait(350);
-
-  // Hover stats
-  for (const s of document.querySelectorAll('.stat-box')) {
-    const r = s.getBoundingClientRect();
-    await moveTo(r.left + r.width/2, r.top + r.height/2, 300);
-    await pWait(200);
-  }
-
-  // Savings ticker
-  const ticker = document.querySelector('.savings-ticker');
-  if (ticker) {
-    const r = ticker.getBoundingClientRect();
-    await moveTo(r.left + r.width/2, r.top + r.height/2, 400);
-    await pWait(350);
-  }
-
-  setProgress(22);
-  await scrollEl(homeScroll, 200, 700);
-  const catBtns = document.querySelectorAll('.cat-btn');
-  for (let i = 1; i < Math.min(catBtns.length, 4); i++) {
-    const r = catBtns[i].getBoundingClientRect();
-    await moveTo(r.left + r.width/2, r.top + r.height/2, 340);
-    clickAnim(r.left + r.width/2, r.top + r.height/2);
-    catBtns.forEach(b => b.classList.remove('active'));
-    catBtns[i].classList.add('active');
-    await pWait(240);
-  }
-  catBtns.forEach(b => b.classList.remove('active'));
-  catBtns[0].classList.add('active');
-
-  setProgress(30);
-  await scrollEl(homeScroll, 320, 600);
-  await pWait(400);
-
-  await clickEl(document.getElementById('prod-card-1'));
-  await pWait(350);
-  await clickEl(document.getElementById('prod-card-2'));
-  await pWait(550);
 }
 
-/* Step 2: Search focus */
-async function stepSearchFocus() {
-  navCtrl.advanceTo(2);
-  setProgress(38);
-
-  await scrollEl(document.getElementById('home-scroll'), 0, 600);
-  await pWait(350);
-
-  const si = document.getElementById('home-search-input');
-  const sr = si.getBoundingClientRect();
-  await moveTo(sr.left + sr.width/2, sr.top + sr.height/2, 700);
-  await pWait(160);
-  clickAnim(sr.left + sr.width/2, sr.top + sr.height/2);
-  si.focus();
-
-  setProgress(44);
-  await pWait(300);
-  await typeText(si, 'iPhone 15 Pro', 85);
-  await pWait(220);
-  document.getElementById('home-suggest').classList.add('show');
-  await pWait(700);
-}
-
-/* Step 3: Search results */
-async function stepSearchResults() {
-  navCtrl.advanceTo(3);
-  setProgress(50);
-
-  const sug = document.querySelector('#home-suggest .suggest-item.hl');
-  await clickEl(sug);
-  document.getElementById('home-suggest').classList.remove('show');
-  await pWait(280);
-
-  await goToPage('page-search');
-  document.getElementById('search-page-input').value = 'iPhone 15 Pro';
-  await pWait(500);
-
-  setProgress(58);
-
-  // Interact with filter chips
-  const chips = document.querySelectorAll('.filter-chip');
-  for (let i = 1; i < Math.min(chips.length, 3); i++) {
-    const r = chips[i].getBoundingClientRect();
-    await moveTo(r.left + r.width/2, r.top + r.height/2, 320);
-    clickAnim(r.left + r.width/2, r.top + r.height/2);
-    chips.forEach(c => c.classList.remove('active'));
-    chips[i].classList.add('active');
-    await pWait(300);
+function setSearchBusy(busy) {
+  const btn = $('#searchBtn');
+  if (!btn) return;
+  btn.disabled = busy;
+  if (busy) {
+    btn.innerHTML = `
+      <svg style="animation:spin .8s linear infinite" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      <span class="btn-text">Analyzing…</span>`;
+  } else {
+    btn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <span class="btn-text">Compare</span>`;
   }
-  chips.forEach(c => c.classList.remove('active'));
-  chips[0].classList.add('active');
-
-  const sg = document.getElementById('search-grid-scroll');
-  await scrollEl(sg, 80, 700);
-  await pWait(350);
-  await clickEl(document.getElementById('search-prod-1'));
-  await pWait(500);
-  await scrollEl(sg, 180, 700);
-  await pWait(500);
-  await scrollEl(sg, 0, 400);
-  await pWait(250);
 }
 
-/* Step 4: Product page */
-async function stepProductPage() {
-  navCtrl.advanceTo(4);
-  setProgress(64);
+/* ============================================================
+   HISTORY DROPDOWN
+============================================================ */
+function renderHistoryDropdown() {
+  const list = $('#historyList');
+  if (!list) return;
+  if (!state.history.length) {
+    list.innerHTML = '<div class="history-empty">No recent searches</div>';
+    return;
+  }
+  list.innerHTML = state.history.map(q => `
+    <div class="history-item" data-q="${esc(q)}">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      ${esc(q)}
+    </div>`).join('');
 
-  await clickEl(document.querySelector('#search-prod-1 .prod-cta'));
-  await pWait(350);
-  await goToPage('page-details');
-  setProgress(72);
-  await pWait(600);
-
-  await clickEl(document.getElementById('detail-cta'));
-  await pWait(400);
-
-  const wlBtn = document.getElementById('wl-btn');
-  await clickEl(wlBtn);
-  wlBtn.classList.add('active');
-  wlBtn.innerHTML = '<i class="fa-solid fa-heart"></i>';
-  await pWait(700);
+  list.querySelectorAll('.history-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const q = item.dataset.q;
+      $('#mainSearchInput').value = q;
+      closeHistoryDropdown();
+      performSearch(q);
+    });
+  });
 }
 
-/* Step 5: Offers section */
-async function stepOffersSection() {
-  navCtrl.advanceTo(5);
-  setProgress(78);
+function openHistoryDropdown() {
+  const dd = $('#historyDropdown');
+  const btn = $('#historyBtn');
+  if (!dd) return;
+  renderHistoryDropdown();
+  dd.classList.add('open');
+  btn?.setAttribute('aria-expanded', 'true');
+}
 
-  const inner = document.getElementById('details-inner');
-  await scrollEl(inner, 200, 750);
-  await pWait(400);
+function closeHistoryDropdown() {
+  const dd = $('#historyDropdown');
+  const btn = $('#historyBtn');
+  dd?.classList.remove('open');
+  btn?.setAttribute('aria-expanded', 'false');
+}
 
-  // Scroll through chart
-  await scrollEl(inner, 320, 700);
-  await pWait(400);
+/* ============================================================
+   EVENT BINDINGS
+============================================================ */
+function bindEvents() {
+  // Hero search form
+  $('#heroSearchForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = $('#mainSearchInput')?.value;
+    performSearch(q);
+  });
 
-  // Hover offer rows
-  const offerRows = document.querySelectorAll('.offer-row-d');
-  for (const row of offerRows) {
-    const r = row.getBoundingClientRect();
-    if (r.top > 0 && r.bottom < window.innerHeight) {
-      await moveTo(r.left + r.width/2, r.top + r.height/2, 350);
-      await pWait(280);
+  // Search button ripple
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button, .search-btn, .btn');
+    if (btn && !btn.disabled) rippleEffect(btn, e);
+  });
+
+  // Chips
+  $('#chipRow')?.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    const q = chip.dataset.q;
+    $('#mainSearchInput').value = q;
+    performSearch(q);
+  });
+
+  // Logo → home
+  $('#logoLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    stopPolling();
+    stopPhrases();
+    setSearchBusy(false);
+    setStatus('online', 'Ready');
+    showView('emptyView');
+    $('#mainSearchInput').value = '';
+  });
+
+  // Retry btn
+  $('#retryBtn')?.addEventListener('click', () => {
+    if (state.lastQuery || state.query) {
+      performSearch(state.query || state.lastQuery);
+    } else {
+      showView('emptyView');
     }
-  }
-  await pWait(300);
-}
+  });
 
-/* Step 6: Compare / savings meter */
-async function stepCompareCards() {
-  navCtrl.advanceTo(6);
-  setProgress(88);
+  // New search btn
+  $('#newSearchBtn')?.addEventListener('click', () => {
+    stopPolling();
+    stopPhrases();
+    setSearchBusy(false);
+    setStatus('online', 'Ready');
+    showView('emptyView');
+    $('#mainSearchInput').value = '';
+    $('#mainSearchInput').focus();
+  });
 
-  const inner = document.getElementById('details-inner');
-  await scrollEl(inner, 580, 900);
-  await pWait(500);
+  // Sort select
+  $('#sortSelect')?.addEventListener('change', (e) => {
+    const sorted = sortProducts(state.products, e.target.value);
+    renderResults(sorted, state.query);
+  });
 
-  // Hover meter rows
-  const meterRows = document.querySelectorAll('.meter-row');
-  for (const row of meterRows) {
-    const r = row.getBoundingClientRect();
-    if (r.top > 0 && r.bottom < window.innerHeight) {
-      await moveTo(r.left + r.width/2, r.top + r.height/2, 300);
-      await pWait(250);
+  // History dropdown toggle
+  $('#historyBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const dd = $('#historyDropdown');
+    if (dd?.classList.contains('open')) closeHistoryDropdown();
+    else openHistoryDropdown();
+  });
+
+  // History clear
+  $('#historyClearBtn')?.addEventListener('click', () => {
+    state.history = [];
+    saveHistory([]);
+    renderHistoryDropdown();
+    showToast('info', 'History cleared', '', 2000);
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#historyDropdown') && !e.target.closest('#historyBtn')) {
+      closeHistoryDropdown();
     }
-  }
+  });
 
-  await scrollEl(inner, 780, 700);
-  await pWait(600);
+  // Keyboard shortcut: focus search on /
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault();
+      $('#mainSearchInput')?.focus();
+    }
+    if (e.key === 'Escape') {
+      closeHistoryDropdown();
+    }
+  });
 
-  // Alert strip
-  const alertStrip = document.querySelector('.alert-strip');
-  if (alertStrip) {
-    await clickEl(alertStrip.querySelector('.alert-strip-btn'));
-    await pWait(500);
-  }
+  // Theme toggle (functional noop – dark only)
+  $('#themeToggle')?.addEventListener('click', () => {
+    showToast('info', 'Dark mode active', 'This app uses a premium dark theme by design.', 2500);
+  });
+
+  // About link
+  $('#aboutLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showToast('info', 'Visco Compare', 'AI-powered product price comparison. Find the best deal instantly.', 4000);
+  });
+
+  // Nav search input (small nav version for mobile)
+  // Global search shortcut Ctrl+K / Cmd+K
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      const inp = $('#mainSearchInput');
+      inp?.focus();
+      inp?.select();
+    }
+  });
 }
 
-/* Step 7: Outro */
-async function stepOutro() {
-  navCtrl.advanceTo(7);
+/* ============================================================
+   INIT
+============================================================ */
+function init() {
+  bindEvents();
+  renderHistoryDropdown();
+  setStatus('online', 'Ready');
+  showView('emptyView');
 
-  const inner = document.getElementById('details-inner');
-  await scrollEl(inner, 0, 600);
-  await pWait(300);
-
-  setProgress(95);
-
-  // Tap home nav
-  const homeNav = document.querySelector('#page-details .bot-nav .nav-item');
-  await clickEl(homeNav);
-  await pWait(300);
-  await goToPage('page-home');
-  setProgress(100);
-  await pWait(500);
-
-  // Move to logo area
-  const finalLogo = document.querySelector('#page-home .logo-row');
-  const flR = finalLogo.getBoundingClientRect();
-  await moveTo(flR.left + flR.width/2, flR.top + flR.height/2, 800);
-  await pWait(3000);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   STEP REGISTRY
-═══════════════════════════════════════════════════════════ */
-const STEPS = [
-  stepIntroAndLogo,
-  stepHomepageReveal,
-  stepSearchFocus,
-  stepSearchResults,
-  stepProductPage,
-  stepOffersSection,
-  stepCompareCards,
-  stepOutro,
-];
-
-/* ═══════════════════════════════════════════════════════════
-   RUN LOOP
-═══════════════════════════════════════════════════════════ */
-async function run() {
-  if (running) return;
-  running = true;
-  skipRequested = false;
-  navCtrl.isPlaying = true;
-  navCtrl._updateUI();
-
-  await resetAll();
-
-  for (let i = 0; i < STEPS.length; i++) {
-    if (skipRequested) break;
-    navCtrl.advanceTo(i);
-    await navCtrl.waitIfPaused();
-    await STEPS[i]();
-  }
-
-  running = false;
-  navCtrl.isPlaying = false;
-  navCtrl._updateUI();
-
-  // Auto-loop
-  await wait(2200);
-  if (!running) run();
-}
-
-/* ═══════════════════════════════════════════════════════════
-   NAV CONTROLLER HOOKS
-═══════════════════════════════════════════════════════════ */
-navCtrl.onPlay(() => {
-  if (!running) run();
-});
-
-navCtrl.onReplay(() => {
-  skipRequested = true;
-  running       = false;
+  // Welcome toast
   setTimeout(() => {
-    skipRequested = false;
-    run();
-  }, 200);
-});
+    showToast('info', 'Welcome to Visco Compare', 'Search any product to compare prices in real time.', 4000);
+  }, 800);
+}
 
-navCtrl.onSkip(() => {
-  skipRequested = true;
-  running       = false;
-  setTimeout(async () => {
-    skipRequested     = false;
-    running           = true;
-    navCtrl.isPlaying = true;
-    navCtrl._updateUI();
-    await resetAll();
-    await stepOutro();
-    running           = false;
-    navCtrl.isPlaying = false;
-    navCtrl._updateUI();
-    await wait(2200);
-    if (!running) run();
-  }, 200);
-});
+init();
 
-/* ═══════════════════════════════════════════════════════════
-   AUTO-START
-═══════════════════════════════════════════════════════════ */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    navCtrl.isPlaying = true;
-    navCtrl._updateUI();
-    run();
-  }, 400);
-});
+})();
 </script>
 </body>
 </html>
