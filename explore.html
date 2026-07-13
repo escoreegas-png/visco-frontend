@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,42 +7,70 @@
 <meta name="description" content="AI-powered product comparison. Compare prices across stores in real time.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   RESET & ROOT
+   RESET & THEME TOKENS
 ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 html, body { height: 100%; }
 
 :root {
-  --bg:           #0a0a0a;
-  --bg2:          #0e0e0e;
-  --surface:      #141414;
-  --surface2:     #1a1a1a;
-  --border:       rgba(255,255,255,.07);
-  --border2:      rgba(255,255,255,.12);
-  --accent:       #8B5CF6;
-  --accent2:      #4F46E5;
-  --accent-glow:  rgba(139,92,246,.20);
-  --accent-glow2: rgba(79,70,229,.15);
+  /* Brand gradient — sunset magenta (Insta-adjacent, but ours) */
+  --g1: #FF8E3C;
+  --g2: #F72585;
+  --g3: #B5179E;
+  --g4: #7209B7;
+  --grad:      linear-gradient(120deg, var(--g1) 0%, var(--g2) 42%, var(--g4) 100%);
+  --grad-soft: linear-gradient(120deg, rgba(255,142,60,.14), rgba(247,37,133,.14), rgba(114,9,183,.14));
+  --accent:       #F72585;
+  --accent2:      #7209B7;
+  --accent-glow:  rgba(247,37,133,.22);
+
   --success:      #10B981;
   --success-bg:   rgba(16,185,129,.12);
   --warning:      #F59E0B;
-  --warning-bg:   rgba(245,158,11,.12);
   --danger:       #EF4444;
   --danger-bg:    rgba(239,68,68,.12);
-  --text:         #F8FAFC;
-  --text2:        #CBD5E1;
-  --muted:        #94A3B8;
-  --muted2:       #64748B;
-  --radius-xl:    20px;
-  --radius-lg:    14px;
-  --radius-md:    10px;
-  --radius-sm:    8px;
-  --ease:         cubic-bezier(.22,1,.36,1);
-  --ease2:        cubic-bezier(.4,0,.2,1);
+
+  --radius-xl: 22px; --radius-lg: 15px; --radius-md: 11px; --radius-sm: 8px;
+  --ease:  cubic-bezier(.22,1,.36,1);
+  --ease2: cubic-bezier(.4,0,.2,1);
+}
+
+/* ── DARK (default) ── */
+[data-theme="dark"] {
+  --bg:       #0a0a0f;
+  --bg2:      #0e0e14;
+  --surface:  #14141c;
+  --surface2: #1b1b25;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.13);
+  --text:     #F8FAFC;
+  --text2:    #CBD5E1;
+  --muted:    #94A3B8;
+  --muted2:   #64748B;
+  --shadow:   0 8px 24px rgba(0,0,0,.3);
+  --glass:    rgba(20,20,28,.75);
+  color-scheme: dark;
+}
+
+/* ── LIGHT ── */
+[data-theme="light"] {
+  --bg:       #FAF8FB;
+  --bg2:      #FFFFFF;
+  --surface:  #FFFFFF;
+  --surface2: #F4F1F7;
+  --border:   rgba(20,10,40,.08);
+  --border2:  rgba(20,10,40,.14);
+  --text:     #17121F;
+  --text2:    #3D3450;
+  --muted:    #6E6584;
+  --muted2:   #9C93AF;
+  --shadow:   0 8px 24px rgba(114,9,183,.08);
+  --glass:    rgba(255,255,255,.8);
+  color-scheme: light;
 }
 
 body {
@@ -53,42 +81,38 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background .35s var(--ease2), color .35s var(--ease2);
 }
 
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, select { font-family: inherit; }
 img { display: block; max-width: 100%; }
-::selection { background: var(--accent-glow); color: var(--text); }
+::selection { background: var(--accent-glow); }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 /* ============================================================
    ANIMATIONS
 ============================================================ */
-@keyframes fadeIn       { from { opacity: 0; }                                    to { opacity: 1; } }
-@keyframes fadeSlideUp  { from { opacity: 0; transform: translateY(16px); }       to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeSlideDown{ from { opacity: 0; transform: translateY(-8px); }       to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn      { from { opacity: 0; transform: scale(.94); }             to { opacity: 1; transform: scale(1); } }
-@keyframes shimmer      { from { background-position: -600px 0; } to { background-position: 600px 0; } }
-@keyframes pulse        { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-@keyframes spin         { to { transform: rotate(360deg); } }
-@keyframes float        { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-@keyframes barberpole   { from { background-position: 0 0; } to { background-position: 40px 0; } }
-@keyframes dotBounce    { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
-@keyframes toastIn      { from { opacity: 0; transform: translateX(18px) scale(.96); } to { opacity: 1; transform: translateX(0) scale(1); } }
-@keyframes toastOut     { to   { opacity: 0; transform: translateX(18px); } }
-@keyframes glow         { 0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 7px transparent; } }
-@keyframes countUp      { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes ripple       { from { transform: scale(0); opacity: .4; } to { transform: scale(3); opacity: 0; } }
-@keyframes slideInRow   { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-
-/* ============================================================
-   LAYOUT
-============================================================ */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+@keyframes fadeSlideUp  { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeSlideDown{ from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes shimmer      { from { background-position:-600px 0; } to { background-position:600px 0; } }
+@keyframes pulse        { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+@keyframes spin         { to { transform:rotate(360deg); } }
+@keyframes float        { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
+@keyframes dotBounce    { 0%,80%,100% { transform:translateY(0); } 40% { transform:translateY(-8px); } }
+@keyframes toastIn      { from { opacity:0; transform:translateX(18px) scale(.96); } to { opacity:1; transform:translateX(0) scale(1); } }
+@keyframes toastOut     { to { opacity:0; transform:translateX(18px); } }
+@keyframes glow         { 0%,100% { box-shadow:0 0 0 0 var(--accent-glow); } 50% { box-shadow:0 0 0 8px transparent; } }
+@keyframes countUp      { from { transform:translateY(5px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+@keyframes ripple       { from { transform:scale(0); opacity:.4; } to { transform:scale(3); opacity:0; } }
+@keyframes slideInRow   { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+@keyframes micPulse     { 0% { box-shadow:0 0 0 0 rgba(247,37,133,.5); } 100% { box-shadow:0 0 0 16px transparent; } }
+@keyframes gradShift    { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+@keyframes filterPop    { from { opacity:0; transform:scaleY(.92); } to { opacity:1; transform:scaleY(1); } }
+@keyframes barEq        { 0%,100% { height:5px; } 50% { height:14px; } }
 
 /* ============================================================
    TOAST
@@ -96,738 +120,647 @@ img { display: block; max-width: 100%; }
 #toastArea {
   position: fixed; top: 18px; right: 18px; z-index: 9999;
   display: flex; flex-direction: column; gap: 9px;
-  width: min(340px, calc(100vw - 36px));
-  pointer-events: none;
+  width: min(340px, calc(100vw - 36px)); pointer-events: none;
 }
 .toast {
   display: flex; align-items: flex-start; gap: 11px;
   padding: 13px 15px; border-radius: var(--radius-lg);
   background: var(--surface2); border: 1px solid var(--border2);
-  box-shadow: 0 14px 36px rgba(0,0,0,.45);
+  box-shadow: var(--shadow);
   animation: toastIn .3s var(--ease) both;
   pointer-events: all; position: relative; overflow: hidden;
 }
 .toast.out { animation: toastOut .28s var(--ease) forwards; }
 .toast::after {
-  content: ''; position: absolute; bottom: 0; left: 0; height: 2px;
-  background: var(--accent);
-  animation: shimmer linear forwards;
-  animation-duration: var(--td, 4s);
-  width: 100%;
+  content:''; position:absolute; bottom:0; left:0; height:2px; width:100%;
+  background: var(--grad);
+  animation: shimmer linear forwards; animation-duration: var(--td, 4s);
 }
-.toast-icon { flex-shrink: 0; width: 17px; height: 17px; margin-top: 1px; }
-.toast-body { flex: 1; }
-.toast-title { font-size: 13px; font-weight: 600; }
-.toast-msg   { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.toast-close { color: var(--muted); padding: 2px; border-radius: 5px; flex-shrink: 0; cursor: pointer; }
-.toast-close:hover { color: var(--text); }
-.toast.success .toast-icon { color: var(--success); }
-.toast.error   .toast-icon { color: var(--danger);  }
-.toast.warning .toast-icon { color: var(--warning); }
-.toast.info    .toast-icon { color: var(--accent);  }
+.toast-icon { flex-shrink:0; width:17px; height:17px; margin-top:1px; }
+.toast-body { flex:1; }
+.toast-title { font-size:13px; font-weight:600; }
+.toast-msg   { font-size:12px; color:var(--muted); margin-top:2px; }
+.toast-close { color:var(--muted); padding:2px; border-radius:5px; flex-shrink:0; }
+.toast-close:hover { color:var(--text); }
+.toast.success .toast-icon { color:var(--success); }
+.toast.error   .toast-icon { color:var(--danger);  }
+.toast.warning .toast-icon { color:var(--warning); }
+.toast.info    .toast-icon { color:var(--accent);  }
 
 /* ============================================================
-   SIDEBAR LAYOUT (like save8)
+   LAYOUT
 ============================================================ */
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-}
+.app-layout { display:flex; min-height:100vh; }
 
-/* Sidebar */
+/* ── SIDEBAR ── */
 .sidebar {
-  width: 260px;
-  flex-shrink: 0;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  transition: width .25s var(--ease);
+  width:264px; flex-shrink:0;
+  background: var(--bg2); border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  position:sticky; top:0; height:100vh; overflow:hidden;
+  transition: width .25s var(--ease), background .35s;
 }
-.sidebar.collapsed { width: 60px; }
+.sidebar.collapsed { width:62px; }
 
 .sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
+  display:flex; align-items:center; gap:10px;
+  padding:14px 16px; border-bottom:1px solid var(--border); flex-shrink:0;
 }
 .hamburger-btn {
-  width: 28px; height: 28px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px;
-  flex-shrink: 0; cursor: pointer;
-  border-radius: 7px;
-  transition: background .2s;
+  width:28px; height:28px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:4px;
+  flex-shrink:0; border-radius:7px; transition:background .2s;
 }
-.hamburger-btn:hover { background: rgba(255,255,255,.06); }
-.hamburger-btn span {
-  display: block; width: 14px; height: 1.5px;
-  background: var(--muted); border-radius: 2px;
-  transition: all .25s var(--ease);
-}
+.hamburger-btn:hover { background: var(--surface2); }
+.hamburger-btn span { display:block; width:14px; height:1.5px; background:var(--muted); border-radius:2px; }
 
-.sidebar-brand {
-  display: flex; align-items: center; gap: 8px;
-  overflow: hidden;
-  transition: opacity .2s;
-}
-.sidebar.collapsed .sidebar-brand { opacity: 0; pointer-events: none; }
+.sidebar-brand { display:flex; align-items:center; gap:9px; overflow:hidden; transition:opacity .2s; }
+.sidebar.collapsed .sidebar-brand { opacity:0; pointer-events:none; }
 .brand-mark {
-  width: 30px; height: 30px; flex-shrink: 0;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 13px; color: #fff;
-  box-shadow: 0 3px 10px var(--accent-glow);
+  width:32px; height:32px; flex-shrink:0; border-radius:10px;
+  background: var(--grad); background-size:200% 200%;
+  animation: gradShift 6s ease infinite;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:14px; color:#fff;
+  box-shadow: 0 3px 12px var(--accent-glow);
 }
-.brand-name {
-  font-size: 15px; font-weight: 700; white-space: nowrap;
-  letter-spacing: -.02em;
+.brand-name { font-size:15px; font-weight:800; white-space:nowrap; letter-spacing:-.02em; }
+.brand-name span {
+  background: var(--grad);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-.brand-name span { color: var(--accent); }
 
-.sidebar-search {
-  padding: 12px 12px 8px;
-  flex-shrink: 0;
-}
+.sidebar-search { padding:12px 12px 8px; flex-shrink:0; }
 .sidebar-search-input {
-  width: 100%; padding: 8px 12px;
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--radius-md); color: var(--text);
-  font-size: 13px; outline: none;
-  transition: border-color .2s;
+  width:100%; padding:8px 12px;
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:var(--radius-md); color:var(--text);
+  font-size:13px; outline:none; transition:border-color .2s;
 }
-.sidebar-search-input:focus { border-color: rgba(139,92,246,.4); }
-.sidebar-search-input::placeholder { color: var(--muted2); }
-.sidebar.collapsed .sidebar-search { display: none; }
+.sidebar-search-input:focus { border-color: var(--accent); }
+.sidebar-search-input::placeholder { color:var(--muted2); }
+.sidebar.collapsed .sidebar-search { display:none; }
 
 .sidebar-new-btn {
-  margin: 0 12px 8px;
-  display: flex; align-items: center; gap: 7px;
-  padding: 9px 12px; border-radius: var(--radius-md);
-  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2);
-  color: var(--accent); font-size: 13px; font-weight: 600;
-  transition: all .2s; cursor: pointer; flex-shrink: 0;
+  margin:0 12px 8px; display:flex; align-items:center; gap:7px;
+  padding:9px 12px; border-radius:var(--radius-md);
+  background: var(--grad-soft); border:1px solid var(--accent-glow);
+  color:var(--accent); font-size:13px; font-weight:700;
+  transition:all .2s; flex-shrink:0;
 }
-.sidebar-new-btn:hover { background: rgba(139,92,246,.18); }
-.sidebar.collapsed .sidebar-new-btn { justify-content: center; padding: 9px; margin: 0 8px 8px; }
-.sidebar.collapsed .sidebar-new-btn .new-btn-text { display: none; }
+.sidebar-new-btn:hover { filter:brightness(1.15); transform:translateY(-1px); }
+.sidebar.collapsed .sidebar-new-btn { justify-content:center; padding:9px; margin:0 8px 8px; }
+.sidebar.collapsed .sidebar-new-btn .new-btn-text { display:none; }
 
 .sidebar-section-label {
-  padding: 6px 16px 4px;
-  font-size: 11px; font-weight: 700;
-  color: var(--muted2); text-transform: uppercase; letter-spacing: .06em;
-  flex-shrink: 0;
+  padding:6px 16px 4px; font-size:11px; font-weight:700;
+  color:var(--muted2); text-transform:uppercase; letter-spacing:.06em; flex-shrink:0;
 }
-.sidebar.collapsed .sidebar-section-label { display: none; }
+.sidebar.collapsed .sidebar-section-label { display:none; }
 
-.sidebar-list {
-  flex: 1; overflow-y: auto; padding: 4px 8px;
-}
+.sidebar-list { flex:1; overflow-y:auto; padding:4px 8px; }
 .sidebar-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 9px 10px; border-radius: var(--radius-md);
-  cursor: pointer; transition: background .18s;
-  min-height: 44px;
+  display:flex; align-items:center; gap:9px;
+  padding:9px 10px; border-radius:var(--radius-md);
+  cursor:pointer; transition:background .18s; min-height:44px;
 }
-.sidebar-item:hover { background: rgba(255,255,255,.04); }
-.sidebar-item.active { background: rgba(139,92,246,.1); }
+.sidebar-item:hover { background:var(--surface2); }
+.sidebar-item.active { background:var(--grad-soft); }
 .si-icon {
-  width: 30px; height: 30px; flex-shrink: 0;
-  border-radius: 8px; background: var(--surface2);
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700;
-  color: var(--muted);
+  width:30px; height:30px; flex-shrink:0; border-radius:9px;
+  background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:var(--muted);
 }
-.sidebar-item.active .si-icon { background: rgba(139,92,246,.15); border-color: rgba(139,92,246,.3); color: var(--accent); }
-.si-text { overflow: hidden; flex: 1; }
-.si-title { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.si-sub   { font-size: 11px; color: var(--muted2); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sidebar.collapsed .si-text { display: none; }
-.sidebar-empty { padding: 16px 12px; text-align: center; font-size: 13px; color: var(--muted); }
-.sidebar.collapsed .sidebar-empty { display: none; }
+.sidebar-item.active .si-icon { background:var(--grad); color:#fff; border-color:transparent; }
+.si-text { overflow:hidden; flex:1; }
+.si-title { font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.si-sub   { font-size:11px; color:var(--muted2); margin-top:1px; }
+.sidebar.collapsed .si-text { display:none; }
+.sidebar-empty { padding:16px 12px; text-align:center; font-size:13px; color:var(--muted); }
+.sidebar.collapsed .sidebar-empty { display:none; }
 
-.sidebar-footer {
-  border-top: 1px solid var(--border);
-  padding: 12px;
-  flex-shrink: 0;
-}
+.sidebar-footer { border-top:1px solid var(--border); padding:12px; flex-shrink:0; }
 .sidebar-profile {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 8px; border-radius: var(--radius-md);
-  cursor: pointer; transition: background .18s;
+  display:flex; align-items:center; gap:9px;
+  padding:8px; border-radius:var(--radius-md); transition:background .18s;
 }
-.sidebar-profile:hover { background: rgba(255,255,255,.04); }
+.sidebar-profile:hover { background:var(--surface2); }
 .sp-avatar {
-  width: 32px; height: 32px; flex-shrink: 0;
-  border-radius: 9px; background: var(--surface2);
-  border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted);
+  width:32px; height:32px; flex-shrink:0; border-radius:10px;
+  background:var(--grad); display:flex; align-items:center; justify-content:center; color:#fff;
 }
-.sp-info { overflow: hidden; flex: 1; }
-.sp-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sp-sub  { font-size: 11px; color: var(--muted2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sidebar.collapsed .sp-info { display: none; }
+.sp-info { overflow:hidden; flex:1; }
+.sp-name { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sp-sub  { font-size:11px; color:var(--muted2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar.collapsed .sp-info { display:none; }
 
 .theme-toggle-btn {
-  width: 32px; height: 32px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border2);
-  background: var(--surface);
-  color: var(--muted);
-  transition: all .2s;
+  width:32px; height:32px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:var(--radius-md); border:1px solid var(--border2);
+  background:var(--surface); color:var(--muted); transition:all .2s;
 }
-.theme-toggle-btn:hover { color: var(--accent); border-color: rgba(139,92,246,.4); }
-.sidebar.collapsed .theme-toggle-btn { display: none; }
+.theme-toggle-btn:hover { color:var(--accent); border-color:var(--accent); transform:rotate(15deg); }
+.sidebar.collapsed .theme-toggle-btn { display:none; }
 
-/* ============================================================
-   MAIN PANEL
-============================================================ */
+/* ── MAIN PANEL ── */
 .main-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-width: 0;
-  overflow: hidden;
+  flex:1; display:flex; flex-direction:column;
+  min-height:100vh; min-width:0; overflow:hidden;
 }
 
-/* ── Top Header ── */
 .top-header {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-  flex-shrink: 0;
-  height: 56px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:12px 20px; border-bottom:1px solid var(--border);
+  background:var(--bg2); flex-shrink:0; height:56px;
+  transition: background .35s;
 }
 .header-query-label {
-  font-size: 14px; font-weight: 600;
-  color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  display:flex; align-items:center; gap:10px;
+  font-size:14px; font-weight:600; color:var(--muted);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
-.header-query-label span { color: var(--text); }
-.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.header-query-label span { color:var(--text); }
+.header-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .status-pill {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 11px; border-radius: 999px;
-  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
-  font-size: 12px; font-weight: 500; color: var(--muted);
+  display:flex; align-items:center; gap:6px;
+  padding:5px 11px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--border2);
+  font-size:12px; font-weight:500; color:var(--muted);
 }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.status-dot.online   { background: var(--success); animation: glow 2s infinite; }
-.status-dot.offline  { background: var(--muted2); }
-.status-dot.searching{ background: var(--accent); animation: pulse 1.4s infinite; }
-
-/* ── Thread area (chat-like) ── */
-.thread-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+.status-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.status-dot.online    { background:var(--success); animation:glow 2s infinite; }
+.status-dot.offline   { background:var(--muted2); }
+.status-dot.searching { background:var(--accent); animation:pulse 1.4s infinite; }
+.header-theme-btn {
+  width:34px; height:34px; border-radius:10px;
+  border:1px solid var(--border2); background:var(--surface);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); transition:all .25s var(--ease);
 }
+.header-theme-btn:hover { color:var(--accent); border-color:var(--accent); transform:rotate(20deg); }
 
-/* ── HERO inside thread ── */
+/* ── THREAD ── */
+.thread-area { flex:1; overflow-y:auto; display:flex; flex-direction:column; }
+
 .hero-thread {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  padding: 60px 24px 40px;
-  text-align: center;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-height:100%; padding:60px 24px 40px; text-align:center;
+  position:relative;
 }
+.hero-orb {
+  position:absolute; width:420px; height:420px; border-radius:50%;
+  background: var(--grad); opacity:.10; filter:blur(90px);
+  pointer-events:none; top:8%; z-index:0;
+  animation: float 7s ease-in-out infinite;
+}
+.hero-thread > *:not(.hero-orb) { position:relative; z-index:1; }
 .hero-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 13px; border-radius: 999px;
-  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.22);
-  font-size: 11.5px; font-weight: 600; color: var(--accent);
-  margin-bottom: 24px;
-  animation: fadeSlideDown .5s var(--ease) both;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 14px; border-radius:999px;
+  background:var(--grad-soft); border:1px solid var(--accent-glow);
+  font-size:11.5px; font-weight:700; color:var(--accent);
+  margin-bottom:24px; animation:fadeSlideDown .5s var(--ease) both;
 }
 .hero-title {
-  font-size: clamp(26px, 4.5vw, 46px);
-  font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
-  margin-bottom: 14px;
-  animation: fadeSlideUp .5s .05s var(--ease) both;
+  font-size:clamp(28px, 4.8vw, 50px); font-weight:900;
+  letter-spacing:-.035em; line-height:1.08; margin-bottom:14px;
+  animation:fadeSlideUp .5s .05s var(--ease) both;
 }
 .hero-title .gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background:var(--grad); background-size:200% 200%;
+  animation: gradShift 5s ease infinite;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .hero-sub {
-  font-size: clamp(14px, 1.8vw, 16px); color: var(--muted);
-  max-width: 480px; margin: 0 auto 36px; line-height: 1.7;
-  animation: fadeSlideUp .5s .1s var(--ease) both;
+  font-size:clamp(14px, 1.8vw, 16px); color:var(--muted);
+  max-width:500px; margin:0 auto 36px; line-height:1.7;
+  animation:fadeSlideUp .5s .1s var(--ease) both;
 }
 .hero-chips {
-  display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;
-  margin-top: 16px;
-  animation: fadeSlideUp .5s .2s var(--ease) both;
+  display:flex; flex-wrap:wrap; gap:7px; justify-content:center;
+  margin-top:16px; animation:fadeSlideUp .5s .2s var(--ease) both;
 }
 .chip {
-  padding: 6px 14px; border-radius: 999px;
-  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
-  font-size: 12px; font-weight: 500; color: var(--muted);
-  transition: all .2s var(--ease); cursor: pointer;
+  padding:7px 15px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--border2);
+  font-size:12.5px; font-weight:500; color:var(--muted);
+  transition:all .2s var(--ease);
 }
 .chip:hover {
-  color: var(--text); border-color: rgba(139,92,246,.4);
-  background: rgba(139,92,246,.07); transform: translateY(-1px);
+  color:var(--text); border-color:var(--accent);
+  background:var(--grad-soft); transform:translateY(-2px);
 }
 
-/* ── Search composer (bottom bar) ── */
+/* ── COMPOSER ── */
 .composer-bar {
-  padding: 10px 16px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-  flex-shrink: 0;
+  padding:12px 16px; border-top:1px solid var(--border);
+  background:var(--glass); backdrop-filter: blur(14px);
+  flex-shrink:0;
 }
 .search-form {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 7px 7px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: 22px;
-  transition: border-color .25s, box-shadow .25s;
+  display:flex; align-items:center; gap:8px;
+  padding:7px 7px 7px 16px; max-width:860px; margin:0 auto;
+  background:var(--surface); border:1.5px solid var(--border2);
+  border-radius:26px; transition:border-color .25s, box-shadow .25s;
 }
 .search-form:focus-within {
-  border-color: rgba(139,92,246,.5);
+  border-color:var(--accent);
   box-shadow: 0 0 0 4px var(--accent-glow);
 }
-.search-icon { color: var(--muted); flex-shrink: 0; }
+.search-icon { color:var(--muted); flex-shrink:0; }
 .search-input {
-  flex: 1; background: none; border: none; outline: none;
-  color: var(--text); font-size: 14.5px;
-  min-width: 0;
+  flex:1; background:none; border:none; outline:none;
+  color:var(--text); font-size:14.5px; min-width:0;
 }
-.search-input::placeholder { color: var(--muted2); }
+.search-input::placeholder { color:var(--muted2); }
+
+.mic-btn {
+  flex-shrink:0; width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); border:1px solid transparent;
+  transition:all .2s var(--ease);
+}
+.mic-btn:hover { color:var(--accent); background:var(--grad-soft); }
+.mic-btn.listening {
+  color:#fff; background:var(--grad);
+  animation: micPulse 1.2s infinite;
+}
+.mic-eq { display:none; align-items:flex-end; gap:2px; height:14px; }
+.mic-btn.listening .mic-eq { display:flex; }
+.mic-btn.listening .mic-svg { display:none; }
+.mic-eq span {
+  width:3px; border-radius:2px; background:#fff;
+  animation: barEq .8s ease-in-out infinite;
+}
+.mic-eq span:nth-child(2) { animation-delay:.15s; }
+.mic-eq span:nth-child(3) { animation-delay:.3s; }
+
 .search-btn {
-  flex-shrink: 0;
-  display: flex; align-items: center; gap: 7px;
-  padding: 9px 18px; border-radius: 18px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-size: 13.5px; font-weight: 600;
-  transition: transform .2s var(--ease), box-shadow .2s, opacity .2s;
-  box-shadow: 0 4px 16px var(--accent-glow);
+  flex-shrink:0; display:flex; align-items:center; gap:7px;
+  padding:10px 20px; border-radius:20px;
+  background:var(--grad); background-size:200% 200%;
+  color:#fff; font-size:13.5px; font-weight:700;
+  transition:transform .2s var(--ease), box-shadow .2s, opacity .2s;
+  box-shadow:0 4px 16px var(--accent-glow);
+  position:relative; overflow:hidden;
 }
-.search-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 22px var(--accent-glow); }
-.search-btn:active:not(:disabled) { transform: scale(.97); }
-.search-btn:disabled { opacity: .55; cursor: not-allowed; }
+.search-btn:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 8px 22px var(--accent-glow); background-position:100% 50%; }
+.search-btn:active:not(:disabled) { transform:scale(.97); }
+.search-btn:disabled { opacity:.55; cursor:not-allowed; }
+.voice-hint {
+  text-align:center; font-size:11.5px; color:var(--accent);
+  font-weight:600; margin-top:7px; display:none;
+  animation:fadeSlideDown .3s var(--ease) both;
+}
+.voice-hint.show { display:block; }
 
-/* ============================================================
-   THREAD MESSAGES (chat-like content)
-============================================================ */
-.thread-content {
-  flex: 1;
-  padding: 20px 20px 100px;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-}
+/* ── THREAD CONTENT ── */
+.thread-content { flex:1; padding:20px 20px 100px; max-width:920px; width:100%; margin:0 auto; }
 
-/* User message bubble */
-.msg-user {
-  display: flex; justify-content: flex-end;
-  margin-bottom: 20px;
-  animation: fadeSlideUp .3s var(--ease) both;
-}
+.msg-user { display:flex; justify-content:flex-end; margin-bottom:20px; animation:fadeSlideUp .3s var(--ease) both; }
 .user-bubble {
-  max-width: min(85%, 460px);
-  padding: 11px 17px;
-  border-radius: 18px 18px 5px 18px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 14px; font-weight: 500;
-  line-height: 1.5;
+  max-width:min(85%, 460px); padding:11px 17px;
+  border-radius:18px 18px 5px 18px;
+  background:var(--grad); color:#fff;
+  font-size:14px; font-weight:500; line-height:1.5;
+  box-shadow: 0 4px 14px var(--accent-glow);
 }
+.msg-assistant { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; animation:fadeSlideUp .3s var(--ease) both; }
 
-/* Assistant message */
-.msg-assistant {
-  display: flex; flex-direction: column; gap: 12px;
-  margin-bottom: 24px;
-  animation: fadeSlideUp .3s var(--ease) both;
-}
-
-/* ============================================================
-   PIPELINE STEPS (loading timeline like save8)
-============================================================ */
+/* ── PIPELINE ── */
 .sc-pipeline {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:var(--radius-lg); overflow:hidden;
 }
-.pipeline-progress {
-  height: 2px;
-  background: var(--border);
-}
+.pipeline-progress { height:3px; background:var(--border); }
 .pipeline-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-  width: 0%;
-  transition: width .5s var(--ease);
+  height:100%; background:var(--grad); width:0%;
+  transition:width .5s var(--ease);
 }
-
-.sc-step {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.sc-step:last-child { border-bottom: none; }
-
-.step-rail {
-  width: 3px;
-  flex-shrink: 0;
-  background: var(--border);
-  margin: 0;
-  transition: background .3s;
-}
-.sc-step.step-active .step-rail { background: var(--accent); }
-.sc-step.step-done .step-rail   { background: var(--success); }
-
-.step-inner { flex: 1; padding: 12px 14px; }
-.step-head {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 4px;
-}
+.sc-step { display:flex; border-bottom:1px solid var(--border); }
+.sc-step:last-child { border-bottom:none; }
+.step-rail { width:3px; flex-shrink:0; background:var(--border); transition:background .3s; }
+.sc-step.step-active .step-rail { background:var(--accent); }
+.sc-step.step-done   .step-rail { background:var(--success); }
+.step-inner { flex:1; padding:12px 14px; }
+.step-head  { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
 .step-dot {
-  width: 18px; height: 18px; flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--surface2); border: 2px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: var(--muted);
-  transition: all .3s;
+  width:18px; height:18px; flex-shrink:0; border-radius:50%;
+  background:var(--surface2); border:2px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:700; color:var(--muted); transition:all .3s;
 }
-.sc-step.step-active .step-dot {
-  border-color: var(--accent); background: rgba(139,92,246,.2); color: var(--accent);
-  animation: glow 1.8s infinite;
-}
-.sc-step.step-done .step-dot { background: var(--success); border-color: var(--success); color: #fff; }
-.step-title { font-size: 13px; font-weight: 600; color: var(--muted); transition: color .3s; }
-.sc-step.step-active .step-title { color: var(--text); }
-.sc-step.step-done   .step-title { color: var(--success); }
-.step-desc { font-size: 11.5px; color: var(--muted2); margin-top: 1px; }
+.sc-step.step-active .step-dot { border-color:var(--accent); background:var(--accent-glow); color:var(--accent); animation:glow 1.8s infinite; }
+.sc-step.step-done .step-dot { background:var(--success); border-color:var(--success); color:#fff; }
+.step-title { font-size:13px; font-weight:600; color:var(--muted); transition:color .3s; }
+.sc-step.step-active .step-title { color:var(--text); }
+.sc-step.step-done   .step-title { color:var(--success); }
+.step-desc { font-size:11.5px; color:var(--muted2); margin-top:1px; }
 
-/* Skeleton variant inside steps */
 .step-card-skeleton {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px; border-radius: var(--radius-md);
-  background: var(--surface2); border: 1px solid var(--border);
-  margin-top: 8px;
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:var(--radius-md);
+  background:var(--surface2); border:1px solid var(--border); margin-top:8px;
 }
 .skel {
-  background: linear-gradient(90deg, var(--surface2) 25%, rgba(255,255,255,.04) 37%, var(--surface2) 63%);
-  background-size: 600px 100%;
-  animation: shimmer 1.5s infinite linear;
-  border-radius: 5px;
+  background:linear-gradient(90deg, var(--surface2) 25%, var(--border2) 37%, var(--surface2) 63%);
+  background-size:600px 100%;
+  animation:shimmer 1.5s infinite linear; border-radius:5px;
 }
 
-/* ============================================================
-   STORES WIDGET (results area like save8)
-============================================================ */
-.stores-widget {
-  margin-top: 8px;
-  animation: fadeSlideUp .4s var(--ease) both;
-}
-.stores-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-.stores-sub   { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
-
-/* ============================================================
-   STATS BAR
-============================================================ */
-.stats-strip {
-  display: flex; gap: 10px; flex-wrap: wrap;
-  margin-bottom: 16px;
-}
+/* ── STATS ── */
+.stats-strip { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
 .stat-chip {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 14px; border-radius: var(--radius-md);
-  background: var(--surface); border: 1px solid var(--border);
-  transition: transform .2s var(--ease), border-color .2s;
-  animation: countUp .4s var(--ease) both;
+  display:flex; align-items:center; gap:8px;
+  padding:9px 14px; border-radius:var(--radius-md);
+  background:var(--surface); border:1px solid var(--border);
+  transition:transform .2s var(--ease), border-color .2s;
+  animation:countUp .4s var(--ease) both;
 }
-.stat-chip:hover { transform: translateY(-2px); border-color: var(--border2); }
+.stat-chip:hover { transform:translateY(-2px); border-color:var(--accent); }
 .stat-chip-icon {
-  width: 26px; height: 26px; border-radius: 7px;
-  background: rgba(139,92,246,.12);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent); flex-shrink: 0;
+  width:26px; height:26px; border-radius:8px;
+  background:var(--grad-soft);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--accent); flex-shrink:0;
 }
-.stat-chip-val  { font-size: 16px; font-weight: 800; line-height: 1.1; }
-.stat-chip-label{ font-size: 10.5px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+.stat-chip-val   { font-size:16px; font-weight:800; line-height:1.1; }
+.stat-chip-label { font-size:10.5px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
 
 /* ============================================================
-   PRODUCT / STORE CARD
+   AI FILTER PANEL
 ============================================================ */
-.product-list {
-  display: flex; flex-direction: column; gap: 10px;
+.filter-bar {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-bottom:12px;
 }
+.filter-toggle-btn {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:8px 15px; border-radius:999px;
+  background:var(--surface); border:1.5px solid var(--border2);
+  font-size:12.5px; font-weight:700; color:var(--text);
+  transition:all .2s var(--ease);
+}
+.filter-toggle-btn:hover, .filter-toggle-btn.active {
+  border-color:var(--accent); color:var(--accent); background:var(--grad-soft);
+}
+.filter-count-badge {
+  min-width:17px; height:17px; padding:0 5px; border-radius:999px;
+  background:var(--grad); color:#fff; font-size:10px; font-weight:800;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+.ai-chip {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 13px; border-radius:999px;
+  background:var(--grad-soft); border:1px dashed var(--accent);
+  font-size:11.5px; font-weight:700; color:var(--accent);
+  animation:fadeSlideDown .35s var(--ease) both;
+}
+.ai-chip .ai-x { cursor:pointer; opacity:.7; display:flex; }
+.ai-chip .ai-x:hover { opacity:1; }
+.sort-select {
+  margin-left:auto;
+  background:var(--surface); border:1px solid var(--border2);
+  color:var(--text); border-radius:999px;
+  padding:7px 30px 7px 14px; font-size:12.5px; font-weight:600;
+  -webkit-appearance:none; appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center;
+}
+.sort-select:focus { outline:none; border-color:var(--accent); }
 
+.filter-panel {
+  display:none; transform-origin:top;
+  background:var(--surface); border:1px solid var(--border2);
+  border-radius:var(--radius-lg); padding:16px;
+  margin-bottom:14px;
+}
+.filter-panel.open { display:block; animation:filterPop .3s var(--ease) both; }
+.filter-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+  gap:14px;
+}
+.filter-group-label {
+  font-size:11px; font-weight:800; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--muted); margin-bottom:8px;
+  display:flex; align-items:center; gap:5px;
+}
+.price-inputs { display:flex; align-items:center; gap:7px; }
+.price-input {
+  width:100%; padding:8px 10px; font-size:13px;
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:var(--radius-sm); color:var(--text); outline:none;
+}
+.price-input:focus { border-color:var(--accent); }
+.price-dash { color:var(--muted2); flex-shrink:0; }
+
+.seg-row { display:flex; gap:5px; flex-wrap:wrap; }
+.seg-btn {
+  padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600;
+  background:var(--surface2); border:1px solid var(--border2); color:var(--muted);
+  transition:all .18s;
+}
+.seg-btn:hover { color:var(--text); border-color:var(--accent); }
+.seg-btn.active { background:var(--grad); color:#fff; border-color:transparent; }
+
+.switch-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:7px 0; font-size:13px; font-weight:500;
+}
+.switch {
+  position:relative; width:38px; height:21px; flex-shrink:0;
+  border-radius:999px; background:var(--border2);
+  transition:background .25s; cursor:pointer; border:none;
+}
+.switch::after {
+  content:''; position:absolute; top:2.5px; left:3px;
+  width:16px; height:16px; border-radius:50%; background:#fff;
+  transition:transform .25s var(--ease);
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+.switch.on { background:var(--grad); }
+.switch.on::after { transform:translateX(16px); }
+
+.cat-chips { display:flex; gap:5px; flex-wrap:wrap; }
+
+.filter-actions {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:14px; padding-top:12px; border-top:1px solid var(--border);
+}
+.filter-result-count { font-size:12.5px; color:var(--muted); font-weight:600; }
+.filter-result-count b { color:var(--accent); }
+.clear-filters-btn {
+  font-size:12.5px; font-weight:700; color:var(--danger);
+  padding:6px 12px; border-radius:8px; transition:background .18s;
+}
+.clear-filters-btn:hover { background:var(--danger-bg); }
+
+/* ── PRODUCT CARDS ── */
+.product-list { display:flex; flex-direction:column; gap:10px; }
 .product-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: border-color .25s, box-shadow .25s;
-  animation: fadeSlideUp .4s var(--ease) both;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); overflow:hidden;
+  transition:border-color .25s, box-shadow .25s, transform .25s;
+  animation:fadeSlideUp .4s var(--ease) both;
+  position:relative;
 }
-.product-card:hover {
-  border-color: var(--border2);
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+.product-card::before {
+  content:''; position:absolute; inset:0 auto 0 0; width:3px;
+  background:var(--grad); opacity:0; transition:opacity .25s;
+}
+.product-card:hover { border-color:var(--border2); box-shadow:var(--shadow); transform:translateY(-2px); }
+.product-card:hover::before { opacity:1; }
+.product-card.best-deal { border-color:var(--accent); }
+.best-badge {
+  position:absolute; top:10px; right:10px; z-index:2;
+  padding:3px 10px; border-radius:999px;
+  background:var(--grad); color:#fff;
+  font-size:10px; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+  box-shadow:0 3px 10px var(--accent-glow);
 }
 
-/* Card top row */
-.card-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 16px;
-}
+.card-row { display:flex; align-items:center; gap:12px; padding:14px 16px; }
 .card-img-wrap {
-  width: 56px; height: 56px; flex-shrink: 0;
-  border-radius: var(--radius-md);
-  background: var(--surface2);
-  overflow: hidden;
+  width:58px; height:58px; flex-shrink:0;
+  border-radius:var(--radius-md); background:var(--surface2); overflow:hidden;
 }
-.card-img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .4s var(--ease);
+.card-img { width:100%; height:100%; object-fit:cover; transition:transform .4s var(--ease); }
+.product-card:hover .card-img { transform:scale(1.07); }
+.card-body { flex:1; min-width:0; }
+.card-cat {
+  font-size:10.5px; font-weight:800; text-transform:uppercase;
+  letter-spacing:.06em; margin-bottom:2px;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  display:inline-block;
 }
-.product-card:hover .card-img { transform: scale(1.06); }
+.card-name { font-size:14px; font-weight:700; line-height:1.35; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-meta { display:flex; align-items:center; gap:10px; margin-top:3px; }
+.card-rating { display:flex; align-items:center; gap:3px; font-size:12px; font-weight:700; color:var(--warning); }
+.card-avail { font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; }
+.avail-in  { background:var(--success-bg); color:var(--success); }
+.avail-out { background:var(--danger-bg);  color:var(--danger);  }
 
-.card-body { flex: 1; min-width: 0; }
-.card-cat  { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 2px; }
-.card-name {
-  font-size: 14px; font-weight: 700; line-height: 1.35;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.card-meta {
-  display: flex; align-items: center; gap: 10px; margin-top: 3px;
-}
-.card-rating {
-  display: flex; align-items: center; gap: 3px;
-  font-size: 12px; font-weight: 700; color: var(--warning);
-}
-.card-avail {
-  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
-}
-.avail-in  { background: var(--success-bg); color: var(--success); }
-.avail-out { background: var(--danger-bg);  color: var(--danger);  }
-
-.card-price-col { text-align: right; flex-shrink: 0; }
-.card-price-val { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
-.card-price-low { font-size: 11px; color: var(--success); font-weight: 700; margin-top: 1px; }
+.card-price-col { text-align:right; flex-shrink:0; }
+.card-price-val { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.card-price-low { font-size:11px; color:var(--success); font-weight:700; margin-top:1px; }
 .card-buy-btn {
-  flex-shrink: 0;
-  padding: 8px 16px; border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-size: 12.5px; font-weight: 600;
-  box-shadow: 0 3px 10px var(--accent-glow);
-  transition: transform .2s, box-shadow .2s;
-  white-space: nowrap;
+  flex-shrink:0; padding:8px 17px; border-radius:999px;
+  background:var(--grad); color:#fff; font-size:12.5px; font-weight:700;
+  box-shadow:0 3px 10px var(--accent-glow);
+  transition:transform .2s, box-shadow .2s; white-space:nowrap;
 }
-.card-buy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
+.card-buy-btn:hover { transform:translateY(-1px); box-shadow:0 6px 16px var(--accent-glow); }
 
-/* Offers accordion */
 .card-toggle-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 16px;
-  border-top: 1px solid var(--border);
-  cursor: pointer;
-  transition: background .18s;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px; border-top:1px solid var(--border);
+  cursor:pointer; transition:background .18s;
 }
-.card-toggle-row:hover { background: rgba(255,255,255,.02); }
-.card-toggle-label { font-size: 13px; font-weight: 600; color: var(--accent); }
-.card-toggle-icon  { color: var(--accent); transition: transform .25s var(--ease); }
-.card-toggle-row.open .card-toggle-icon { transform: rotate(180deg); }
-
-.offers-accordion {
-  max-height: 0; overflow: hidden;
-  transition: max-height .4s var(--ease);
-}
-.offers-accordion.open { max-height: 1400px; }
-
-.offers-inner { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 6px; }
-
+.card-toggle-row:hover { background:var(--surface2); }
+.card-toggle-label { font-size:13px; font-weight:700; color:var(--accent); }
+.card-toggle-icon  { color:var(--accent); transition:transform .25s var(--ease); }
+.card-toggle-row.open .card-toggle-icon { transform:rotate(180deg); }
+.offers-accordion { max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
+.offers-accordion.open { max-height:1600px; }
+.offers-inner { padding:0 12px 12px; display:flex; flex-direction:column; gap:6px; }
 .offer-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 11px; border-radius: var(--radius-md);
-  background: var(--surface2); border: 1px solid var(--border);
-  animation: slideInRow .25s var(--ease) both;
-  transition: border-color .2s;
+  display:flex; align-items:center; gap:10px;
+  padding:9px 11px; border-radius:var(--radius-md);
+  background:var(--surface2); border:1px solid var(--border);
+  animation:slideInRow .25s var(--ease) both; transition:border-color .2s;
 }
-.offer-row:hover { border-color: var(--border2); }
+.offer-row:hover { border-color:var(--accent); }
 .offer-logo {
-  width: 32px; height: 32px; flex-shrink: 0;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 800; color: #fff;
-  overflow: hidden;
+  width:32px; height:32px; flex-shrink:0; border-radius:9px;
+  background:var(--grad); display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:#fff; overflow:hidden;
 }
-.offer-logo img { width: 100%; height: 100%; object-fit: cover; }
-.offer-info { flex: 1; min-width: 0; }
-.offer-store { font-size: 12.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.offer-tags  { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
-.o-tag { font-size: 10px; font-weight: 700; padding: 1.5px 6px; border-radius: 4px; }
-.o-tag.free   { background: var(--success-bg); color: var(--success); }
-.o-tag.out    { background: var(--danger-bg);  color: var(--danger);  }
-.offer-price  { font-size: 14px; font-weight: 800; flex-shrink: 0; text-align: right; }
-.offer-saving { font-size: 10.5px; color: var(--success); font-weight: 700; }
+.offer-logo img { width:100%; height:100%; object-fit:cover; }
+.offer-info { flex:1; min-width:0; }
+.offer-store { font-size:12.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.offer-tags { display:flex; gap:4px; margin-top:2px; flex-wrap:wrap; }
+.o-tag { font-size:10px; font-weight:700; padding:1.5px 6px; border-radius:4px; }
+.o-tag.free { background:var(--success-bg); color:var(--success); }
+.o-tag.out  { background:var(--danger-bg);  color:var(--danger);  }
+.offer-price  { font-size:14px; font-weight:800; flex-shrink:0; text-align:right; }
+.offer-saving { font-size:10.5px; color:var(--success); font-weight:700; }
 .offer-buy {
-  flex-shrink: 0;
-  padding: 6px 12px; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-size: 12px; font-weight: 600;
-  box-shadow: 0 2px 8px var(--accent-glow);
-  transition: transform .18s;
+  flex-shrink:0; padding:6px 13px; border-radius:9px;
+  background:var(--grad); color:#fff; font-size:12px; font-weight:700;
+  box-shadow:0 2px 8px var(--accent-glow); transition:transform .18s;
 }
-.offer-buy:hover { transform: translateY(-1px); }
+.offer-buy:hover { transform:translateY(-1px); }
 
-/* ============================================================
-   SKELETON CARDS
-============================================================ */
-.skeleton-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  padding: 14px 16px;
-}
-.skel-row { display: flex; align-items: center; gap: 12px; }
-.skel-img-wrap { width: 56px; height: 56px; flex-shrink: 0; border-radius: var(--radius-md); overflow: hidden; }
-
-/* ============================================================
-   EMPTY / ERROR STATES
-============================================================ */
-.state-center { text-align: center; padding: 80px 24px; }
+/* ── STATES ── */
+.state-center { text-align:center; padding:70px 24px; }
 .state-icon {
-  width: 80px; height: 80px; margin: 0 auto 22px;
-  border-radius: 22px;
-  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.18);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  animation: float 4s ease-in-out infinite;
+  width:80px; height:80px; margin:0 auto 22px; border-radius:24px;
+  background:var(--grad-soft); border:1px solid var(--accent-glow);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--accent); animation:float 4s ease-in-out infinite;
 }
-.state-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-.state-sub   { font-size: 14px; color: var(--muted); max-width: 360px; margin: 0 auto 24px; }
+.state-title { font-size:20px; font-weight:800; margin-bottom:8px; }
+.state-sub   { font-size:14px; color:var(--muted); max-width:380px; margin:0 auto 24px; }
 
-.error-state {
-  text-align: center; padding: 60px 24px;
-}
+.error-state { text-align:center; padding:60px 24px; }
 .error-card {
-  display: inline-block; max-width: 460px; width: 100%;
-  background: var(--surface); border: 1px solid rgba(239,68,68,.2);
-  border-radius: var(--radius-xl); padding: 40px 36px;
-  box-shadow: 0 16px 40px rgba(0,0,0,.3);
+  display:inline-block; max-width:460px; width:100%;
+  background:var(--surface); border:1px solid rgba(239,68,68,.25);
+  border-radius:var(--radius-xl); padding:40px 36px; box-shadow:var(--shadow);
 }
 .error-icon {
-  width: 64px; height: 64px; margin: 0 auto 20px;
-  border-radius: 50%; background: rgba(239,68,68,.1);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--danger);
+  width:64px; height:64px; margin:0 auto 20px; border-radius:50%;
+  background:var(--danger-bg); display:flex; align-items:center; justify-content:center;
+  color:var(--danger);
 }
 
-/* ============================================================
-   BUTTONS
-============================================================ */
+/* ── BUTTONS ── */
 .btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 10px 20px; border-radius: 11px;
-  font-size: 13.5px; font-weight: 600;
-  transition: all .22s var(--ease); cursor: pointer;
-  position: relative; overflow: hidden;
+  display:inline-flex; align-items:center; gap:7px;
+  padding:10px 20px; border-radius:12px;
+  font-size:13.5px; font-weight:700;
+  transition:all .22s var(--ease); position:relative; overflow:hidden;
 }
-.btn:active { transform: scale(.97); }
-.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 5px 18px var(--accent-glow); border: none; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
-.btn-ghost   { background: rgba(255,255,255,.05); color: var(--text); border: 1px solid var(--border2); }
-.btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(139,92,246,.35); }
-.btn .ripple-el {
-  position: absolute; border-radius: 50%;
-  background: rgba(255,255,255,.35); pointer-events: none;
-  animation: ripple .5s var(--ease) forwards;
-}
+.btn:active { transform:scale(.97); }
+.btn-primary { background:var(--grad); color:#fff; box-shadow:0 5px 18px var(--accent-glow); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--accent-glow); }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border2); }
+.btn-ghost:hover { border-color:var(--accent); }
+.btn .ripple-el { position:absolute; border-radius:50%; background:rgba(255,255,255,.35); pointer-events:none; animation:ripple .5s var(--ease) forwards; }
 
-/* ============================================================
-   SORT ROW
-============================================================ */
-.sort-row {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 14px;
-}
-.sort-label  { font-size: 12.5px; color: var(--muted); flex-shrink: 0; }
-.sort-select {
-  background: var(--surface2); border: 1px solid var(--border2);
-  color: var(--text); border-radius: var(--radius-sm);
-  padding: 6px 26px 6px 10px; font-size: 12.5px;
-  -webkit-appearance: none; appearance: none; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 7px center;
-}
-.sort-select:focus { outline: none; border-color: var(--accent); }
+.dot-loader { display:flex; align-items:center; gap:5px; margin:10px 0; }
+.dot-loader span { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:dotBounce 1.4s ease-in-out infinite; }
+.dot-loader span:nth-child(2) { animation-delay:.15s; }
+.dot-loader span:nth-child(3) { animation-delay:.3s; }
 
-/* ============================================================
-   DOT LOADER
-============================================================ */
-.dot-loader { display: flex; align-items: center; justify-content: center; gap: 5px; margin: 10px 0; }
-.dot-loader span {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--accent); animation: dotBounce 1.4s ease-in-out infinite;
-}
-.dot-loader span:nth-child(2) { animation-delay: .15s; }
-.dot-loader span:nth-child(3) { animation-delay: .3s; }
+.sidebar-overlay { display:none; position:fixed; inset:0; z-index:299; background:rgba(0,0,0,.6); }
+.sidebar-overlay.active { display:block; }
 
-/* ============================================================
-   MOBILE SIDEBAR OVERLAY
-============================================================ */
-.sidebar-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 299;
-  background: rgba(0,0,0,.6);
-}
-.sidebar-overlay.active { display: block; }
-
-/* ============================================================
-   RESPONSIVE
-============================================================ */
+/* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .sidebar {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 300;
-    transform: translateX(-100%);
-    transition: transform .3s var(--ease), width .3s var(--ease);
-    width: 260px !important;
+    position:fixed; top:0; left:0; bottom:0; z-index:300;
+    transform:translateX(-100%);
+    transition:transform .3s var(--ease); width:264px !important;
   }
-  .sidebar.mobile-open { transform: translateX(0); }
-  .main-panel { width: 100%; }
+  .sidebar.mobile-open { transform:translateX(0); }
+  .main-panel { width:100%; }
 }
 @media (max-width: 600px) {
-  .search-btn .btn-search-text { display: none; }
-  .search-btn { padding: 9px 12px; }
-  .stats-strip { gap: 8px; }
-  .stat-chip { padding: 7px 10px; }
-  .card-row { gap: 9px; }
-  .card-img-wrap { width: 46px; height: 46px; }
-  .card-price-val { font-size: 17px; }
+  .search-btn .btn-search-text { display:none; }
+  .search-btn { padding:10px 13px; }
+  .card-row { gap:9px; }
+  .card-img-wrap { width:46px; height:46px; }
+  .card-price-val { font-size:17px; }
+  .sort-select { margin-left:0; }
 }
 </style>
 </head>
 <body>
 
-<!-- Toast -->
 <div id="toastArea" aria-live="polite" aria-atomic="true"></div>
-<!-- Mobile sidebar overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="app-layout">
@@ -845,8 +778,7 @@ img { display: block; max-width: 100%; }
     </div>
 
     <div class="sidebar-search">
-      <input type="search" class="sidebar-search-input" id="sidebarSearchInput"
-        placeholder="Search history…" autocomplete="off">
+      <input type="search" class="sidebar-search-input" id="sidebarSearchInput" placeholder="Search history…" autocomplete="off">
     </div>
 
     <button class="sidebar-new-btn" id="sidebarNewBtn" aria-label="New search">
@@ -869,7 +801,7 @@ img { display: block; max-width: 100%; }
           <div class="sp-sub">Log in to sync across devices</div>
         </div>
         <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <span id="themeIconSide"></span>
         </button>
       </div>
     </div>
@@ -878,7 +810,6 @@ img { display: block; max-width: 100%; }
   <!-- ── MAIN PANEL ── -->
   <div class="main-panel">
 
-    <!-- Top header -->
     <header class="top-header" id="topHeader">
       <div class="header-query-label" id="headerQueryLabel">
         <button class="hamburger-btn" id="mobileHamburger" aria-label="Open sidebar" style="display:none">
@@ -891,76 +822,60 @@ img { display: block; max-width: 100%; }
           <span class="status-dot online" id="statusDot"></span>
           <span id="statusLabel">Ready</span>
         </div>
+        <button class="header-theme-btn" id="headerThemeBtn" aria-label="Toggle light / dark mode">
+          <span id="themeIconTop"></span>
+        </button>
       </div>
     </header>
 
-    <!-- Thread (scrollable content area) -->
     <div class="thread-area" id="threadArea">
 
-      <!-- EMPTY / HERO STATE -->
+      <!-- HERO -->
       <div id="heroView" class="hero-thread">
+        <div class="hero-orb"></div>
         <div class="hero-badge">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
           AI-Powered Product Intelligence
         </div>
         <h1 class="hero-title">What would you like to<br><span class="gradient-text">compare today?</span></h1>
-        <p class="hero-sub">Find and compare the best prices across stores — live, no waiting.</p>
+        <p class="hero-sub">Search by text or voice. Our AI scans stores in real time, filters the noise, and surfaces the best price — instantly.</p>
         <div class="hero-chips" id="heroChips">
           <button class="chip" data-q="iPhone 17 Pro Max">iPhone 17 Pro Max</button>
           <button class="chip" data-q="Samsung Galaxy S25 Ultra">Samsung S25 Ultra</button>
           <button class="chip" data-q="MacBook Air M3">MacBook Air M3</button>
           <button class="chip" data-q="Sony WH-1000XM5">Sony WH-1000XM5</button>
-          <button class="chip" data-q="4K Smart TV">4K Smart TV</button>
+          <button class="chip" data-q="mobile phone under 15000">Phone under ₹15k</button>
           <button class="chip" data-q="iPad Pro M4">iPad Pro M4</button>
         </div>
       </div>
 
-      <!-- THREAD CONTENT (shown during and after search) -->
+      <!-- THREAD CONTENT -->
       <div id="threadContent" class="thread-content" style="display:none">
 
-        <!-- User query bubble -->
         <div class="msg-user" id="msgUser" style="display:none">
           <div class="user-bubble" id="userBubble"></div>
         </div>
 
-        <!-- Assistant response: pipeline steps -->
         <div class="msg-assistant" id="msgAssistant" style="display:none">
+          <div id="loadingPhrase" style="font-size:14px;color:var(--muted);display:none">Initializing analysis…</div>
+          <div class="dot-loader" id="dotLoader" style="display:none"><span></span><span></span><span></span></div>
 
-          <!-- Loading phrase -->
-          <div id="loadingPhrase" style="font-size:14px;color:var(--muted);display:none">
-            Initializing analysis…
-          </div>
-
-          <!-- Dot loader -->
-          <div class="dot-loader" id="dotLoader" style="display:none;justify-content:flex-start;">
-            <span></span><span></span><span></span>
-          </div>
-
-          <!-- Pipeline widget -->
           <div class="sc-pipeline" id="pipelineWidget" style="display:none">
-            <div class="pipeline-progress">
-              <div class="pipeline-progress-fill" id="pipelineProgressFill"></div>
-            </div>
-            <div class="sc-step" data-step="0" id="pipeStep0">
+            <div class="pipeline-progress"><div class="pipeline-progress-fill" id="pipelineProgressFill"></div></div>
+            <div class="sc-step" id="pipeStep0">
               <div class="step-rail"></div>
               <div class="step-inner">
-                <div class="step-head">
-                  <div class="step-dot">1</div>
-                  <div class="step-title">Searching products</div>
-                </div>
-                <div class="step-desc">Querying BuyHatke catalog</div>
+                <div class="step-head"><div class="step-dot">1</div><div class="step-title">Searching products</div></div>
+                <div class="step-desc">Scanning the Visco product graph</div>
               </div>
             </div>
-            <div class="sc-step" data-step="1" id="pipeStep1">
+            <div class="sc-step" id="pipeStep1">
               <div class="step-rail"></div>
               <div class="step-inner">
-                <div class="step-head">
-                  <div class="step-dot">2</div>
-                  <div class="step-title">Discovering URLs</div>
-                </div>
+                <div class="step-head"><div class="step-dot">2</div><div class="step-title">Discovering listings</div></div>
                 <div class="step-desc">Locating store listings</div>
                 <div id="step1SkeletonCards" style="display:none">
-                  <div class="step-card-skeleton" style="margin-top:8px">
+                  <div class="step-card-skeleton">
                     <div class="skel" style="width:44px;height:44px;border-radius:8px;flex-shrink:0"></div>
                     <div style="flex:1;display:flex;flex-direction:column;gap:6px">
                       <div class="skel" style="height:10px;width:55%"></div>
@@ -979,53 +894,44 @@ img { display: block; max-width: 100%; }
                 </div>
               </div>
             </div>
-            <div class="sc-step" data-step="2" id="pipeStep2">
+            <div class="sc-step" id="pipeStep2">
               <div class="step-rail"></div>
               <div class="step-inner">
-                <div class="step-head">
-                  <div class="step-dot">3</div>
-                  <div class="step-title">Parsing offers</div>
-                </div>
-                <div class="step-desc" id="step2Desc">Extracting product & pricing data</div>
+                <div class="step-head"><div class="step-dot">3</div><div class="step-title">Parsing offers</div></div>
+                <div class="step-desc" id="step2Desc">Extracting product &amp; pricing data</div>
               </div>
             </div>
-            <div class="sc-step" data-step="3" id="pipeStep3">
+            <div class="sc-step" id="pipeStep3">
               <div class="step-rail"></div>
               <div class="step-inner">
-                <div class="step-head">
-                  <div class="step-dot">4</div>
-                  <div class="step-title">Comparing prices</div>
-                </div>
+                <div class="step-head"><div class="step-dot">4</div><div class="step-title">Comparing prices</div></div>
                 <div class="step-desc">Ranking by best value</div>
               </div>
             </div>
-            <div class="sc-step" data-step="4" id="pipeStep4">
+            <div class="sc-step" id="pipeStep4">
               <div class="step-rail"></div>
               <div class="step-inner">
-                <div class="step-head">
-                  <div class="step-dot">5</div>
-                  <div class="step-title">Finalizing results</div>
-                </div>
-                <div class="step-desc">Building comparison report</div>
+                <div class="step-head"><div class="step-dot">5</div><div class="step-title">Finalizing results</div></div>
+                <div class="step-desc">Building your comparison report</div>
               </div>
             </div>
           </div>
-          <!-- end pipeline -->
-
         </div>
-        <!-- end msg-assistant -->
 
-        <!-- RESULTS AREA (updates live as products arrive) -->
+        <!-- RESULTS -->
         <div id="resultsArea" style="display:none">
-
-          <!-- Stats strip -->
           <div class="stats-strip" id="statsStrip"></div>
 
-          <!-- Sort row -->
-          <div class="sort-row">
-            <span class="sort-label">Sort</span>
-            <select class="sort-select" id="sortSelect">
-              <option value="relevance">Relevance</option>
+          <!-- Filter bar -->
+          <div class="filter-bar">
+            <button class="filter-toggle-btn" id="filterToggleBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></svg>
+              Filters
+              <span class="filter-count-badge" id="filterCountBadge" style="display:none">0</span>
+            </button>
+            <div id="aiChipsWrap" style="display:contents"></div>
+            <select class="sort-select" id="sortSelect" aria-label="Sort results">
+              <option value="relevance">✨ AI Relevance</option>
               <option value="price-low">Price: Low → High</option>
               <option value="price-high">Price: High → Low</option>
               <option value="rating">Best Rating</option>
@@ -1033,9 +939,74 @@ img { display: block; max-width: 100%; }
             </select>
           </div>
 
-          <!-- Product list -->
-          <div class="product-list" id="productList"></div>
+          <!-- Filter panel -->
+          <div class="filter-panel" id="filterPanel">
+            <div class="filter-grid">
+              <div>
+                <div class="filter-group-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  Price range
+                </div>
+                <div class="price-inputs">
+                  <input type="number" class="price-input" id="fMinPrice" placeholder="Min" min="0" inputmode="numeric">
+                  <span class="price-dash">—</span>
+                  <input type="number" class="price-input" id="fMaxPrice" placeholder="Max" min="0" inputmode="numeric">
+                </div>
+              </div>
+              <div>
+                <div class="filter-group-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+                  Minimum rating
+                </div>
+                <div class="seg-row" id="ratingSeg">
+                  <button class="seg-btn active" data-val="0">Any</button>
+                  <button class="seg-btn" data-val="3">3★+</button>
+                  <button class="seg-btn" data-val="4">4★+</button>
+                  <button class="seg-btn" data-val="4.5">4.5★+</button>
+                </div>
+              </div>
+              <div>
+                <div class="filter-group-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                  Quick filters
+                </div>
+                <div class="switch-row">
+                  <span>In stock only</span>
+                  <button class="switch" id="fInStock" role="switch" aria-checked="false" aria-label="In stock only"></button>
+                </div>
+                <div class="switch-row">
+                  <span>Has free delivery</span>
+                  <button class="switch" id="fFreeDel" role="switch" aria-checked="false" aria-label="Free delivery"></button>
+                </div>
+                <div class="switch-row">
+                  <span>✨ AI Smart Match</span>
+                  <button class="switch on" id="fSmartMatch" role="switch" aria-checked="true" aria-label="AI Smart Match"></button>
+                </div>
+              </div>
+              <div>
+                <div class="filter-group-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                  Category
+                </div>
+                <div class="cat-chips seg-row" id="catChips">
+                  <button class="seg-btn active" data-cat="">All</button>
+                </div>
+              </div>
+            </div>
+            <div class="filter-actions">
+              <span class="filter-result-count" id="filterResultCount"></span>
+              <button class="clear-filters-btn" id="clearFiltersBtn">Reset all filters</button>
+            </div>
+          </div>
 
+          <div class="product-list" id="productList"></div>
+          <div id="noMatchArea" style="display:none">
+            <div class="state-center" style="padding:44px 20px">
+              <div class="state-title" style="font-size:16px">No products match your filters</div>
+              <p class="state-sub" style="margin-bottom:16px">Loosen a filter or reset to see everything.</p>
+              <button class="btn btn-ghost" id="noMatchResetBtn">Reset filters</button>
+            </div>
+          </div>
         </div>
 
         <!-- ERROR -->
@@ -1058,7 +1029,7 @@ img { display: block; max-width: 100%; }
           </div>
         </div>
 
-        <!-- EMPTY RESULTS -->
+        <!-- EMPTY -->
         <div id="emptyResultsArea" style="display:none">
           <div class="state-center">
             <div class="state-icon">
@@ -1070,35 +1041,27 @@ img { display: block; max-width: 100%; }
         </div>
 
       </div>
-      <!-- end threadContent -->
-
     </div>
-    <!-- end threadArea -->
 
-    <!-- ── Composer bar (bottom search) ── -->
+    <!-- ── COMPOSER ── -->
     <div class="composer-bar">
       <form class="search-form" id="searchForm" role="search">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input
-          class="search-input"
-          id="searchInput"
-          type="text"
-          placeholder="Search any product to compare prices…"
-          autocomplete="off"
-          spellcheck="false"
-        >
+        <input class="search-input" id="searchInput" type="text" placeholder="Search or say a product… e.g. “phone under 10000”" autocomplete="off" spellcheck="false">
+        <button class="mic-btn" id="micBtn" type="button" aria-label="Voice search" title="Voice search">
+          <svg class="mic-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8 22h8"/></svg>
+          <span class="mic-eq"><span></span><span></span><span></span></span>
+        </button>
         <button class="search-btn" id="searchBtn" type="submit">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           <span class="btn-search-text">Compare</span>
         </button>
       </form>
+      <div class="voice-hint" id="voiceHint">🎙 Listening… speak now</div>
     </div>
 
   </div>
-  <!-- end main-panel -->
-
 </div>
-<!-- end app-layout -->
 
 <script>
 (() => {
@@ -1107,7 +1070,7 @@ img { display: block; max-width: 100%; }
 /* ============================================================
    CONFIG
 ============================================================ */
-const API_BASE = "https://api.viscocompare.online";
+const API_BASE      = "https://api.viscocompare.online";
 const POLL_INTERVAL = 1000;
 const MAX_HISTORY   = 15;
 
@@ -1115,24 +1078,26 @@ const MAX_HISTORY   = 15;
    STATE
 ============================================================ */
 const state = {
-  jobId:     null,
-  polling:   false,
-  pollTimer: null,
-  products:  [],
-  query:     '',
-  history:   loadHistory(),
-  savedItems: loadSaved(),
-  lastQuery: '',
+  jobId: null, polling: false, pollTimer: null,
+  products: [], query: '', history: loadHistory(),
+  filters: defaultFilters(),
+  categories: [],
+  autoBudget: null,        // detected from query, e.g. 10000
+  bestDealId: null,
 };
+
+function defaultFilters() {
+  return { minPrice:null, maxPrice:null, minRating:0, inStock:false, freeDel:false, smartMatch:true, category:'' };
+}
 
 /* ============================================================
    UTILS
 ============================================================ */
 const $ = (s, ctx = document) => ctx.querySelector(s);
+const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
-    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
-  );
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 }
 function fmtPrice(n) {
   const num = Number(n);
@@ -1142,30 +1107,51 @@ function fmtPrice(n) {
     : '$' + num.toFixed(2);
 }
 function randId() { return Math.random().toString(36).slice(2, 9); }
+function getLowestPrice(p) {
+  if (p.lowestPrice || p.analytics?.lowest_price) return Number(p.lowestPrice || p.analytics.lowest_price);
+  const prices = (Array.isArray(p.offers) ? p.offers : []).map(o => Number(o.price || 0)).filter(x => x > 0);
+  return prices.length ? Math.min(...prices) : 0;
+}
 
 /* ============================================================
-   LOCAL STORAGE
+   THEME
+============================================================ */
+const SUN  = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+const MOON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('vc_theme', theme); } catch {}
+  const icon = theme === 'dark' ? SUN : MOON;
+  const t1 = $('#themeIconTop'), t2 = $('#themeIconSide');
+  if (t1) t1.innerHTML = icon;
+  if (t2) t2.innerHTML = icon;
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  showToast('info', next === 'light' ? '☀️ Light mode' : '🌙 Dark mode', 'Theme saved for next time.', 2200);
+}
+function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('vc_theme'); } catch {}
+  applyTheme(saved || 'dark');
+}
+
+/* ============================================================
+   LOCAL STORAGE — history
 ============================================================ */
 function loadHistory() {
   try { return JSON.parse(localStorage.getItem('vc_history') || '[]'); } catch { return []; }
 }
-function saveHistory(h) {
-  try { localStorage.setItem('vc_history', JSON.stringify(h)); } catch {}
-}
+function saveHistory(h) { try { localStorage.setItem('vc_history', JSON.stringify(h)); } catch {} }
 function addHistory(q) {
   const h = state.history.filter(x => x.toLowerCase() !== q.toLowerCase());
   h.unshift(q);
   state.history = h.slice(0, MAX_HISTORY);
   saveHistory(state.history);
   renderSidebar();
-}
-function loadSaved() {
-  try { return new Set(JSON.parse(localStorage.getItem('vc_saved') || '[]')); } catch { return new Set(); }
-}
-function toggleSaved(id) {
-  if (state.savedItems.has(id)) state.savedItems.delete(id);
-  else state.savedItems.add(id);
-  try { localStorage.setItem('vc_saved', JSON.stringify([...state.savedItems])); } catch {}
 }
 
 /* ============================================================
@@ -1193,8 +1179,7 @@ function showToast(type, title, msg = '', duration = 4000) {
     </button>`;
   t.querySelector('.toast-close').onclick = () => removeToast(t);
   toastArea.appendChild(t);
-  const timer = setTimeout(() => removeToast(t), duration);
-  t._timer = timer;
+  t._timer = setTimeout(() => removeToast(t), duration);
 }
 function removeToast(t) {
   if (t._removed) return;
@@ -1208,8 +1193,7 @@ function removeToast(t) {
    STATUS
 ============================================================ */
 function setStatus(mode, label) {
-  const dot = $('#statusDot');
-  const lbl = $('#statusLabel');
+  const dot = $('#statusDot'), lbl = $('#statusLabel');
   if (dot) dot.className = 'status-dot ' + mode;
   if (lbl) lbl.textContent = label;
 }
@@ -1227,111 +1211,73 @@ function renderSidebar(filter = '') {
     list.innerHTML = '<div class="sidebar-empty">No recent searches</div>';
     return;
   }
-  list.innerHTML = items.map((q, i) => `
+  list.innerHTML = items.map(q => `
     <div class="sidebar-item ${q === state.query ? 'active' : ''}" data-q="${esc(q)}">
-      <div class="si-icon">${q.trim()[0]?.toUpperCase() || 'S'}</div>
+      <div class="si-icon">${esc(q.trim()[0]?.toUpperCase() || 'S')}</div>
       <div class="si-text">
         <div class="si-title">${esc(q)}</div>
         <div class="si-sub">Recent search</div>
       </div>
     </div>`).join('');
-  list.querySelectorAll('.sidebar-item').forEach(item => {
+  $$('.sidebar-item', list).forEach(item => {
     item.addEventListener('click', () => {
-      const q = item.dataset.q;
-      $('#searchInput').value = q;
+      $('#searchInput').value = item.dataset.q;
       closeMobileSidebar();
-      performSearch(q);
+      performSearch(item.dataset.q);
     });
   });
 }
-
-function toggleSidebar() {
-  const sb = $('#sidebar');
-  sb.classList.toggle('collapsed');
-}
-function openMobileSidebar() {
-  $('#sidebar').classList.add('mobile-open');
-  $('#sidebarOverlay').classList.add('active');
-}
-function closeMobileSidebar() {
-  $('#sidebar').classList.remove('mobile-open');
-  $('#sidebarOverlay').classList.remove('active');
-}
+function toggleSidebar()     { $('#sidebar').classList.toggle('collapsed'); }
+function openMobileSidebar() { $('#sidebar').classList.add('mobile-open'); $('#sidebarOverlay').classList.add('active'); }
+function closeMobileSidebar(){ $('#sidebar').classList.remove('mobile-open'); $('#sidebarOverlay').classList.remove('active'); }
 
 /* ============================================================
-   VIEW HELPERS
+   VIEWS
 ============================================================ */
-function showHero() {
-  $('#heroView').style.display   = '';
-  $('#threadContent').style.display = 'none';
-}
-function showThread() {
-  $('#heroView').style.display   = 'none';
-  $('#threadContent').style.display = '';
-}
+function showHero()   { $('#heroView').style.display = ''; $('#threadContent').style.display = 'none'; }
+function showThread() { $('#heroView').style.display = 'none'; $('#threadContent').style.display = ''; }
 
 function resetThreadUI() {
-  $('#msgUser').style.display      = 'none';
-  $('#msgAssistant').style.display = 'none';
-  $('#loadingPhrase').style.display = 'none';
-  $('#dotLoader').style.display    = 'none';
-  $('#pipelineWidget').style.display = 'none';
-  $('#resultsArea').style.display  = 'none';
-  $('#errorArea').style.display    = 'none';
-  $('#emptyResultsArea').style.display = 'none';
+  ['#msgUser','#msgAssistant','#loadingPhrase','#dotLoader','#pipelineWidget',
+   '#resultsArea','#errorArea','#emptyResultsArea','#noMatchArea']
+    .forEach(id => { const el = $(id); if (el) el.style.display = 'none'; });
+  $('#filterPanel')?.classList.remove('open');
+  $('#filterToggleBtn')?.classList.remove('active');
 }
 
 function showSearchingUI(query) {
   resetThreadUI();
   showThread();
-
-  // User bubble
-  const ub = $('#userBubble');
-  if (ub) ub.textContent = query;
+  $('#userBubble').textContent = query;
   $('#msgUser').style.display = 'flex';
-
-  // Assistant: pipeline
   $('#msgAssistant').style.display = 'flex';
   $('#loadingPhrase').style.display = '';
-  $('#dotLoader').style.display    = 'flex';
+  $('#dotLoader').style.display = 'flex';
   $('#pipelineWidget').style.display = '';
   setAllStepsPending();
   advancePipelineStep(0);
   setPipelineProgress(5);
-
-  // Update header
   const qLabel = $('#headerQueryText');
   if (qLabel) qLabel.innerHTML = `Comparing: <span>${esc(query)}</span>`;
 }
 
 /* ============================================================
-   PIPELINE STEPS
+   PIPELINE
 ============================================================ */
 function setAllStepsPending() {
-  document.querySelectorAll('.sc-step').forEach(el => {
-    el.classList.remove('step-active','step-done');
-  });
+  $$('.sc-step').forEach(el => el.classList.remove('step-active','step-done'));
 }
 function advancePipelineStep(idx) {
-  document.querySelectorAll('.sc-step').forEach((el, i) => {
+  $$('.sc-step').forEach((el, i) => {
     el.classList.remove('step-active','step-done');
     if (i < idx) el.classList.add('step-done');
     else if (i === idx) el.classList.add('step-active');
   });
-  if (idx === 1) {
-    const skels = $('#step1SkeletonCards');
-    if (skels) skels.style.display = '';
-  }
-  if (idx === 2) {
-    const skels = $('#step1SkeletonCards');
-    if (skels) skels.style.display = 'none';
-  }
+  const skels = $('#step1SkeletonCards');
+  if (skels) skels.style.display = idx === 1 ? '' : 'none';
 }
 function completeAllSteps() {
-  document.querySelectorAll('.sc-step').forEach(el => {
-    el.classList.remove('step-active');
-    el.classList.add('step-done');
-  });
+  $$('.sc-step').forEach(el => { el.classList.remove('step-active'); el.classList.add('step-done'); });
 }
 function setPipelineProgress(pct) {
   const fill = $('#pipelineProgressFill');
@@ -1344,42 +1290,161 @@ function progressToStep(pct) {
   else if (pct < 75) advancePipelineStep(3);
   else if (pct < 95) advancePipelineStep(4);
   const desc = $('#step2Desc');
-  if (desc && pct >= 25) {
-    desc.textContent = `Progress: ${Math.round(pct)}%`;
-  }
+  if (desc && pct >= 25) desc.textContent = `Progress: ${Math.round(pct)}%`;
 }
 
 /* ============================================================
-   STATS STRIP
+   AI QUERY INTELLIGENCE
+   - budget extraction ("under 10000", "below 5k", "within ₹20,000")
+   - relevance scoring for Smart Match
+============================================================ */
+function extractBudget(query) {
+  const q = query.toLowerCase().replace(/,/g, '');
+  const m = q.match(/(?:under|below|less than|within|upto|up to|max)\s*(?:₹|rs\.?\s*)?(\d+(?:\.\d+)?)\s*(k|thousand|lakh|l)?\b/i);
+  if (!m) return null;
+  let n = parseFloat(m[1]);
+  const unit = (m[2] || '').toLowerCase();
+  if (unit === 'k' || unit === 'thousand') n *= 1000;
+  if (unit === 'lakh' || unit === 'l')     n *= 100000;
+  return n >= 100 ? Math.round(n) : null;
+}
+
+const STOPWORDS = new Set(['under','below','less','than','the','a','an','for','with','best','buy','cheap','price','of','to','in','and','or','upto','up','within','max','rs','new','latest']);
+function queryTokens(query) {
+  return query.toLowerCase().replace(/[₹,]/g,' ').split(/\s+/)
+    .filter(t => t && !STOPWORDS.has(t) && !/^\d+k?$/.test(t));
+}
+function relevanceScore(p, tokens) {
+  if (!tokens.length) return 1;
+  const title = (p.title || p.name || '').toLowerCase();
+  let hits = 0;
+  tokens.forEach(t => { if (title.includes(t)) hits++; });
+  return hits / tokens.length; // 0..1
+}
+function isSmartMatch(p, tokens, budget) {
+  // Budget: if the user set a budget, the product's lowest price must respect it
+  if (budget) {
+    const price = getLowestPrice(p);
+    if (price > 0 && price > budget * 1.1) return false; // 10% grace
+  }
+  // Relevance: at least ~1/3 of meaningful query words in title
+  return relevanceScore(p, tokens) >= (tokens.length > 2 ? 0.34 : 0.5) || tokens.length === 0;
+}
+
+/* ============================================================
+   FILTER ENGINE
+============================================================ */
+function activeFilterCount() {
+  const f = state.filters;
+  let n = 0;
+  if (f.minPrice != null) n++;
+  if (f.maxPrice != null) n++;
+  if (f.minRating > 0) n++;
+  if (f.inStock) n++;
+  if (f.freeDel) n++;
+  if (f.category) n++;
+  return n;
+}
+
+function applyFilters(products) {
+  const f = state.filters;
+  const tokens = queryTokens(state.query);
+  return products.filter(p => {
+    const price  = getLowestPrice(p);
+    const rating = Number(p.rating || 0);
+    const avail  = !(p.availability || 'in stock').toLowerCase().includes('out');
+    const offers = Array.isArray(p.offers) ? p.offers : [];
+    const cat    = p.classification?.sub_category || '';
+    const hasFree = offers.some(o =>
+      (o.delivery || '').toLowerCase().includes('free') || o.freeDelivery || (o.delivery || '') === '0');
+
+    if (f.smartMatch && !isSmartMatch(p, tokens, state.autoBudget)) return false;
+    if (f.minPrice != null && price > 0 && price < f.minPrice) return false;
+    if (f.maxPrice != null && price > 0 && price > f.maxPrice) return false;
+    if (f.minRating > 0 && rating < f.minRating) return false;
+    if (f.inStock && !avail) return false;
+    if (f.freeDel && !hasFree) return false;
+    if (f.category && cat !== f.category) return false;
+    return true;
+  });
+}
+
+function rebuildCategoryChips() {
+  const cats = [...new Set(state.products.map(p => p.classification?.sub_category).filter(Boolean))];
+  state.categories = cats;
+  const wrap = $('#catChips');
+  if (!wrap) return;
+  wrap.innerHTML = `<button class="seg-btn ${!state.filters.category ? 'active' : ''}" data-cat="">All</button>` +
+    cats.map(c => `<button class="seg-btn ${state.filters.category === c ? 'active' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  $$('.seg-btn', wrap).forEach(b => b.addEventListener('click', () => {
+    state.filters.category = b.dataset.cat;
+    $$('.seg-btn', wrap).forEach(x => x.classList.toggle('active', x === b));
+    refreshResults();
+  }));
+}
+
+function renderAiChips() {
+  const wrap = $('#aiChipsWrap');
+  if (!wrap) return;
+  let html = '';
+  if (state.autoBudget && state.filters.smartMatch) {
+    html += `
+      <span class="ai-chip" id="budgetChip" title="Auto-detected from your search">
+        ✨ AI: Budget ≤ ${fmtPrice(state.autoBudget)}
+        <span class="ai-x" role="button" aria-label="Remove budget filter" tabindex="0">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </span>
+      </span>`;
+  }
+  wrap.innerHTML = html;
+  const chip = $('#budgetChip');
+  if (chip) chip.querySelector('.ai-x').addEventListener('click', () => {
+    state.autoBudget = null;
+    renderAiChips();
+    refreshResults();
+    showToast('info', 'Budget filter removed', 'Showing all price points.', 2500);
+  });
+}
+
+function updateFilterBadge(shown, total) {
+  const badge = $('#filterCountBadge');
+  const n = activeFilterCount();
+  if (badge) {
+    badge.style.display = n ? '' : 'none';
+    badge.textContent = n;
+  }
+  const count = $('#filterResultCount');
+  if (count) count.innerHTML = `Showing <b>${shown}</b> of ${total} products`;
+}
+
+function resetFilters() {
+  state.filters = defaultFilters();
+  $('#fMinPrice').value = '';
+  $('#fMaxPrice').value = '';
+  $$('#ratingSeg .seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === '0'));
+  setSwitch($('#fInStock'), false);
+  setSwitch($('#fFreeDel'), false);
+  setSwitch($('#fSmartMatch'), true);
+  rebuildCategoryChips();
+  refreshResults();
+}
+function setSwitch(el, on) {
+  if (!el) return;
+  el.classList.toggle('on', on);
+  el.setAttribute('aria-checked', String(on));
+}
+
+/* ============================================================
+   STATS
 ============================================================ */
 function renderStats(stats) {
   const strip = $('#statsStrip');
   if (!strip) return;
   const items = [
-    {
-      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-      val: stats.productsFound || 0,
-      label: 'Products',
-      fmt: v => String(v),
-    },
-    {
-      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 12.1 12 3.5H4v8l8.6 8.6a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8z"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg>`,
-      val: stats.offersFound || 0,
-      label: 'Offers',
-      fmt: v => String(v),
-    },
-    {
-      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5v11H3z"/></svg>`,
-      val: stats.storesCompared || 0,
-      label: 'Stores',
-      fmt: v => String(v),
-    },
-    {
-      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-      val: stats.lowestPrice,
-      label: 'Lowest Price',
-      fmt: v => v ? fmtPrice(v) : '—',
-    },
+    { icon:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>', val:stats.productsFound||0, label:'Products', fmt:String },
+    { icon:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 12.1 12 3.5H4v8l8.6 8.6a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8z"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg>', val:stats.offersFound||0, label:'Offers', fmt:String },
+    { icon:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5v11H3z"/></svg>', val:stats.storesCompared||0, label:'Stores', fmt:String },
+    { icon:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', val:stats.lowestPrice, label:'Lowest Price', fmt:v => v ? fmtPrice(v) : '—' },
   ];
   strip.innerHTML = items.map(it => `
     <div class="stat-chip">
@@ -1392,61 +1457,57 @@ function renderStats(stats) {
 }
 
 /* ============================================================
-   PRODUCT CARD
+   PRODUCT CARDS
 ============================================================ */
 function getProductImage(p) {
   const img = p.image || '';
   if (img && img.startsWith('http')) return img;
-  const name   = (p.title || p.name || 'P').trim();
+  const name = (p.title || p.name || 'P').trim();
   const letter = name[0].toUpperCase();
-  const hue    = ((name.charCodeAt(0) || 65) * 13) % 360;
+  const hue = ((name.charCodeAt(0) || 65) * 13) % 360;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
     <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(${hue},55%,28%)" stop-opacity=".9"/>
-      <stop offset="100%" stop-color="hsl(${(hue+40)%360},65%,18%)" stop-opacity=".95"/>
+      <stop offset="0%" stop-color="hsl(${hue},60%,45%)"/>
+      <stop offset="100%" stop-color="hsl(${(hue+50)%360},70%,30%)"/>
     </linearGradient></defs>
-    <rect width="120" height="120" fill="#141414"/>
     <rect width="120" height="120" fill="url(#g)"/>
-    <text x="60" y="80" font-family="Inter,sans-serif" font-size="52" font-weight="800"
-      fill="#fff" text-anchor="middle" opacity=".85">${letter}</text>
+    <text x="60" y="80" font-family="Inter,sans-serif" font-size="52" font-weight="800" fill="#fff" text-anchor="middle" opacity=".9">${letter}</text>
   </svg>`;
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 
-function renderProductCard(p, delay = 0) {
-  const id = p.normalized_product_id || p.url || randId();
+function renderProductCard(p, delay = 0, isBest = false) {
+  const id      = p.normalized_product_id || p.url || randId();
   const title   = p.title || p.name || 'Unknown Product';
   const cat     = p.classification?.sub_category || '';
   const rating  = Number(p.rating || 0);
   const avail   = (p.availability || 'In Stock').toLowerCase().includes('out') ? 'out' : 'in';
   const imgSrc  = getProductImage(p);
-
   const offers  = Array.isArray(p.offers) ? p.offers : [];
-  const lowestP = p.lowestPrice  || p.analytics?.lowest_price  || 0;
-  const highestP= p.highestPrice || p.analytics?.highest_price || 0;
-
-  const bestBuyUrl = p.bestOffer?.buyUrl || offers.find(o => o.buyUrl || o.url)?.buyUrl
+  const lowestP = getLowestPrice(p);
+  const highestP= Number(p.highestPrice || p.analytics?.highest_price || 0);
+  const bestBuyUrl = p.bestOffer?.buyUrl
+    || offers.find(o => o.buyUrl || o.url)?.buyUrl
     || offers.find(o => o.buyUrl || o.url)?.url
     || p.productUrl || p.url || '#';
 
   const offersHtml = offers.length ? offers.map((o, i) => {
     const storeName = o.store || `Store ${i+1}`;
     const storeInit = storeName[0]?.toUpperCase() || 'S';
-    const price     = Number(o.price || 0);
-    const isFree    = (o.delivery || '').toLowerCase().includes('free')
-      || (o.delivery || '') === '0' || o.freeDelivery;
-    const isAvail   = o.is_available !== false;
-    const saving    = price > 0 && highestP > price ? highestP - price : 0;
-    const buyLink   = o.buyUrl || o.url || '#';
+    const price = Number(o.price || 0);
+    const isFree = (o.delivery || '').toLowerCase().includes('free') || (o.delivery || '') === '0' || o.freeDelivery;
+    const isAvail = o.is_available !== false;
+    const saving = price > 0 && highestP > price ? highestP - price : 0;
+    const buyLink = o.buyUrl || o.url || '#';
     return `
-      <div class="offer-row" style="animation-delay:${i*50}ms">
+      <div class="offer-row" style="animation-delay:${i*40}ms">
         <div class="offer-logo">${o.logo
           ? `<img src="${esc(o.logo)}" alt="${esc(storeName)}" loading="lazy" onerror="this.parentNode.textContent='${storeInit}'">`
           : storeInit}</div>
         <div class="offer-info">
           <div class="offer-store">${esc(storeName)}</div>
           <div class="offer-tags">
-            ${isFree   ? '<span class="o-tag free">Free delivery</span>' : ''}
+            ${isFree ? '<span class="o-tag free">Free delivery</span>' : ''}
             ${!isAvail ? '<span class="o-tag out">Out of stock</span>' : ''}
           </div>
         </div>
@@ -1459,25 +1520,22 @@ function renderProductCard(p, delay = 0) {
   }).join('') : '<div style="padding:12px;text-align:center;font-size:13px;color:var(--muted)">No offer details</div>';
 
   const card = document.createElement('div');
-  card.className = 'product-card';
+  card.className = 'product-card' + (isBest ? ' best-deal' : '');
   card.style.animationDelay = delay + 'ms';
   card.dataset.id = id;
-
   card.innerHTML = `
+    ${isBest ? '<div class="best-badge">✨ Best Deal</div>' : ''}
     <div class="card-row">
       <div class="card-img-wrap">
-        <img class="card-img" src="${imgSrc}" alt="${esc(title)}" loading="lazy"
-          onerror="this.src='${getProductImage({title:'P'})}'" >
+        <img class="card-img" src="${imgSrc}" alt="${esc(title)}" loading="lazy">
       </div>
       <div class="card-body">
         ${cat ? `<div class="card-cat">${esc(cat)}</div>` : ''}
         <div class="card-name" title="${esc(title)}">${esc(title)}</div>
         <div class="card-meta">
-          ${rating > 0 ? `
-            <div class="card-rating">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
-              ${rating.toFixed(1)}
-            </div>` : ''}
+          ${rating > 0 ? `<div class="card-rating">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+            ${rating.toFixed(1)}</div>` : ''}
           <span class="card-avail avail-${avail}">${avail === 'in' ? 'In Stock' : 'Out of Stock'}</span>
         </div>
       </div>
@@ -1487,66 +1545,67 @@ function renderProductCard(p, delay = 0) {
       </div>
       ${bestBuyUrl !== '#' ? `<a href="${esc(bestBuyUrl)}" target="_blank" rel="noopener noreferrer" class="card-buy-btn">Buy</a>` : ''}
     </div>
-    <div class="card-toggle-row" data-id="${esc(id)}" role="button" aria-expanded="false" tabindex="0">
+    <div class="card-toggle-row" role="button" aria-expanded="false" tabindex="0">
       <span class="card-toggle-label">View ${offers.length} offer${offers.length !== 1 ? 's' : ''}</span>
       <svg class="card-toggle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
     </div>
-    <div class="offers-accordion" id="acc-${esc(id)}">
-      <div class="offers-inner">${offersHtml}</div>
-    </div>`;
+    <div class="offers-accordion"><div class="offers-inner">${offersHtml}</div></div>`;
 
-  // Toggle accordion
   const toggleRow = card.querySelector('.card-toggle-row');
   toggleRow.addEventListener('click', () => {
-    const acc    = card.querySelector('.offers-accordion');
-    const isOpen = acc.classList.contains('open');
-    acc.classList.toggle('open', !isOpen);
-    toggleRow.classList.toggle('open', !isOpen);
-    toggleRow.setAttribute('aria-expanded', String(!isOpen));
+    const acc = card.querySelector('.offers-accordion');
+    const open = !acc.classList.contains('open');
+    acc.classList.toggle('open', open);
+    toggleRow.classList.toggle('open', open);
+    toggleRow.setAttribute('aria-expanded', String(open));
   });
-  toggleRow.addEventListener('keydown', (e) => {
+  toggleRow.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRow.click(); }
   });
-
   return card;
 }
 
 /* ============================================================
-   RENDER PRODUCTS
+   RENDER (filter + sort + best-deal detection)
 ============================================================ */
-function renderProducts(products, isAppend = false) {
+function refreshResults() {
   const list = $('#productList');
   if (!list) return;
 
-  const sorted = sortProducts(products, $('#sortSelect')?.value || 'relevance');
+  const filtered = applyFilters(state.products);
+  const sorted = sortProducts(filtered, $('#sortSelect')?.value || 'relevance');
+  updateFilterBadge(sorted.length, state.products.length);
+  renderAiChips();
 
-  if (!isAppend) {
-    list.innerHTML = '';
-    sorted.forEach((p, i) => list.appendChild(renderProductCard(p, i * 50)));
-  } else {
-    // Append new cards only
-    const existing = new Set([...list.querySelectorAll('.product-card')].map(c => c.dataset.id));
-    sorted.forEach((p, i) => {
-      const id = p.normalized_product_id || p.url || '';
-      if (!existing.has(id)) list.appendChild(renderProductCard(p, i * 40));
-    });
+  // Best deal = lowest valid price among filtered
+  let bestId = null, bestPrice = Infinity;
+  sorted.forEach(p => {
+    const pr = getLowestPrice(p);
+    if (pr > 0 && pr < bestPrice) { bestPrice = pr; bestId = p.normalized_product_id || p.url; }
+  });
+
+  list.innerHTML = '';
+  const noMatch = $('#noMatchArea');
+  if (!sorted.length && state.products.length) {
+    if (noMatch) noMatch.style.display = '';
+    return;
   }
+  if (noMatch) noMatch.style.display = 'none';
+  sorted.forEach((p, i) => {
+    const id = p.normalized_product_id || p.url;
+    list.appendChild(renderProductCard(p, i * 50, id === bestId && sorted.length > 1));
+  });
 }
 
 function sortProducts(products, mode) {
   const arr = [...products];
-  const getPrice = p => {
-    if (p.lowestPrice || p.analytics?.lowest_price) return p.lowestPrice || p.analytics.lowest_price;
-    const offers = Array.isArray(p.offers) ? p.offers : [];
-    const prices = offers.map(o => Number(o.price || 0)).filter(x => x > 0);
-    return prices.length ? Math.min(...prices) : 0;
-  };
+  const tokens = queryTokens(state.query);
   switch (mode) {
-    case 'price-low':  return arr.sort((a, b) => getPrice(a) - getPrice(b));
-    case 'price-high': return arr.sort((a, b) => getPrice(b) - getPrice(a));
-    case 'rating':     return arr.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
-    case 'offers':     return arr.sort((a, b) => (b.offers?.length || 0) - (a.offers?.length || 0));
-    default:           return arr;
+    case 'price-low':  return arr.sort((a,b) => getLowestPrice(a) - getLowestPrice(b));
+    case 'price-high': return arr.sort((a,b) => getLowestPrice(b) - getLowestPrice(a));
+    case 'rating':     return arr.sort((a,b) => Number(b.rating||0) - Number(a.rating||0));
+    case 'offers':     return arr.sort((a,b) => (b.offers?.length||0) - (a.offers?.length||0));
+    default:           return arr.sort((a,b) => relevanceScore(b, tokens) - relevanceScore(a, tokens));
   }
 }
 
@@ -1564,7 +1623,6 @@ async function createJob(query) {
   if (!data.jobId) throw new Error(data.message || 'No jobId returned');
   return data.jobId;
 }
-
 async function getJob(jobId) {
   const res = await fetch(`${API_BASE}/jobs/${jobId}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1575,64 +1633,50 @@ async function getJob(jobId) {
    POLLING
 ============================================================ */
 function parseProducts(data) {
-  return (
-    data.products ||
-    data.returnvalue?.products ||
-    data.result?.products ||
-    []
-  );
+  return data.products || data.returnvalue?.products || data.result?.products || [];
 }
-
 function parseStats(data) {
   return data.stats || {
     productsFound:  data.products?.length || 0,
-    offersFound:    data.products?.reduce((s, p) => s + (p.offers?.length || 0), 0) || 0,
-    storesCompared: 0,
-    lowestPrice:    null,
-    highestPrice:   null,
+    offersFound:    data.products?.reduce((s,p) => s + (p.offers?.length||0), 0) || 0,
+    storesCompared: 0, lowestPrice: null, highestPrice: null,
   };
 }
 
 async function pollJob() {
   if (!state.jobId || !state.polling) return;
-
   try {
-    const data   = await getJob(state.jobId);
+    const data = await getJob(state.jobId);
     const status = (data.status || '').toLowerCase();
-    const pct    = typeof data.progress === 'number' ? data.progress : 0;
+    const pct = typeof data.progress === 'number' ? data.progress : 0;
 
     setPipelineProgress(pct);
     progressToStep(pct);
 
-    // Update loading phrase
     const phrase = $('#loadingPhrase');
     if (phrase && status === 'running') {
       const pctLabel = pct ? `${Math.round(pct)}%` : '';
-      const product  = data.dbStatus?.current_product || '';
-      if (product) phrase.textContent = `Analyzing: ${product.substring(0, 60)}${product.length > 60 ? '…' : ''}`;
-      else if (pct < 20) phrase.textContent = 'Searching BuyHatke catalog…';
+      const product = data.dbStatus?.current_product || '';
+      if (product) phrase.textContent = `Analyzing: ${product.substring(0,60)}${product.length > 60 ? '…' : ''}`;
+      else if (pct < 20) phrase.textContent = 'Scanning the product graph…';
       else if (pct < 50) phrase.textContent = `Collecting offers… ${pctLabel}`;
       else phrase.textContent = `Comparing prices… ${pctLabel}`;
     }
 
-    // Live products — update as they arrive
     const products = parseProducts(data);
-    const stats    = parseStats(data);
+    const stats = parseStats(data);
 
     if (products.length > state.products.length) {
       const isFirst = state.products.length === 0;
       state.products = products;
-
-      // Show results area as soon as we have ANY product
-      if ($('#resultsArea').style.display === 'none' || isFirst) {
+      if (isFirst || $('#resultsArea').style.display === 'none') {
         $('#resultsArea').style.display = '';
-        $('#dotLoader').style.display   = 'none';
+        $('#dotLoader').style.display = 'none';
       }
-
       renderStats(stats);
-      renderProducts(products, !isFirst);
+      rebuildCategoryChips();
+      refreshResults();
     } else if (products.length > 0) {
-      // Stats might update even without new products
       renderStats(stats);
     }
 
@@ -1643,18 +1687,20 @@ async function pollJob() {
       setStatus('online', 'Ready');
       setSearchBusy(false);
 
-      // Hide pipeline if we have results
-      if (state.products.length > 0 || products.length > 0) {
-        $('#pipelineWidget').style.display = 'none';
-        $('#loadingPhrase').style.display  = 'none';
-        $('#dotLoader').style.display      = 'none';
-        const finalProducts = products.length ? products : state.products;
+      const finalProducts = products.length ? products : state.products;
+      if (finalProducts.length > 0) {
         state.products = finalProducts;
+        $('#pipelineWidget').style.display = 'none';
+        $('#loadingPhrase').style.display = 'none';
+        $('#dotLoader').style.display = 'none';
         renderStats(parseStats(data));
-        renderProducts(finalProducts);
+        rebuildCategoryChips();
+        refreshResults();
         $('#resultsArea').style.display = '';
-        const storeCount = stats.storesCompared || '?';
-        showToast('success', 'Comparison complete!', `${finalProducts.length} products across ${storeCount} stores.`);
+        showToast('success', 'Comparison complete!', `${finalProducts.length} products across ${stats.storesCompared || '?'} stores.`);
+        if (state.autoBudget) {
+          showToast('info', '✨ AI budget applied', `Filtering to products around ${fmtPrice(state.autoBudget)} or less.`, 4500);
+        }
       } else {
         $('#pipelineWidget').style.display = 'none';
         $('#emptyResultsArea').style.display = '';
@@ -1670,8 +1716,8 @@ async function pollJob() {
       setStatus('offline', 'Error');
       setSearchBusy(false);
       $('#pipelineWidget').style.display = 'none';
-      $('#dotLoader').style.display      = 'none';
-      $('#loadingPhrase').style.display  = 'none';
+      $('#dotLoader').style.display = 'none';
+      $('#loadingPhrase').style.display = 'none';
       const errMsg = $('#errorMsg');
       if (errMsg) errMsg.textContent = data.failedReason || 'The analysis could not be completed.';
       $('#errorArea').style.display = '';
@@ -1685,38 +1731,33 @@ async function pollJob() {
     if (state.polling) state.pollTimer = setTimeout(pollJob, POLL_INTERVAL * 2);
   }
 }
-
-function stopPolling() {
-  state.polling = false;
-  clearTimeout(state.pollTimer);
-}
+function stopPolling() { state.polling = false; clearTimeout(state.pollTimer); }
 
 /* ============================================================
-   MAIN SEARCH
+   SEARCH
 ============================================================ */
 async function performSearch(query) {
   query = (query || '').trim();
   if (!query) {
-    showToast('warning', 'Enter a search term', 'Type a product name to compare prices.');
+    showToast('warning', 'Enter a search term', 'Type or speak a product name to compare prices.');
     $('#searchInput')?.focus();
     return;
   }
-
   stopPolling();
-
-  state.query    = query;
+  state.query = query;
   state.products = [];
-  state.jobId    = null;
+  state.jobId = null;
+  state.filters = defaultFilters();
+  state.autoBudget = extractBudget(query);
 
   addHistory(query);
-
   showSearchingUI(query);
   setStatus('searching', 'Comparing…');
   setSearchBusy(true);
 
   try {
     const jobId = await createJob(query);
-    state.jobId  = jobId;
+    state.jobId = jobId;
     state.polling = true;
     setPipelineProgress(8);
     state.pollTimer = setTimeout(pollJob, 600);
@@ -1728,8 +1769,8 @@ async function performSearch(query) {
     const errMsg = $('#errorMsg');
     if (errMsg) errMsg.textContent = msg;
     $('#pipelineWidget').style.display = 'none';
-    $('#dotLoader').style.display      = 'none';
-    $('#errorArea').style.display      = '';
+    $('#dotLoader').style.display = 'none';
+    $('#errorArea').style.display = '';
     showToast('error', 'Failed to start', msg);
   }
 }
@@ -1738,15 +1779,71 @@ function setSearchBusy(busy) {
   const btn = $('#searchBtn');
   if (!btn) return;
   btn.disabled = busy;
-  if (busy) {
-    btn.innerHTML = `
-      <svg style="animation:spin .8s linear infinite" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      <span class="btn-search-text">Analyzing…</span>`;
-  } else {
-    btn.innerHTML = `
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      <span class="btn-search-text">Compare</span>`;
+  btn.innerHTML = busy
+    ? `<svg style="animation:spin .8s linear infinite" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg><span class="btn-search-text">Analyzing…</span>`
+    : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="btn-search-text">Compare</span>`;
+}
+
+/* ============================================================
+   VOICE SEARCH (Web Speech API)
+============================================================ */
+let recognition = null;
+let isListening = false;
+
+function initVoice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micBtn = $('#micBtn');
+  if (!SR) {
+    if (micBtn) {
+      micBtn.style.opacity = '.35';
+      micBtn.title = 'Voice search not supported in this browser';
+      micBtn.addEventListener('click', () =>
+        showToast('warning', 'Voice search unavailable', 'Your browser does not support speech recognition. Try Chrome or Edge.'));
+    }
+    return;
   }
+  recognition = new SR();
+  recognition.lang = 'en-IN';
+  recognition.interimResults = true;
+  recognition.continuous = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    isListening = true;
+    micBtn.classList.add('listening');
+    $('#voiceHint').classList.add('show');
+    setStatus('searching', 'Listening…');
+  };
+  recognition.onresult = (e) => {
+    let transcript = '';
+    for (const res of e.results) transcript += res[0].transcript;
+    $('#searchInput').value = transcript;
+    if (e.results[e.results.length - 1].isFinal) {
+      stopVoice();
+      if (transcript.trim()) {
+        showToast('info', '🎙 Heard you!', `“${transcript.trim()}”`, 2500);
+        performSearch(transcript.trim());
+      }
+    }
+  };
+  recognition.onerror = (e) => {
+    stopVoice();
+    if (e.error === 'not-allowed') showToast('error', 'Microphone blocked', 'Allow mic access in your browser settings to use voice search.');
+    else if (e.error === 'no-speech') showToast('warning', "Didn't catch that", 'Try speaking again, a little louder.');
+    else showToast('error', 'Voice error', e.error);
+  };
+  recognition.onend = stopVoice;
+
+  micBtn.addEventListener('click', () => {
+    if (isListening) { recognition.stop(); return; }
+    try { recognition.start(); } catch {}
+  });
+}
+function stopVoice() {
+  isListening = false;
+  $('#micBtn')?.classList.remove('listening');
+  $('#voiceHint')?.classList.remove('show');
+  if (!state.polling) setStatus('online', 'Ready');
 }
 
 /* ============================================================
@@ -1757,7 +1854,7 @@ document.addEventListener('click', (e) => {
   if (!btn || btn.disabled) return;
   const rect = btn.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height) * 1.8;
-  const el   = document.createElement('span');
+  const el = document.createElement('span');
   el.className = 'ripple-el';
   el.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
   btn.appendChild(el);
@@ -1765,97 +1862,102 @@ document.addEventListener('click', (e) => {
 });
 
 /* ============================================================
-   RESPONSIVE SIDEBAR VISIBILITY
+   EVENTS
 ============================================================ */
 function checkMobileHamburger() {
   const mh = $('#mobileHamburger');
   if (mh) mh.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
 }
 
-/* ============================================================
-   EVENT BINDINGS
-============================================================ */
 function bindEvents() {
-  // Search form
-  $('#searchForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    performSearch($('#searchInput')?.value);
-  });
+  $('#searchForm')?.addEventListener('submit', e => { e.preventDefault(); performSearch($('#searchInput')?.value); });
 
-  // Hero chips
-  $('#heroChips')?.addEventListener('click', (e) => {
+  $('#heroChips')?.addEventListener('click', e => {
     const chip = e.target.closest('.chip');
     if (!chip) return;
     $('#searchInput').value = chip.dataset.q;
     performSearch(chip.dataset.q);
   });
 
-  // Sidebar hamburger (desktop collapse)
   $('#hamburgerBtn')?.addEventListener('click', toggleSidebar);
-
-  // Mobile hamburger (open sidebar)
   $('#mobileHamburger')?.addEventListener('click', openMobileSidebar);
   $('#sidebarOverlay')?.addEventListener('click', closeMobileSidebar);
 
-  // New search buttons
-  $('#sidebarNewBtn')?.addEventListener('click', () => {
-    stopPolling();
-    setSearchBusy(false);
-    setStatus('online', 'Ready');
-    showHero();
-    state.query = '';
-    const ql = $('#headerQueryText');
-    if (ql) ql.textContent = 'Visco Compare';
+  const newSearch = () => {
+    stopPolling(); setSearchBusy(false); setStatus('online', 'Ready');
+    showHero(); state.query = '';
+    const ql = $('#headerQueryText'); if (ql) ql.textContent = 'Visco Compare';
     closeMobileSidebar();
-    $('#searchInput').value = '';
-    $('#searchInput').focus();
+    $('#searchInput').value = ''; $('#searchInput').focus();
+  };
+  $('#sidebarNewBtn')?.addEventListener('click', newSearch);
+  $('#newSearchFromError')?.addEventListener('click', newSearch);
+
+  $('#sidebarSearchInput')?.addEventListener('input', e => renderSidebar(e.target.value));
+  $('#sortSelect')?.addEventListener('change', refreshResults);
+  $('#retryBtn')?.addEventListener('click', () => state.query ? performSearch(state.query) : showHero());
+
+  // Theme
+  $('#themeToggleBtn')?.addEventListener('click', toggleTheme);
+  $('#headerThemeBtn')?.addEventListener('click', toggleTheme);
+
+  // Filter panel toggle
+  $('#filterToggleBtn')?.addEventListener('click', () => {
+    const panel = $('#filterPanel');
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    $('#filterToggleBtn').classList.toggle('active', open);
   });
 
-  // Sidebar history search filter
-  $('#sidebarSearchInput')?.addEventListener('input', (e) => {
-    renderSidebar(e.target.value);
-  });
+  // Price inputs (debounced)
+  let priceTimer;
+  const onPrice = () => {
+    clearTimeout(priceTimer);
+    priceTimer = setTimeout(() => {
+      const min = parseFloat($('#fMinPrice').value);
+      const max = parseFloat($('#fMaxPrice').value);
+      state.filters.minPrice = isNaN(min) ? null : min;
+      state.filters.maxPrice = isNaN(max) ? null : max;
+      refreshResults();
+    }, 350);
+  };
+  $('#fMinPrice')?.addEventListener('input', onPrice);
+  $('#fMaxPrice')?.addEventListener('input', onPrice);
 
-  // Sort
-  $('#sortSelect')?.addEventListener('change', (e) => {
-    renderProducts(state.products);
-  });
+  // Rating segments
+  $$('#ratingSeg .seg-btn').forEach(b => b.addEventListener('click', () => {
+    state.filters.minRating = parseFloat(b.dataset.val);
+    $$('#ratingSeg .seg-btn').forEach(x => x.classList.toggle('active', x === b));
+    refreshResults();
+  }));
 
-  // Retry
-  $('#retryBtn')?.addEventListener('click', () => {
-    if (state.query) performSearch(state.query);
-    else showHero();
-  });
-  $('#newSearchFromError')?.addEventListener('click', () => {
-    stopPolling();
-    setSearchBusy(false);
-    setStatus('online', 'Ready');
-    showHero();
-    state.query = '';
-    $('#searchInput').value = '';
-    $('#searchInput').focus();
-  });
+  // Switches
+  const bindSwitch = (id, key) => {
+    $(id)?.addEventListener('click', () => {
+      state.filters[key] = !state.filters[key];
+      setSwitch($(id), state.filters[key]);
+      refreshResults();
+    });
+  };
+  bindSwitch('#fInStock', 'inStock');
+  bindSwitch('#fFreeDel', 'freeDel');
+  bindSwitch('#fSmartMatch', 'smartMatch');
 
-  // Theme toggle (dark only for now)
-  $('#themeToggleBtn')?.addEventListener('click', () => {
-    showToast('info', 'Dark mode', 'Visco Compare uses a premium dark theme by design.', 2500);
-  });
+  $('#clearFiltersBtn')?.addEventListener('click', resetFilters);
+  $('#noMatchResetBtn')?.addEventListener('click', resetFilters);
 
   // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();
-      const inp = $('#searchInput');
-      inp?.focus(); inp?.select();
+      const inp = $('#searchInput'); inp?.focus(); inp?.select();
     }
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-      e.preventDefault();
-      $('#searchInput')?.focus();
+      e.preventDefault(); $('#searchInput')?.focus();
     }
     if (e.key === 'Escape') closeMobileSidebar();
   });
 
-  // Resize
   window.addEventListener('resize', checkMobileHamburger);
 }
 
@@ -1863,19 +1965,19 @@ function bindEvents() {
    INIT
 ============================================================ */
 function init() {
+  initTheme();
   bindEvents();
+  initVoice();
   checkMobileHamburger();
   renderSidebar();
   setStatus('online', 'Ready');
   showHero();
-
   setTimeout(() => {
-    showToast('info', 'Welcome to Visco Compare', 'Search any product to compare live prices.', 4000);
+    showToast('info', 'Welcome to Visco Compare ✨', 'Type or tap the mic to compare live prices.', 4000);
   }, 900);
 }
 
 init();
-
 })();
 </script>
 </body>
