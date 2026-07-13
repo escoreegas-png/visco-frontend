@@ -17,31 +17,32 @@ html { scroll-behavior: smooth; font-size: 16px; }
 html, body { height: 100%; }
 
 :root {
-  --bg: #0B0F19;
-  --bg2: #0E1320;
-  --card: #141A26;
-  --card2: #1A2135;
-  --border: rgba(255,255,255,.06);
-  --border2: rgba(255,255,255,.11);
-  --accent: #8B5CF6;
-  --accent2: #4F46E5;
-  --accent-glow: rgba(139,92,246,.22);
-  --accent-glow2: rgba(79,70,229,.18);
-  --success: #10B981;
-  --success-bg: rgba(16,185,129,.12);
-  --warning: #F59E0B;
-  --warning-bg: rgba(245,158,11,.12);
-  --danger: #EF4444;
-  --danger-bg: rgba(239,68,68,.12);
-  --text: #F8FAFC;
-  --text2: #CBD5E1;
-  --muted: #94A3B8;
-  --muted2: #64748B;
-  --radius: 24px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
-  --ease: cubic-bezier(.22,1,.36,1);
-  --ease2: cubic-bezier(.4,0,.2,1);
+  --bg:           #0a0a0a;
+  --bg2:          #0e0e0e;
+  --surface:      #141414;
+  --surface2:     #1a1a1a;
+  --border:       rgba(255,255,255,.07);
+  --border2:      rgba(255,255,255,.12);
+  --accent:       #8B5CF6;
+  --accent2:      #4F46E5;
+  --accent-glow:  rgba(139,92,246,.20);
+  --accent-glow2: rgba(79,70,229,.15);
+  --success:      #10B981;
+  --success-bg:   rgba(16,185,129,.12);
+  --warning:      #F59E0B;
+  --warning-bg:   rgba(245,158,11,.12);
+  --danger:       #EF4444;
+  --danger-bg:    rgba(239,68,68,.12);
+  --text:         #F8FAFC;
+  --text2:        #CBD5E1;
+  --muted:        #94A3B8;
+  --muted2:       #64748B;
+  --radius-xl:    20px;
+  --radius-lg:    14px;
+  --radius-md:    10px;
+  --radius-sm:    8px;
+  --ease:         cubic-bezier(.22,1,.36,1);
+  --ease2:        cubic-bezier(.4,0,.2,1);
 }
 
 body {
@@ -50,7 +51,6 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100vh;
 }
@@ -60,312 +60,326 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 input, select { font-family: inherit; }
 img { display: block; max-width: 100%; }
 ::selection { background: var(--accent-glow); color: var(--text); }
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.2); }
-
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .001ms !important;
-  }
-}
 
 /* ============================================================
    ANIMATIONS
 ============================================================ */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(.93); } to { opacity: 1; transform: scale(1); } }
-@keyframes shimmer {
-  from { background-position: -600px 0; }
-  to { background-position: 600px 0; }
-}
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes glow {
-  0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-  50% { box-shadow: 0 0 0 8px transparent; }
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-@keyframes barberpole {
-  from { background-position: 0 0; }
-  to { background-position: 40px 0; }
-}
-@keyframes countUp {
-  from { transform: translateY(6px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-@keyframes ripple {
-  from { transform: scale(0); opacity: .5; }
-  to { transform: scale(3); opacity: 0; }
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(20px) scale(.96); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
-}
-@keyframes toastOut {
-  to { opacity: 0; transform: translateX(20px); }
-}
-@keyframes dotBounce {
-  0%,80%,100% { transform: translateY(0); }
-  40% { transform: translateY(-8px); }
-}
-@keyframes progressPulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: .7; }
-}
+@keyframes fadeIn       { from { opacity: 0; }                                    to { opacity: 1; } }
+@keyframes fadeSlideUp  { from { opacity: 0; transform: translateY(16px); }       to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideDown{ from { opacity: 0; transform: translateY(-8px); }       to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn      { from { opacity: 0; transform: scale(.94); }             to { opacity: 1; transform: scale(1); } }
+@keyframes shimmer      { from { background-position: -600px 0; } to { background-position: 600px 0; } }
+@keyframes pulse        { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+@keyframes spin         { to { transform: rotate(360deg); } }
+@keyframes float        { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes barberpole   { from { background-position: 0 0; } to { background-position: 40px 0; } }
+@keyframes dotBounce    { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
+@keyframes toastIn      { from { opacity: 0; transform: translateX(18px) scale(.96); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes toastOut     { to   { opacity: 0; transform: translateX(18px); } }
+@keyframes glow         { 0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 7px transparent; } }
+@keyframes countUp      { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes ripple       { from { transform: scale(0); opacity: .4; } to { transform: scale(3); opacity: 0; } }
+@keyframes slideInRow   { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
 /* ============================================================
-   UTILITIES
+   LAYOUT
 ============================================================ */
-.glass {
-  background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.015) 100%);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid var(--border);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.visually-hidden {
-  position: absolute; width: 1px; height: 1px;
-  overflow: hidden; clip: rect(0,0,0,0);
-  white-space: nowrap; border: 0;
-}
-
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* ============================================================
    TOAST
 ============================================================ */
 #toastArea {
-  position: fixed; top: 20px; right: 20px; z-index: 9999;
-  display: flex; flex-direction: column; gap: 10px;
-  width: min(360px, calc(100vw - 40px));
+  position: fixed; top: 18px; right: 18px; z-index: 9999;
+  display: flex; flex-direction: column; gap: 9px;
+  width: min(340px, calc(100vw - 36px));
   pointer-events: none;
 }
 .toast {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 14px 16px; border-radius: var(--radius-md);
-  background: var(--card2); border: 1px solid var(--border2);
-  box-shadow: 0 16px 40px rgba(0,0,0,.4);
-  animation: toastIn .35s var(--ease) both;
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 13px 15px; border-radius: var(--radius-lg);
+  background: var(--surface2); border: 1px solid var(--border2);
+  box-shadow: 0 14px 36px rgba(0,0,0,.45);
+  animation: toastIn .3s var(--ease) both;
   pointer-events: all; position: relative; overflow: hidden;
 }
-.toast.out { animation: toastOut .3s var(--ease) forwards; }
+.toast.out { animation: toastOut .28s var(--ease) forwards; }
 .toast::after {
   content: ''; position: absolute; bottom: 0; left: 0; height: 2px;
   background: var(--accent);
-  animation: typing linear forwards;
+  animation: shimmer linear forwards;
   animation-duration: var(--td, 4s);
+  width: 100%;
 }
-.toast-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
+.toast-icon { flex-shrink: 0; width: 17px; height: 17px; margin-top: 1px; }
 .toast-body { flex: 1; }
-.toast-title { font-size: 13.5px; font-weight: 600; }
-.toast-msg { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
-.toast-close { background: none; border: none; color: var(--muted); padding: 2px; border-radius: 6px; flex-shrink: 0; cursor: pointer; }
+.toast-title { font-size: 13px; font-weight: 600; }
+.toast-msg   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.toast-close { color: var(--muted); padding: 2px; border-radius: 5px; flex-shrink: 0; cursor: pointer; }
 .toast-close:hover { color: var(--text); }
 .toast.success .toast-icon { color: var(--success); }
-.toast.error .toast-icon { color: var(--danger); }
+.toast.error   .toast-icon { color: var(--danger);  }
 .toast.warning .toast-icon { color: var(--warning); }
-.toast.info .toast-icon { color: var(--accent); }
+.toast.info    .toast-icon { color: var(--accent);  }
 
 /* ============================================================
-   HEADER / NAV
+   SIDEBAR LAYOUT (like save8)
 ============================================================ */
-header.site-header {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(11,15,25,.8);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  transition: width .25s var(--ease);
+}
+.sidebar.collapsed { width: 60px; }
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
-}
-.header-inner {
-  display: flex; align-items: center; gap: 20px;
-  height: 64px;
-}
-.logo {
-  display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
 }
-.logo-mark {
-  width: 32px; height: 32px; border-radius: 9px;
+.hamburger-btn {
+  width: 28px; height: 28px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  flex-shrink: 0; cursor: pointer;
+  border-radius: 7px;
+  transition: background .2s;
+}
+.hamburger-btn:hover { background: rgba(255,255,255,.06); }
+.hamburger-btn span {
+  display: block; width: 14px; height: 1.5px;
+  background: var(--muted); border-radius: 2px;
+  transition: all .25s var(--ease);
+}
+
+.sidebar-brand {
+  display: flex; align-items: center; gap: 8px;
+  overflow: hidden;
+  transition: opacity .2s;
+}
+.sidebar.collapsed .sidebar-brand { opacity: 0; pointer-events: none; }
+.brand-mark {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 8px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 14px; color: #fff;
-  box-shadow: 0 4px 14px var(--accent-glow);
+  font-weight: 800; font-size: 13px; color: #fff;
+  box-shadow: 0 3px 10px var(--accent-glow);
 }
-.logo-text {
-  font-size: 16px; font-weight: 700; letter-spacing: -.02em;
+.brand-name {
+  font-size: 15px; font-weight: 700; white-space: nowrap;
+  letter-spacing: -.02em;
 }
-.logo-text span { color: var(--accent); }
+.brand-name span { color: var(--accent); }
 
-.nav-links {
-  display: flex; align-items: center; gap: 4px; margin-left: auto;
+.sidebar-search {
+  padding: 12px 12px 8px;
+  flex-shrink: 0;
 }
-.nav-link {
-  padding: 7px 14px; border-radius: var(--radius-sm);
-  font-size: 13.5px; font-weight: 500; color: var(--muted);
-  transition: color .2s, background .2s;
+.sidebar-search-input {
+  width: 100%; padding: 8px 12px;
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius-md); color: var(--text);
+  font-size: 13px; outline: none;
+  transition: border-color .2s;
 }
-.nav-link:hover { color: var(--text); background: rgba(255,255,255,.05); }
-.nav-link.active { color: var(--text); }
+.sidebar-search-input:focus { border-color: rgba(139,92,246,.4); }
+.sidebar-search-input::placeholder { color: var(--muted2); }
+.sidebar.collapsed .sidebar-search { display: none; }
 
-.nav-actions {
-  display: flex; align-items: center; gap: 8px; margin-left: 8px;
-}
-.theme-btn {
-  width: 34px; height: 34px; border-radius: 10px;
-  background: rgba(255,255,255,.05); border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted); transition: all .2s;
-}
-.theme-btn:hover { color: var(--text); background: rgba(255,255,255,.08); }
-
-.status-pill {
+.sidebar-new-btn {
+  margin: 0 12px 8px;
   display: flex; align-items: center; gap: 7px;
-  padding: 6px 12px; border-radius: 999px;
-  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
-  font-size: 12px; font-weight: 500; color: var(--muted);
+  padding: 9px 12px; border-radius: var(--radius-md);
+  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2);
+  color: var(--accent); font-size: 13px; font-weight: 600;
+  transition: all .2s; cursor: pointer; flex-shrink: 0;
 }
-.status-dot {
-  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-}
-.status-dot.online { background: var(--success); animation: glow 2s infinite; }
-.status-dot.offline { background: var(--muted2); }
-.status-dot.searching { background: var(--accent); animation: pulse 1.4s infinite; }
+.sidebar-new-btn:hover { background: rgba(139,92,246,.18); }
+.sidebar.collapsed .sidebar-new-btn { justify-content: center; padding: 9px; margin: 0 8px 8px; }
+.sidebar.collapsed .sidebar-new-btn .new-btn-text { display: none; }
 
-@media (max-width: 640px) {
-  .nav-links { display: none; }
+.sidebar-section-label {
+  padding: 6px 16px 4px;
+  font-size: 11px; font-weight: 700;
+  color: var(--muted2); text-transform: uppercase; letter-spacing: .06em;
+  flex-shrink: 0;
 }
+.sidebar.collapsed .sidebar-section-label { display: none; }
+
+.sidebar-list {
+  flex: 1; overflow-y: auto; padding: 4px 8px;
+}
+.sidebar-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 10px; border-radius: var(--radius-md);
+  cursor: pointer; transition: background .18s;
+  min-height: 44px;
+}
+.sidebar-item:hover { background: rgba(255,255,255,.04); }
+.sidebar-item.active { background: rgba(139,92,246,.1); }
+.si-icon {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border-radius: 8px; background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  color: var(--muted);
+}
+.sidebar-item.active .si-icon { background: rgba(139,92,246,.15); border-color: rgba(139,92,246,.3); color: var(--accent); }
+.si-text { overflow: hidden; flex: 1; }
+.si-title { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.si-sub   { font-size: 11px; color: var(--muted2); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar.collapsed .si-text { display: none; }
+.sidebar-empty { padding: 16px 12px; text-align: center; font-size: 13px; color: var(--muted); }
+.sidebar.collapsed .sidebar-empty { display: none; }
+
+.sidebar-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+  flex-shrink: 0;
+}
+.sidebar-profile {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 8px; border-radius: var(--radius-md);
+  cursor: pointer; transition: background .18s;
+}
+.sidebar-profile:hover { background: rgba(255,255,255,.04); }
+.sp-avatar {
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 9px; background: var(--surface2);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+}
+.sp-info { overflow: hidden; flex: 1; }
+.sp-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sp-sub  { font-size: 11px; color: var(--muted2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar.collapsed .sp-info { display: none; }
+
+.theme-toggle-btn {
+  width: 32px; height: 32px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--muted);
+  transition: all .2s;
+}
+.theme-toggle-btn:hover { color: var(--accent); border-color: rgba(139,92,246,.4); }
+.sidebar.collapsed .theme-toggle-btn { display: none; }
 
 /* ============================================================
-   HERO / SEARCH SECTION
+   MAIN PANEL
 ============================================================ */
-.hero {
-  min-height: 60vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 80px 24px 60px;
-  position: relative;
+.main-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute; inset: -20% -10% auto -10%;
-  height: 500px;
-  background: radial-gradient(ellipse at center top, rgba(139,92,246,.13) 0%, transparent 65%);
-  pointer-events: none; z-index: 0;
-}
-.hero::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border2), transparent);
-}
-
-.hero-inner { position: relative; z-index: 1; width: 100%; max-width: 780px; }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 6px 14px; border-radius: 999px;
-  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.25);
-  font-size: 12px; font-weight: 600; color: var(--accent);
-  margin-bottom: 28px;
-  animation: fadeSlideDown .6s var(--ease) both;
-}
-.hero-badge svg { flex-shrink: 0; }
-
-.hero h1 {
-  font-size: clamp(30px, 5vw, 52px);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: 1.08;
-  margin-bottom: 16px;
-  animation: fadeSlideUp .6s .06s var(--ease) both;
-}
-
-.hero p.subtitle {
-  font-size: clamp(15px, 2vw, 17px);
-  color: var(--muted);
-  max-width: 540px;
-  margin: 0 auto 40px;
-  line-height: 1.7;
-  animation: fadeSlideUp .6s .12s var(--ease) both;
-}
-
-/* Search Box */
-.search-container {
-  width: 100%;
-  animation: fadeSlideUp .6s .18s var(--ease) both;
-}
-.search-box {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 8px 8px 20px;
-  background: var(--card2);
-  border: 1px solid var(--border2);
-  border-radius: 999px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 0 var(--accent-glow);
-  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
-  position: relative;
-}
-.search-box:focus-within {
-  border-color: rgba(139,92,246,.5);
-  box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 5px var(--accent-glow);
-}
-.search-icon { color: var(--muted); flex-shrink: 0; }
-.search-input {
-  flex: 1; background: none; border: none; outline: none;
-  color: var(--text); font-size: 15.5px; font-weight: 400;
-  min-width: 0; padding: 6px 0;
-}
-.search-input::placeholder { color: var(--muted2); }
-.search-btn {
+/* ── Top Header ── */
+.top-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
   flex-shrink: 0;
-  display: flex; align-items: center; gap: 8px;
-  padding: 11px 22px; border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-size: 14px; font-weight: 600;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), opacity .2s;
-  box-shadow: 0 6px 20px var(--accent-glow);
-  position: relative; overflow: hidden;
+  height: 56px;
 }
-.search-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 28px var(--accent-glow);
+.header-query-label {
+  font-size: 14px; font-weight: 600;
+  color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.search-btn:active:not(:disabled) { transform: scale(.97); }
-.search-btn:disabled { opacity: .6; cursor: not-allowed; }
+.header-query-label span { color: var(--text); }
+.header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border2);
+  font-size: 12px; font-weight: 500; color: var(--muted);
+}
+.status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.online   { background: var(--success); animation: glow 2s infinite; }
+.status-dot.offline  { background: var(--muted2); }
+.status-dot.searching{ background: var(--accent); animation: pulse 1.4s infinite; }
 
-.chip-row {
-  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-  margin-top: 20px;
+/* ── Thread area (chat-like) ── */
+.thread-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HERO inside thread ── */
+.hero-thread {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 60px 24px 40px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 13px; border-radius: 999px;
+  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.22);
+  font-size: 11.5px; font-weight: 600; color: var(--accent);
+  margin-bottom: 24px;
+  animation: fadeSlideDown .5s var(--ease) both;
+}
+.hero-title {
+  font-size: clamp(26px, 4.5vw, 46px);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+  margin-bottom: 14px;
+  animation: fadeSlideUp .5s .05s var(--ease) both;
+}
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 16px); color: var(--muted);
+  max-width: 480px; margin: 0 auto 36px; line-height: 1.7;
+  animation: fadeSlideUp .5s .1s var(--ease) both;
+}
+.hero-chips {
+  display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;
+  margin-top: 16px;
+  animation: fadeSlideUp .5s .2s var(--ease) both;
 }
 .chip {
-  padding: 7px 16px; border-radius: 999px;
+  padding: 6px 14px; border-radius: 999px;
   background: rgba(255,255,255,.04); border: 1px solid var(--border2);
-  font-size: 12.5px; font-weight: 500; color: var(--muted);
+  font-size: 12px; font-weight: 500; color: var(--muted);
   transition: all .2s var(--ease); cursor: pointer;
 }
 .chip:hover {
@@ -373,758 +387,718 @@ header.site-header {
   background: rgba(139,92,246,.07); transform: translateY(-1px);
 }
 
-/* ============================================================
-   MAIN CONTENT AREA
-============================================================ */
-main { padding-bottom: 80px; }
-
-/* ============================================================
-   STATES
-============================================================ */
-.view { display: none; }
-.view.active { display: block; }
-
-/* --- Loading State --- */
-#loadingView { padding: 60px 0; }
-.loading-center { text-align: center; padding-bottom: 50px; }
-
-.ai-orb {
-  width: 96px; height: 96px;
-  margin: 0 auto 32px;
-  position: relative;
-}
-.ai-orb-inner {
-  width: 100%; height: 100%; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 40px var(--accent-glow), 0 0 80px var(--accent-glow2);
-  animation: float 3s ease-in-out infinite;
-}
-.ai-orb-inner svg { color: #fff; }
-.ai-orb::before, .ai-orb::after {
-  content: ''; position: absolute; inset: -12px;
-  border-radius: 50%; border: 1.5px solid rgba(139,92,246,.25);
-  animation: pulse 2s ease-in-out infinite;
-}
-.ai-orb::after { inset: -24px; animation-delay: .4s; opacity: .5; }
-
-.loading-phrase {
-  font-size: 20px; font-weight: 700; margin-bottom: 10px;
-  min-height: 32px;
-  animation: fadeIn .4s var(--ease);
-}
-.loading-sub {
-  font-size: 14px; color: var(--muted); margin-bottom: 36px;
-}
-
-/* Dot loader */
-.dot-loader {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  margin: 0 auto 40px;
-}
-.dot-loader span {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--accent);
-  animation: dotBounce 1.4s ease-in-out infinite;
-}
-.dot-loader span:nth-child(2) { animation-delay: .15s; }
-.dot-loader span:nth-child(3) { animation-delay: .3s; }
-
-/* Progress Bar */
-.progress-section { max-width: 580px; margin: 0 auto; }
-.progress-label {
-  display: flex; justify-content: space-between;
-  font-size: 13px; color: var(--muted); margin-bottom: 10px;
-}
-.progress-label span { font-weight: 600; color: var(--text); }
-.progress-track {
-  height: 6px; border-radius: 999px;
-  background: rgba(255,255,255,.06); overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-fill {
-  height: 100%; border-radius: 999px; width: 0%;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-  transition: width .5s var(--ease);
-  position: relative; overflow: hidden;
-}
-.progress-fill.active::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 10px, transparent 10px 20px);
-  animation: barberpole .8s linear infinite;
-}
-.progress-fill.done { background: var(--success); }
-.progress-fill.done::after { display: none; }
-.progress-pct {
-  font-size: 12px; color: var(--muted); text-align: right;
-}
-#progressPct { color: var(--accent); font-weight: 700; }
-
-/* Timeline */
-.timeline {
-  display: flex; flex-direction: column; gap: 0;
-  max-width: 400px; margin: 40px auto 0;
-  position: relative;
-}
-.timeline::before {
-  content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
-  width: 1px; background: var(--border2); z-index: 0;
-}
-.tl-step {
-  display: flex; align-items: flex-start; gap: 16px;
-  padding: 10px 0;
-  position: relative; z-index: 1;
-}
-.tl-dot {
-  width: 30px; height: 30px; flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--card2); border: 2px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: var(--muted);
-  transition: all .35s var(--ease);
-}
-.tl-step.active .tl-dot {
-  border-color: var(--accent);
-  background: rgba(139,92,246,.15);
-  color: var(--accent);
-  box-shadow: 0 0 0 6px rgba(139,92,246,.1);
-  animation: glow 1.8s infinite;
-}
-.tl-step.done .tl-dot {
-  background: var(--success); border-color: var(--success); color: #fff;
-}
-.tl-content { padding-top: 4px; }
-.tl-title { font-size: 13.5px; font-weight: 600; color: var(--muted); transition: color .3s; }
-.tl-step.active .tl-title { color: var(--text); }
-.tl-step.done .tl-title { color: var(--success); }
-.tl-desc { font-size: 12px; color: var(--muted2); margin-top: 2px; }
-
-/* --- Empty State --- */
-#emptyView { text-align: center; padding: 100px 24px; }
-.empty-icon {
-  width: 90px; height: 90px; margin: 0 auto 28px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(79,70,229,.1));
-  border: 1px solid rgba(139,92,246,.2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  animation: float 4s ease-in-out infinite;
-}
-#emptyView h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-#emptyView p { font-size: 15px; color: var(--muted); max-width: 380px; margin: 0 auto 30px; }
-
-/* --- Error State --- */
-#errorView { text-align: center; padding: 100px 24px; }
-.error-card {
-  display: inline-block; max-width: 480px; width: 100%;
-  background: var(--card2); border: 1px solid rgba(239,68,68,.2);
-  border-radius: var(--radius);
-  padding: 48px 40px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.3);
-}
-.error-icon {
-  width: 72px; height: 72px; margin: 0 auto 24px;
-  border-radius: 50%;
-  background: rgba(239,68,68,.1);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--danger);
-}
-#errorView h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-#errorView p { font-size: 14px; color: var(--muted); margin-bottom: 28px; line-height: 1.7; }
-
-/* --- Results State --- */
-#resultsView { animation: fadeIn .4s var(--ease); }
-
-/* ============================================================
-   STATISTICS BAR
-============================================================ */
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px; margin-bottom: 28px;
-}
-.stat-card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: 18px 20px;
-  transition: transform .25s var(--ease), border-color .25s, box-shadow .25s;
-  overflow: hidden; position: relative;
-}
-.stat-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  opacity: 0; transition: opacity .3s;
-}
-.stat-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border2);
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
-}
-.stat-card:hover::before { opacity: 1; }
-.stat-icon {
-  width: 32px; height: 32px; border-radius: 9px;
-  background: rgba(139,92,246,.12);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent); margin-bottom: 12px;
-}
-.stat-value {
-  font-size: 22px; font-weight: 800;
-  letter-spacing: -.02em; line-height: 1.1;
-  animation: countUp .4s var(--ease);
-}
-.stat-label { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
-
-/* ============================================================
-   RESULTS HEADER / SORT
-============================================================ */
-.results-header {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin-bottom: 22px; flex-wrap: wrap;
-}
-.results-title { font-size: 20px; font-weight: 700; }
-.results-count { font-size: 13.5px; color: var(--muted); font-weight: 500; }
-
-.sort-row {
-  display: flex; align-items: center; gap: 8px;
-}
-.sort-label { font-size: 12.5px; color: var(--muted); }
-.sort-select {
-  background: var(--card2); border: 1px solid var(--border2);
-  color: var(--text); border-radius: var(--radius-sm);
-  padding: 7px 28px 7px 12px; font-size: 12.5px;
-  -webkit-appearance: none; appearance: none;
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 8px center;
-}
-.sort-select:focus { outline: none; border-color: var(--accent); }
-
-/* ============================================================
-   PRODUCT GRID
-============================================================ */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px;
-}
-
-/* Product Card */
-.product-card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius-md); overflow: hidden;
-  display: flex; flex-direction: column;
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
-  animation: fadeSlideUp .5s var(--ease) both;
-  cursor: default;
-}
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,.35);
-  border-color: var(--border2);
-}
-
-.product-img-wrap {
-  position: relative; height: 160px;
-  background: var(--card2); overflow: hidden;
-}
-.product-img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform .5s var(--ease);
-}
-.product-card:hover .product-img { transform: scale(1.05); }
-
-.avail-badge {
-  position: absolute; bottom: 10px; left: 10px;
-  padding: 4px 10px; border-radius: 999px;
-  font-size: 10.5px; font-weight: 700; letter-spacing: .04em;
-}
-.avail-badge.in { background: var(--success-bg); color: var(--success); }
-.avail-badge.limited { background: var(--warning-bg); color: var(--warning); }
-.avail-badge.out { background: var(--danger-bg); color: var(--danger); }
-
-.save-btn {
-  position: absolute; top: 10px; right: 10px;
-  width: 30px; height: 30px; border-radius: 9px;
-  background: rgba(11,15,25,.6); backdrop-filter: blur(8px);
-  border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted); transition: all .2s;
-}
-.save-btn:hover { color: var(--warning); border-color: var(--warning); }
-.save-btn.saved { color: var(--warning); border-color: var(--warning); background: rgba(245,158,11,.15); }
-
-.product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-
-.product-meta-top {
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
-}
-.product-category {
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .06em; color: var(--accent);
-}
-.product-rating {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 12.5px; font-weight: 700; color: var(--warning);
+/* ── Search composer (bottom bar) ── */
+.composer-bar {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
   flex-shrink: 0;
 }
+.search-form {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 7px 7px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 22px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.search-form:focus-within {
+  border-color: rgba(139,92,246,.5);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+.search-icon { color: var(--muted); flex-shrink: 0; }
+.search-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--text); font-size: 14.5px;
+  min-width: 0;
+}
+.search-input::placeholder { color: var(--muted2); }
+.search-btn {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 18px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: 13.5px; font-weight: 600;
+  transition: transform .2s var(--ease), box-shadow .2s, opacity .2s;
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+.search-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 22px var(--accent-glow); }
+.search-btn:active:not(:disabled) { transform: scale(.97); }
+.search-btn:disabled { opacity: .55; cursor: not-allowed; }
 
-.product-name { font-size: 14.5px; font-weight: 700; line-height: 1.35; }
-.product-brand { font-size: 12px; color: var(--muted); margin-top: 2px; }
+/* ============================================================
+   THREAD MESSAGES (chat-like content)
+============================================================ */
+.thread-content {
+  flex: 1;
+  padding: 20px 20px 100px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
 
-.price-block { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
-.price-main {
-  display: flex; align-items: baseline; gap: 8px;
-}
-.price-current { font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
-.price-note { font-size: 11.5px; color: var(--success); font-weight: 600; }
-.price-range {
-  display: flex; gap: 14px; font-size: 11.5px; color: var(--muted);
-}
-.price-range b { color: var(--text2); }
-
-.product-footer { margin-top: auto; padding-top: 6px; display: flex; flex-direction: column; gap: 8px; }
-.offers-toggle-btn {
-  width: 100%; padding: 9px 14px; border-radius: var(--radius-sm);
-  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2);
-  color: var(--accent); font-size: 13px; font-weight: 600;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: all .2s;
-}
-.offers-toggle-btn:hover {
-  background: rgba(139,92,246,.18);
-  border-color: rgba(139,92,246,.4);
-}
-.offers-toggle-btn svg { transition: transform .25s var(--ease); }
-.offers-toggle-btn.open svg { transform: rotate(180deg); }
-
-/* Offers Accordion */
-.offers-panel {
-  max-height: 0; overflow: hidden;
-  transition: max-height .45s var(--ease);
-}
-.offers-panel.open { max-height: 1200px; }
-.offers-list { padding: 8px 0; display: flex; flex-direction: column; gap: 6px; }
-.offer-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: var(--radius-sm);
-  background: var(--card2); border: 1px solid var(--border);
-  transition: border-color .2s, background .2s;
+/* User message bubble */
+.msg-user {
+  display: flex; justify-content: flex-end;
+  margin-bottom: 20px;
   animation: fadeSlideUp .3s var(--ease) both;
 }
-.offer-row:hover { border-color: var(--border2); background: rgba(255,255,255,.03); }
+.user-bubble {
+  max-width: min(85%, 460px);
+  padding: 11px 17px;
+  border-radius: 18px 18px 5px 18px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px; font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Assistant message */
+.msg-assistant {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 24px;
+  animation: fadeSlideUp .3s var(--ease) both;
+}
+
+/* ============================================================
+   PIPELINE STEPS (loading timeline like save8)
+============================================================ */
+.sc-pipeline {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.pipeline-progress {
+  height: 2px;
+  background: var(--border);
+}
+.pipeline-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  width: 0%;
+  transition: width .5s var(--ease);
+}
+
+.sc-step {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.sc-step:last-child { border-bottom: none; }
+
+.step-rail {
+  width: 3px;
+  flex-shrink: 0;
+  background: var(--border);
+  margin: 0;
+  transition: background .3s;
+}
+.sc-step.step-active .step-rail { background: var(--accent); }
+.sc-step.step-done .step-rail   { background: var(--success); }
+
+.step-inner { flex: 1; padding: 12px 14px; }
+.step-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.step-dot {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface2); border: 2px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: var(--muted);
+  transition: all .3s;
+}
+.sc-step.step-active .step-dot {
+  border-color: var(--accent); background: rgba(139,92,246,.2); color: var(--accent);
+  animation: glow 1.8s infinite;
+}
+.sc-step.step-done .step-dot { background: var(--success); border-color: var(--success); color: #fff; }
+.step-title { font-size: 13px; font-weight: 600; color: var(--muted); transition: color .3s; }
+.sc-step.step-active .step-title { color: var(--text); }
+.sc-step.step-done   .step-title { color: var(--success); }
+.step-desc { font-size: 11.5px; color: var(--muted2); margin-top: 1px; }
+
+/* Skeleton variant inside steps */
+.step-card-skeleton {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: var(--radius-md);
+  background: var(--surface2); border: 1px solid var(--border);
+  margin-top: 8px;
+}
+.skel {
+  background: linear-gradient(90deg, var(--surface2) 25%, rgba(255,255,255,.04) 37%, var(--surface2) 63%);
+  background-size: 600px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 5px;
+}
+
+/* ============================================================
+   STORES WIDGET (results area like save8)
+============================================================ */
+.stores-widget {
+  margin-top: 8px;
+  animation: fadeSlideUp .4s var(--ease) both;
+}
+.stores-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+.stores-sub   { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+
+/* ============================================================
+   STATS BAR
+============================================================ */
+.stats-strip {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.stat-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-radius: var(--radius-md);
+  background: var(--surface); border: 1px solid var(--border);
+  transition: transform .2s var(--ease), border-color .2s;
+  animation: countUp .4s var(--ease) both;
+}
+.stat-chip:hover { transform: translateY(-2px); border-color: var(--border2); }
+.stat-chip-icon {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: rgba(139,92,246,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); flex-shrink: 0;
+}
+.stat-chip-val  { font-size: 16px; font-weight: 800; line-height: 1.1; }
+.stat-chip-label{ font-size: 10.5px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ============================================================
+   PRODUCT / STORE CARD
+============================================================ */
+.product-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color .25s, box-shadow .25s;
+  animation: fadeSlideUp .4s var(--ease) both;
+}
+.product-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* Card top row */
+.card-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+}
+.card-img-wrap {
+  width: 56px; height: 56px; flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface2);
+  overflow: hidden;
+}
+.card-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .4s var(--ease);
+}
+.product-card:hover .card-img { transform: scale(1.06); }
+
+.card-body { flex: 1; min-width: 0; }
+.card-cat  { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 2px; }
+.card-name {
+  font-size: 14px; font-weight: 700; line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.card-meta {
+  display: flex; align-items: center; gap: 10px; margin-top: 3px;
+}
+.card-rating {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 12px; font-weight: 700; color: var(--warning);
+}
+.card-avail {
+  font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+}
+.avail-in  { background: var(--success-bg); color: var(--success); }
+.avail-out { background: var(--danger-bg);  color: var(--danger);  }
+
+.card-price-col { text-align: right; flex-shrink: 0; }
+.card-price-val { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+.card-price-low { font-size: 11px; color: var(--success); font-weight: 700; margin-top: 1px; }
+.card-buy-btn {
+  flex-shrink: 0;
+  padding: 8px 16px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; font-size: 12.5px; font-weight: 600;
+  box-shadow: 0 3px 10px var(--accent-glow);
+  transition: transform .2s, box-shadow .2s;
+  white-space: nowrap;
+}
+.card-buy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
+
+/* Offers accordion */
+.card-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .18s;
+}
+.card-toggle-row:hover { background: rgba(255,255,255,.02); }
+.card-toggle-label { font-size: 13px; font-weight: 600; color: var(--accent); }
+.card-toggle-icon  { color: var(--accent); transition: transform .25s var(--ease); }
+.card-toggle-row.open .card-toggle-icon { transform: rotate(180deg); }
+
+.offers-accordion {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s var(--ease);
+}
+.offers-accordion.open { max-height: 1400px; }
+
+.offers-inner { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 6px; }
+
+.offer-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 11px; border-radius: var(--radius-md);
+  background: var(--surface2); border: 1px solid var(--border);
+  animation: slideInRow .25s var(--ease) both;
+  transition: border-color .2s;
+}
+.offer-row:hover { border-color: var(--border2); }
 .offer-logo {
-  width: 34px; height: 34px; border-radius: 9px;
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 8px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0;
+  font-size: 12px; font-weight: 800; color: #fff;
+  overflow: hidden;
 }
+.offer-logo img { width: 100%; height: 100%; object-fit: cover; }
 .offer-info { flex: 1; min-width: 0; }
-.offer-store { font-size: 12.5px; font-weight: 700; }
-.offer-tags { display: flex; gap: 5px; margin-top: 3px; flex-wrap: wrap; }
-.o-tag {
-  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 5px;
-}
-.o-tag.free { background: var(--success-bg); color: var(--success); }
-.o-tag.coupon { background: rgba(139,92,246,.15); color: var(--accent); }
-.o-tag.unavail { background: var(--danger-bg); color: var(--danger); }
-
-.offer-price-col { text-align: right; flex-shrink: 0; }
-.offer-price-val { font-size: 15px; font-weight: 800; }
-.offer-savings { font-size: 10.5px; color: var(--success); font-weight: 700; margin-top: 1px; }
-
-.offer-buy-btn {
+.offer-store { font-size: 12.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.offer-tags  { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
+.o-tag { font-size: 10px; font-weight: 700; padding: 1.5px 6px; border-radius: 4px; }
+.o-tag.free   { background: var(--success-bg); color: var(--success); }
+.o-tag.out    { background: var(--danger-bg);  color: var(--danger);  }
+.offer-price  { font-size: 14px; font-weight: 800; flex-shrink: 0; text-align: right; }
+.offer-saving { font-size: 10.5px; color: var(--success); font-weight: 700; }
+.offer-buy {
   flex-shrink: 0;
-  padding: 7px 14px; border-radius: 8px;
+  padding: 6px 12px; border-radius: 8px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: #fff; font-size: 12px; font-weight: 600;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 3px 10px var(--accent-glow);
+  box-shadow: 0 2px 8px var(--accent-glow);
+  transition: transform .18s;
 }
-.offer-buy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px var(--accent-glow); }
+.offer-buy:hover { transform: translateY(-1px); }
 
 /* ============================================================
    SKELETON CARDS
 ============================================================ */
-.skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px; margin-top: 28px;
+.skeleton-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 14px 16px;
 }
-.skel-card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--radius-md); overflow: hidden;
+.skel-row { display: flex; align-items: center; gap: 12px; }
+.skel-img-wrap { width: 56px; height: 56px; flex-shrink: 0; border-radius: var(--radius-md); overflow: hidden; }
+
+/* ============================================================
+   EMPTY / ERROR STATES
+============================================================ */
+.state-center { text-align: center; padding: 80px 24px; }
+.state-icon {
+  width: 80px; height: 80px; margin: 0 auto 22px;
+  border-radius: 22px;
+  background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.18);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  animation: float 4s ease-in-out infinite;
 }
-.skel {
-  background: linear-gradient(90deg, var(--card2) 25%, rgba(255,255,255,.04) 37%, var(--card2) 63%);
-  background-size: 600px 100%;
-  animation: shimmer 1.5s infinite linear;
+.state-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.state-sub   { font-size: 14px; color: var(--muted); max-width: 360px; margin: 0 auto 24px; }
+
+.error-state {
+  text-align: center; padding: 60px 24px;
 }
-.skel.img { height: 160px; }
-.skel.line { border-radius: 6px; }
-.skel-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.error-card {
+  display: inline-block; max-width: 460px; width: 100%;
+  background: var(--surface); border: 1px solid rgba(239,68,68,.2);
+  border-radius: var(--radius-xl); padding: 40px 36px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.3);
+}
+.error-icon {
+  width: 64px; height: 64px; margin: 0 auto 20px;
+  border-radius: 50%; background: rgba(239,68,68,.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--danger);
+}
 
 /* ============================================================
    BUTTONS
 ============================================================ */
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 22px; border-radius: 12px;
-  font-size: 14px; font-weight: 600;
-  transition: all .25s var(--ease);
-  position: relative; overflow: hidden; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px; border-radius: 11px;
+  font-size: 13.5px; font-weight: 600;
+  transition: all .22s var(--ease); cursor: pointer;
+  position: relative; overflow: hidden;
 }
 .btn:active { transform: scale(.97); }
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; box-shadow: 0 6px 20px var(--accent-glow);
-  border: none;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--accent-glow); }
-
-.btn-ghost {
-  background: rgba(255,255,255,.05); color: var(--text);
-  border: 1px solid var(--border2);
-}
-.btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(139,92,246,.4); }
-
-.btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 10px; }
-
+.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 5px 18px var(--accent-glow); border: none; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+.btn-ghost   { background: rgba(255,255,255,.05); color: var(--text); border: 1px solid var(--border2); }
+.btn-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(139,92,246,.35); }
 .btn .ripple-el {
   position: absolute; border-radius: 50%;
-  background: rgba(255,255,255,.4); pointer-events: none;
-  animation: ripple .55s var(--ease) forwards;
+  background: rgba(255,255,255,.35); pointer-events: none;
+  animation: ripple .5s var(--ease) forwards;
 }
 
 /* ============================================================
-   FOOTER
+   SORT ROW
 ============================================================ */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 0;
+.sort-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
 }
-.footer-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
-  font-size: 13px; color: var(--muted);
+.sort-label  { font-size: 12.5px; color: var(--muted); flex-shrink: 0; }
+.sort-select {
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); border-radius: var(--radius-sm);
+  padding: 6px 26px 6px 10px; font-size: 12.5px;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='[w3.org](http://www.w3.org/2000/svg)' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 7px center;
 }
-.footer-logo { display: flex; align-items: center; gap: 8px; }
-.footer-logo .logo-mark { width: 26px; height: 26px; font-size: 11px; }
-.footer-logo .logo-text { font-size: 14px; }
-.footer-links { display: flex; gap: 20px; }
-.footer-link { color: var(--muted); transition: color .2s; font-size: 13px; }
-.footer-link:hover { color: var(--text); }
+.sort-select:focus { outline: none; border-color: var(--accent); }
 
 /* ============================================================
-   HISTORY DROPDOWN
+   DOT LOADER
 ============================================================ */
-.history-btn {
-  position: relative;
-  padding: 7px 14px; border-radius: var(--radius-sm);
-  font-size: 13.5px; font-weight: 500; color: var(--muted);
-  transition: color .2s, background .2s; cursor: pointer; border: none;
-  background: none;
-  display: flex; align-items: center; gap: 6px;
+.dot-loader { display: flex; align-items: center; justify-content: center; gap: 5px; margin: 10px 0; }
+.dot-loader span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); animation: dotBounce 1.4s ease-in-out infinite;
 }
-.history-btn:hover { color: var(--text); background: rgba(255,255,255,.05); }
+.dot-loader span:nth-child(2) { animation-delay: .15s; }
+.dot-loader span:nth-child(3) { animation-delay: .3s; }
 
-.history-dropdown {
-  position: absolute; top: calc(100% + 8px); right: 0;
-  width: 280px; background: var(--card2);
-  border: 1px solid var(--border2); border-radius: var(--radius-md);
-  box-shadow: 0 20px 50px rgba(0,0,0,.4);
-  overflow: hidden; z-index: 300;
-  animation: fadeSlideDown .25s var(--ease);
+/* ============================================================
+   MOBILE SIDEBAR OVERLAY
+============================================================ */
+.sidebar-overlay {
   display: none;
+  position: fixed; inset: 0; z-index: 299;
+  background: rgba(0,0,0,.6);
 }
-.history-dropdown.open { display: block; }
-.history-header {
-  padding: 12px 16px;
-  font-size: 11.5px; font-weight: 700;
-  color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
-  border-bottom: 1px solid var(--border);
-}
-.history-list { max-height: 240px; overflow-y: auto; }
-.history-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px; cursor: pointer;
-  transition: background .18s;
-  font-size: 13.5px;
-}
-.history-item:hover { background: rgba(255,255,255,.04); }
-.history-item svg { color: var(--muted); flex-shrink: 0; }
-.history-empty { padding: 20px 16px; text-align: center; font-size: 13px; color: var(--muted); }
-.history-clear {
-  padding: 10px 16px; text-align: center;
-  border-top: 1px solid var(--border);
-  font-size: 12.5px; color: var(--danger); cursor: pointer;
-  transition: background .18s;
-}
-.history-clear:hover { background: var(--danger-bg); }
+.sidebar-overlay.active { display: block; }
 
 /* ============================================================
    RESPONSIVE
 ============================================================ */
-@media (max-width: 768px) {
-  .hero { padding: 50px 16px 40px; min-height: auto; }
-  .hero h1 { font-size: 26px; }
-  .search-btn .btn-text { display: none; }
-  .search-btn { padding: 11px 14px; }
-  .product-grid { grid-template-columns: 1fr; }
-  .stats-bar { grid-template-columns: repeat(2, 1fr); }
-  .results-header { flex-direction: column; align-items: flex-start; }
-  .footer-inner { flex-direction: column; text-align: center; }
-  .footer-links { justify-content: center; }
-  .chip-row .chip:nth-child(n+4) { display: none; }
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 300;
+    transform: translateX(-100%);
+    transition: transform .3s var(--ease), width .3s var(--ease);
+    width: 260px !important;
+  }
+  .sidebar.mobile-open { transform: translateX(0); }
+  .main-panel { width: 100%; }
 }
-
-@media (max-width: 480px) {
-  .stats-bar { grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) {
+  .search-btn .btn-search-text { display: none; }
+  .search-btn { padding: 9px 12px; }
+  .stats-strip { gap: 8px; }
+  .stat-chip { padding: 7px 10px; }
+  .card-row { gap: 9px; }
+  .card-img-wrap { width: 46px; height: 46px; }
+  .card-price-val { font-size: 17px; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
+<!-- Toast -->
 <div id="toastArea" aria-live="polite" aria-atomic="true"></div>
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="#" class="logo" id="logoLink">
-      <div class="logo-mark">V</div>
-      <div class="logo-text">Visco <span>Compare</span></div>
-    </a>
+<div class="app-layout">
 
-    <nav class="nav-links" aria-label="Main navigation">
-      <a href="#" class="nav-link active">Search</a>
-      <div style="position:relative;">
-        <button class="history-btn" id="historyBtn" aria-label="Search history" aria-haspopup="true" aria-expanded="false">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          History
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+    <div class="sidebar-header">
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle sidebar">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="sidebar-brand">
+        <div class="brand-mark">V</div>
+        <div class="brand-name">Visco <span>Compare</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-search">
+      <input type="search" class="sidebar-search-input" id="sidebarSearchInput"
+        placeholder="Search history…" autocomplete="off">
+    </div>
+
+    <button class="sidebar-new-btn" id="sidebarNewBtn" aria-label="New search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4.5v15M19.5 12h-15"/></svg>
+      <span class="new-btn-text">New Search</span>
+    </button>
+
+    <div class="sidebar-section-label">Recent</div>
+    <div class="sidebar-list" id="sidebarList">
+      <div class="sidebar-empty">No recent searches</div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-profile">
+        <div class="sp-avatar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="sp-info">
+          <div class="sp-name">Guest User</div>
+          <div class="sp-sub">Log in to sync across devices</div>
+        </div>
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <div class="history-dropdown" id="historyDropdown">
-          <div class="history-header">Recent Searches</div>
-          <div class="history-list" id="historyList">
-            <div class="history-empty">No recent searches</div>
-          </div>
-          <div class="history-clear" id="historyClearBtn">Clear history</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN PANEL ── -->
+  <div class="main-panel">
+
+    <!-- Top header -->
+    <header class="top-header" id="topHeader">
+      <div class="header-query-label" id="headerQueryLabel">
+        <button class="hamburger-btn" id="mobileHamburger" aria-label="Open sidebar" style="display:none">
+          <span></span><span></span><span></span>
+        </button>
+        <span id="headerQueryText">Visco Compare</span>
+      </div>
+      <div class="header-actions">
+        <div class="status-pill" id="statusPill">
+          <span class="status-dot online" id="statusDot"></span>
+          <span id="statusLabel">Ready</span>
         </div>
       </div>
-      <a href="#" class="nav-link" id="aboutLink">About</a>
-    </nav>
+    </header>
 
-    <div class="nav-actions">
-      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Dark mode active">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <div class="status-pill" id="statusPill" role="status" aria-live="polite">
-        <span class="status-dot online" id="statusDot"></span>
-        <span id="statusLabel">Ready</span>
+    <!-- Thread (scrollable content area) -->
+    <div class="thread-area" id="threadArea">
+
+      <!-- EMPTY / HERO STATE -->
+      <div id="heroView" class="hero-thread">
+        <div class="hero-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+          AI-Powered Product Intelligence
+        </div>
+        <h1 class="hero-title">What would you like to<br><span class="gradient-text">compare today?</span></h1>
+        <p class="hero-sub">Find and compare the best prices across stores — live, no waiting.</p>
+        <div class="hero-chips" id="heroChips">
+          <button class="chip" data-q="iPhone 17 Pro Max">iPhone 17 Pro Max</button>
+          <button class="chip" data-q="Samsung Galaxy S25 Ultra">Samsung S25 Ultra</button>
+          <button class="chip" data-q="MacBook Air M3">MacBook Air M3</button>
+          <button class="chip" data-q="Sony WH-1000XM5">Sony WH-1000XM5</button>
+          <button class="chip" data-q="4K Smart TV">4K Smart TV</button>
+          <button class="chip" data-q="iPad Pro M4">iPad Pro M4</button>
+        </div>
       </div>
+
+      <!-- THREAD CONTENT (shown during and after search) -->
+      <div id="threadContent" class="thread-content" style="display:none">
+
+        <!-- User query bubble -->
+        <div class="msg-user" id="msgUser" style="display:none">
+          <div class="user-bubble" id="userBubble"></div>
+        </div>
+
+        <!-- Assistant response: pipeline steps -->
+        <div class="msg-assistant" id="msgAssistant" style="display:none">
+
+          <!-- Loading phrase -->
+          <div id="loadingPhrase" style="font-size:14px;color:var(--muted);display:none">
+            Initializing analysis…
+          </div>
+
+          <!-- Dot loader -->
+          <div class="dot-loader" id="dotLoader" style="display:none;justify-content:flex-start;">
+            <span></span><span></span><span></span>
+          </div>
+
+          <!-- Pipeline widget -->
+          <div class="sc-pipeline" id="pipelineWidget" style="display:none">
+            <div class="pipeline-progress">
+              <div class="pipeline-progress-fill" id="pipelineProgressFill"></div>
+            </div>
+            <div class="sc-step" data-step="0" id="pipeStep0">
+              <div class="step-rail"></div>
+              <div class="step-inner">
+                <div class="step-head">
+                  <div class="step-dot">1</div>
+                  <div class="step-title">Searching products</div>
+                </div>
+                <div class="step-desc">Querying BuyHatke catalog</div>
+              </div>
+            </div>
+            <div class="sc-step" data-step="1" id="pipeStep1">
+              <div class="step-rail"></div>
+              <div class="step-inner">
+                <div class="step-head">
+                  <div class="step-dot">2</div>
+                  <div class="step-title">Discovering URLs</div>
+                </div>
+                <div class="step-desc">Locating store listings</div>
+                <div id="step1SkeletonCards" style="display:none">
+                  <div class="step-card-skeleton" style="margin-top:8px">
+                    <div class="skel" style="width:44px;height:44px;border-radius:8px;flex-shrink:0"></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+                      <div class="skel" style="height:10px;width:55%"></div>
+                      <div class="skel" style="height:10px;width:80%"></div>
+                    </div>
+                    <div class="skel" style="height:12px;width:60px;flex-shrink:0"></div>
+                  </div>
+                  <div class="step-card-skeleton" style="margin-top:6px">
+                    <div class="skel" style="width:44px;height:44px;border-radius:8px;flex-shrink:0"></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+                      <div class="skel" style="height:10px;width:40%"></div>
+                      <div class="skel" style="height:10px;width:70%"></div>
+                    </div>
+                    <div class="skel" style="height:12px;width:50px;flex-shrink:0"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sc-step" data-step="2" id="pipeStep2">
+              <div class="step-rail"></div>
+              <div class="step-inner">
+                <div class="step-head">
+                  <div class="step-dot">3</div>
+                  <div class="step-title">Parsing offers</div>
+                </div>
+                <div class="step-desc" id="step2Desc">Extracting product & pricing data</div>
+              </div>
+            </div>
+            <div class="sc-step" data-step="3" id="pipeStep3">
+              <div class="step-rail"></div>
+              <div class="step-inner">
+                <div class="step-head">
+                  <div class="step-dot">4</div>
+                  <div class="step-title">Comparing prices</div>
+                </div>
+                <div class="step-desc">Ranking by best value</div>
+              </div>
+            </div>
+            <div class="sc-step" data-step="4" id="pipeStep4">
+              <div class="step-rail"></div>
+              <div class="step-inner">
+                <div class="step-head">
+                  <div class="step-dot">5</div>
+                  <div class="step-title">Finalizing results</div>
+                </div>
+                <div class="step-desc">Building comparison report</div>
+              </div>
+            </div>
+          </div>
+          <!-- end pipeline -->
+
+        </div>
+        <!-- end msg-assistant -->
+
+        <!-- RESULTS AREA (updates live as products arrive) -->
+        <div id="resultsArea" style="display:none">
+
+          <!-- Stats strip -->
+          <div class="stats-strip" id="statsStrip"></div>
+
+          <!-- Sort row -->
+          <div class="sort-row">
+            <span class="sort-label">Sort</span>
+            <select class="sort-select" id="sortSelect">
+              <option value="relevance">Relevance</option>
+              <option value="price-low">Price: Low → High</option>
+              <option value="price-high">Price: High → Low</option>
+              <option value="rating">Best Rating</option>
+              <option value="offers">Most Offers</option>
+            </select>
+          </div>
+
+          <!-- Product list -->
+          <div class="product-list" id="productList"></div>
+
+        </div>
+
+        <!-- ERROR -->
+        <div id="errorArea" style="display:none">
+          <div class="error-state">
+            <div class="error-card">
+              <div class="error-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>
+              </div>
+              <div class="state-title">Something went wrong</div>
+              <p class="state-sub" id="errorMsg" style="margin:10px auto 22px">We couldn't complete this comparison.</p>
+              <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+                <button class="btn btn-primary" id="retryBtn">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v6h-6"/></svg>
+                  Retry
+                </button>
+                <button class="btn btn-ghost" id="newSearchFromError">New Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMPTY RESULTS -->
+        <div id="emptyResultsArea" style="display:none">
+          <div class="state-center">
+            <div class="state-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <div class="state-title">No products found</div>
+            <p class="state-sub" id="emptyMsg">Try a different search query.</p>
+          </div>
+        </div>
+
+      </div>
+      <!-- end threadContent -->
+
     </div>
-  </div>
-</header>
+    <!-- end threadArea -->
 
-<!-- HERO -->
-<section class="hero" id="heroSection">
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
-      AI-Powered Product Intelligence
-    </div>
-
-    <h1>What would you like to<br><span class="gradient-text">compare today?</span></h1>
-    <p class="subtitle">Instantly find and compare the best prices across stores — powered by intelligent real-time analysis.</p>
-
-    <div class="search-container">
-      <form class="search-box" id="heroSearchForm" role="search">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <!-- ── Composer bar (bottom search) ── -->
+    <div class="composer-bar">
+      <form class="search-form" id="searchForm" role="search">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
         <input
           class="search-input"
-          id="mainSearchInput"
+          id="searchInput"
           type="text"
-          placeholder="Search mobiles, laptops, TVs, beauty products…"
-          aria-label="Search products"
+          placeholder="Search any product to compare prices…"
           autocomplete="off"
           spellcheck="false"
         >
-        <button class="search-btn" id="searchBtn" type="submit" aria-label="Start comparison">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          <span class="btn-text">Compare</span>
+        <button class="search-btn" id="searchBtn" type="submit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span class="btn-search-text">Compare</span>
         </button>
       </form>
-
-      <div class="chip-row" id="chipRow">
-        <button class="chip" data-q="iPhone 16">iPhone 16</button>
-        <button class="chip" data-q="Samsung Galaxy S25">Samsung Galaxy S25</button>
-        <button class="chip" data-q="MacBook Air M3">MacBook Air M3</button>
-        <button class="chip" data-q="Sony WH-1000XM5">Sony WH-1000XM5</button>
-        <button class="chip" data-q="Nike Air Max">Nike Air Max</button>
-        <button class="chip" data-q="4K Smart TV">4K Smart TV</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MAIN CONTENT -->
-<main id="mainContent">
-  <div class="container">
-
-    <!-- EMPTY VIEW -->
-    <div class="view active" id="emptyView">
-      <div style="text-align:center;padding:80px 24px;">
-        <div class="empty-icon">
-          <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg>
-        </div>
-        <h3>Start your comparison</h3>
-        <p>Search for any product above to instantly compare prices, availability, and offers across multiple stores.</p>
-      </div>
-    </div>
-
-    <!-- LOADING VIEW -->
-    <div class="view" id="loadingView">
-      <div class="loading-center">
-        <div class="ai-orb">
-          <div class="ai-orb-inner">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
-          </div>
-        </div>
-
-        <div class="loading-phrase" id="loadingPhrase">Initializing search…</div>
-        <div class="loading-sub" id="loadingSub">Visco Compare is analyzing your query</div>
-
-        <div class="dot-loader" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>Analysis Progress</span>
-            <span><span id="progressPct">0</span>%</span>
-          </div>
-          <div class="progress-track">
-            <div class="progress-fill active" id="progressFill"></div>
-          </div>
-          <div class="progress-pct" id="progressStatus">Starting up…</div>
-        </div>
-
-        <div class="timeline" id="timeline">
-          <div class="tl-step" data-step="searching">
-            <div class="tl-dot">1</div>
-            <div class="tl-content">
-              <div class="tl-title">Searching Products</div>
-              <div class="tl-desc">Querying product catalog</div>
-            </div>
-          </div>
-          <div class="tl-step" data-step="urls">
-            <div class="tl-dot">2</div>
-            <div class="tl-content">
-              <div class="tl-title">URLs Discovered</div>
-              <div class="tl-desc">Locating store listings</div>
-            </div>
-          </div>
-          <div class="tl-step" data-step="parsing">
-            <div class="tl-dot">3</div>
-            <div class="tl-content">
-              <div class="tl-title">Parsing Products</div>
-              <div class="tl-desc">Extracting product details</div>
-            </div>
-          </div>
-          <div class="tl-step" data-step="offers">
-            <div class="tl-dot">4</div>
-            <div class="tl-content">
-              <div class="tl-title">Collecting Offers</div>
-              <div class="tl-desc">Gathering pricing data</div>
-            </div>
-          </div>
-          <div class="tl-step" data-step="comparing">
-            <div class="tl-dot">5</div>
-            <div class="tl-content">
-              <div class="tl-title">Comparing Prices</div>
-              <div class="tl-desc">Ranking by best value</div>
-            </div>
-          </div>
-          <div class="tl-step" data-step="finished">
-            <div class="tl-dot">6</div>
-            <div class="tl-content">
-              <div class="tl-title">Finished</div>
-              <div class="tl-desc">Results ready</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Skeleton cards shown during load -->
-      <div class="skeleton-grid" id="skeletonGrid"></div>
-
-      <!-- Live products appended here during loading -->
-      <div id="liveResultsDuringLoad"></div>
-    </div>
-
-    <!-- ERROR VIEW -->
-    <div class="view" id="errorView">
-      <div style="display:flex;justify-content:center;padding:60px 24px;">
-        <div class="error-card">
-          <div class="error-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>
-          </div>
-          <h3>Something went wrong</h3>
-          <p id="errorMsg">We couldn't complete this comparison. This may be a temporary issue. Please try again.</p>
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-            <button class="btn btn-primary" id="retryBtn">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v6h-6"/></svg>
-              Retry
-            </button>
-            <button class="btn btn-ghost" id="newSearchBtn">New Search</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RESULTS VIEW -->
-    <div class="view" id="resultsView">
-      <div class="stats-bar" id="statsBar"></div>
-
-      <div class="results-header">
-        <div>
-          <div class="results-title" id="resultsTitle">Comparison Results</div>
-          <div class="results-count" id="resultsCount"></div>
-        </div>
-        <div class="sort-row">
-          <span class="sort-label">Sort by</span>
-          <select class="sort-select" id="sortSelect" aria-label="Sort results">
-            <option value="relevance">Relevance</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="rating">Best Rating</option>
-            <option value="offers">Most Offers</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="product-grid" id="productGrid"></div>
     </div>
 
   </div>
-</main>
+  <!-- end main-panel -->
 
-<!-- FOOTER -->
-<footer>
-  <div class="container footer-inner">
-    <div class="footer-logo">
-      <div class="logo-mark">V</div>
-      <div class="logo-text">Visco <span style="color:var(--accent)">Compare</span></div>
-    </div>
-    <div class="footer-links">
-      <a href="#" class="footer-link">Privacy</a>
-      <a href="#" class="footer-link">Terms</a>
-      <a href="#" class="footer-link">Support</a>
-    </div>
-    <div>© 2026 Visco Compare. All rights reserved.</div>
-  </div>
-</footer>
+</div>
+<!-- end app-layout -->
 
 <script>
 (() => {
@@ -1134,79 +1108,46 @@ footer {
    CONFIG
 ============================================================ */
 const API_BASE = "https://api.viscocompare.online";
-const POLL_INTERVAL = 1200;
-const MAX_HISTORY = 12;
+const POLL_INTERVAL = 1000;
+const MAX_HISTORY   = 15;
 
 /* ============================================================
    STATE
 ============================================================ */
 const state = {
-  jobId: null,
-  polling: false,
+  jobId:     null,
+  polling:   false,
   pollTimer: null,
-  products: [],
-  query: '',
-  history: loadHistory(),
+  products:  [],
+  query:     '',
+  history:   loadHistory(),
   savedItems: loadSaved(),
   lastQuery: '',
-  stats: { products: 0, offers: 0, stores: 0, lowest: null, avgSavings: 0 }
 };
 
 /* ============================================================
    UTILS
 ============================================================ */
-const $ = (s, c = document) => c.querySelector(s);
-const $$ = (s, c = document) => [...c.querySelectorAll(s)];
-
+const $ = (s, ctx = document) => ctx.querySelector(s);
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
   );
 }
-
-function fmt(n) {
-  const num = Number(n);
-  if (isNaN(num)) return '—';
-  return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
-
-function fmtUSD(n) {
-  const num = Number(n);
-  if (isNaN(num)) return '—';
-  if (num >= 100) return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  return '$' + num.toFixed(2);
-}
-
 function fmtPrice(n) {
   const num = Number(n);
-  if (isNaN(num) || num <= 0) return '—';
-  return num < 10000 ? '$' + num.toFixed(2) : '₹' + num.toLocaleString('en-IN');
+  if (!num || isNaN(num) || num <= 0) return '—';
+  return num >= 100
+    ? '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 0 })
+    : '$' + num.toFixed(2);
 }
-
-function randId() {
-  return Math.random().toString(36).slice(2, 9);
-}
-
-function debounce(fn, wait) {
-  let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), wait); };
-}
-
-function rippleEffect(btn, e) {
-  const rect = btn.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height) * 1.8;
-  const el = document.createElement('span');
-  el.className = 'ripple-el';
-  el.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
-  btn.appendChild(el);
-  setTimeout(() => el.remove(), 600);
-}
+function randId() { return Math.random().toString(36).slice(2, 9); }
 
 /* ============================================================
    LOCAL STORAGE
 ============================================================ */
 function loadHistory() {
-  try { return JSON.parse(localStorage.getItem('vc_history') || '[]'); }
-  catch { return []; }
+  try { return JSON.parse(localStorage.getItem('vc_history') || '[]'); } catch { return []; }
 }
 function saveHistory(h) {
   try { localStorage.setItem('vc_history', JSON.stringify(h)); } catch {}
@@ -1216,10 +1157,10 @@ function addHistory(q) {
   h.unshift(q);
   state.history = h.slice(0, MAX_HISTORY);
   saveHistory(state.history);
+  renderSidebar();
 }
 function loadSaved() {
-  try { return new Set(JSON.parse(localStorage.getItem('vc_saved') || '[]')); }
-  catch { return new Set(); }
+  try { return new Set(JSON.parse(localStorage.getItem('vc_saved') || '[]')); } catch { return new Set(); }
 }
 function toggleSaved(id) {
   if (state.savedItems.has(id)) state.savedItems.delete(id);
@@ -1233,10 +1174,10 @@ function toggleSaved(id) {
 const toastArea = $('#toastArea');
 function showToast(type, title, msg = '', duration = 4000) {
   const icons = {
-    success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>',
-    error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>',
-    warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a1.5 1.5 0 0 0 1.3 2.3h17.8a1.5 1.5 0 0 0 1.3-2.3L13.7 3.9a1.5 1.5 0 0 0-2.6 0zM12 9v5M12 16.5h.01"/></svg>',
-    info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>'
+    success: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>',
+    error:   '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>',
+    warning: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a1.5 1.5 0 0 0 1.3 2.3h17.8a1.5 1.5 0 0 0 1.3-2.3L13.7 3.9a1.5 1.5 0 0 0-2.6 0zM12 9v5M12 16.5h.01"/></svg>',
+    info:    '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>',
   };
   const t = document.createElement('div');
   t.className = `toast ${type}`;
@@ -1248,7 +1189,7 @@ function showToast(type, title, msg = '', duration = 4000) {
       ${msg ? `<div class="toast-msg">${esc(msg)}</div>` : ''}
     </div>
     <button class="toast-close" aria-label="Close">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>`;
   t.querySelector('.toast-close').onclick = () => removeToast(t);
   toastArea.appendChild(t);
@@ -1260,442 +1201,368 @@ function removeToast(t) {
   t._removed = true;
   clearTimeout(t._timer);
   t.classList.add('out');
-  setTimeout(() => t.remove(), 320);
+  setTimeout(() => t.remove(), 300);
 }
 
 /* ============================================================
-   VIEW MANAGEMENT
-============================================================ */
-function showView(id) {
-  $$('.view').forEach(v => v.classList.remove('active'));
-  const v = $('#' + id);
-  if (v) v.classList.add('active');
-}
-
-/* ============================================================
-   STATUS INDICATOR
+   STATUS
 ============================================================ */
 function setStatus(mode, label) {
   const dot = $('#statusDot');
   const lbl = $('#statusLabel');
-  dot.className = 'status-dot ' + mode;
+  if (dot) dot.className = 'status-dot ' + mode;
   if (lbl) lbl.textContent = label;
 }
 
 /* ============================================================
-   LOADING PHRASES
+   SIDEBAR
 ============================================================ */
-const PHRASES = [
-  { phrase: 'Searching products…', sub: 'Scanning the product catalog for your query' },
-  { phrase: 'Discovering stores…', sub: 'Locating available stores and listings' },
-  { phrase: 'Collecting offers…', sub: 'Gathering pricing from all found sources' },
-  { phrase: 'Comparing prices…', sub: 'Analyzing and ranking by best value' },
-  { phrase: 'Finding best deals…', sub: 'Identifying top savings opportunities' },
-  { phrase: 'Processing results…', sub: 'Finalizing comparison data for you' }
-];
-let phraseIdx = 0;
-let phraseTimer = null;
-function startPhrases() {
-  phraseIdx = 0;
-  updatePhrase();
-  phraseTimer = setInterval(() => {
-    phraseIdx = (phraseIdx + 1) % PHRASES.length;
-    updatePhrase();
-  }, 2200);
-}
-function stopPhrases() {
-  clearInterval(phraseTimer);
-}
-function updatePhrase() {
-  const el = $('#loadingPhrase');
-  const sub = $('#loadingSub');
-  if (!el) return;
-  el.style.animation = 'none';
-  el.offsetHeight; // reflow
-  el.style.animation = 'fadeIn .4s var(--ease)';
-  el.textContent = PHRASES[phraseIdx].phrase;
-  if (sub) sub.textContent = PHRASES[phraseIdx].sub;
-}
-
-/* ============================================================
-   TIMELINE
-============================================================ */
-const TL_STEPS = ['searching','urls','parsing','offers','comparing','finished'];
-let tlCurrentIdx = -1;
-
-function advanceTimeline(idx) {
-  if (idx <= tlCurrentIdx) return;
-  tlCurrentIdx = idx;
-  $$('.tl-step').forEach((el, i) => {
-    el.classList.remove('active','done');
-    if (i < idx) el.classList.add('done');
-    else if (i === idx) el.classList.add('active');
+function renderSidebar(filter = '') {
+  const list = $('#sidebarList');
+  if (!list) return;
+  const items = filter
+    ? state.history.filter(q => q.toLowerCase().includes(filter.toLowerCase()))
+    : state.history;
+  if (!items.length) {
+    list.innerHTML = '<div class="sidebar-empty">No recent searches</div>';
+    return;
+  }
+  list.innerHTML = items.map((q, i) => `
+    <div class="sidebar-item ${q === state.query ? 'active' : ''}" data-q="${esc(q)}">
+      <div class="si-icon">${q.trim()[0]?.toUpperCase() || 'S'}</div>
+      <div class="si-text">
+        <div class="si-title">${esc(q)}</div>
+        <div class="si-sub">Recent search</div>
+      </div>
+    </div>`).join('');
+  list.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const q = item.dataset.q;
+      $('#searchInput').value = q;
+      closeMobileSidebar();
+      performSearch(q);
+    });
   });
 }
 
-function progressToTimeline(pct) {
-  if (pct < 10) advanceTimeline(0);
-  else if (pct < 25) advanceTimeline(1);
-  else if (pct < 50) advanceTimeline(2);
-  else if (pct < 72) advanceTimeline(3);
-  else if (pct < 92) advanceTimeline(4);
-  else advanceTimeline(5);
+function toggleSidebar() {
+  const sb = $('#sidebar');
+  sb.classList.toggle('collapsed');
+}
+function openMobileSidebar() {
+  $('#sidebar').classList.add('mobile-open');
+  $('#sidebarOverlay').classList.add('active');
+}
+function closeMobileSidebar() {
+  $('#sidebar').classList.remove('mobile-open');
+  $('#sidebarOverlay').classList.remove('active');
 }
 
 /* ============================================================
-   PROGRESS BAR
+   VIEW HELPERS
 ============================================================ */
-let currentPct = 0;
-let targetPct = 0;
-let pctAnimFrame = null;
-
-function setProgress(pct) {
-  targetPct = Math.min(100, Math.max(0, pct));
-  animateProgress();
+function showHero() {
+  $('#heroView').style.display   = '';
+  $('#threadContent').style.display = 'none';
+}
+function showThread() {
+  $('#heroView').style.display   = 'none';
+  $('#threadContent').style.display = '';
 }
 
-function animateProgress() {
-  if (pctAnimFrame) cancelAnimationFrame(pctAnimFrame);
-  const step = () => {
-    const diff = targetPct - currentPct;
-    if (Math.abs(diff) < 0.3) {
-      currentPct = targetPct;
-    } else {
-      currentPct += diff * 0.12;
-    }
-    const fill = $('#progressFill');
-    const pct = $('#progressPct');
-    const statusEl = $('#progressStatus');
-    if (fill) fill.style.width = currentPct.toFixed(1) + '%';
-    if (pct) pct.textContent = Math.round(currentPct);
-    if (statusEl) {
-      if (currentPct < 20) statusEl.textContent = 'Starting analysis…';
-      else if (currentPct < 40) statusEl.textContent = 'Locating listings…';
-      else if (currentPct < 65) statusEl.textContent = 'Extracting product data…';
-      else if (currentPct < 88) statusEl.textContent = 'Comparing prices across stores…';
-      else if (currentPct < 99) statusEl.textContent = 'Finalizing results…';
-      else statusEl.textContent = 'Complete!';
-    }
-    progressToTimeline(currentPct);
-    if (Math.abs(targetPct - currentPct) > 0.3) {
-      pctAnimFrame = requestAnimationFrame(step);
-    }
-  };
-  pctAnimFrame = requestAnimationFrame(step);
+function resetThreadUI() {
+  $('#msgUser').style.display      = 'none';
+  $('#msgAssistant').style.display = 'none';
+  $('#loadingPhrase').style.display = 'none';
+  $('#dotLoader').style.display    = 'none';
+  $('#pipelineWidget').style.display = 'none';
+  $('#resultsArea').style.display  = 'none';
+  $('#errorArea').style.display    = 'none';
+  $('#emptyResultsArea').style.display = 'none';
+}
+
+function showSearchingUI(query) {
+  resetThreadUI();
+  showThread();
+
+  // User bubble
+  const ub = $('#userBubble');
+  if (ub) ub.textContent = query;
+  $('#msgUser').style.display = 'flex';
+
+  // Assistant: pipeline
+  $('#msgAssistant').style.display = 'flex';
+  $('#loadingPhrase').style.display = '';
+  $('#dotLoader').style.display    = 'flex';
+  $('#pipelineWidget').style.display = '';
+  setAllStepsPending();
+  advancePipelineStep(0);
+  setPipelineProgress(5);
+
+  // Update header
+  const qLabel = $('#headerQueryText');
+  if (qLabel) qLabel.innerHTML = `Comparing: <span>${esc(query)}</span>`;
 }
 
 /* ============================================================
-   SKELETON CARDS
+   PIPELINE STEPS
 ============================================================ */
-function renderSkeletons(count = 6) {
-  const grid = $('#skeletonGrid');
-  if (!grid) return;
-  grid.innerHTML = Array.from({ length: count }).map(() => `
-    <div class="skel-card">
-      <div class="skel img"></div>
-      <div class="skel-body">
-        <div class="skel line" style="height:10px;width:40%;"></div>
-        <div class="skel line" style="height:14px;width:85%;"></div>
-        <div class="skel line" style="height:11px;width:55%;"></div>
-        <div class="skel line" style="height:22px;width:45%;margin-top:4px;"></div>
-        <div class="skel line" style="height:11px;width:70%;"></div>
+function setAllStepsPending() {
+  document.querySelectorAll('.sc-step').forEach(el => {
+    el.classList.remove('step-active','step-done');
+  });
+}
+function advancePipelineStep(idx) {
+  document.querySelectorAll('.sc-step').forEach((el, i) => {
+    el.classList.remove('step-active','step-done');
+    if (i < idx) el.classList.add('step-done');
+    else if (i === idx) el.classList.add('step-active');
+  });
+  if (idx === 1) {
+    const skels = $('#step1SkeletonCards');
+    if (skels) skels.style.display = '';
+  }
+  if (idx === 2) {
+    const skels = $('#step1SkeletonCards');
+    if (skels) skels.style.display = 'none';
+  }
+}
+function completeAllSteps() {
+  document.querySelectorAll('.sc-step').forEach(el => {
+    el.classList.remove('step-active');
+    el.classList.add('step-done');
+  });
+}
+function setPipelineProgress(pct) {
+  const fill = $('#pipelineProgressFill');
+  if (fill) fill.style.width = Math.min(100, pct) + '%';
+}
+function progressToStep(pct) {
+  if (pct < 10) advancePipelineStep(0);
+  else if (pct < 25) advancePipelineStep(1);
+  else if (pct < 50) advancePipelineStep(2);
+  else if (pct < 75) advancePipelineStep(3);
+  else if (pct < 95) advancePipelineStep(4);
+  const desc = $('#step2Desc');
+  if (desc && pct >= 25) {
+    desc.textContent = `Progress: ${Math.round(pct)}%`;
+  }
+}
+
+/* ============================================================
+   STATS STRIP
+============================================================ */
+function renderStats(stats) {
+  const strip = $('#statsStrip');
+  if (!strip) return;
+  const items = [
+    {
+      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+      val: stats.productsFound || 0,
+      label: 'Products',
+      fmt: v => String(v),
+    },
+    {
+      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 12.1 12 3.5H4v8l8.6 8.6a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8z"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+      val: stats.offersFound || 0,
+      label: 'Offers',
+      fmt: v => String(v),
+    },
+    {
+      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5v11H3z"/></svg>`,
+      val: stats.storesCompared || 0,
+      label: 'Stores',
+      fmt: v => String(v),
+    },
+    {
+      icon: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+      val: stats.lowestPrice,
+      label: 'Lowest Price',
+      fmt: v => v ? fmtPrice(v) : '—',
+    },
+  ];
+  strip.innerHTML = items.map(it => `
+    <div class="stat-chip">
+      <div class="stat-chip-icon">${it.icon}</div>
+      <div>
+        <div class="stat-chip-val">${it.fmt(it.val)}</div>
+        <div class="stat-chip-label">${it.label}</div>
       </div>
     </div>`).join('');
 }
 
 /* ============================================================
-   STATS BAR
-============================================================ */
-function renderStats() {
-  const { stats } = state;
-  const items = [
-    {
-      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-      value: stats.products,
-      label: 'Products Found',
-      fmt: v => v.toString()
-    },
-    {
-      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 12.1 12 3.5H4v8l8.6 8.6a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8z"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none"/></svg>`,
-      value: stats.offers,
-      label: 'Offers Found',
-      fmt: v => v.toString()
-    },
-    {
-      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l1-5h16l1 5M4 9v11h16V9M4 9h16"/></svg>`,
-      value: stats.stores,
-      label: 'Stores Compared',
-      fmt: v => v.toString()
-    },
-    {
-      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-      value: stats.lowest,
-      label: 'Lowest Price',
-      fmt: v => v ? fmtPrice(v) : '—'
-    },
-    {
-      icon: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
-      value: stats.avgSavings,
-      label: 'Avg. Savings',
-      fmt: v => v ? fmtPrice(v) : '—'
-    }
-  ];
-
-  const bar = $('#statsBar');
-  if (!bar) return;
-  bar.innerHTML = items.map(it => `
-    <div class="stat-card">
-      <div class="stat-icon">${it.icon}</div>
-      <div class="stat-value">${it.fmt(it.value)}</div>
-      <div class="stat-label">${it.label}</div>
-    </div>`).join('');
-}
-
-function updateStats(products) {
-  const allOffers = products.flatMap(p => p.offers || []);
-  const prices = products
-    .map(p => p.offers && p.offers.length ? Math.min(...p.offers.map(o => Number(o.price || 0)).filter(x => x > 0)) : 0)
-    .filter(x => x > 0);
-
-  const stores = new Set(allOffers.map(o => o.storeName || o.store || o.name || '').filter(Boolean));
-
-  state.stats = {
-    products: products.length,
-    offers: allOffers.length,
-    stores: stores.size,
-    lowest: prices.length ? Math.min(...prices) : null,
-    avgSavings: (() => {
-      const highs = products
-        .map(p => p.offers && p.offers.length ? Math.max(...p.offers.map(o => Number(o.price || 0)).filter(x => x > 0)) : 0)
-        .filter(x => x > 0);
-      const lows = prices;
-      if (!highs.length || !lows.length) return null;
-      const avgHigh = highs.reduce((a, b) => a + b, 0) / highs.length;
-      const avgLow = lows.reduce((a, b) => a + b, 0) / lows.length;
-      return Math.max(0, avgHigh - avgLow);
-    })()
-  };
-  renderStats();
-}
-
-/* ============================================================
-   AVAILABILITY HELPER
-============================================================ */
-function getAvail(p) {
-  const raw = (p.availability || p.stock || '').toLowerCase();
-  if (raw.includes('out') || raw === 'false' || raw === '0') return 'out';
-  if (raw.includes('limited') || raw.includes('few') || raw.includes('hurry')) return 'limited';
-  return 'in';
-}
-
-function availLabel(code) {
-  return { in: 'In Stock', limited: 'Limited', out: 'Out of Stock' }[code] || 'In Stock';
-}
-
-/* ============================================================
-   PRODUCT IMAGE
+   PRODUCT CARD
 ============================================================ */
 function getProductImage(p) {
-  const img = p.image || p.imageUrl || p.img || p.thumbnail || p.photo || '';
+  const img = p.image || '';
   if (img && img.startsWith('http')) return img;
-  // SVG placeholder with gradient
-  const name = (p.name || p.title || 'P').trim();
+  const name   = (p.title || p.name || 'P').trim();
   const letter = name[0].toUpperCase();
-  const hue = ((name.charCodeAt(0) || 65) * 13) % 360;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="hsl(${hue},60%,30%)" stop-opacity=".8"/>
-        <stop offset="100%" stop-color="hsl(${(hue+40)%360},70%,20%)" stop-opacity=".9"/>
-      </linearGradient>
-    </defs>
-    <rect width="400" height="200" fill="#141A26"/>
-    <rect width="400" height="200" fill="url(#g)"/>
-    <circle cx="200" cy="100" r="55" fill="rgba(255,255,255,.06)"/>
-    <text x="200" y="122" font-family="Inter, sans-serif" font-size="64" font-weight="800"
-      fill="#fff" text-anchor="middle" opacity=".9">${letter}</text>
+  const hue    = ((name.charCodeAt(0) || 65) * 13) % 360;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(${hue},55%,28%)" stop-opacity=".9"/>
+      <stop offset="100%" stop-color="hsl(${(hue+40)%360},65%,18%)" stop-opacity=".95"/>
+    </linearGradient></defs>
+    <rect width="120" height="120" fill="#141414"/>
+    <rect width="120" height="120" fill="url(#g)"/>
+    <text x="60" y="80" font-family="Inter,sans-serif" font-size="52" font-weight="800"
+      fill="#fff" text-anchor="middle" opacity=".85">${letter}</text>
   </svg>`;
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 
-/* ============================================================
-   RENDER PRODUCT CARD
-============================================================ */
 function renderProductCard(p, delay = 0) {
-  const id = p.id || p._id || randId();
-  const name = esc(p.name || p.title || 'Unknown Product');
-  const brand = esc(p.brand || p.manufacturer || '');
-  const category = esc(p.category || p.type || '');
-  const rating = Number(p.rating || p.stars || 0);
-  const avail = getAvail(p);
-  const saved = state.savedItems.has(id);
-  const imgSrc = getProductImage(p);
+  const id = p.normalized_product_id || p.url || randId();
+  const title   = p.title || p.name || 'Unknown Product';
+  const cat     = p.classification?.sub_category || '';
+  const rating  = Number(p.rating || 0);
+  const avail   = (p.availability || 'In Stock').toLowerCase().includes('out') ? 'out' : 'in';
+  const imgSrc  = getProductImage(p);
 
-  const offers = Array.isArray(p.offers) ? p.offers : [];
-  const prices = offers.map(o => Number(o.price || o.amount || 0)).filter(x => x > 0);
-  const lowestPrice = prices.length ? Math.min(...prices) : Number(p.price || p.lowestPrice || 0);
-  const highestPrice = prices.length ? Math.max(...prices) : Number(p.maxPrice || p.highestPrice || 0);
-  const avgPrice = prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : lowestPrice;
+  const offers  = Array.isArray(p.offers) ? p.offers : [];
+  const lowestP = p.lowestPrice  || p.analytics?.lowest_price  || 0;
+  const highestP= p.highestPrice || p.analytics?.highest_price || 0;
 
-  const stars = rating > 0 ? `
-    <div class="product-rating">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
-      ${rating.toFixed(1)}
-    </div>` : '';
+  const bestBuyUrl = p.bestOffer?.buyUrl || offers.find(o => o.buyUrl || o.url)?.buyUrl
+    || offers.find(o => o.buyUrl || o.url)?.url
+    || p.productUrl || p.url || '#';
 
   const offersHtml = offers.length ? offers.map((o, i) => {
-    const storeName = esc(o.storeName || o.store || o.name || `Store ${i + 1}`);
-    const storeInitial = storeName.trim()[0]?.toUpperCase() || 'S';
-    const price = Number(o.price || o.amount || 0);
-    const isFree = o.freeDelivery || o.freeShipping || o.delivery === 'free';
-    const hasCoupon = o.coupon || o.couponCode || o.hasCoupon;
-    const isAvail = !((o.availability || '').toLowerCase().includes('out'));
-    const savings = price > 0 && highestPrice > price ? highestPrice - price : 0;
-
+    const storeName = o.store || `Store ${i+1}`;
+    const storeInit = storeName[0]?.toUpperCase() || 'S';
+    const price     = Number(o.price || 0);
+    const isFree    = (o.delivery || '').toLowerCase().includes('free')
+      || (o.delivery || '') === '0' || o.freeDelivery;
+    const isAvail   = o.is_available !== false;
+    const saving    = price > 0 && highestP > price ? highestP - price : 0;
+    const buyLink   = o.buyUrl || o.url || '#';
     return `
-      <div class="offer-row" style="animation-delay:${i * 60}ms">
-        <div class="offer-logo">${storeInitial}</div>
+      <div class="offer-row" style="animation-delay:${i*50}ms">
+        <div class="offer-logo">${o.logo
+          ? `<img src="${esc(o.logo)}" alt="${esc(storeName)}" loading="lazy" onerror="this.parentNode.textContent='${storeInit}'">`
+          : storeInit}</div>
         <div class="offer-info">
-          <div class="offer-store">${storeName}</div>
+          <div class="offer-store">${esc(storeName)}</div>
           <div class="offer-tags">
-            ${isFree ? '<span class="o-tag free">Free delivery</span>' : ''}
-            ${hasCoupon ? '<span class="o-tag coupon">Coupon</span>' : ''}
-            ${!isAvail ? '<span class="o-tag unavail">Out of stock</span>' : ''}
+            ${isFree   ? '<span class="o-tag free">Free delivery</span>' : ''}
+            ${!isAvail ? '<span class="o-tag out">Out of stock</span>' : ''}
           </div>
         </div>
-        <div class="offer-price-col">
-          <div class="offer-price-val">${price > 0 ? fmtPrice(price) : '—'}</div>
-          ${savings > 0 ? `<div class="offer-savings">Save ${fmtPrice(savings)}</div>` : ''}
+        <div style="text-align:right;flex-shrink:0">
+          <div class="offer-price">${price > 0 ? fmtPrice(price) : '—'}</div>
+          ${saving > 0 ? `<div class="offer-saving">Save ${fmtPrice(saving)}</div>` : ''}
         </div>
-        <a href="${esc(o.url || o.link || o.productUrl || '#')}" target="_blank" rel="noopener noreferrer" class="offer-buy-btn">Buy</a>
+        <a href="${esc(buyLink)}" target="_blank" rel="noopener noreferrer" class="offer-buy">Buy</a>
       </div>`;
-  }).join('') : '<div style="padding:14px;text-align:center;font-size:13px;color:var(--muted)">No offer details available</div>';
+  }).join('') : '<div style="padding:12px;text-align:center;font-size:13px;color:var(--muted)">No offer details</div>';
 
   const card = document.createElement('div');
   card.className = 'product-card';
-  card.dataset.id = id;
   card.style.animationDelay = delay + 'ms';
+  card.dataset.id = id;
 
   card.innerHTML = `
-    <div class="product-img-wrap">
-      <img class="product-img" src="${imgSrc}" alt="${name}" loading="lazy"
-        onerror="this.src='${getProductImage({name:'P'})}'" >
-      <span class="avail-badge ${avail}">${availLabel(avail)}</span>
-      <button class="save-btn ${saved ? 'saved' : ''}" data-id="${id}" aria-label="${saved ? 'Remove from saved' : 'Save product'}">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
+    <div class="card-row">
+      <div class="card-img-wrap">
+        <img class="card-img" src="${imgSrc}" alt="${esc(title)}" loading="lazy"
+          onerror="this.src='${getProductImage({title:'P'})}'" >
+      </div>
+      <div class="card-body">
+        ${cat ? `<div class="card-cat">${esc(cat)}</div>` : ''}
+        <div class="card-name" title="${esc(title)}">${esc(title)}</div>
+        <div class="card-meta">
+          ${rating > 0 ? `
+            <div class="card-rating">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></svg>
+              ${rating.toFixed(1)}
+            </div>` : ''}
+          <span class="card-avail avail-${avail}">${avail === 'in' ? 'In Stock' : 'Out of Stock'}</span>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="card-price-val">${lowestP > 0 ? fmtPrice(lowestP) : '—'}</div>
+        ${lowestP > 0 && highestP > lowestP ? `<div class="card-price-low">Lowest</div>` : ''}
+      </div>
+      ${bestBuyUrl !== '#' ? `<a href="${esc(bestBuyUrl)}" target="_blank" rel="noopener noreferrer" class="card-buy-btn">Buy</a>` : ''}
     </div>
-    <div class="product-body">
-      <div class="product-meta-top">
-        ${category ? `<span class="product-category">${category}</span>` : '<span></span>'}
-        ${stars}
-      </div>
-      <div>
-        <div class="product-name">${name}</div>
-        ${brand ? `<div class="product-brand">${brand}</div>` : ''}
-      </div>
-      <div class="price-block">
-        <div class="price-main">
-          <span class="price-current">${lowestPrice > 0 ? fmtPrice(lowestPrice) : '—'}</span>
-          ${lowestPrice > 0 && highestPrice > lowestPrice ? `<span class="price-note">Lowest</span>` : ''}
-        </div>
-        ${highestPrice > lowestPrice ? `
-          <div class="price-range">
-            <span>High: <b>${fmtPrice(highestPrice)}</b></span>
-            <span>Avg: <b>${fmtPrice(avgPrice)}</b></span>
-          </div>` : ''}
-      </div>
-      <div class="product-footer">
-        <button class="offers-toggle-btn" data-id="${id}" aria-expanded="false">
-          <span>View ${offers.length || 0} offer${offers.length !== 1 ? 's' : ''}</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <div class="offers-panel" id="offers-${id}">
-          <div class="offers-list">${offersHtml}</div>
-        </div>
-      </div>
+    <div class="card-toggle-row" data-id="${esc(id)}" role="button" aria-expanded="false" tabindex="0">
+      <span class="card-toggle-label">View ${offers.length} offer${offers.length !== 1 ? 's' : ''}</span>
+      <svg class="card-toggle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="offers-accordion" id="acc-${esc(id)}">
+      <div class="offers-inner">${offersHtml}</div>
     </div>`;
 
-  // Save button
-  card.querySelector('.save-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    const btn = e.currentTarget;
-    const pid = btn.dataset.id;
-    toggleSaved(pid);
-    const isSaved = state.savedItems.has(pid);
-    btn.classList.toggle('saved', isSaved);
-    btn.querySelector('svg').setAttribute('fill', isSaved ? 'currentColor' : 'none');
-    showToast(isSaved ? 'success' : 'info', isSaved ? 'Saved!' : 'Removed', isSaved ? 'Product added to your saved items.' : 'Removed from saved items.', 2500);
+  // Toggle accordion
+  const toggleRow = card.querySelector('.card-toggle-row');
+  toggleRow.addEventListener('click', () => {
+    const acc    = card.querySelector('.offers-accordion');
+    const isOpen = acc.classList.contains('open');
+    acc.classList.toggle('open', !isOpen);
+    toggleRow.classList.toggle('open', !isOpen);
+    toggleRow.setAttribute('aria-expanded', String(!isOpen));
   });
-
-  // Offers toggle
-  card.querySelector('.offers-toggle-btn').addEventListener('click', (e) => {
-    const btn = e.currentTarget;
-    const pid = btn.dataset.id;
-    const panel = card.querySelector(`#offers-${pid}`);
-    const isOpen = panel.classList.contains('open');
-    panel.classList.toggle('open', !isOpen);
-    btn.classList.toggle('open', !isOpen);
-    btn.setAttribute('aria-expanded', String(!isOpen));
+  toggleRow.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRow.click(); }
   });
 
   return card;
 }
 
 /* ============================================================
-   RENDER RESULTS
+   RENDER PRODUCTS
 ============================================================ */
-function renderResults(products, query) {
-  const grid = $('#productGrid');
-  if (!grid) return;
+function renderProducts(products, isAppend = false) {
+  const list = $('#productList');
+  if (!list) return;
 
-  const title = $('#resultsTitle');
-  const count = $('#resultsCount');
-  if (title) title.textContent = `Results for "${query}"`;
-  if (count) count.textContent = `${products.length} product${products.length !== 1 ? 's' : ''} found`;
+  const sorted = sortProducts(products, $('#sortSelect')?.value || 'relevance');
 
-  updateStats(products);
-  renderStats();
-
-  grid.innerHTML = '';
-  products.forEach((p, i) => {
-    const card = renderProductCard(p, i * 55);
-    grid.appendChild(card);
-  });
+  if (!isAppend) {
+    list.innerHTML = '';
+    sorted.forEach((p, i) => list.appendChild(renderProductCard(p, i * 50)));
+  } else {
+    // Append new cards only
+    const existing = new Set([...list.querySelectorAll('.product-card')].map(c => c.dataset.id));
+    sorted.forEach((p, i) => {
+      const id = p.normalized_product_id || p.url || '';
+      if (!existing.has(id)) list.appendChild(renderProductCard(p, i * 40));
+    });
+  }
 }
 
-/* ============================================================
-   SORT
-============================================================ */
 function sortProducts(products, mode) {
   const arr = [...products];
   const getPrice = p => {
+    if (p.lowestPrice || p.analytics?.lowest_price) return p.lowestPrice || p.analytics.lowest_price;
     const offers = Array.isArray(p.offers) ? p.offers : [];
     const prices = offers.map(o => Number(o.price || 0)).filter(x => x > 0);
-    return prices.length ? Math.min(...prices) : Number(p.price || 0);
+    return prices.length ? Math.min(...prices) : 0;
   };
   switch (mode) {
-    case 'price-low': return arr.sort((a, b) => getPrice(a) - getPrice(b));
+    case 'price-low':  return arr.sort((a, b) => getPrice(a) - getPrice(b));
     case 'price-high': return arr.sort((a, b) => getPrice(b) - getPrice(a));
-    case 'rating': return arr.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
-    case 'offers': return arr.sort((a, b) => (b.offers?.length || 0) - (a.offers?.length || 0));
-    default: return arr;
+    case 'rating':     return arr.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+    case 'offers':     return arr.sort((a, b) => (b.offers?.length || 0) - (a.offers?.length || 0));
+    default:           return arr;
   }
 }
 
 /* ============================================================
-   API CALLS
+   API
 ============================================================ */
 async function createJob(query) {
   const res = await fetch(`${API_BASE}/jobs`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query })
+    body: JSON.stringify({ query }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
-  if (!data.success && !data.jobId) throw new Error(data.message || 'Failed to create job');
-  return data.jobId || data.id;
+  if (!data.jobId) throw new Error(data.message || 'No jobId returned');
+  return data.jobId;
 }
 
 async function getJob(jobId) {
@@ -1705,113 +1572,117 @@ async function getJob(jobId) {
 }
 
 /* ============================================================
-   POLL JOB
+   POLLING
 ============================================================ */
 function parseProducts(data) {
-  // Try all known locations for product data
-  const rv = data.returnvalue || data.result || {};
   return (
-    rv.products ||
-    rv.data?.products ||
     data.products ||
-    data.data?.products ||
+    data.returnvalue?.products ||
+    data.result?.products ||
     []
   );
 }
 
-function getProgress(data) {
-  if (typeof data.progress === 'number') return data.progress;
-  if (data.progress?.percentage != null) return Number(data.progress.percentage);
-  if (data.dbStatus) {
-    const s = (data.dbStatus || '').toLowerCase();
-    if (s.includes('complet')) return 100;
-    if (s.includes('compar')) return 85;
-    if (s.includes('offer')) return 65;
-    if (s.includes('pars')) return 45;
-    if (s.includes('url')) return 25;
-    if (s.includes('search')) return 10;
-  }
-  return 0;
+function parseStats(data) {
+  return data.stats || {
+    productsFound:  data.products?.length || 0,
+    offersFound:    data.products?.reduce((s, p) => s + (p.offers?.length || 0), 0) || 0,
+    storesCompared: 0,
+    lowestPrice:    null,
+    highestPrice:   null,
+  };
 }
 
 async function pollJob() {
   if (!state.jobId || !state.polling) return;
 
   try {
-    const data = await getJob(state.jobId);
+    const data   = await getJob(state.jobId);
     const status = (data.status || '').toLowerCase();
-    const pct = getProgress(data);
-    setProgress(pct);
+    const pct    = typeof data.progress === 'number' ? data.progress : 0;
 
-    // Append any live products
-    const products = parseProducts(data);
-    if (products.length > state.products.length) {
-      const newProds = products.slice(state.products.length);
-      state.products = products;
+    setPipelineProgress(pct);
+    progressToStep(pct);
 
-      // If we're in loading view, append live cards
-      const liveDiv = $('#liveResultsDuringLoad');
-      if (liveDiv) {
-        newProds.forEach((p, i) => {
-          const card = renderProductCard(p, i * 60);
-          liveDiv.appendChild(card);
-        });
-        // Show live div if hidden
-        liveDiv.style.display = '';
-        // Hide skeletons once we have products
-        const skelGrid = $('#skeletonGrid');
-        if (skelGrid) skelGrid.style.display = 'none';
-      }
+    // Update loading phrase
+    const phrase = $('#loadingPhrase');
+    if (phrase && status === 'running') {
+      const pctLabel = pct ? `${Math.round(pct)}%` : '';
+      const product  = data.dbStatus?.current_product || '';
+      if (product) phrase.textContent = `Analyzing: ${product.substring(0, 60)}${product.length > 60 ? '…' : ''}`;
+      else if (pct < 20) phrase.textContent = 'Searching BuyHatke catalog…';
+      else if (pct < 50) phrase.textContent = `Collecting offers… ${pctLabel}`;
+      else phrase.textContent = `Comparing prices… ${pctLabel}`;
     }
 
-    if (status === 'completed' || status === 'complete' || status === 'done') {
-      stopPolling();
-      setProgress(100);
-      advanceTimeline(5); // "Finished"
-      stopPhrases();
-      setStatus('online', 'Ready');
+    // Live products — update as they arrive
+    const products = parseProducts(data);
+    const stats    = parseStats(data);
 
-      const finalProducts = parseProducts(data);
-      if (finalProducts.length === 0 && state.products.length === 0) {
-        showView('emptyView');
-        showToast('warning', 'No products found', `No results matched "${state.query}". Try a different search.`);
+    if (products.length > state.products.length) {
+      const isFirst = state.products.length === 0;
+      state.products = products;
+
+      // Show results area as soon as we have ANY product
+      if ($('#resultsArea').style.display === 'none' || isFirst) {
+        $('#resultsArea').style.display = '';
+        $('#dotLoader').style.display   = 'none';
+      }
+
+      renderStats(stats);
+      renderProducts(products, !isFirst);
+    } else if (products.length > 0) {
+      // Stats might update even without new products
+      renderStats(stats);
+    }
+
+    if (status === 'completed' || status === 'complete') {
+      stopPolling();
+      setPipelineProgress(100);
+      completeAllSteps();
+      setStatus('online', 'Ready');
+      setSearchBusy(false);
+
+      // Hide pipeline if we have results
+      if (state.products.length > 0 || products.length > 0) {
+        $('#pipelineWidget').style.display = 'none';
+        $('#loadingPhrase').style.display  = 'none';
+        $('#dotLoader').style.display      = 'none';
+        const finalProducts = products.length ? products : state.products;
+        state.products = finalProducts;
+        renderStats(parseStats(data));
+        renderProducts(finalProducts);
+        $('#resultsArea').style.display = '';
+        const storeCount = stats.storesCompared || '?';
+        showToast('success', 'Comparison complete!', `${finalProducts.length} products across ${storeCount} stores.`);
       } else {
-        const allProducts = finalProducts.length ? finalProducts : state.products;
-        state.products = allProducts;
-        const sorted = sortProducts(allProducts, $('#sortSelect')?.value || 'relevance');
-        renderResults(sorted, state.query);
-        showView('resultsView');
-        showToast('success', 'Comparison complete!', `Found ${allProducts.length} products across ${state.stats.stores || '?'} stores.`);
+        $('#pipelineWidget').style.display = 'none';
+        $('#emptyResultsArea').style.display = '';
+        const emptyMsg = $('#emptyMsg');
+        if (emptyMsg) emptyMsg.textContent = `No products found for "${state.query}". Try a different search.`;
+        showToast('warning', 'No results', `Nothing found for "${state.query}".`);
       }
       return;
     }
 
     if (status === 'failed' || status === 'error') {
       stopPolling();
-      stopPhrases();
       setStatus('offline', 'Error');
-      const msg = data.failedReason || data.message || 'The analysis could not be completed.';
-      $('#errorMsg').textContent = msg;
-      showView('errorView');
-      showToast('error', 'Analysis failed', msg);
+      setSearchBusy(false);
+      $('#pipelineWidget').style.display = 'none';
+      $('#dotLoader').style.display      = 'none';
+      $('#loadingPhrase').style.display  = 'none';
+      const errMsg = $('#errorMsg');
+      if (errMsg) errMsg.textContent = data.failedReason || 'The analysis could not be completed.';
+      $('#errorArea').style.display = '';
+      showToast('error', 'Analysis failed', data.failedReason || 'Try again shortly.');
       return;
     }
 
-    // Update status label
-    const dbStatus = data.dbStatus || data.statusText || '';
-    if (dbStatus) {
-      const sub = $('#loadingSub');
-      if (sub) sub.textContent = dbStatus;
-    }
-
-    if (state.polling) {
-      state.pollTimer = setTimeout(pollJob, POLL_INTERVAL);
-    }
+    if (state.polling) state.pollTimer = setTimeout(pollJob, POLL_INTERVAL);
   } catch (err) {
-    console.warn('[Visco] Poll error:', err.message);
-    if (state.polling) {
-      state.pollTimer = setTimeout(pollJob, POLL_INTERVAL * 2);
-    }
+    console.warn('[ViscoCompare] Poll error:', err.message);
+    if (state.polling) state.pollTimer = setTimeout(pollJob, POLL_INTERVAL * 2);
   }
 }
 
@@ -1826,53 +1697,39 @@ function stopPolling() {
 async function performSearch(query) {
   query = (query || '').trim();
   if (!query) {
-    showToast('warning', 'Enter a search term', 'Please type a product name to compare.');
-    $('#mainSearchInput')?.focus();
+    showToast('warning', 'Enter a search term', 'Type a product name to compare prices.');
+    $('#searchInput')?.focus();
     return;
   }
 
-  // Stop any active poll
   stopPolling();
-  stopPhrases();
 
-  state.query = query;
+  state.query    = query;
   state.products = [];
-  state.jobId = null;
-  tlCurrentIdx = -1;
-  currentPct = 0;
-  targetPct = 0;
+  state.jobId    = null;
 
   addHistory(query);
-  renderHistoryDropdown();
 
-  // Show loading UI
-  showView('loadingView');
+  showSearchingUI(query);
   setStatus('searching', 'Comparing…');
   setSearchBusy(true);
-  setProgress(0);
-  startPhrases();
-  renderSkeletons(6);
-
-  // Clear live results area
-  const liveDiv = $('#liveResultsDuringLoad');
-  if (liveDiv) { liveDiv.innerHTML = ''; liveDiv.style.display = 'none'; }
-  const skelGrid = $('#skeletonGrid');
-  if (skelGrid) skelGrid.style.display = '';
 
   try {
     const jobId = await createJob(query);
-    state.jobId = jobId;
+    state.jobId  = jobId;
     state.polling = true;
-    setProgress(5);
+    setPipelineProgress(8);
     state.pollTimer = setTimeout(pollJob, 600);
   } catch (err) {
     stopPolling();
-    stopPhrases();
     setStatus('offline', 'Error');
     setSearchBusy(false);
     const msg = err.message || 'Failed to start comparison.';
-    $('#errorMsg').textContent = msg;
-    showView('errorView');
+    const errMsg = $('#errorMsg');
+    if (errMsg) errMsg.textContent = msg;
+    $('#pipelineWidget').style.display = 'none';
+    $('#dotLoader').style.display      = 'none';
+    $('#errorArea').style.display      = '';
     showToast('error', 'Failed to start', msg);
   }
 }
@@ -1883,175 +1740,123 @@ function setSearchBusy(busy) {
   btn.disabled = busy;
   if (busy) {
     btn.innerHTML = `
-      <svg style="animation:spin .8s linear infinite" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      <span class="btn-text">Analyzing…</span>`;
+      <svg style="animation:spin .8s linear infinite" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      <span class="btn-search-text">Analyzing…</span>`;
   } else {
     btn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      <span class="btn-text">Compare</span>`;
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <span class="btn-search-text">Compare</span>`;
   }
 }
 
 /* ============================================================
-   HISTORY DROPDOWN
+   RIPPLE
 ============================================================ */
-function renderHistoryDropdown() {
-  const list = $('#historyList');
-  if (!list) return;
-  if (!state.history.length) {
-    list.innerHTML = '<div class="history-empty">No recent searches</div>';
-    return;
-  }
-  list.innerHTML = state.history.map(q => `
-    <div class="history-item" data-q="${esc(q)}">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-      ${esc(q)}
-    </div>`).join('');
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button.btn, .search-btn');
+  if (!btn || btn.disabled) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 1.8;
+  const el   = document.createElement('span');
+  el.className = 'ripple-el';
+  el.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(el);
+  setTimeout(() => el.remove(), 560);
+});
 
-  list.querySelectorAll('.history-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const q = item.dataset.q;
-      $('#mainSearchInput').value = q;
-      closeHistoryDropdown();
-      performSearch(q);
-    });
-  });
-}
-
-function openHistoryDropdown() {
-  const dd = $('#historyDropdown');
-  const btn = $('#historyBtn');
-  if (!dd) return;
-  renderHistoryDropdown();
-  dd.classList.add('open');
-  btn?.setAttribute('aria-expanded', 'true');
-}
-
-function closeHistoryDropdown() {
-  const dd = $('#historyDropdown');
-  const btn = $('#historyBtn');
-  dd?.classList.remove('open');
-  btn?.setAttribute('aria-expanded', 'false');
+/* ============================================================
+   RESPONSIVE SIDEBAR VISIBILITY
+============================================================ */
+function checkMobileHamburger() {
+  const mh = $('#mobileHamburger');
+  if (mh) mh.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
 }
 
 /* ============================================================
    EVENT BINDINGS
 ============================================================ */
 function bindEvents() {
-  // Hero search form
-  $('#heroSearchForm')?.addEventListener('submit', (e) => {
+  // Search form
+  $('#searchForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const q = $('#mainSearchInput')?.value;
-    performSearch(q);
+    performSearch($('#searchInput')?.value);
   });
 
-  // Search button ripple
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('button, .search-btn, .btn');
-    if (btn && !btn.disabled) rippleEffect(btn, e);
-  });
-
-  // Chips
-  $('#chipRow')?.addEventListener('click', (e) => {
+  // Hero chips
+  $('#heroChips')?.addEventListener('click', (e) => {
     const chip = e.target.closest('.chip');
     if (!chip) return;
-    const q = chip.dataset.q;
-    $('#mainSearchInput').value = q;
-    performSearch(q);
+    $('#searchInput').value = chip.dataset.q;
+    performSearch(chip.dataset.q);
   });
 
-  // Logo → home
-  $('#logoLink')?.addEventListener('click', (e) => {
-    e.preventDefault();
+  // Sidebar hamburger (desktop collapse)
+  $('#hamburgerBtn')?.addEventListener('click', toggleSidebar);
+
+  // Mobile hamburger (open sidebar)
+  $('#mobileHamburger')?.addEventListener('click', openMobileSidebar);
+  $('#sidebarOverlay')?.addEventListener('click', closeMobileSidebar);
+
+  // New search buttons
+  $('#sidebarNewBtn')?.addEventListener('click', () => {
     stopPolling();
-    stopPhrases();
     setSearchBusy(false);
     setStatus('online', 'Ready');
-    showView('emptyView');
-    $('#mainSearchInput').value = '';
+    showHero();
+    state.query = '';
+    const ql = $('#headerQueryText');
+    if (ql) ql.textContent = 'Visco Compare';
+    closeMobileSidebar();
+    $('#searchInput').value = '';
+    $('#searchInput').focus();
   });
 
-  // Retry btn
-  $('#retryBtn')?.addEventListener('click', () => {
-    if (state.lastQuery || state.query) {
-      performSearch(state.query || state.lastQuery);
-    } else {
-      showView('emptyView');
-    }
+  // Sidebar history search filter
+  $('#sidebarSearchInput')?.addEventListener('input', (e) => {
+    renderSidebar(e.target.value);
   });
 
-  // New search btn
-  $('#newSearchBtn')?.addEventListener('click', () => {
-    stopPolling();
-    stopPhrases();
-    setSearchBusy(false);
-    setStatus('online', 'Ready');
-    showView('emptyView');
-    $('#mainSearchInput').value = '';
-    $('#mainSearchInput').focus();
-  });
-
-  // Sort select
+  // Sort
   $('#sortSelect')?.addEventListener('change', (e) => {
-    const sorted = sortProducts(state.products, e.target.value);
-    renderResults(sorted, state.query);
+    renderProducts(state.products);
   });
 
-  // History dropdown toggle
-  $('#historyBtn')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const dd = $('#historyDropdown');
-    if (dd?.classList.contains('open')) closeHistoryDropdown();
-    else openHistoryDropdown();
+  // Retry
+  $('#retryBtn')?.addEventListener('click', () => {
+    if (state.query) performSearch(state.query);
+    else showHero();
+  });
+  $('#newSearchFromError')?.addEventListener('click', () => {
+    stopPolling();
+    setSearchBusy(false);
+    setStatus('online', 'Ready');
+    showHero();
+    state.query = '';
+    $('#searchInput').value = '';
+    $('#searchInput').focus();
   });
 
-  // History clear
-  $('#historyClearBtn')?.addEventListener('click', () => {
-    state.history = [];
-    saveHistory([]);
-    renderHistoryDropdown();
-    showToast('info', 'History cleared', '', 2000);
+  // Theme toggle (dark only for now)
+  $('#themeToggleBtn')?.addEventListener('click', () => {
+    showToast('info', 'Dark mode', 'Visco Compare uses a premium dark theme by design.', 2500);
   });
 
-  // Close dropdown on outside click
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#historyDropdown') && !e.target.closest('#historyBtn')) {
-      closeHistoryDropdown();
-    }
-  });
-
-  // Keyboard shortcut: focus search on /
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-      e.preventDefault();
-      $('#mainSearchInput')?.focus();
-    }
-    if (e.key === 'Escape') {
-      closeHistoryDropdown();
-    }
-  });
-
-  // Theme toggle (functional noop – dark only)
-  $('#themeToggle')?.addEventListener('click', () => {
-    showToast('info', 'Dark mode active', 'This app uses a premium dark theme by design.', 2500);
-  });
-
-  // About link
-  $('#aboutLink')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showToast('info', 'Visco Compare', 'AI-powered product price comparison. Find the best deal instantly.', 4000);
-  });
-
-  // Nav search input (small nav version for mobile)
-  // Global search shortcut Ctrl+K / Cmd+K
+  // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();
-      const inp = $('#mainSearchInput');
-      inp?.focus();
-      inp?.select();
+      const inp = $('#searchInput');
+      inp?.focus(); inp?.select();
     }
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault();
+      $('#searchInput')?.focus();
+    }
+    if (e.key === 'Escape') closeMobileSidebar();
   });
+
+  // Resize
+  window.addEventListener('resize', checkMobileHamburger);
 }
 
 /* ============================================================
@@ -2059,14 +1864,14 @@ function bindEvents() {
 ============================================================ */
 function init() {
   bindEvents();
-  renderHistoryDropdown();
+  checkMobileHamburger();
+  renderSidebar();
   setStatus('online', 'Ready');
-  showView('emptyView');
+  showHero();
 
-  // Welcome toast
   setTimeout(() => {
-    showToast('info', 'Welcome to Visco Compare', 'Search any product to compare prices in real time.', 4000);
-  }, 800);
+    showToast('info', 'Welcome to Visco Compare', 'Search any product to compare live prices.', 4000);
+  }, 900);
 }
 
 init();
